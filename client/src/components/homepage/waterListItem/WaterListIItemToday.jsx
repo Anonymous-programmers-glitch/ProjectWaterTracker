@@ -1,9 +1,9 @@
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
 import TrashOutline from "../../ui/icons/TrashOutline.jsx";
-import css from "./waterlistitem.module.css";
+import css from "./waterlistitemtoday.module.css";
 
-function WaterListIItem({ item }) {
+function WaterListIItemToday({ item }) {
   const { volumeOfWater, time } = item;
   return (
     <li className={css.item}>
@@ -26,4 +26,4 @@ function WaterListIItem({ item }) {
   );
 }
 
-export default WaterListIItem;
+export default WaterListIItemToday;
