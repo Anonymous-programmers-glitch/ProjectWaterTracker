@@ -1,5 +1,5 @@
 import WaterListIItemToday from "../../components/homepage/waterListItem/WaterListIItemToday.jsx";
-import Butt from "../../components/homepage/butt.jsx";
+import Bottle from "../../components/homepage/bottle.jsx";
 import MyDailyCard from "../../components/homepage/mydaylicard/MyDayliCard.jsx";
 import WaterListIItemMonth from "../../components/homepage/waterListItemMonth/WaterListIItemMonth.jsx";
 import WaterListMonth from "../../components/homepage/waterListMonth/WaterListMonth.jsx";
@@ -57,22 +57,22 @@ const dataMonth = [
 function HomePage() {
   const sizeWindow = resizeWindow();
   const isMobile = sizeWindow <= 767;
-  const isTablet = sizeWindow > 767 || sizeWindow < 1439;
+  const isTablet = sizeWindow > 767 && sizeWindow < 1439;
   const isDesktop = sizeWindow >= 1440;
 
   console.log(isMobile, isTablet, isDesktop);
   return (
     <main className={css.homepage}>
-      <MyDailyCard />
-      <div className={css.butl}>
-        <Butt />
+      <div className={css.topcontent}>
+        <div className={css.dayli}>
+          <MyDailyCard />
+        </div>
+        <Bottle className={css.bottle} />
+        <div className={css.rangeblok}>
+          <WaterRange />
+          <button>Add Water</button>
+        </div>
       </div>
-
-      <div className={css.rangeblok}>
-        <WaterRange />
-        <button>Add Water</button>
-      </div>
-
       <div className={css.today}>
         <h2 className={css.title}>Today</h2>
         <WaterListToday>
@@ -93,4 +93,3 @@ function HomePage() {
 }
 
 export default HomePage;
-4;

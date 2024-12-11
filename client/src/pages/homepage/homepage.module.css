@@ -6,9 +6,16 @@
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
+  padding: 24px 20px 40px 20px;
 }
 
+.topcontent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
 .rangeblok{
   display: flex;
   flex-direction: column;
@@ -17,10 +24,17 @@
 
 }
 
-.butl {
-  width: 100%;
-  max-width: 280px;
+.bottle {
+  /*max-height: 208px;*/
+  /*height: 100%;*/
+  /*width: 100%;*/
+  /*margin:0 auto;*/
+}
+
+.bottle svg{
+  max-height: 208px;
   margin:0 auto;
+  height: 100%;
 }
 .today{
   box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.3);
@@ -45,11 +59,50 @@
 @media screen and (min-width: 768px){
   .homepage{
     background-image: url("../../assets/homepage/backgroundtablethome.svg");
+    padding: 24px 32px 40px 32px;
   }
 
   .rangeblok{
     flex-direction: row;
     justify-content: space-between;
     gap:12px;
+  }
+
+  .bottle svg{
+     max-height: 376px;
+  }
+
+  .dayli{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 1440px){
+  .homepage{
+    padding: 20px 112px 40px 112px;
+  justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap:32px;
+
+  }
+  .bottle svg{
+    max-height: 548px;
+  }
+  .topcontent{
+    display: block;
+    height: 100%;
+    /*width: 50%;*/
+    /*justify-content: space-between;*/
+
+    /*align-items: stretch;*/
+  }
+  .botomcontent{
+    width: 50%;
+  }
+  .bottle svg{
+    max-height: 548px;
   }
 }
