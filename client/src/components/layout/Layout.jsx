@@ -1,10 +1,13 @@
 import { Outlet } from "react-router";
+import AppBar from "../AppBar/AppBar";
 
 function Layout() {
   return (
     <div>
-      <h1>Layout</h1>
-      <Outlet />
+      <AppBar />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 }
