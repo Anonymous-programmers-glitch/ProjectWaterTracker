@@ -3,11 +3,83 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Verification</title>
+    <title>Email Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background: #4caf50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .content p {
+        font-size: 16px;
+        margin: 20px 0;
+      }
+      .content a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background: #4caf50;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .content a:hover {
+        background: #45a049;
+      }
+      .footer {
+        background: #f4f4f9;
+        color: #777;
+        text-align: center;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    </style>
   </head>
   <body>
-    <p>
-      Click <a target="_blank" href="{{link}}">here</a> to verify your email!
-    </p>
+    <div class="container">
+      <div class="header">
+        <h1>Email Verification</h1>
+      </div>
+      <div class="content">
+        <p>Hello,</p>
+        <p>
+          Thank you for signing up! Please verify your email address by clicking
+          the button below.
+        </p>
+        <a target="_blank" href="{{link}}">Verify Email</a>
+        <p>
+          If you did not create this account, you can safely ignore this email.
+        </p>
+      </div>
+      <div class="footer">
+        <p>&copy; {{currentYear}} Water tracker. All rights reserved.</p>
+      </div>
+    </div>
   </body>
 </html>

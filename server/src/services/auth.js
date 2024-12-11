@@ -64,6 +64,7 @@ export const signup = async (payload) => {
 
   const html = template({
     link: `${appDomain}/auth/verify?token=${token}`,
+    currentYear: new Date().getFullYear(),
   });
 
   await sendEmail({
@@ -169,8 +170,9 @@ export const requestResetToken = async (email) => {
   );
 
   const html = template({
-    name: user.name,
+    name: user.name ?? 'Guest',
     link: `${appDomain}/auth/reset-password?token=${resetToken}`,
+    currentYear: new Date().getFullYear(),
   });
 
   await sendEmail({

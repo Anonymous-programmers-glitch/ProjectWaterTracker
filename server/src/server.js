@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'node:path';
 import pino from 'pino-http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -22,6 +23,7 @@ export const setupServer = () => {
       },
     }),
   );
+  app.use('/public', express.static(path.resolve('public')));
 
   app.use(router);
 
