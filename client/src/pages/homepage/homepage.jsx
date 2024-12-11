@@ -64,10 +64,12 @@ function HomePage() {
   return (
     <main className={css.homepage}>
       <div className={css.topcontent}>
-        <div className={css.dayli}>
-          <MyDailyCard />
+        <div className={css.bottle}>
+          <div className={css.dayli}>
+            <MyDailyCard />
+          </div>
+          <Bottle />
         </div>
-        <Bottle className={css.bottle} />
         <div className={css.rangeblok}>
           <WaterRange />
           <button>Add Water</button>
