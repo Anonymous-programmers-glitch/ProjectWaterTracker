@@ -4,3 +4,10 @@
   width: 100%;
   row-gap: 16px;
 }
+@media screen and (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(10, 1fr);
+    row-gap: 22px;
+    column-gap: 20px;
+  }
+}
