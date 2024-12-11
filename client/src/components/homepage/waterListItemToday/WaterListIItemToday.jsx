@@ -17,6 +17,10 @@ function WaterListIItemToday({ item }) {
     dispatch(deleteWater(id));
   };
 
+  const handleEdit = () => {
+    console.log("edit");
+  };
+
   return (
     <li className={css.item}>
       <div className={css.leftcontent}>
@@ -27,12 +31,7 @@ function WaterListIItemToday({ item }) {
         <p className={css.time}>{time}</p>
       </div>
       <div className={css.rightcontent}>
-        <button
-          className={css.pencilicon}
-          onClick={() => {
-            console.log("edit");
-          }}
-        >
+        <button className={css.pencilicon} onClick={handleEdit}>
           <PencilSquareOutline size="16" />
         </button>
         <button className={css.trashicon} onClick={handleDelete}>
