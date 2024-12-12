@@ -20,6 +20,7 @@ function WaterListIItemMonth({ item }) {
         {day}
       </p>
       <p className={css.percent}>{percent}%</p>
+      {/*<PopUpDay data={{ pointerIsOver, percent }} />*/}
       {pointerIsOver && <PopUpDay data={{ pointerIsOver, percent }} />}
     </li>
   );

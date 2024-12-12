@@ -8,6 +8,8 @@ import WaterListIItemMonth from "../../components/homepage/waterListItemMonth/Wa
 import WaterListMonth from "../../components/homepage/waterListMonth/WaterListMonth.jsx";
 import WaterListToday from "../../components/homepage/waterListToday/WaterListToday.jsx";
 import WaterRange from "../../components/homepage/waterrange/WaterRange.jsx";
+import Button from "../../components/ui/Button/Button.jsx";
+import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { selectWaterToday } from "../../redux/waterToday/waterTodayslice.js";
 import { dataMonth } from "../../tempData/homepagetempdata.js";
@@ -65,7 +67,12 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-          <button>Add Water</button>
+          <Button>
+            <div className={css.buttoncontent}>
+              <PlusCircleOutline />
+              <p> Add Water </p>
+            </div>
+          </Button>
         </div>
       </div>
       <div className={css.today}>
