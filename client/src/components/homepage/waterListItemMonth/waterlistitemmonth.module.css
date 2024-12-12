@@ -4,19 +4,11 @@
   justify-content: center;
   flex-direction: column;
   gap: 4px;
-  position: relative;
+  /*position: relative;*/
 
   /*border-bottom: 1px solid var(--secondary-color-5);*/
 }
-.popUp{
-  position: absolute;
-  top: -188px;
-  left: -270px;
-  background: #ffffff;
-  min-width: 280px;
-  min-height: 188px;
-  padding: 24px 16px;
-}
+
 .day {
   display: flex;
   align-items: center;

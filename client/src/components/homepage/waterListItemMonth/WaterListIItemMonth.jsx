@@ -1,11 +1,14 @@
 import clsx from "clsx";
 import { useRef, useState } from "react";
+import PopUpDay from "../popUp/popUpDay.jsx";
 import css from "./waterlistitemmonth.module.css";
 
 function WaterListIItemMonth({ item }) {
   const [pointerIsOver, setPointerIsOver] = useState(null);
   const refDay = useRef(null);
-  const { id, day, percent } = item;
+  const { id, date, percent } = item;
+  const day = date.split("-")[0];
+
   return (
     <li key={id} className={css.item}>
       <p
@@ -17,14 +20,7 @@ function WaterListIItemMonth({ item }) {
         {day}
       </p>
       <p className={css.percent}>{percent}%</p>
-      {pointerIsOver && (
-        <div className={css.popUp}>
-          <p>{pointerIsOver}</p>
-          <p>Daily norma:</p>
-          <p>Fulfillment of the daily norm: {percent}</p>
-          <p>How many servings of water:</p>
-        </div>
-      )}
+      {pointerIsOver && <PopUpDay data={{ pointerIsOver, percent }} />}
     </li>
   );
 }
