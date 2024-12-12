@@ -1,4 +1,4 @@
-.userAuthBtn {
+.userLogoBtn {
   width: auto;
   height: 28px;
   display: flex;
@@ -8,37 +8,34 @@
   padding: 0 4px;
 }
 
-.userAuthBtnText {
-  min-width: 48px;
+.userLogoBtnText {
+  min-width: 66px;
   height: 20px;
   font-family: "Roboto", sans-serif;
   /* font-family: var(--font-family); */
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
+  text-align: right;
   color: #407BFF;
   /* color: var(--primery-color-blue); */
   flex-shrink: 0;
   padding: 2px 0;
 }
 
-.userAuthBtnText:hover,
-.userAuthBtnText:focus {
-  color: #FF9D43;
-  /* color: var(--secondary-color-5); */
-}
-
-.icon {
-  flex-shrink: 0;
+.userAvatarWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  /* border: 1px solid #2F2F2F; */
+  overflow: hidden;
 }
 
-@media screen and (min-width: 768px) {
-  .userAuthBtnText {
-    min-width: 54px;
-    font-size: 18px;
-    line-height: 1.33;
-  }
+.userAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

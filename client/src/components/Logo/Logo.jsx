@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import logo from "../../../public/assets/Logo.png";
+import LogoIcon from "../ui/icons/LogoIcon";
 import { useState } from "react";
+import css from "./Logo.module.css";
 
 const Logo = () => {
   // const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -9,8 +10,9 @@ const Logo = () => {
   const targetRoute = isLoggedIn ? "/home" : "/welcome";
 
   return (
-    <Link to={targetRoute} className="logo">
-      <img src={logo} alt="Water tracker logo" />
+    <Link to={targetRoute} className={css.logo}>
+      <LogoIcon />
+      <p className={css.iconText}>Tracker of water</p>
     </Link>
   );
 };
