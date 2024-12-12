@@ -13,7 +13,7 @@ import css from "./homepage.module.css";
 function HomePage() {
   const dataToday = useSelector(selectWaterToday);
   return (
-    <main className={css.homepage}>
+    <section className={css.homepage}>
       <div className={css.topcontent}>
         <div className={css.bottle}>
           <div className={css.dayli}>
@@ -28,11 +28,16 @@ function HomePage() {
       </div>
       <div className={css.today}>
         <h2 className={css.title}>Today</h2>
-        <WaterListToday>
-          {dataToday.map((item) => (
-            <WaterListIItemToday key={item.id} item={item} />
-          ))}
-        </WaterListToday>
+
+        {dataToday.length > 0 ? (
+          <WaterListToday>
+            {dataToday.map((item) => (
+              <WaterListIItemToday key={item.id} item={item} />
+            ))}
+          </WaterListToday>
+        ) : (
+          <h2 className={css.list}>No notes yet</h2>
+        )}
         <h3>Add water</h3>
         <h2 className={css.title}>Month</h2>
         <WaterListMonth>
@@ -41,7 +46,7 @@ function HomePage() {
           ))}
         </WaterListMonth>
       </div>
-    </main>
+    </section>
   );
 }
 
