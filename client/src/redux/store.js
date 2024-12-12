@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import waterTodayReducer from "./waterToday/waterTodayslice.js";
+import userReducer from "./userSlice";
 
 const persistedWaterTodayReducer = persistReducer(
   {
@@ -23,6 +24,7 @@ const persistedWaterTodayReducer = persistReducer(
 export const store = configureStore({
   reducer: {
     waterToday: persistedWaterTodayReducer,
+    user: userReducer, // Додаємо редюсер користувача
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -30,7 +32,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  // devTools: process.env.NODE_ENV === "development",
 });
 
 export const persistor = persistStore(store);
