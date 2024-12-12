@@ -1,0 +1,69 @@
+.wrapper {
+  width: 280px;
+  height: 304px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  justify-content: space-between;
+  margin-top: 80px;
+  margin-left: 20px;
+}
+
+.label {
+  height: 76px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  text-align: left;
+  justify-content: space-between;
+}
+
+.psw {
+  border: 1px solid black;
+  border-radius: 6px;
+  width: 280px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.icon {
+  border: 1px solid red;
+}
+
+.input {
+  border: 1px solid black;
+  border-radius: 6px;
+  width: 280px;
+  height: 44px;
+  padding: 10px;
+}
+
+.btn {
+  border: 1px solid blue;
+}
+
+.h3 {
+  height: 24px;
+}
+
+.link {
+  height: 20px;
+}
+
+.linktxt {
+  color: blue;
+  border-bottom: 2px solid blue;
+}
+
+.errorEmail {
+  color: red;
+}
+.errorPswrd {
+  color: red;
+}
