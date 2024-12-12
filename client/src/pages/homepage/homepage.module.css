@@ -76,6 +76,14 @@
   width: 100%;
   margin-bottom: 16px;
 }
+
+.buttoncontent{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 30px;
+}
 @media screen and (min-width: 768px) {
   .homepage {
     background-image: url("../../assets/homepage/backgroundtablethome.svg");
