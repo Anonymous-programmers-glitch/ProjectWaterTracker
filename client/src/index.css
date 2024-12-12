@@ -36,7 +36,8 @@ ul {
     list-style: none;
 }
 
-img, picture {
+img,
+picture {
     display: block;
     max-width: 100%;
     /*height: auto;*/
@@ -80,4 +81,3 @@ button:focus,
 button:active {
     outline: none;
 }
-
