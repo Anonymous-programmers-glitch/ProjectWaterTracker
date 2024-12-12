@@ -1,0 +1,71 @@
+.formWrapper {
+  padding-top: 32px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.mainTitle {
+  padding-bottom: 24px;
+}
+
+.photoTitle {
+  padding-bottom: 8px;
+}
+
+.imgWrapper {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 24px;
+}
+
+.buttonUpload {
+  display: flex;
+  gap: 8px;
+  color: #407bff;
+}
+
+.wrapperTwoBlocks {
+  display: flex;
+  gap: 24px;
+}
+
+.firstWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* .buttonUpload {
+
+} */
+
+.genderOptions {
+  display: flex;
+  padding-bottom: 52px;
+  gap: 24px;
+}
+
+.genderInput {
+  margin-left: 8px;
+}
+
+.labelUser {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.passwordWrapper {
+  flex: 1;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 12px;
+}
+
+.labelPassword {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
