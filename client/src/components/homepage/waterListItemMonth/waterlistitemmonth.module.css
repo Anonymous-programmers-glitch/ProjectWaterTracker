@@ -4,6 +4,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 4px;
+  /*position: relative;*/
 
   /*border-bottom: 1px solid var(--secondary-color-5);*/
 }
@@ -20,10 +21,11 @@
   font-size: 14px;
   line-height: 129%;
   color: #2f2f2f;
+  cursor: pointer;
   /*color: var(--primery-color-black);;*/
 }
 
-.border{
+.border {
   border: 1px solid #407bff;
 }
 
@@ -33,4 +35,10 @@
   line-height: 160%;
   color: #9ebbff;
   /*color: var(--primery-color-black);*/
+}
+
+@media screen and (min-width: 1440px) {
+  .item  {
+  position: relative;
+  }
 }

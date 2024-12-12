@@ -1,0 +1,34 @@
+.popUp {
+  position: absolute;
+  top: -188px;
+  left: 0;
+  background: #ffffff;
+  width: 280px;
+  min-height: 188px;
+  padding: 24px 12px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 400;
+}
+
+.data {
+  font-size: 18px;
+
+  color: var(--primery-color-blue);
+}
+
+.date {
+  color: var(--primery-color-blue);
+}
+.text {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 1440px) {
+  .popUp {
+    left: -280px;
+  }
+}
