@@ -1,5 +1,5 @@
 {
-  "avatar": "../public/assets/images/Project-02.png",
+  "avatar": "/assets/images/Project-02.png",
   "name": "Dawid",
   "email": "dawid@MediaList.com"
 }
