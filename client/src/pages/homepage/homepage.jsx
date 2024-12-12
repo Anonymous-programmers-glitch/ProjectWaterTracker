@@ -13,7 +13,7 @@ import css from "./homepage.module.css";
 function HomePage() {
   const dataToday = useSelector(selectWaterToday);
   return (
-    <main className={css.homepage}>
+    <section className={css.homepage}>
       <div className={css.topcontent}>
         <div className={css.bottle}>
           <div className={css.dayli}>
@@ -46,7 +46,7 @@ function HomePage() {
           ))}
         </WaterListMonth>
       </div>
-    </main>
+    </section>
   );
 }
 
