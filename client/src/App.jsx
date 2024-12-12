@@ -4,7 +4,9 @@ import Layout from "./components/layout/Layout.jsx";
 import HomePage from "./pages/homepage/homepage.jsx";
 
 function App() {
+
   return (
+    
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<h1>Main Page</h1>} />
@@ -13,7 +15,10 @@ function App() {
         <Route path="/homepage" element={<HomePage />} />
       </Route>
       <Route path="*" element={<h1>Not Found</h1>} />
+      
     </Routes>
+    
+    
   );
 }
 
