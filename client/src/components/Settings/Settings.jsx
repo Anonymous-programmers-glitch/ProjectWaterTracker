@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import css from "./Settings.module.css";
 import { useDispatch } from "react-redux";
 import { HiArrowDownTray } from "react-icons/hi2";
+import user from "../../testUser.json";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().min(1, "Name is Too Short."),
@@ -20,14 +21,6 @@ const FeedbackSchema = Yup.object().shape({
 
 export default function Settings() {
   const dispatch = useDispatch();
-
-  const userName = user.name ? user.name : user.email;
-
-  const avatarContent = user.avatar ? (
-    <img src={user.avatar} alt="User Avatar" className={css.userAvatar} />
-  ) : (
-    <span>{(user.name || user.email[0]).charAt(0).toUpperCase()}</span>
-  );
 
   const handleSubmit = (values, actions) => {
     console.log(values);
@@ -58,7 +51,7 @@ export default function Settings() {
 
         <h3 className={css.photoTitle}>Your photo</h3>
         <div className={css.imgWrapper}>
-          <img src={avatarContent} alt="User photo" className={css.photo} />
+          <img src={user.avatar} alt="User photo" className={css.photo} />
           <button type="button" className={css.buttonUpload}>
             <HiArrowDownTray style={{ color: "407BFF" }} />
             Upload a photo
@@ -70,7 +63,13 @@ export default function Settings() {
 
             <div className={css.genderOptions}>
               <div className={css.genderWrapper}>
-                <input type="radio" name="gender" id="woman" defaultChecked />
+                <input
+                  type="radio"
+                  name="gender"
+                  id="woman"
+                  defaultChecked
+                  // className={style.input}
+                />
                 <label htmlFor="woman" className={css.genderInput}>
                   Woman
                 </label>
