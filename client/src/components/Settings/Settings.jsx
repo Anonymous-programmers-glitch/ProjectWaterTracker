@@ -21,6 +21,14 @@ const FeedbackSchema = Yup.object().shape({
 export default function Settings() {
   const dispatch = useDispatch();
 
+  const userName = user.name ? user.name : user.email;
+
+  const avatarContent = user.avatar ? (
+    <img src={user.avatar} alt="User Avatar" className={css.userAvatar} />
+  ) : (
+    <span>{(user.name || user.email[0]).charAt(0).toUpperCase()}</span>
+  );
+
   const handleSubmit = (values, actions) => {
     console.log(values);
 
@@ -50,7 +58,7 @@ export default function Settings() {
 
         <h3 className={css.photoTitle}>Your photo</h3>
         <div className={css.imgWrapper}>
-          <img src="" alt="User photo" className={css.photo} />
+          <img src={avatarContent} alt="User photo" className={css.photo} />
           <button type="button" className={css.buttonUpload}>
             <HiArrowDownTray style={{ color: "407BFF" }} />
             Upload a photo
