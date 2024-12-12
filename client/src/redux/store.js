@@ -10,16 +10,21 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import changeMonthReducer from "./changeMonth/changeMonth.js";
+import waterTodayReducer from "./waterToday/waterTodayslice.js";
 
-const authPersistConfig = {
-  key: "auth",
-  storage,
-  whitelist: ["token"],
-};
+const persistedWaterTodayReducer = persistReducer(
+  {
+    key: "water-today",
+    storage,
+  },
+  waterTodayReducer,
+);
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    waterToday: persistedWaterTodayReducer,
+    changeMonth: changeMonthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
