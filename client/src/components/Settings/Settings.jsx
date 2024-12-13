@@ -1,10 +1,13 @@
-import { Form, Formik, Field, ErrorMessage } from "formik";
+import { Form, Formik, ErrorMessage } from "formik";
+// import { Field } from "formik";
 import * as Yup from "yup";
 import css from "./Settings.module.css";
 import { useDispatch } from "react-redux";
 import { HiArrowDownTray } from "react-icons/hi2";
+import { HiXMark } from "react-icons/hi2";
 import user from "../../testUser.json";
 import Button from "../ui/Button/Button.jsx";
+import Inputs from "../ui/Inputs/Inputs.jsx";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().min(1, "Name is Too Short."),
@@ -45,6 +48,7 @@ export default function Settings() {
     >
       <Form className={css.formWrapper}>
         <h2 className={css.mainTitle}>Settings</h2>
+        <HiXMark style={{ color: "#407BFF" }} size={24} />
 
         <h3 className={css.photoTitle}>Your photo</h3>
         <div className={css.imgWrapper}>
@@ -82,14 +86,16 @@ export default function Settings() {
             <div className={css.userInfo}>
               <label className={css.labelUser}>
                 Name
-                <Field type="text" name="name" placeholder="Name" />
+                {/* <Field type="text" name="name" placeholder="Name" /> */}
+                <Inputs type="text" name="name" placeholder="Name" />
                 <ErrorMessage name="name" component="span" />
               </label>
 
               <label className={css.labelUser}>
                 Email
-                <Field type="email" name="email" placeholder="Email" />
-                <ErrorMessage name="email" component="span" />
+                {/* <Field type="email" name="email" placeholder="Email" /> */}
+                <Inputs type="email" name="email" placeholder="Email" />
+                {/* <ErrorMessage name="email" component="span" /> */}
               </label>
             </div>
           </div>
@@ -98,36 +104,59 @@ export default function Settings() {
             <h3>Password</h3>
             <label className={css.labelPassword}>
               Outdated password:
-              <Field
+              {/* <Field
                 type="password"
                 name="outdatedPassword"
                 placeholder="Old password"
+              /> */}
+              <Inputs
+                type="password"
+                name="outdatedPassword"
+                placeholder="Password"
               />
               <ErrorMessage name="outdatedPassword" component="span" />
             </label>
 
             <label className={css.labelPassword}>
               New password:
-              <Field
+              {/* <Field
                 type="password"
                 name="newPassword"
                 placeholder="New password"
+              /> */}
+              <Inputs
+                type="password"
+                name="newPassword"
+                placeholder="Password"
               />
               <ErrorMessage name="newPassword" component="span" />
             </label>
 
             <label className={css.labelPassword}>
               Repeat new password:
-              <Field
+              {/* <Field
                 type="password"
                 name="repeatNewPassword"
                 placeholder="Repeat new password"
+              /> */}
+              <Inputs
+                type="password"
+                name="repeatNewPassword"
+                placeholder="Password"
               />
               <ErrorMessage name="repeatNewPassword" component="span" />
             </label>
           </div>
         </div>
-        <Button type="submit" cssStyle={css.btn} onClick={handleSubmit} />
+
+        <Button
+          type="submit"
+          cssStyle={css.btn}
+          onClick={handleSubmit}
+          // className={css.btn}
+        >
+          Submit
+        </Button>
 
         {/* <button type="submit" className={css.btn}>
           Submit
