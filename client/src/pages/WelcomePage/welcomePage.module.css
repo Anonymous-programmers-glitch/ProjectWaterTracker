@@ -24,7 +24,9 @@
   gap: 16px;
   padding: 24px 0 24px 0;
 }
-
+.button {
+  margin-bottom: 40px;
+}
 @media screen and (min-width: 768px) {
   .welcomePage {
     background-image: url("../../assets/welcomePage/backgroundTabletWelcomePage.svg");
