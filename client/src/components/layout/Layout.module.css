@@ -1,49 +1,29 @@
 .container {
   width: 100%;
-  margin-right: auto;
-  margin-left: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  max-width: 320px;
+  margin: 0 auto;
+  padding-top: 80px;
+  height: 100vh;
 }
 
-.main {
-  position: relative;
-  top: 56px;
-  width: 100%;
-}
-
-@media screen and (min-width: 320px) {
-  .container {
-    max-width: 320px;
-  }
-
-  .main {
-    width: 320px;
-  }
-}
 
 @media screen and (min-width: 768px) {
-  .container {
+  .container{
     max-width: 768px;
-
+    padding-right: 32px;
+    padding-left: 32px;
+    padding-top: 104px;
   }
-
-  .main {
-    width: 768px;
-    top: 64px;
-  }
-
 }
 
 @media screen and (min-width: 1440px) {
+
   .container {
     max-width: 1440px;
     padding-right: 112px;
     padding-left: 112px;
-
+    padding-top: 80px;
   }
-
-  .main {
-    width: 1440px;
-    top: 60px;
-  }
-
 }
