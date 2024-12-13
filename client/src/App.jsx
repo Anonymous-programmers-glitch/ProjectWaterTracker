@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
+import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
-import HomePage from "./pages/homepage/homepage.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import Settings from "./components/Settings/Settings.jsx";
 
