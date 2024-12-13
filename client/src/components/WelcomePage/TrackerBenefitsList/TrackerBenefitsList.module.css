@@ -24,3 +24,21 @@
   stroke-width: 2px;
   stroke: var(--primery-color-blue);
 }
+
+@media screen and (min-width: 768px) {
+  .list {
+    flex-direction: row;
+  }
+  .item {
+    width: 224px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .list {
+    flex-direction: column;
+  }
+  .item {
+    width: 248px;
+  }
+}
