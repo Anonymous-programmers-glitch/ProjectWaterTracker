@@ -50,6 +50,7 @@ function HomePage() {
 
   return (
     <section className={css.homepage}>
+      <div className={css.background}></div>
       <div className={css.topcontent}>
         <div className={css.bottle}>
           <div className={css.dayli}>
