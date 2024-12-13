@@ -1,13 +1,16 @@
+import dayjs from "dayjs";
 import { useEffect, useId, useState } from "react";
 import { useSelector } from "react-redux";
-import DatePicker from "../../components/homepage/datePicker/DatePicker.jsx";
-import WaterListIItemToday from "../../components/homepage/waterListItemToday/WaterListIItemToday.jsx";
-import Bottle from "../../components/homepage/bottle.jsx";
-import MyDailyCard from "../../components/homepage/mydaylicard/MyDayliCard.jsx";
-import WaterListIItemMonth from "../../components/homepage/waterListItemMonth/WaterListIItemMonth.jsx";
-import WaterListMonth from "../../components/homepage/waterListMonth/WaterListMonth.jsx";
-import WaterListToday from "../../components/homepage/waterListToday/WaterListToday.jsx";
-import WaterRange from "../../components/homepage/waterrange/WaterRange.jsx";
+import DatePicker from "../../components/HomePage/datePicker/DatePicker.jsx";
+import WaterListIItemToday from "../../components/HomePage/waterListItemToday/WaterListIItemToday.jsx";
+import Bottle from "../../components/HomePage/bottle.jsx";
+import MyDailyCard from "../../components/HomePage/myDayliCard/MyDayliCard.jsx";
+import WaterListIItemMonth from "../../components/HomePage/waterListItemMonth/WaterListIItemMonth.jsx";
+import WaterListMonth from "../../components/HomePage/waterListMonth/WaterListMonth.jsx";
+import WaterListToday from "../../components/HomePage/waterListToday/WaterListToday.jsx";
+import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
+import Button from "../../components/ui/Button/Button.jsx";
+import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { selectWaterToday } from "../../redux/waterToday/waterTodayslice.js";
 import { dataMonth } from "../../tempData/homepagetempdata.js";
@@ -17,39 +20,30 @@ function HomePage() {
   const [newData, setNewData] = useState([]);
   const dataToday = useSelector(selectWaterToday);
   const monthState = useSelector(changeMonthSelector);
-  function reorderData(dataMonth, currentMonth) {
-    let prevDay = 0;
-    const newData = [];
-    let arrayDate;
-    let day;
-    let month;
 
-    const crMount = Number(currentMonth.split("-")[1]);
-    console.log(crMount);
-    dataMonth.map((item) => {
-      arrayDate = item.date.split("-");
-      day = Number(arrayDate[0]);
-      month = Number(arrayDate[1]);
-      if (month === crMount) {
-        if (day === prevDay + 1) {
-          newData.push(item);
-          prevDay = day;
-        } else {
-          while (day !== prevDay + 1) {
-            const defaultData = { id: "", date: "", percent: "0" };
-            defaultData.id = Math.random().toString(36);
-            arrayDate[0] = `${prevDay + 1}`;
-            defaultData.date = arrayDate.join("-");
-            newData.push(defaultData);
-            prevDay++;
-          }
-          newData.push(item);
-          prevDay = day;
-        }
+  function reorderData(dataMonth, currentMonth) {
+    const newData = [];
+    const countDayofMonth = dayjs(currentMonth).daysInMonth();
+    const currentDay = dayjs(currentMonth).format("D-MM-YYYY").split("-");
+    for (let i = 1; i <= countDayofMonth; i++) {
+      currentDay[0] = i;
+      const isDay = dataMonth.find(
+        (data) => data.date === currentDay.join("-"),
+      );
+
+      if (isDay) {
+        newData.push(isDay);
+      } else {
+        const defaultData = { id: "", date: "", percent: "0" };
+        defaultData.id = Math.random().toString(36);
+        defaultData.date = currentDay.join("-");
+        newData.push(defaultData);
       }
-    });
+    }
+
     return newData;
   }
+
   useEffect(() => {
     setNewData(reorderData(dataMonth, monthState));
   }, [monthState]);
@@ -66,7 +60,12 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-          <button>Add Water</button>
+          <Button>
+            <div className="btn">
+              <PlusCircleOutline />
+              <p>Add Water</p>
+            </div>
+          </Button>
         </div>
       </div>
       <div className={css.today}>
