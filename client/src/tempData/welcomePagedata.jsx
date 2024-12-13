@@ -6,17 +6,17 @@ export const trackerBennefits = [
   {
     id: 1,
     text: "Habit drive",
-    icon: <CalendarDaysOutline size={24} />,
+    icon: <CalendarDaysOutline size={32} />,
   },
   {
     id: 2,
     text: "View statistics",
-    icon: <PresentationChartBar size={24} />,
+    icon: <PresentationChartBar size={32} />,
   },
   {
     id: 3,
     text: "Personal rate setting",
-    icon: <WrenchScrewdriverOutline size={24} />,
+    icon: <WrenchScrewdriverOutline size={32} />,
   },
 ];
 
