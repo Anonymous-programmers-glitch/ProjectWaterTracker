@@ -2,8 +2,6 @@
   background-image: url("../../assets/welcomePage/backgroundMobileWelcomePage.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  /* height: 840px;
-  width: 320px; */
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -32,6 +30,8 @@
 @media screen and (min-width: 768px) {
   .welcomePage {
     background-image: url("../../assets/welcomePage/backgroundTabletWelcomePage.svg");
+    background-size: cover;
+    width: 768px;
     gap: 60px;
   }
   .title {
@@ -52,6 +52,9 @@
 @media screen and (min-width: 1440px) {
   .welcomePage {
     background-image: url("../../assets/welcomePage/backgroundDesktopWelcomePage.svg");
+    width: 1440px;
+    background-size: contain;
+
     flex-direction: row;
     gap: 81px;
     justify-content: center;
