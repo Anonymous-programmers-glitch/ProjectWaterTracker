@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import changeMonthReducer from "./changeMonth/changeMonth.js";
 import waterTodayReducer from "./waterToday/waterTodayslice.js";
+import userReducer from "./userSlice";
 
 const persistedWaterTodayReducer = persistReducer(
   {
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     waterToday: persistedWaterTodayReducer,
     changeMonth: changeMonthReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
