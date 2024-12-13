@@ -4,11 +4,13 @@
   gap: 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: baseline;
   text-align: left;
   justify-content: space-between;
-  margin-top: 80px;
-  margin-left: 20px;
+}
+
+.h3 {
+  height: 24px;
 }
 
 .label {
@@ -33,12 +35,13 @@
 }
 
 .icon {
-  border: 1px solid red;
+  stroke: #407bff;
 }
 
 .input {
   border: 1px solid black;
   border-radius: 6px;
+  color: red;
   width: 280px;
   height: 44px;
   padding: 10px;
@@ -46,19 +49,20 @@
 
 .btn {
   border: 1px solid blue;
-}
-
-.h3 {
-  height: 24px;
+  background-color: #407bff;
+  color: white;
+  border-radius: 6px;
+  width: 280px;
+  height: 36px;
 }
 
 .link {
   height: 20px;
+  color: #407bff;
 }
 
-.linktxt {
-  color: blue;
-  border-bottom: 2px solid blue;
+.link:hover {
+  color: #ff9d43;
 }
 
 .errorEmail {
@@ -66,4 +70,41 @@
 }
 .errorPswrd {
   color: red;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439.9px) {
+  .wrapper {
+    width: 336px;
+    height: 312px;
+  }
+
+  .h3 {
+    height: 32px;
+  }
+  .psw {
+    width: 336px;
+  }
+  .input {
+    width: 336px;
+  }
+  .btn {
+    width: 336px;
+    height: 44px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    width: 384px;
+  }
+  .psw {
+    width: 384px;
+  }
+  .input {
+    width: 384px;
+  }
+  .btn {
+    width: 384px;
+    height: 44px;
+  }
 }

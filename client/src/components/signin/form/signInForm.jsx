@@ -1,12 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signIn } from "../../redux/auth/operations.js";
+import { signIn } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
-import css from "../signin/signInForm.module.css";
-import EyeOutline from "../ui/icons/EyeOutline.jsx";
-import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
+import css from "./signInForm.module.css";
+import EyeOutline from "../../ui/icons/EyeOutline.jsx";
+import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 
 const initialValues = {
   email: "",
@@ -93,9 +93,9 @@ export default function SignInForm() {
         <button type="submit" className={css.btn}>
           Sign In
         </button>
-        <Link to="/registration" className={css.link}>
-          <p className={css.linktxt}>Sign up</p>
-        </Link>
+        <NavLink to="/registration" className={css.link}>
+          <p>Sign up</p>
+        </NavLink>
       </Form>
     </Formik>
   );
