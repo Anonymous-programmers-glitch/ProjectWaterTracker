@@ -8,7 +8,7 @@ const userSchema = new Schema(
     password: { type: String, minlength: 8, maxlength: 64, required: true },
     verify: { type: Boolean, default: false, required: true },
     name: { type: String, required: false },
-    gender: { type: String, enum: typeList, required: true, default: 'woman' },
+    gender: { type: String, enum: typeList, required: true, default: 'women' },
     daylyNorm: { type: Number, required: false, default: '1500' },
     avatarUrl: { type: String, required: false, default: null },
   },
