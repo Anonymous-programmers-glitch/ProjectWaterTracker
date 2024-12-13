@@ -6,13 +6,12 @@ import css from "./AppBar.module.css";
 const AppBar = () => {
   // const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
+  const isLoggedIn = true;
+
   return (
-    // <header className={css.header}>
     <header className={css.header}>
       <Logo />
-      {/* {isLoggedIn ? <UserLogo /> : <UserAuth />} */}
-      <UserLogo />
-      <UserAuth />
+      {isLoggedIn ? <UserLogo /> : <UserAuth />}
     </header>
   );
 };
