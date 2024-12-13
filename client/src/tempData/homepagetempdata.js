@@ -12,7 +12,13 @@ export const dataToday = [
 ];
 
 export const dataMonth = [
-  { id: "16", date: "16-11-2024", percent: "100" },
+  {
+    id: "16",
+    date: "16-11-2024",
+    percent: "100",
+    daylinorma: 1800,
+    countofDay: 10,
+  },
   { id: "17", date: "17-11-2024", percent: "100" },
   { id: "18", date: "18-11-2024", percent: "100" },
   { id: "19", date: "19-11-2024", percent: "100" },
@@ -28,7 +34,20 @@ export const dataMonth = [
   { id: "4", date: "4-12-2024", percent: "100" },
   { id: "5", date: "5-12-2024", percent: "100" },
   { id: "8", date: "8-12-2024", percent: "100" },
-  { id: "9", date: "9-12-2024", percent: "100" },
+  {
+    id: "9",
+    date: "9-12-2024",
+    percent: "75",
+    daylinorma: 2000,
+    countofDay: 0,
+  },
+  {
+    id: "16",
+    date: "10-12-2024",
+    percent: "0",
+    daylinorma: 1800,
+    countofDay: 0,
+  },
   { id: "11", date: "11-12-2024", percent: "100" },
   { id: "12", date: "12-12-2024", percent: "100" },
   { id: "13", date: "13-12-2024", percent: "100" },
