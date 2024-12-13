@@ -36,9 +36,3 @@
   color: #9ebbff;
   /*color: var(--primery-color-black);*/
 }
-
-@media screen and (min-width: 1440px) {
-  .item  {
-  position: relative;
-  }
-}
