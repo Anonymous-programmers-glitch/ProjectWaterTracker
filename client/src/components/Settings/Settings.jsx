@@ -4,6 +4,7 @@ import css from "./Settings.module.css";
 import { useDispatch } from "react-redux";
 import { HiArrowDownTray } from "react-icons/hi2";
 import user from "../../testUser.json";
+import Button from "../ui/Button/Button.jsx";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().min(1, "Name is Too Short."),
@@ -44,10 +45,6 @@ export default function Settings() {
     >
       <Form className={css.formWrapper}>
         <h2 className={css.mainTitle}>Settings</h2>
-
-        {/* Основний контейнер для двох блоків */}
-
-        {/* Перший блок: Фото, гендер, ім'я, email */}
 
         <h3 className={css.photoTitle}>Your photo</h3>
         <div className={css.imgWrapper}>
@@ -97,7 +94,6 @@ export default function Settings() {
             </div>
           </div>
 
-          {/* Другий блок: Паролі */}
           <div className={css.passwordWrapper}>
             <h3>Password</h3>
             <label className={css.labelPassword}>
@@ -131,11 +127,11 @@ export default function Settings() {
             </label>
           </div>
         </div>
+        <Button type="submit" cssStyle={css.btn} onClick={handleSubmit} />
 
-        {/* Кнопка для відправки форми */}
-        <button type="submit" className={css.btn}>
+        {/* <button type="submit" className={css.btn}>
           Submit
-        </button>
+        </button> */}
       </Form>
     </Formik>
   );
