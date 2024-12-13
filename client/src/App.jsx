@@ -2,12 +2,15 @@ import "./App.css";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/homepage/homepage.jsx";
 import Layout from "./components/layout/Layout.jsx";
+import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
+
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<h1>Main Page</h1>} />
+        <Route index element={<WelcomePage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/login" element={<h1>Login Page</h1>} />
         <Route path="/registration" element={<h1>Registion Page</h1>} />
         <Route path="/homepage" element={<HomePage />} />
