@@ -17,7 +17,7 @@ export default function WelcomePage() {
           <p className={css.subTitle}>Record daily water intake and track</p>
         </div>
         <TrackerBenefitsList data={trackerBennefits} />
-        <Button cssStyle="TryTracker">Try tracker</Button>
+        <Button cssstyle="trytracker">Try tracker</Button>
       </div>
       <WhyDrinkWaterList data={whyDrinkWater} />
     </section>

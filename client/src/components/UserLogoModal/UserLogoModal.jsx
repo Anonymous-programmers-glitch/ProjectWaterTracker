@@ -37,8 +37,8 @@ const UserLogoModal = ({ isOpen, onClose, targetRef }) => {
     onClose();
   };
   const handleOpenLogoutModal = () => {
-    dispatch(openLogoutModal());
     onClose();
+    dispatch(openLogoutModal());
   };
 
   const getModalPosition = () => {

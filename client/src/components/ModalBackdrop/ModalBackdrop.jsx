@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import './ModalBackdrop.css';
+import PropTypes from "prop-types";
+import css from "./ModalBackdrop.module.css";
 
 const ModalBackdrop = ({ onClick, children }) => {
   return (
-    <div className="modal-backdrop" onClick={onClick}>
+    <div className={css.modalbackdrop} onClick={onClick}>
       {children}
     </div>
   );

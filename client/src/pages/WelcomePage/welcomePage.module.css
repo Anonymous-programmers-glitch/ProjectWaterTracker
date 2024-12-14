@@ -13,8 +13,8 @@
   left: 0;
   background-repeat: no-repeat;
   background-image: url("../../assets/welcomePage/backgroundMobileWelcomePage.svg");
-  background-size: 50%;
-  background-position: center -15%;
+  background-size: cover;
+  background-position: center ;
   z-index: -2;
 }
 
