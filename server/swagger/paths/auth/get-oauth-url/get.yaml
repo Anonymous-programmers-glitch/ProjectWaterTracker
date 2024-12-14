@@ -1,6 +1,8 @@
 get:
   summary: Get Google OAuth URL
   description: Returns the Google OAuth URL that the user can visit to authenticate via Google.
+  tags:
+    - Auth
   operationId: getGoogleOAuthUrl
   security: []
   responses:
