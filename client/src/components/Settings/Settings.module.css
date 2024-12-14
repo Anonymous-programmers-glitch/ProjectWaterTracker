@@ -1,11 +1,31 @@
-.formWrapper {
+.container {
+  border-radius: 10px;
+  padding: 32px 24px;
+  max-width: 1008px;
+  max-height: 592px;
+  background: #fff;
+  position: relative;
+}
+
+/* .formWrapper {
   padding-top: 32px;
   padding-right: 24px;
   padding-left: 24px;
-}
+} */
 
 .mainTitle {
   padding-bottom: 24px;
+}
+
+.wrapperToBtn {
+  padding-bottom: 100px;
+}
+
+.closeBtn {
+  color: var(--primery-color-blue);
+  position: absolute;
+  top: 30px;
+  right: 24px;
 }
 
 .photoTitle {
@@ -49,6 +69,10 @@
 
 } */
 
+.genderTitle {
+  padding-bottom: 12px;
+}
+
 .genderOptions {
   display: flex;
   padding-bottom: 52px;
@@ -59,11 +83,17 @@
   margin-left: 8px;
 }
 
+.labelUserName {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
 .labelUser {
   display: flex;
   gap: 8px;
   flex-direction: column;
-  padding-bottom: 24px;
 }
 
 .passwordWrapper {
@@ -79,10 +109,36 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+}
+
+.eyeIcon {
+  color: var(--primery-color-blue);
+  position: absolute;
+  top: 40px;
+  right: 16px;
 }
 
 .btn {
   position: absolute;
   right: 24px;
   bottom: 32px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 704px;
+    max-height: 860px;
+  }
+
+  .wrapperTwoBlocks {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .container {
+    max-width: 280px;
+    max-height: 852px;
+  }
 }
