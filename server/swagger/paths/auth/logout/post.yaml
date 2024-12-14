@@ -1,0 +1,15 @@
+post:
+  summary: Logout the user
+  description: Logs out the user and clears the session
+  tags:
+    - Auth
+  operationId: logoutUser
+  responses:
+    '204':
+      description: Successfully logged out, session cleared
+    '401':
+      $ref: '../../../components/responses/401.yaml'
+    '500':
+      $ref: '../../../components/responses/500.yaml'
+  security:
+    - bearerAuth: []
