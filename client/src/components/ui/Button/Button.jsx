@@ -1,11 +1,12 @@
 import React from "react";
+import clsx from "clsx";
 import css from "./Button.module.css";
 
 const Button = (props) => {
-  const { cssStyle, children, onClick } = props;
+  const { cssstyle, children, onClick } = props;
   return (
     <button
-      className={`${css.button} ${css[cssStyle]}`}
+      className={clsx(css.button, css[cssstyle])}
       onClick={onClick}
       {...props}
     >
