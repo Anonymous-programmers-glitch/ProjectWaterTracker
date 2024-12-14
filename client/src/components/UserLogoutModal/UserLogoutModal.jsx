@@ -1,9 +1,9 @@
-import { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../redux/userSlice';
-import ModalBackdrop from '../ModalBackdrop/ModalBackdrop';
-import './UserLogoutModal.css';
+import { useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/userSlice";
+import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
+import "./UserLogoutModal.css";
 
 const UserLogoutModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -15,13 +15,13 @@ const UserLogoutModal = ({ isOpen, onClose }) => {
         onClose();
       })
       .catch((error) => {
-        console.error('Ошибка при выходе:', error);
+        console.error("Ошибка при выходе:", error);
       });
   };
 
   const handleKeyDown = useCallback(
     (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         onClose();
       }
     },
@@ -30,9 +30,9 @@ const UserLogoutModal = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener("keydown", handleKeyDown);
       return () => {
-        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener("keydown", handleKeyDown);
       };
     }
   }, [isOpen, handleKeyDown]);
@@ -53,8 +53,12 @@ const UserLogoutModal = ({ isOpen, onClose }) => {
         </div>
         <p className="modal-text">Do you really want to leave?</p>
         <div className="modal-buttons">
-          <button onClick={onClose} className="btn-cancel">Cancel</button>
-          <button onClick={handleLogout} className="btn-logout">Log out</button>
+          <button onClick={onClose} className="btn-cancel">
+            Cancel
+          </button>
+          <button onClick={handleLogout} className="btn-logout">
+            Log out
+          </button>
         </div>
       </div>
     </ModalBackdrop>

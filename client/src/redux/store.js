@@ -13,13 +13,14 @@ import storage from "redux-persist/lib/storage";
 import changeMonthReducer from "./changeMonth/changeMonth.js";
 import waterTodayReducer from "./waterToday/waterTodayslice.js";
 import userReducer from "./userSlice";
+import modalReducer from "./modalSlice/modalSlice.js";
 
 const persistedWaterTodayReducer = persistReducer(
   {
     key: "water-today",
     storage,
   },
-  waterTodayReducer,
+  waterTodayReducer
 );
 
 export const store = configureStore({
@@ -27,6 +28,7 @@ export const store = configureStore({
     waterToday: persistedWaterTodayReducer,
     changeMonth: changeMonthReducer,
     user: userReducer,
+    modal: modalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

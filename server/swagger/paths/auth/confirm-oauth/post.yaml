@@ -1,0 +1,40 @@
+post:
+  summary: Confirm Google OAuth and Log In or Sign Up
+  description: Confirms the Google OAuth code and either logs in or signs up the user based on the code received from Google.
+  operationId: loginWithGoogleOAuth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The OAuth code received from Google after user authentication.
+              example: '4/0AX4XfWhJjh5rZ-8l3_lXX8Hr0VK0A7k5Fzss8DS0GsTpUE44xnbp4XYu-0S9_w7GZX0GAw'
+  responses:
+    '200':
+      description: Successfully logged in or signed up via Google OAuth
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'Successfully logged in via Google OAuth!'
+              data:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+    '401':
+      $ref: ../../../components/responses/401.yaml
+    '500':
+      $ref: ../../../components/responses/500.yaml
+  security: []

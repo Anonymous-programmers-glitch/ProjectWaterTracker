@@ -10,6 +10,7 @@ import Button from "../../components/ui/Button/Button.jsx";
 export default function WelcomePage() {
   return (
     <section className={css.welcomePage}>
+      <div className={css.background}></div>
       <div>
         <div className={css.titleBox}>
           <h1 className={css.title}>Water consumption tracker</h1>
