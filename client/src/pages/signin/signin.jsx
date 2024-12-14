@@ -4,11 +4,13 @@ import css from "./signin.module.css";
 
 export default function SignInPage() {
   return (
-    <div className={css.main}>
-      <SignInForm className={(css.form, css.box)} />
-      <div className={(css.btlcontainer, css.box)}>
-        <BottleContainer className={css.bottle} />
+    <section className={css.main}>
+      <div className={css.form}>
+        <SignInForm />
       </div>
-    </div>
+      <div className={css.btl}>
+        <BottleContainer />
+      </div>
+    </section>
   );
 }

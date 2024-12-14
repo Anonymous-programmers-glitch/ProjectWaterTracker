@@ -1,6 +1,6 @@
 .wrapper {
   width: 280px;
-  height: 304px;
+  height: 396px;
   gap: 16px;
   display: flex;
   flex-direction: column;
@@ -87,7 +87,8 @@
 }
 
 .errorEmail,
-.errorPswrd {
+.errorPswrd,
+.errorRepeatPswrd {
   color: red;
 }
 
@@ -113,6 +114,8 @@
     height: 44px;
   }
 }
+
+/*____________________ DESKTOP _______________________*/
 
 @media screen and (min-width: 1440px) {
   .wrapper {
