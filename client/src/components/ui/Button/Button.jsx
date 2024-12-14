@@ -3,11 +3,11 @@ import React from "react";
 import css from "./Button.module.css";
 
 const Button = (props) => {
-  const { cssStyle, children, onClick } = props;
+  const { cssstyle, children, onClick } = props;
 
   return (
     <button
-      className={clsx(css.button, css[cssStyle])}
+      className={clsx(css.button, css[cssstyle])}
       // `${css.button} ${css[cssStyle]}`}
       onClick={onClick}
       {...props}
