@@ -15,7 +15,8 @@ router.get('/:id', ctrlWrapper(getUserInfo));
 
 router.patch(
   '/:id',
-  upload.single('avatar'),
+
+  upload.single('avatarUrl'),
   validateBody(userInfoUpdatedSchema),
   ctrlWrapper(updateUserController),
 );
