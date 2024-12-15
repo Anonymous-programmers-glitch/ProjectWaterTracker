@@ -1,0 +1,40 @@
+get:
+  summary: Verify user's account
+  description: This endpoint verifies a user account via a token.
+  tags:
+    - Auth
+  operationId: verifyAccount
+  security: []
+  parameters:
+    - name: token
+      in: query
+      description: Verification token sent to the user.
+      required: true
+      schema:
+        type: string
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+  responses:
+    '200':
+      description: Account verified successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - message
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Account verified successfully!
+    '400':
+      $ref: '../../../components/responses/400.yaml'
+    '401':
+      $ref: '../../../components/responses/401.yaml'
+    '404':
+      $ref: ../../../components/responses/404.yaml
+    '500':
+      $ref: '../../../components/responses/500.yaml'
