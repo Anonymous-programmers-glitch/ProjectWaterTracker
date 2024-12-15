@@ -1,0 +1,31 @@
+get:
+  summary: Get Google OAuth URL
+  description: Returns the Google OAuth URL that the user can visit to authenticate via Google.
+  tags:
+    - Auth
+  operationId: getGoogleOAuthUrl
+  security: []
+  responses:
+    '200':
+      description: Successfully retrieved Google OAuth URL
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'Successfully get Google OAuth url!'
+              data:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: 'https://accounts.google.com/o/oauth2/v2/auth?...'
+    '400':
+      $ref: '../../../components/responses/400.yaml'
+    '500':
+      $ref: ../../../components/responses/500.yaml

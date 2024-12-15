@@ -17,7 +17,7 @@
 .button:active {
   box-shadow: none;
 }
-.TryTracker,
+.trytracker,
 .SignIn,
 .SignUp {
   padding: 8px 30px;

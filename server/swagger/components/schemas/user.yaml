@@ -1,0 +1,60 @@
+type: object
+required:
+  - email
+  - password
+  - verify
+  - gender
+properties:
+  _id:
+    description: "User's unique identifier"
+    type: string
+    example: '64f5b992c4b3f1567e63a178'
+  email:
+    description: "User's email address"
+    type: string
+    format: email
+    example: 'user@example.com'
+  password:
+    description: "User's password"
+    type: string
+    minLength: 8
+    maxLength: 64
+    example: 'password123'
+  verify:
+    description: 'Indicates if the user is verified'
+    type: boolean
+    default: false
+    example: false
+  name:
+    description: "User's name"
+    type: string
+    example: 'John Doe'
+  gender:
+    description: "User's gender"
+    type: string
+    enum:
+      - woman
+      - man
+      - other
+    default: 'woman'
+    example: 'woman'
+  daylyNorm:
+    description: "User's daily norm value"
+    type: number
+    default: 2000
+    example: 2000
+  avatarUrl:
+    description: "URL of the user's avatar image"
+    type: string
+    default: null
+    example: 'https://example.com/avatar.jpg'
+  createdAt:
+    description: 'Timestamp when the user was created'
+    type: string
+    format: date-time
+    example: '2023-10-22T12:34:56Z'
+  updatedAt:
+    description: 'Timestamp when the user was last updated'
+    type: string
+    format: date-time
+    example: '2023-11-01T14:22:11Z'
