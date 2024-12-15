@@ -1,0 +1,134 @@
+.wrapper {
+  width: 280px;
+  height: 396px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  text-align: left;
+  justify-content: space-between;
+}
+
+.h3 {
+  height: 24px;
+}
+
+.label {
+  height: 76px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  text-align: left;
+  justify-content: space-between;
+  color: #2f2f2f;
+}
+
+.psw {
+  border: 1px solid #9ebbff;
+  border-radius: 6px;
+  width: 280px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.field {
+  color: #407bff;
+}
+
+.field:invalid {
+  color: #ef5050;
+}
+
+.field::placeholder {
+  color: #9ebbff;
+}
+
+.icon {
+  stroke: #407bff;
+}
+
+.input {
+  border: 1px solid #9ebbff;
+  border-radius: 6px;
+  color: #407bff;
+  width: 280px;
+  height: 44px;
+  padding: 10px;
+}
+
+.input::placeholder {
+  color: #9ebbff;
+}
+
+.input:invalid {
+  color: #ef5050;
+  border: 1px solid #ef5050;
+}
+
+.btn {
+  background-color: #407bff;
+  color: white;
+  border-radius: 6px;
+  width: 280px;
+  height: 36px;
+}
+
+.link {
+  height: 20px;
+  color: #407bff;
+}
+
+.link:hover {
+  color: #ff9d43;
+}
+
+.errorEmail,
+.errorPswrd,
+.errorRepeatPswrd {
+  color: red;
+}
+
+/*____________________ TABLET _______________________*/
+
+@media screen and (min-width: 768px) and (max-width: 1439.9px) {
+  .wrapper {
+    width: 336px;
+    height: 312px;
+  }
+
+  .h3 {
+    height: 32px;
+  }
+  .psw {
+    width: 336px;
+  }
+  .input {
+    width: 336px;
+  }
+  .btn {
+    width: 336px;
+    height: 44px;
+  }
+}
+
+/*____________________ DESKTOP _______________________*/
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    width: 384px;
+  }
+  .psw {
+    width: 384px;
+  }
+  .input {
+    width: 384px;
+  }
+  .btn {
+    width: 384px;
+    height: 44px;
+  }
+}
