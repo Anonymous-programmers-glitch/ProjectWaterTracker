@@ -36,4 +36,9 @@ router.delete(
   ctrlWrapper(waterControllers.deleteWaterController),
 );
 
+router.get(
+  '/:month/:year',
+  ctrlWrapper(waterControllers.getWaterByMonthController),
+);
+
 export default router;

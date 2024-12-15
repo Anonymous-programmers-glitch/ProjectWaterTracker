@@ -136,3 +136,18 @@ export const deleteWaterController = async (req, res, next) => {
 
   res.status(204).send({ message: 'Water record is deleted successfully' });
 };
+
+export const getWaterByMonthController = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { month, year } = req.params;
+  const dailyNorm = req.user.dailyNorm || 2000;
+
+  const data = await waterServices.getWaterConsumptionByMonth(
+    userId,
+    parseInt(month),
+    parseInt(year),
+    dailyNorm,
+  );
+
+  res.json({ status: 200, data });
+};
