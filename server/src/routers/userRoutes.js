@@ -1,4 +1,6 @@
 import express from 'express';
+import { authenticate } from '../middlewares/authenticate.js';
+import { isValidId } from '../middlewares/isValidId.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { upload } from '../middlewares/uploid.js';
@@ -11,11 +13,14 @@ import {
 
 const router = express.Router();
 
-router.get('/:id', ctrlWrapper(getUserInfo));
+router.use(authenticate);
+
+router.get('/:id', isValidId, ctrlWrapper(getUserInfo));
 
 router.patch(
   '/:id',
-  upload.single('avatar'),
+  isValidId,
+  upload.single('avatarUrl'),
   validateBody(userInfoUpdatedSchema),
   ctrlWrapper(updateUserController),
 );

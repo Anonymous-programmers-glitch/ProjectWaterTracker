@@ -13,37 +13,6 @@ export const getAllWaterController = async (req, res, next) => {
   });
 };
 
-// export const getWaterByDateController = async (req, res, next) => {
-//   const { _id: userId } = req.user;
-//   const { date } = req.params;
-
-//   const startOfDay = moment(date).startOf('day').toISOString();
-//   const endOfDay = moment(date).endOf('day').toISOString();
-
-//   const waterRecords = await waterServices.getWaterByDate(
-//     startOfDay,
-//     endOfDay,
-//     userId,
-//   );
-
-//   if (waterRecords.length === 0) {
-//     throw createHttpError(404, 'No records found for this date');
-//   }
-
-//   const totalDayWater = waterRecords.reduce(
-//     (acc, item) => acc + item.amount,
-//     0,
-//   );
-
-//   res.json({
-//     status: 200,
-//     message: `Successfully found water records by this date ${date}`,
-//     waterRecords,
-//     recordsCount: waterRecords.length,
-//     totalDayWater,
-//   });
-// };
-
 export const getWaterByDateController = async (req, res, next) => {
   const { _id: userId } = req.user;
   const date = new Date(req.params.date);
@@ -78,6 +47,8 @@ export const getWaterByDateController = async (req, res, next) => {
     0,
   );
 
+  const currentDailyNorm = req.user.daylyNorm;
+  const percentage = ((totalDayWater / currentDailyNorm) * 100).toFixed(2);
   res.json({
     status: 200,
     message: `Successfully found water records by this date ${date}`,
@@ -85,6 +56,7 @@ export const getWaterByDateController = async (req, res, next) => {
       waterRecords,
       recordsCount: waterRecords.length,
       totalDayWater,
+      percentage,
     },
   });
 };
@@ -94,6 +66,7 @@ export const addWaterController = async (req, res) => {
   const waterRecord = await waterServices.addWater({
     ...req.body,
     userId,
+    currentDailyNorm: req.user.daylyNorm,
   });
 
   res.status(201).json({

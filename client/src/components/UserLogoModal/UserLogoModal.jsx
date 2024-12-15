@@ -1,24 +1,31 @@
-import { useState } from "react";
-import css from "./UserLogoModal.module.css";
 import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
+
 import CogToothOutline from "../ui/icons/CogToothOutline";
 import ArrowRightOnRectangle from "../ui/icons/ArrowRightOnRectangle";
 
+import {
+  closeLogoModal,
+  openLogoutModal,
+  // openSettingModal,
+  selectLogoModal,
+} from "../../redux/modal/modalSlice";
+
+import css from "./UserLogoModal.module.css";
+
 Modal.setAppElement("#root");
 
-const UserLogoModal = ({ isOpen, onClose, targetRef }) => {
-  if (!isOpen || !targetRef.current) return null;
+const UserLogoModal = ({ targetRef }) => {
+  const dispatch = useDispatch();
+  const isLogoModalOpen = useSelector(selectLogoModal);
 
-  const [isSettingOpen, setIsSettingOpen] = useState(false);
-  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
-
-  const openModal = (setState) => {
-    setState(true);
-    onClose();
-  };
+  if (!isLogoModalOpen || !targetRef.current) return null;
 
   const getModalPosition = () => {
+    if (!targetRef.current) return {};
+
     const rect = targetRef.current.getBoundingClientRect();
+
     return {
       top: `${rect.bottom + window.scrollY}px`,
       left: `${rect.left + window.scrollX + 4}px`,
@@ -27,48 +34,37 @@ const UserLogoModal = ({ isOpen, onClose, targetRef }) => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
+      isOpen={isLogoModalOpen}
+      onRequestClose={() => dispatch(closeLogoModal())}
       className={css.modal}
       style={{
         content: {
           ...getModalPosition(),
         },
-        overlay: null,
+        overlay: {
+          backgroundColor: "transparent",
+        },
       }}
     >
       <button
-        onClick={() => openModal(setIsSettingOpen)}
+        // onClick={() => dispatch(openSettingModal())}
         className={css.modalBtn}
       >
-        <div className={css.modalWrapper}>
-          <div className={css.icon}>
-            <CogToothOutline size="16" color="#407BFF" />
-          </div>
-          <span className={css.modalText}>Setting</span>
+        <div className={css.icon}>
+          <CogToothOutline size="16" color="currentColor" />
         </div>
+        <span className={css.modalText}>Setting</span>
       </button>
 
       <button
-        onClick={() => openModal(setIsLogoutOpen)}
+        onClick={() => dispatch(openLogoutModal())}
         className={css.modalBtn}
       >
-        <div className={css.modalWrapper}>
-          <div className={css.icon}>
-            <ArrowRightOnRectangle size="16" color="#407BFF" />
-          </div>
-          <span className={css.modalText}>Log out</span>
+        <div className={css.icon}>
+          <ArrowRightOnRectangle size="16" color="currentColor" />
         </div>
+        <span className={css.modalText}>Log out</span>
       </button>
-
-      {/* <SettingModal
-        isOpen={isSettingOpen}
-        onClose={() => setIsSettingOpen(false)}
-      />
-      <UserLogoutModal
-        isOpen={isLogoutOpen}
-        onClose={() => setIsLogoutOpen(false)}
-      /> */}
     </Modal>
   );
 };
