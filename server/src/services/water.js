@@ -47,54 +47,38 @@ export const getWaterConsumptionByMonth = async (
   year,
   dailyNorm,
 ) => {
-  // Визначаємо початок і кінець місяця
   const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
   const endDate = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
 
-  // Отримує записи про споживання води за вказаний місяць і сортує їх за датою у порядку зростання
   const records = await WaterCollection.find({
     userId,
     date: { $gte: startDate, $lt: endDate },
-  }).sort({ date: 1 }); // Сортування записів за датою
+  }).sort({ date: 1 });
 
-  // Визначає кількість днів у місяці
-  const daysInMonth = new Date(year, month, 0).getDate(); // Останній день місяця для підрахунку кількості днів
-  const fullMonthData = []; // Масив для збереження даних про кожен день
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const fullMonthData = [];
 
-  // Проходимо по кожному дню місяця
   for (let day = 1; day <= daysInMonth; day++) {
-    // Фільтруємо записи для конкретного дня
     const dayRecords = records.filter((record) => {
-      const recordDate = new Date(record.date); // Перетворюємо дату запису
-      return recordDate.getUTCDate() === day; // Порівнюємо день запису з поточним днем
+      const recordDate = new Date(record.date);
+      return recordDate.getUTCDate() === day;
     });
 
-    // Підраховуємо загальну кількість спожитої води за день
     const consumedWaterByDay = dayRecords.reduce((total, record) => {
-      return total + record.amount; // Сумуємо значення amount для кожного запису
+      return total + record.amount;
     }, 0);
 
-    // Розраховуємо відсоток від денної норми
     const percentageConsumed =
-      dailyNorm > 0
-        ? Math.round((consumedWaterByDay / dailyNorm) * 100) // Розрахунок відсотка
-        : 0; // Якщо денна норма не задана, повертаємо 0
+      dailyNorm > 0 ? Math.round((consumedWaterByDay / dailyNorm) * 100) : 0;
 
-    // Форматуємо денну норму у літрах
-    const formattedDailyNorm = (dailyNorm / 1000).toFixed(1); // Перетворення у літри з точністю до однієї цифри
-
-    // Форматуємо кількість спожитої води у літрах
-    const formattedConsumedWater = (consumedWaterByDay / 1000).toFixed(1); // Аналогічне перетворення
-
-    // Додаємо дані за день у масив результатів
     fullMonthData.push({
-      date: `${day}, ${new Date(year, month - 1, day).toLocaleString('en-US', {
-        month: 'long',
-      })}`, // Форматуємо дату як "число, місяць"
-      dailyNorm: `${formattedDailyNorm} L`, // Денна норма у літрах
-      percentageConsumed: `${percentageConsumed}%`, // Відсоток спожитої води
-      entries: dayRecords.length, // Кількість записів за день
-      consumedWaterByDay: `${formattedConsumedWater} L`, // Загальна кількість спожитої води за день у літрах
+      date: `${day.toString().padStart(2, '0')}.${month
+        .toString()
+        .padStart(2, '0')}.${year}`,
+      dailyNorm: dailyNorm.toString(),
+      percentageConsumed: percentageConsumed.toString(),
+      entries: dayRecords.length,
+      consumedWaterByDay: consumedWaterByDay.toString(),
     });
   }
 
