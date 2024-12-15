@@ -5,7 +5,16 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 4px;
+  padding: 0;
+  color: #2F2F2F;
+  /* color: var(--primery-color-black); */
+  transition: color 300ms ease;
+}
+
+.userLogoBtn:hover,
+.userLogoBtn:focus {
+  color: #FF9D43;
+  /* color: var(--secondary-color-5); */
 }
 
 .userLogoBtnText {
@@ -17,24 +26,29 @@
   font-size: 16px;
   line-height: 1.25;
   text-align: right;
-  color: #407BFF;
-  /* color: var(--primery-color-blue); */
   flex-shrink: 0;
   padding: 2px 0;
 }
 
-.userAvatarWrapper {
+.userLogoBtnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.userLogoBtnAvatarWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  /* border: 1px solid #2F2F2F; */
+  border: 1px solid #2F2F2F;
   overflow: hidden;
 }
 
-.userAvatar {
+.userLogoBtnAvatar {
   width: 100%;
   height: 100%;
   object-fit: cover;

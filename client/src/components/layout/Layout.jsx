@@ -4,12 +4,12 @@ import css from "./Layout.module.css";
 
 const Layout = () => {
   return (
-    <div className={css.container}>
+    <>
       <AppBar />
-      <main>
+      <main className={css.container}>
         <Outlet />
       </main>
-    </div>
+    </>
   );
 };
 
