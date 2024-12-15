@@ -12,7 +12,7 @@ export const waterAddSchema = Joi.object({
     'number.max': 'The amount of water cannot exceed 5,000 ml.',
     'number.empty': '"amount" field is required.',
   }),
-  currentDailyNorm: Joi.number().integer().min(500).messages({
+  currentDailyNorm: Joi.number().integer().default(2000).min(500).messages({
     'number.base': '"currentDailyNorm" must be a number.',
     'number.min': 'The daily norm must be at least 1 ml.',
   }),
@@ -30,7 +30,7 @@ export const waterUpdateSchema = Joi.object({
     'number.max': 'The amount of water cannot exceed 5,000 ml.',
     'number.empty': '"amount" field is required.',
   }),
-  currentDailyNorm: Joi.number().integer().min(500).messages({
+  currentDailyNorm: Joi.number().integer().default(2000).min(500).messages({
     'number.base': '"currentDailyNorm" must be a number.',
     'number.min': 'The daily norm must be at least 1 ml.',
   }),
