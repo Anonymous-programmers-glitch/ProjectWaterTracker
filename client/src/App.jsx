@@ -4,10 +4,10 @@ import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
+import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 // import PrivateRoute from "./PrivateRoute.jsx";
 // import RestrictedRoute from "./RestrictedRoute.jsx";
-
 
 // const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 // const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
@@ -15,8 +15,6 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 // const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
 
 function App() {
-
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -30,14 +28,13 @@ function App() {
 
         <Route path="/registration" element={<h1>Registion Page</h1>} />
         {/* <Route path="/registration" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<RegisterPage />}/>} /> */}
-        
+
         <Route path="/homepage" element={<HomePage />} />
       </Route>
-      
+      <Route path="/success" element={<SuccessPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
 
 export default App;
-
