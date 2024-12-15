@@ -1,6 +1,8 @@
 post:
   summary: Send a password reset email
   description: Sends a password reset email to the user with a reset link.
+  tags:
+    - Auth
   operationId: requestResetEmail
   security:
     - bearerAuth: []

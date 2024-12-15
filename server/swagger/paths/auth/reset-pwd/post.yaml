@@ -1,6 +1,8 @@
 post:
   summary: Reset user password
   description: Allows the user to reset their password using a valid reset token.
+  tags:
+    - Auth
   operationId: resetPassword
   security:
     - bearerAuth: []

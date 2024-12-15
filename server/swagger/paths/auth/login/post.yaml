@@ -2,7 +2,7 @@ post:
   summary: User login
   description: Authenticate a user and return an access token.
   tags:
-    - Authentication
+    - Auth
   operationId: loginUser
   security:
     - bearerAuth: []
