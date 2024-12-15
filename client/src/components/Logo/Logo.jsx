@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LogoIcon from "../ui/icons/LogoIcon";
-import { useState } from "react";
 import css from "./Logo.module.css";
+import { selectIsLoggedIn } from "../../redux/auth/authSlice";
 
 const Logo = () => {
-  // const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const { isLoggedIn, setisLoggedIn } = useState(true);
-
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const targetRoute = isLoggedIn ? "/home" : "/welcome";
 
   return (
