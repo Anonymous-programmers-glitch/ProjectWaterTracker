@@ -54,7 +54,7 @@ post:
                     example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
     '400':
       $ref: ../../../components/responses/400.yaml
-    '401':
-      $ref: ../../../components/responses/401.yaml
+    '409':
+      $ref: ../../../components/responses/409.yaml
     '500':
       $ref: ../../../components/responses/500.yaml

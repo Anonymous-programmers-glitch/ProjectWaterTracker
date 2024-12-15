@@ -35,13 +35,14 @@ properties:
     enum:
       - woman
       - man
+      - other
     default: 'woman'
     example: 'woman'
   daylyNorm:
     description: "User's daily norm value"
     type: number
-    default: 1500
-    example: 1500
+    default: 2000
+    example: 2000
   avatarUrl:
     description: "URL of the user's avatar image"
     type: string

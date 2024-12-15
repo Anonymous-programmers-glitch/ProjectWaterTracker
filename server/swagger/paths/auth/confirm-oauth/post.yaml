@@ -1,7 +1,10 @@
 post:
   summary: Confirm Google OAuth and Log In or Sign Up
   description: Confirms the Google OAuth code and either logs in or signs up the user based on the code received from Google.
+  tags:
+    - Auth
   operationId: loginWithGoogleOAuth
+  security: []
   requestBody:
     required: true
     content:
@@ -37,4 +40,3 @@ post:
       $ref: ../../../components/responses/401.yaml
     '500':
       $ref: ../../../components/responses/500.yaml
-  security: []

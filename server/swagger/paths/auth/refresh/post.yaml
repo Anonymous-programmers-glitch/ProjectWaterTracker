@@ -1,6 +1,8 @@
 post:
   summary: Refresh user session
   description: Refreshes the user's session using the refresh token.
+  tags:
+    - Auth
   operationId: refreshUserSession
   security:
     - bearerAuth: []
