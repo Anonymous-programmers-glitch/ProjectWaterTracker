@@ -1,0 +1,46 @@
+.userAuthBtn {
+  width: auto;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 4px;
+  color: #407BFF;
+  /* color: var(--primery-color-blue); */
+  transition: color 300ms ease;
+}
+
+.userAuthBtn:hover,
+.userAuthBtn:focus {
+  color: #FF9D43;
+  /* color: var(--secondary-color-5); */
+}
+
+.userAuthBtnText {
+  min-width: 48px;
+  height: 20px;
+  font-family: "Roboto", sans-serif;
+  /* font-family: var(--font-family); */
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  text-align: right;
+  flex-shrink: 0;
+  padding: 2px 0;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .userAuthBtnText {
+    min-width: 54px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+}

@@ -1,0 +1,46 @@
+.modal {
+  position: absolute;
+  /* z-index: 10000; */
+  width: 118px;
+  height: 88px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.2);
+  background: #fff;
+  /* background: var(--primery-color-white); */
+}
+
+.modalBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  color: #407BFF;
+  transition: color 300ms ease;
+}
+
+.modalBtn:hover,
+.modalBtn:focus {
+  color: #FF9D43;
+  /* color: var(--secondary-color-5); */
+}
+
+.modalText {
+  font-family: "Roboto", sans-serif;
+  /* font-family: var(--font-family); */
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

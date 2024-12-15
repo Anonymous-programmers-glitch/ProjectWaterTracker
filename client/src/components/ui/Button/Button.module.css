@@ -1,0 +1,93 @@
+.button {
+  border: none;
+  border-radius: 10px;
+  height: 36px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: var(--primery-color-blue);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: var(--primery-color-white);
+}
+
+.button:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.button:active {
+  box-shadow: none;
+}
+.trytracker,
+.SignIn,
+.SignUp {
+  padding: 8px 30px;
+  width: 280px;
+}
+
+.AddWater {
+  width: 280px;
+  padding: 6px 76px;
+}
+
+.Save {
+  padding: 8px 30px;
+  width: 256px;
+}
+
+.LogOut,
+.Delete {
+  padding: 8px 30px;
+  width: 232px;
+  background: var(--secondary-color-3);
+}
+.Cancel {
+  padding: 8px 30px;
+  width: 232px;
+  background: var(--secondary-color---5);
+  color: var(--primery-color-blue);
+  box-shadow: none;
+}
+.Cancel:hover {
+  box-shadow: none;
+}
+
+@media screen and (min-width: 768px) {
+  .button {
+    height: 44px;
+    font-size: 18px;
+    line-height: 133%;
+  }
+
+  .TryTracker,
+  .SignIn,
+  .SignUp {
+    padding: 10px 30px;
+    width: 336px;
+  }
+  .AddWater {
+    padding: 10px 104px;
+    width: 336px;
+  }
+  .Save {
+    width: 160px;
+    padding: 10px 30px;
+  }
+  .LogOut,
+  .Cancel,
+  .Delete {
+    padding: 10px 30px;
+    width: 160px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .TryTracker,
+  .SignIn,
+  .SignUp {
+    width: 384px;
+  }
+  .AddWater {
+    width: 178px;
+    padding: 10px 30px;
+  }
+}
