@@ -13,6 +13,7 @@ import { selectWaterToday } from "../../redux/waterToday/waterTodayslice.js";
 import { dataMonth } from "../../tempData/homepagetempdata.js";
 import css from "./homepage.module.css";
 
+
 function HomePage() {
   const [newData, setNewData] = useState([]);
   const dataToday = useSelector(selectWaterToday);
@@ -90,6 +91,7 @@ function HomePage() {
             <WaterListIItemMonth key={item.id} item={item} />
           ))}
         </WaterListMonth>
+
       </div>
     </section>
   );

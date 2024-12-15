@@ -1,0 +1,119 @@
+.modalContent{
+  
+    
+   
+    transform: scale(0);
+    transform: 0.5s;
+    
+
+}
+.modalContent.active{
+    transform: scale(1);
+
+    
+}
+
+
+.modal{
+ 
+
+    
+
+    z-index: 1;
+    width: 592px;
+    height: 712px;
+    border: 2px;
+    border-radius: 2%;
+    background-color: #FFFFFF;
+    padding: 32px 24px 32px 24px;
+    border: 1px solid black;
+
+   
+}
+
+.cover{
+    display:flex;
+    margin-top: 20px;
+}
+
+.text1{
+    font-size: 26px;
+    margin-top: 32px;
+   
+}
+.formula{
+    font-size: 18px;
+    color: #407BFF;
+    padding-right: 10px;
+
+}
+
+.for{
+    padding-right: 5px;
+}
+
+.modalDescr{
+    margin-top: 20px;
+    height: 65px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font-size: 12px;
+    color: #8F8F8F;
+    border: 1px solid #D7E3FF;
+    border-radius: 5px;
+}
+
+.textRadioBtn{
+    margin-top: 20px;
+    font-size: 18px;
+}
+.labelInput{
+    margin-top: 20px;
+}
+
+
+.text{
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.modalInput{
+    width: 544px;
+    height: 44px;
+    margin-top: 10px;
+    border: 1px solid #D7E3FF;
+    border-radius: 5px;
+}
+.modalInput:focus{
+    border: 1px solid #407BFF;
+}
+
+.submitBtn{
+    margin-top: 20px;
+    width: 160px;
+    height: 44px;
+    border-radius: 5px;
+    background: #407BFF;
+    color: #FFFFFF;
+    font-size: 18px;
+    float: right;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.3s ease-in-out;
+    
+}
+
+.submitBtn:hover{
+    background: #0040cb;
+}
+
+.closeBtn{
+    font-size: 30px;
+    
+    position: absolute;
+    top: 50px;
+    right: 20px;
+
+    
+color: #407BFF;
+}

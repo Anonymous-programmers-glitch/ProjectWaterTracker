@@ -13,6 +13,7 @@ const AppBar = () => {
       {/* {isLoggedIn ? <UserLogo /> : <UserAuth />} */}
       <UserLogo />
       <UserAuth />
+  
     </header>
   );
 };
