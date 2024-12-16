@@ -10,7 +10,7 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/', ctrlWrapper(waterControllers.getAllWaterController));
+// router.get('/', ctrlWrapper(waterControllers.getAllWaterController));
 
 router.get(
   '/day/:date',
