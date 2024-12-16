@@ -1,6 +1,7 @@
 .background {
   position: absolute;
   background-image: url("../../assets/homepage/backgroundmobilehome.svg");
+  background-color: var(--primery-color-white);
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
