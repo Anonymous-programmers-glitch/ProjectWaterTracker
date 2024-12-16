@@ -14,7 +14,7 @@ const userSchema = new Schema(
       required: false,
       min: 50,
       max: 5000,
-      default: '2000',
+      default: 2000,
     },
     avatarUrl: { type: String, required: false, default: null },
   },
