@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { signup } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
 import css from "./signUpForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
@@ -35,12 +35,12 @@ export default function SignUpForm() {
 
   const handleSubmit = (values, actions) => {
     console.log(values);
-    dispatch(signUp(values));
+    dispatch(signup(values));
     actions.resetForm();
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeOutline size={size} />,
+    <EyeOutline size={size} />
   );
   const [inputType, setInputType] = useState("password");
 
@@ -122,7 +122,7 @@ export default function SignUpForm() {
             <button type="submit" className={css.btn}>
               Sign Up
             </button>
-            <NavLink to="/login" className={css.link}>
+            <NavLink to="/signin" className={css.link}>
               <p>Sign in</p>
             </NavLink>
           </Form>
