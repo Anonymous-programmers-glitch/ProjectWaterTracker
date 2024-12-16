@@ -1,4 +1,4 @@
-function toggleOff({ size = "24" }) {
+function ToggleOff({ size = "24" }) {
   return (
     <svg
       height={size}
@@ -14,4 +14,4 @@ function toggleOff({ size = "24" }) {
   );
 }
 
-export default toggleOff;
+export default ToggleOff;

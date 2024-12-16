@@ -1,4 +1,4 @@
-function onSun({ size = "24" }) {
+function OnSun({ size = "24" }) {
   return (
     <svg
       height={size}
@@ -15,4 +15,4 @@ function onSun({ size = "24" }) {
   );
 }
 
-export default onSun;
+export default OnSun;
