@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
@@ -8,12 +8,13 @@ import XMarkOutline from "../ui/icons/xMarkOutline";
 import GlassOfWater from "../ui/icons/GlassOfWater";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
+import Inputs from "../ui/Inputs/Inputs";
 import css from "./TodayListModal.module.css";
 
 const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
   // Состояние для хранения количества воды
   const [waterAmount, setWaterAmount] = useState(initialData?.amount || 0);
-
+  
   // Состояние для хранения времени
   const [time, setTime] = useState(
     initialData?.time || dayjs().format("HH:mm")
@@ -98,20 +99,19 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
             initialValues={{ manualAmount: waterAmount, manualTime: time }}
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue, handleBlur }) => (
+            {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
                   <p>
-                    {mode === "add"
-                      ? "Choose a value:"
-                      : "Correct entered data:"}
+                    {mode === "add" ? "Choose a value:" : "Correct entered data:"}
                   </p>
                 </div>
 
                 <div className={css.formGroupWater}>
                   <label className={css.labelWater}>Amount of water:</label>
                   <div className={css.amountButtons}>
-                    <button className={css.buttonWater}
+                    <button
+                      className={css.buttonWater}
                       type="button"
                       onClick={() => handleAmountChange(-50, setFieldValue)}
                     >
@@ -131,17 +131,19 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualTime" className={css.label}>Recording time:</label>
-                  <Field
-                    as="input"
+                  <label htmlFor="manualTime" className={css.label}>
+                    Recording time:
+                  </label>
+                  <Inputs
+                    className={css.customInput}
                     type="time"
                     name="manualTime"
+                    placeholder="HH:mm"
                     value={values.manualTime}
                     onChange={(e) => {
                       setFieldValue("manualTime", e.target.value);
                       setTime(e.target.value);
                     }}
-                    onBlur={handleBlur}
                   />
                 </div>
 
@@ -149,9 +151,11 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                   <label htmlFor="manualAmount" className={css.labelWater}>
                     Enter the value of the water used:
                   </label>
-                  <Field
-                    name="manualAmount"
+                  <Inputs
+                    className={css.customInput}
                     type="number"
+                    name="manualAmount"
+                    placeholder="Enter amount"
                     step="50"
                     value={values.manualAmount}
                     onChange={(e) => {
@@ -191,3 +195,4 @@ TodayListModal.defaultProps = {
 };
 
 export default TodayListModal;
+
