@@ -45,7 +45,7 @@ get:
                         type: string
                         enum: [woman, man, other]
                         example: 'woman'
-                      daylyNorm:
+                      dailyNorm:
                         type: integer
                         example: 2000
                       avatarUrl:

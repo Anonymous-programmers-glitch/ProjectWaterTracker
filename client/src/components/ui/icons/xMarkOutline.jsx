@@ -1,4 +1,4 @@
-function xMarkOutline({ size = "24" }) {
+function XMarkOutline({ size = "24" }) {
   return (
     <svg
       width={size}
@@ -18,4 +18,4 @@ function xMarkOutline({ size = "24" }) {
   );
 }
 
-export default xMarkOutline;
+export default XMarkOutline;

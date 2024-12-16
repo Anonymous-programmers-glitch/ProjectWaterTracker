@@ -37,7 +37,7 @@ patch:
               enum: [woman, man, other]
               default: 'woman'
               example: 'woman'
-            daylyNorm:
+            dailyNorm:
               type: integer
               minimum: 50
               maximum: 5000
