@@ -53,10 +53,10 @@ export const loginUserController = async (req, res) => {
     data: {
       user: {
         id: user._id,
+        name: user.name,
         email: user.email,
-        verify: user.verify,
         gender: user.gender,
-        dailyNorm: user.daylyNorm,
+        dailyNorma: user.dailyNorma,
         avatarUrl: user.avatarUrl,
       },
       accessToken: session.accessToken,
