@@ -10,7 +10,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  * After successful registration, you will need to go through verification. An email with a link has been sent to the email address you provided during registration.
  */
 export const signup = createAsyncThunk(
-  "auth/SignUp",
+  "auth/signup",
   async (credentials, thunkAPI) => {
     try {
       const { user } = (await axios.post("/auth/register", credentials)).data;
