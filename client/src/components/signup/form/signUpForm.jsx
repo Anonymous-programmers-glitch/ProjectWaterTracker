@@ -18,8 +18,9 @@ export default function SignUpForm() {
   const SignUpSchema = Yup.object().shape({
     email: Yup.string().email().required(),
     password: Yup.string()
-      .required()
-      .min(6, "Password is too short - should be 6 chars minimum."),
+      .required("Please confirm your password")
+      .min(8, "Password is too short - should be 6 chars minimum.")
+      .max(64, "Password is too long - should be 64 chars maximum."),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -34,8 +35,9 @@ export default function SignUpForm() {
   const repeatPasswordId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    dispatch(signup(values));
+    const { email, password } = values;
+
+    dispatch(signup({ email, password }));
     actions.resetForm();
   };
 

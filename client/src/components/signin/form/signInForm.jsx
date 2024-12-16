@@ -18,7 +18,8 @@ export default function SignInForm() {
     email: Yup.string().email().required(),
     password: Yup.string()
       .required()
-      .min(6, "Password is too short - should be 6 chars minimum."),
+      .min(8, "Password is too short - should be 6 chars minimum.")
+      .max(64, "Password is too long - should be 64 chars maximum."),
   });
   const dispatch = useDispatch();
 
