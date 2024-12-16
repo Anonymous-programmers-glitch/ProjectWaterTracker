@@ -85,7 +85,11 @@ button:active {
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
+  background-color: var(--primery-color-white);
+
 }
+
+
 
 :root.light {
   --primery-color-white: #fff;
@@ -108,3 +112,4 @@ body {
   --secondary-color-5: #ffa756;
   --secondary-color---5: #2a3052;
 }
+
