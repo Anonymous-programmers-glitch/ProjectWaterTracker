@@ -2,25 +2,26 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
-import user from "../../testUser.json";
+// import user from "../../testUser.json";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import {
   closeLogoModal,
   openLogoModal,
   selectLogoModal,
   selectLogoutModal,
-  // selectSettingModal,
+  selectSettingModal,
 } from "../../redux/modal/modalSlice";
 
 import css from "./UserLogo.module.css";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
+import Settings from "../Settings/Settings";
 import { selectUser } from "../../redux/auth/authSlice";
 
 const UserLogo = () => {
   const buttonRef = useRef(null);
   const dispatch = useDispatch();
   const isLogoModalOpen = useSelector(selectLogoModal);
-  // const isSettingModalOpen = useSelector(selectSettingModal);
+  const isSettingModalOpen = useSelector(selectSettingModal);
   const isLogoutModalOpen = useSelector(selectLogoutModal);
   const toggleModal = () => {
     if (isLogoModalOpen) {
@@ -59,7 +60,7 @@ const UserLogo = () => {
 
       {isLogoModalOpen && <UserLogoModal targetRef={buttonRef} />}
 
-      {/* { isSettingModalOpen&&<SettingModal />} */}
+      {isSettingModalOpen && <Settings />}
       {isLogoutModalOpen && <UserLogoutModal />}
     </>
   );
