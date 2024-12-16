@@ -1,4 +1,4 @@
-import { upsertUserNormHistory } from '../services/userNormHistory';
+import { upsertUserNormHistory } from '../services/userNormHistory.js';
 
 export const userNormHistoryController = async (req, res, next) => {
   const { _id: userId } = req.user;

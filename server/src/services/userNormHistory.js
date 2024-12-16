@@ -1,4 +1,4 @@
-import { userNormHistoryCollection } from '../db/models/userNormHistory';
+import { userNormHistoryCollection } from '../db/models/userNormHistory.js';
 
 export const upsertUserNormHistory = async (userId, payload, options = {}) => {
   const date = new Date().toISOString().split('T')[0];

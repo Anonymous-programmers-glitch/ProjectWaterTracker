@@ -7,7 +7,7 @@ import { userNormaHistorySchema } from '../validation/userNormaHistory.js';
 const router = Router();
 
 router.put(
-  '/userNormHistory',
+  '/',
   ctrlWrapper(userNormHistoryController),
   validateBody(userNormaHistorySchema),
 );

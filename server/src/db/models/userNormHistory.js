@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { handleSaveError, setUpdateSettings } from './hooks';
+import { handleSaveError, setUpdateSettings } from './hooks.js';
 
 const userNormHistorySchema = new Schema(
   {
@@ -12,7 +12,7 @@ const userNormHistorySchema = new Schema(
       ref: 'user',
       required: true,
     },
-    dailyNorm: {
+    dailyNorma: {
       type: Number,
       default: 2000,
     },
