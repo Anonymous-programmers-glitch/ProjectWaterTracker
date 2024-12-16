@@ -1,5 +1,5 @@
 import "./App.css";
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
@@ -8,6 +8,8 @@ import SignUpPage from "./pages/SignUp/SignUp.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
+import { useDispatch } from "react-redux";
+import { refreshUser } from "./redux/auth/operations.js";
 // import PrivateRoute from "./PrivateRoute.jsx";
 // import RestrictedRoute from "./RestrictedRoute.jsx";
 
@@ -17,6 +19,12 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 // const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
