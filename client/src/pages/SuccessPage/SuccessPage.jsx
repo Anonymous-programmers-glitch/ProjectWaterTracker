@@ -6,7 +6,7 @@ const SuccessPage = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/login");
+      navigate("/signin");
     }, 5000);
 
     return () => clearTimeout(timer);

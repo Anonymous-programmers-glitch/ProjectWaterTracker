@@ -87,7 +87,7 @@ body {
   font-weight: 400;
 }
 
-:root {
+:root.light {
   --primery-color-white: #fff;
   --primery-color-black: #2f2f2f;
   --primery-color-blue: #407bff;
@@ -96,12 +96,15 @@ body {
   --secondary-color-4: #9ebbff;
   --secondary-color-5: #ff9d43;
   --secondary-color---5: #d7e3ff;
-  --color: #fff;
-  --color-2: #2f2f2f;
-  --color-3: #407bff;
-  --color-4: #ecf2ff;
-  --color-5: #ef5050;
-  --color-6: #9ebbff;
-  --color-7: #ff9d43;
-  --color-8: #d7e3ff;
+}
+
+:root.dark {
+  --primery-color-white: #1c1d26;
+  --primery-color-black: #d5dff5;
+  --primery-color-blue: #5082f2;
+  --secondary-color-2: #1f2438;
+  --secondary-color-3: #f16161;
+  --secondary-color-4: #2f3875;
+  --secondary-color-5: #ffa756;
+  --secondary-color---5: #2a3052;
 }

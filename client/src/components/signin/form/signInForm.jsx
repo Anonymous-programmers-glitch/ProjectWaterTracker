@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-// import { signIn } from "../../../redux/auth/operations.js";
+import { login } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
 import css from "./signInForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
@@ -18,7 +18,8 @@ export default function SignInForm() {
     email: Yup.string().email().required(),
     password: Yup.string()
       .required()
-      .min(6, "Password is too short - should be 6 chars minimum."),
+      .min(8, "Password is too short - should be 6 chars minimum.")
+      .max(64, "Password is too long - should be 64 chars maximum."),
   });
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ export default function SignInForm() {
 
   const handleSubmit = (values, actions) => {
     console.log(values);
-    dispatch(signIn(values));
+    dispatch(login(values));
     actions.resetForm();
   };
 
@@ -96,7 +97,7 @@ export default function SignInForm() {
             <button type="submit" className={css.btn}>
               Sign In
             </button>
-            <NavLink to="/registration" className={css.link}>
+            <NavLink to="/signup" className={css.link}>
               <p>Sign up</p>
             </NavLink>
           </Form>

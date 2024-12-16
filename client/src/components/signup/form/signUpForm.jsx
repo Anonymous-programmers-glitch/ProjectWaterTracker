@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signUp } from "../../../redux/auth/operations.js";
+import { signup } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
 import css from "./signUpForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
@@ -18,8 +18,9 @@ export default function SignUpForm() {
   const SignUpSchema = Yup.object().shape({
     email: Yup.string().email().required(),
     password: Yup.string()
-      .required()
-      .min(6, "Password is too short - should be 6 chars minimum."),
+      .required("Please confirm your password")
+      .min(8, "Password is too short - should be 6 chars minimum.")
+      .max(64, "Password is too long - should be 64 chars maximum."),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -34,8 +35,9 @@ export default function SignUpForm() {
   const repeatPasswordId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    dispatch(signUp(values));
+    const { email, password } = values;
+
+    dispatch(signup({ email, password }));
     actions.resetForm();
   };
 
@@ -122,7 +124,7 @@ export default function SignUpForm() {
             <button type="submit" className={css.btn}>
               Sign Up
             </button>
-            <NavLink to="/login" className={css.link}>
+            <NavLink to="/signin" className={css.link}>
               <p>Sign in</p>
             </NavLink>
           </Form>
