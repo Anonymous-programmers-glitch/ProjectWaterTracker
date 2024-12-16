@@ -22,14 +22,15 @@ const persistedWaterTodayReducer = persistReducer(
     key: "water-today",
     storage,
   },
-  waterTodayReducer
+  waterTodayReducer,
 );
+
 const persistedThemeReducer = persistReducer(
   {
     key: "theme",
     storage,
   },
-  themeReducer
+  themeReducer,
 );
 
 export const store = configureStore({
@@ -41,6 +42,7 @@ export const store = configureStore({
     modal: modalReducer,
     theme: persistedThemeReducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
