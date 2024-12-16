@@ -15,6 +15,7 @@ import waterTodayReducer from "./waterToday/waterTodayslice.js";
 import userReducer from "./userSlice";
 import modalReducer from "./modal/modalSlice.js";
 import authReducer from "./auth/authSlice.js";
+import themeReducer from "./themeSlice/themeSlice.jsx";
 
 const persistedWaterTodayReducer = persistReducer(
   {
@@ -22,6 +23,13 @@ const persistedWaterTodayReducer = persistReducer(
     storage,
   },
   waterTodayReducer
+);
+const persistedThemeReducer = persistReducer(
+  {
+    key: "theme",
+    storage,
+  },
+  themeReducer
 );
 
 export const store = configureStore({
@@ -31,6 +39,7 @@ export const store = configureStore({
     changeMonth: changeMonthReducer,
     user: userReducer,
     modal: modalReducer,
+    theme: persistedThemeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -18,36 +18,36 @@
   box-shadow: none;
 }
 .trytracker,
-.SignIn,
-.SignUp {
+.signin,
+.signup {
   padding: 8px 30px;
   width: 280px;
 }
 
-.AddWater {
+.addwater {
   width: 280px;
   padding: 6px 76px;
 }
 
-.Save {
+.save {
   padding: 8px 30px;
   width: 256px;
 }
 
-.LogOut,
-.Delete {
+.logout,
+.delete {
   padding: 8px 30px;
   width: 232px;
   background: var(--secondary-color-3);
 }
-.Cancel {
+.cancel {
   padding: 8px 30px;
   width: 232px;
   background: var(--secondary-color---5);
   color: var(--primery-color-blue);
   box-shadow: none;
 }
-.Cancel:hover {
+.cancel:hover {
   box-shadow: none;
 }
 
@@ -58,35 +58,35 @@
     line-height: 133%;
   }
 
-  .TryTracker,
-  .SignIn,
-  .SignUp {
+  .trytracker,
+  .signin,
+  .signup {
     padding: 10px 30px;
     width: 336px;
   }
-  .AddWater {
+  .addwater {
     padding: 10px 104px;
     width: 336px;
   }
-  .Save {
+  .save {
     width: 160px;
     padding: 10px 30px;
   }
-  .LogOut,
-  .Cancel,
-  .Delete {
+  .logout,
+  .cancel,
+  .delete {
     padding: 10px 30px;
     width: 160px;
   }
 }
 
 @media screen and (min-width: 1440px) {
-  .TryTracker,
-  .SignIn,
-  .SignUp {
+  .trytracker,
+  .signin,
+  .signup {
     width: 384px;
   }
-  .AddWater {
+  .addwater {
     width: 178px;
     padding: 10px 30px;
   }
