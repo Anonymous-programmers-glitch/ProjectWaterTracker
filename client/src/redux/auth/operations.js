@@ -18,7 +18,7 @@ export const signup = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );
 
 /*
@@ -36,7 +36,7 @@ export const verifyUser = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );
 
 /*
@@ -55,7 +55,7 @@ export const login = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );
 
 /*
@@ -84,13 +84,13 @@ export const refreshUser = createAsyncThunk(
       const response = (
         await axios.post("/auth/refresh", null, { withCredentials: true })
       ).data;
-
+      console.log("response :>> ", response);
       setAuthHeader(response.data.accessToken);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );
 
 // // Операція запиту на скидання паролю
