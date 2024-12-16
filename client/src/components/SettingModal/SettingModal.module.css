@@ -48,6 +48,10 @@
   border-radius: 50px;
 }
 
+.uploadSvg {
+  stroke: var(--primery-color-blue);
+}
+
 .buttonUpload {
   display: flex;
   gap: 8px;
@@ -113,7 +117,7 @@
 }
 
 .eyeIcon {
-  color: var(--primery-color-blue);
+  stroke: var(--primery-color-blue);
   position: absolute;
   top: 40px;
   right: 16px;
