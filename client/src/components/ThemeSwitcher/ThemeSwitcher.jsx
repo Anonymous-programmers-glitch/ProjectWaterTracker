@@ -9,6 +9,7 @@ const ThemeSwitcher = () => {
 
   useEffect(() => {
     const rootElement = document.documentElement;
+
     rootElement.className = theme;
   }, [theme]);
 

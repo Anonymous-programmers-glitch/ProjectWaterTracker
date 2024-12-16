@@ -3,6 +3,8 @@ import { lazy } from "react";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
+import SignInPage from "./pages/SignIn/SignIn.jsx";
+import SignUpPage from "./pages/SignUp/SignUp.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
@@ -23,10 +25,10 @@ function App() {
         <Route path="/welcome" element={<WelcomePage />} />
         {/* <Route path="/welcome" element={ <PrivateRoute redirectTo="/login" component={<WelcomePage />} /> }/> */}
 
-        <Route path="/login" element={<h1>Login Page</h1>} />
+        <Route path="/signin" element={<SignInPage />} />
         {/* <Route path="/login" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<LoginPage />} />}/> */}
 
-        <Route path="/registration" element={<h1>Registion Page</h1>} />
+        <Route path="/signup" element={<SignUpPage />} />
         {/* <Route path="/registration" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<RegisterPage />}/>} /> */}
 
         <Route path="/homepage" element={<HomePage />} />
