@@ -8,10 +8,8 @@ import SignUpPage from "./pages/SignUp/SignUp.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
-
 import { useDispatch } from "react-redux";
 import { refreshUser } from "./redux/auth/operations.js";
-
 import PrivateRoute from "./PrivateRoute.jsx";
 import RestrictedRoute from "./RestrictedRoute.jsx";
 
@@ -30,7 +28,15 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<WelcomePage />} />
+        <Route
+          index
+          element={
+            <RestrictedRoute
+              redirectTo="/homepage"
+              component={<WelcomePage />}
+            />
+          }
+        />
         <Route path="/welcome" element={<WelcomePage />} />
         <Route
           path="/homepage"
@@ -38,7 +44,6 @@ function App() {
             <PrivateRoute redirectTo="/signin" component={<HomePage />} />
           }
         />
-
         <Route
           path="/signin"
           element={
