@@ -61,7 +61,7 @@ function HomePage() {
         <div className={css.rangeblok}>
           <WaterRange />
           <Button>
-            <div className="btn">
+            <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>
             </div>
