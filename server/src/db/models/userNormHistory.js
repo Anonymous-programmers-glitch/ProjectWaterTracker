@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const userNormHistorySchema = new Schema(
   {
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
     userId: {
@@ -11,7 +11,7 @@ const userNormHistorySchema = new Schema(
       ref: 'user',
       required: true,
     },
-    userDailyNorm: {
+    dailyNorm: {
       type: Number,
       default: 2000,
     },
