@@ -21,6 +21,10 @@ function HomePage() {
   const dataToday = useSelector(selectWaterToday);
   const monthState = useSelector(changeMonthSelector);
 
+  function handleAdd() {
+    console.log("Add");
+  }
+
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
     const countDayofMonth = dayjs(currentMonth).daysInMonth();
@@ -60,7 +64,7 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-          <Button>
+          <Button onClick={handleAdd}>
             <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>
