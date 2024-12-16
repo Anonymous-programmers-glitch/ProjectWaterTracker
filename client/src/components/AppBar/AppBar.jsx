@@ -1,4 +1,5 @@
 import Logo from "../Logo/Logo";
+import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher.jsx";
 import UserLogo from "../UserLogo/UserLogo";
 import UserAuth from "../UserAuth/UserAuth";
 import css from "./AppBar.module.css";
@@ -13,6 +14,7 @@ const AppBar = () => {
       <div className={css.container}>
         <Logo />
         {isLoggedIn ? <UserLogo /> : <UserAuth />}
+        <ThemeSwitcher />
       </div>
     </header>
   );
