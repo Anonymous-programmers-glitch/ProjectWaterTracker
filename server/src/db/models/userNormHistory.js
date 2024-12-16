@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { handleSaveError, setUpdateSettings } from './hooks';
 
 const userNormHistorySchema = new Schema(
   {
@@ -19,6 +20,9 @@ const userNormHistorySchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 
+userNormHistorySchema.post('save', handleSaveError);
+userNormHistorySchema.pre('findOneAndUpdate', setUpdateSettings);
+userNormHistorySchema.post('findOneAndUpdate', handleSaveError);
 export const userNormHistoryCollection = model(
   'userNormHistory',
   userNormHistorySchema,
