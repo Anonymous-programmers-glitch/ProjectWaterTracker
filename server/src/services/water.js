@@ -1,8 +1,8 @@
 import WaterCollection from '../db/models/Water.js';
 
-export const getAllWater = async (userId) => {
-  return await WaterCollection.find({ userId });
-};
+// export const getAllWater = async (userId) => {
+//   return await WaterCollection.find({ userId });
+// };
 
 export const getWaterByDate = async (startOfDay, endOfDay, userId) => {
   return await WaterCollection.find({

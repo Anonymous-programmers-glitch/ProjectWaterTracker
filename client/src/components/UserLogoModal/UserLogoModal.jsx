@@ -7,7 +7,7 @@ import ArrowRightOnRectangle from "../ui/icons/ArrowRightOnRectangle";
 import {
   closeLogoModal,
   openLogoutModal,
-  // openSettingModal,
+  openSettingModal,
   selectLogoModal,
 } from "../../redux/modal/modalSlice";
 
@@ -47,7 +47,7 @@ const UserLogoModal = ({ targetRef }) => {
       }}
     >
       <button
-        // onClick={() => dispatch(openSettingModal())}
+        onClick={() => dispatch(openSettingModal())}
         className={css.modalBtn}
       >
         <div className={css.icon}>
