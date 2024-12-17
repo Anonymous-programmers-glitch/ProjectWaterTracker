@@ -1,20 +1,20 @@
 import { useEffect, useCallback } from "react";
 // import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../redux/userSlice";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import "./UserLogoutModal.css";
+import "./UserLogoutModal.module.css";
 import {
   closeLogoutModal,
   selectLogoutModal,
 } from "../../redux/modal/modalSlice";
+import { logout } from "../../redux/auth/operations";
 
 const UserLogoutModal = () => {
   const dispatch = useDispatch();
   const isLogoutModalOpen = useSelector(selectLogoutModal);
 
   const handleLogout = () => {
-    dispatch(logoutUser())
+    dispatch(logout())
       .unwrap()
       .then(() => dispatch(closeLogoutModal()))
       .catch((error) => {
@@ -28,7 +28,7 @@ const UserLogoutModal = () => {
         dispatch(closeLogoutModal());
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {
