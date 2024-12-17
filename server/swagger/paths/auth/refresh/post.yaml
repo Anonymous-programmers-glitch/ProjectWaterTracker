@@ -1,27 +1,11 @@
 post:
   summary: Refresh user session
-  description: Refreshes the user's session using the refresh token.
+  description: Refreshes the user's session using the refresh token from cookies.
   tags:
     - Auth
   operationId: refreshUserSession
   security:
     - bearerAuth: []
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            sessionId:
-              type: string
-              description: The session ID of the user.
-            refreshToken:
-              type: string
-              description: The refresh token to refresh the session.
-          required:
-            - sessionId
-            - refreshToken
   responses:
     '200':
       description: Successfully refreshed session

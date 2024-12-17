@@ -2,6 +2,7 @@ import css from "./waterrange.module.css";
 
 function WaterRange() {
   const value = 50;
+
   return (
     <div className={css.slidercontainer}>
       <p className={css.slidertitle}>Today</p>
