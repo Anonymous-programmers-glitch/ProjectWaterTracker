@@ -1,88 +1,165 @@
-import { useState } from "react";
-import css from './MyDailyNorma.module.css'
+// import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import css from "./MyDailyNorma.module.css";
+import { useEffect, useState } from "react";
 
-const MyDailyNorma = ({active, setActive}) => {
+const DailySchema = Yup.object().shape({
+  weightInKg: Yup.number()
+    .min(2, "Enter your weight in kilograms")
+    .max(200, "Too long, max 200 numbers")
+    .required("This field is required"),
+  loadInHours: Yup.number()
+    .min(1, "Enter your time of active")
+    .max(100, "Too long, max 100 numbers")
+    .required("This field is required"),
+  waterYouDrink: Yup.number()
+    .min(1, "Enter how much water you will drink")
+    .max(100, "Too long, max 100 numbers")
+    .required("This field is required"),
+  option: Yup.string()
+    .oneOf(["For woman", "For man"])
+    .required("This field is required"),
+});
 
-// send form
-    const [formData, setFormData] = useState({
-        weightInKg: '',
-        loadInHours: '',
-        waterYouDrink: '',
-    });
+const MyDailyNorma = ({ active, setActive }) => {
 
-// radio btn
-    const [checked, setChecked] = useState();
+    const [norma, setNorma] = useState("");
+    const [norma2, setNorma2] = useState("");
+    const [result, setResult] = useState("");
+    const [isWoman, setIsWoman] = useState(true);
 
-
-    const handleChange = (e) => {
-        setChecked(e.target.value);
-      const {name, value} = e.target;
-      setFormData((prevData)=>({
-        ...prevData, [name]:value,
-      }));
-    };
-
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-
-        console.log('form:', formData, checked);
-        
+    // for woman
+useEffect(() => {
+    if ( isWoman ) {
+      setResult((norma * 0.03) + (norma2 * 0.04));
     }
+  }, [norma, norma2, isWoman]);
 
-    return (
-        <form className={active ? css.modalContent.active : css.modalContent} onSubmit={handleSubmit} onClick={ () => setActive(false)}>
-        <div className={css.modal}>
-            <div className={css.modalSubmit}  onClick={e=>e.stopPropagation()}>
-                <h1 className={css.text1}>My daily norma</h1>
-                <button className={css.closeBtn} onClick={() => setActive(false)}>&times;</button>
-                <div className={css.cover}>
-                <h2 className={css.for}>For girl: </h2>
-                <h3 className={css.formula}> V=(M*0,03) + (T*0,4)</h3>
-                <h4 className={css.for}>For man:</h4>
-                <h5 className={css.formula}>V=(M*0,04) + (T*0,6)</h5>
-                </div>
-                <div className={css.modalDescr}>
-                * V is the volume of the water norm in liters per day, M is your body weight, T is the time of active sports, or another type of activity commensurate in terms of loads (in the absence of these, you must set 0)
-                </div>
-                <p className={css.textRadioBtn}>Calculate your rate:</p>
-                
-        <label>
-          <input
-          className={css.labelInput}
-          type="radio"
-          value="option1"
-          name="option"
-          checked={checked === "For wonam"}
-          onChange={()=> setChecked("For wonam")}
+    // for man
+useEffect(() => {
+        if ( !isWoman ) {
+          setResult((norma * 0.04) + (norma2 * 0.06));
+        }
+      }, [norma, norma2, isWoman]);
+
+
+  return (
+    <Formik
+      initialValues={{
+        weightInKg: "",
+        loadInHours: "",
+        waterYouDrink: "",
+        option: "For woman",
+      }}
+      validationSchema={DailySchema}
+      onSubmit={(values, action) => {
+        console.log(values);
+        action.resetForm();
+      }}
+    >
+      <Form
+        className={active ? css.modal.active : css.modal}
+        onClick={() => setActive(false)}
+      >
+        <div className={css.modalContent} onClick={e => e.stopPropagation()}>
+          <h2 className={css.text1}>My daily norma</h2>
+          <button className={css.closeBtn} onClick={() => setActive(false)}>
+            &times;
+          </button>
+          <div className={css.cover}>
+            <p className={css.for}>
+              For girl:{" "}
+              <span className={css.formula}>V=(M*0,03) + (T*0,4)</span>{" "}
+            </p>
+            <p className={css.for}>
+              For man: <span className={css.formula}>V=(M*0,04) + (T*0,6)</span>
+            </p>
+          </div>
+          <p className={css.modalDescr}>
+            * V is the volume of the water norm in liters per day, M is your
+            body weight, T is the time of active sports, or another type of
+            activity commensurate in terms of loads (in the absence of these,
+            you must set 0)
+          </p>
+          <p className={css.textRadioBtn}>Calculate your rate:</p>
+
+          <label className={css.labels}>
+            <Field type="radio" name="option" value="woman" checked={isWoman === true} id="For woman" onChange={() => setIsWoman(true)} />
+            <ErrorMessage
+              component="span"
+              className={css.error}
+              name="option"
+            />
+            <span className={css.span}>For woman</span>
+          </label>
+
+          <label className={css.labels}>
+            <Field type="radio" name="option" value="man" checked={isWoman === false} id="For man" onChange={() => setIsWoman(false)} />
+            <ErrorMessage
+              name="option"
+              component="span"
+              className={css.error}
+            />
+            <span className={css.span}>For man</span>
+          </label>
+
+          <p className={css.text}>Your weight in kilograms:</p>
+          <Field
+            className={css.modalInput}
+            type="number"
+            name="weightInKg"
+            placeholder="0"
+            value={norma}
+            onChange={e => setNorma(e.target.value)}
           />
-        For woman
-        </label>
-
-        <label>
-          <input
-          className={css.labelInput}
-          type="radio"
-          value="option2"
-          name="option"
-          checked={checked === "For man"}
-          onChange={()=> setChecked("For man")}
+          <ErrorMessage
+            name="weightInKg"
+            component="span"
+            className={css.error}
           />
-        For man
-        </label>
+          <p className={css.text}>
+            The time of active participation in sports or other activities with
+            a high physical. load in hours:
+          </p>
+          <Field
+            className={css.modalInput}
+            type="number"
+            name="loadInHours"
+            placeholder="0"
+            value={norma2}
+            onChange={e => setNorma2(e.target.value)}
+          />
+          <ErrorMessage
+            name="loadInHours"
+            component="span"
+            className={css.error}
+          />
+          <p className={css.text}>
+            The required amount of water in liters per day:
+          </p>
+          <p className="textRadioBtn">
+            Write down how much water you will drink:{result}L
+          </p>
+          <Field
+            className={css.modalInput}
+            type="number"
+            name="waterYouDrink"
+            placeholder="0"
+          />
+          <ErrorMessage
+            name="waterYouDrink"
+            component="span"
+            className={css.error}
+          />
 
-        <p className={css.text}>Your weight in kilograms:</p>
-        <input className={css.modalInput} value={formData.weightInKg} onChange={handleChange} placeholder="0" name="weightInKg" />
-        <p className={css.text}>The time of active participation in sports or other activities with a high physical. load in hours:</p>
-        <input className={css.modalInput} value={formData.loadInHours} onChange={handleChange} placeholder="0" name="loadInHours" />
-        <p className={css.text}>The required amount of water in liters per day:</p>
-        <p className="textRadioBtn">Write down how much water you will drink:</p>
-        <input className={css.modalInput} value={formData.waterYouDrink} onChange={handleChange} placeholder="0" name="waterYouDrink" />
-
-        <button className={css.submitBtn} type="submit">Save</button>
-    </div>
-    </div>
-    </form>
-    );
+          <button className={css.submitBtn} type="submit">
+            Save
+          </button>
+        </div>
+      </Form>
+    </Formik>
+  );
 };
 
 export default MyDailyNorma;

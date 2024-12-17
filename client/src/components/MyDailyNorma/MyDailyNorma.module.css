@@ -1,34 +1,52 @@
-.modalContent{
-  
-    
-   
-    transform: scale(0);
-    transform: 0.5s;
-    
-
-}
-.modalContent.active{
-    transform: scale(1);
-
-    
-}
-
-
 .modal{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.5s;
+
+}
+
+.modal.active{
+    opacity: 1;
+    pointer-events: all;
  
 
-    
+}
 
-    z-index: 1;
+.modalContent{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
     width: 592px;
     height: 712px;
-    border: 2px;
-    border-radius: 2%;
-    background-color: #FFFFFF;
-    padding: 32px 24px 32px 24px;
-    border: 1px solid black;
+    padding-top: 32px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 32px;
+    border-radius: 10px;
+    gap: 24px;
+    background-color: rgb(250, 250, 250);
 
-   
+}
+
+
+.text1{
+    font-size: 26px;
+    margin-top: 32px;
 }
 
 .cover{
@@ -36,11 +54,6 @@
     margin-top: 20px;
 }
 
-.text1{
-    font-size: 26px;
-    margin-top: 32px;
-   
-}
 .formula{
     font-size: 18px;
     color: #407BFF;
@@ -49,7 +62,24 @@
 }
 
 .for{
-    padding-right: 5px;
+    padding-right: 10px;
+}
+
+.labelInput{
+    margin-top: 20px;
+}
+.labels{
+    padding-right: 20px;
+}
+
+.span{
+    padding-left: 10px;
+}
+
+.textRadioBtn{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
 }
 
 .modalDescr{
@@ -63,15 +93,6 @@
     border: 1px solid #D7E3FF;
     border-radius: 5px;
 }
-
-.textRadioBtn{
-    margin-top: 20px;
-    font-size: 18px;
-}
-.labelInput{
-    margin-top: 20px;
-}
-
 
 .text{
     font-size: 16px;
@@ -107,13 +128,6 @@
     background: #0040cb;
 }
 
-.closeBtn{
-    font-size: 30px;
-    
-    position: absolute;
-    top: 50px;
-    right: 20px;
-
-    
-color: #407BFF;
+.error{
+    color: red;
 }

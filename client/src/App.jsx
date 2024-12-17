@@ -1,11 +1,13 @@
 import "./App.css";
-import { lazy } from "react";
+import { lazy, useState } from "react";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
-import MyDailyNorma from "./components/MyDailyNorma/MyDailyNorma.jsx";
+// import MyDailyNorma from "./components/MyDailyNorma/MyDailyNorma.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
+
+
 // import PrivateRoute from "./PrivateRoute.jsx";
 // import RestrictedRoute from "./RestrictedRoute.jsx";
 
@@ -16,7 +18,7 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 // const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
 
 function App() {
-
+// const [modalActive, setModalActive] = useState();
 
 
   return (
@@ -28,7 +30,7 @@ function App() {
 
         <Route path="/welcome" element={<WelcomePage />} />
         {/* <Route path="/welcome" element={ <PrivateRoute redirectTo="/login" component={<WelcomePage />} /> }/> */}
-
+        
         <Route path="/login" element={<h1>Login Page</h1>} />
         {/* <Route path="/login" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<LoginPage />} />}/> */}
 
@@ -42,8 +44,8 @@ function App() {
     </Routes>
     
      {/* Semple button for open modal myDailyNorma */}
-   <button className="open-btn" onClick={()=> setModalActive(true)}>Open modal</button>
-   <MyDailyNorma active={modalActive} setActive={setModalActive}/> 
+   {/* <button  className="open-btn" onClick={()=> setModalActive(true)}>Open modal</button>
+   <MyDailyNorma active={modalActive} setActive={setModalActive}/>  */}
 
 </>
   );
