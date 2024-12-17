@@ -26,7 +26,7 @@ function App() {
   }, [dispatch]);
 
   return (
- <Routes>
+    <Routes>
       <Route path="/" element={<Layout />}>
         <Route
           index
@@ -49,12 +49,12 @@ function App() {
           element={
             <RestrictedRoute
               redirectTo="/homepage"
-              component={<SignInPage />}
+              component={<SigninPage />}
             />
           }
         />
 
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route path="/success" element={<SuccessPage />} />
       <Route path="*" element={<NotFoundPage />} />
