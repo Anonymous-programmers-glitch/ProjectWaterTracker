@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import SigninPage from "./pages/SigninPage/SigninPage.jsx";
 import SignupPage from "./pages/SignupPage/SignupPage.jsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
@@ -58,6 +59,7 @@ function App() {
       </Route>
       <Route path="/success" element={<SuccessPage />} />
       <Route path="*" element={<NotFoundPage />} />
+          <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
     </Routes>
   );
 }
