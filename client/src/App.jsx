@@ -1,6 +1,7 @@
 import "./App.css";
 import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
+import SuspenseFallback from "./components/SuspenseFallback/SuspenseFallback.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
@@ -27,7 +28,7 @@ function App() {
       <Route
         path="/"
         element={
-          <Suspense fallback={<>Load</>}>
+          <Suspense fallback={<SuspenseFallback />}>
             <Layout />
           </Suspense>
         }
@@ -35,7 +36,7 @@ function App() {
         <Route
           index
           element={
-            <Suspense fallback={<>Load</>}>
+            <Suspense fallback={<SuspenseFallback />}>
               <RestrictedRoute
                 redirectTo="/homepage"
                 component={<WelcomePage />}
