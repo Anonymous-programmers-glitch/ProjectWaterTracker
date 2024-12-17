@@ -5,7 +5,7 @@ import { handleSaveError, setUpdateSettings } from './hooks.js';
 const waterSchema = new Schema(
   {
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     amount: {
