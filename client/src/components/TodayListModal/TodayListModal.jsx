@@ -135,7 +135,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                     Recording time:
                   </label>
                   <Inputs
-                    className={css.customInput}
+                    className={css.customField}
                     type="time"
                     name="manualTime"
                     placeholder="HH:mm"
@@ -152,7 +152,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                     Enter the value of the water used:
                   </label>
                   <Inputs
-                    className={css.customInput}
+                    className={css.customField}
                     type="number"
                     name="manualAmount"
                     placeholder="Enter amount"
