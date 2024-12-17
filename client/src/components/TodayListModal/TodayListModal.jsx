@@ -12,32 +12,14 @@ import Inputs from "../ui/Inputs/Inputs";
 import css from "./TodayListModal.module.css";
 
 const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
-  // Состояние для хранения количества воды
-  const [waterAmount, setWaterAmount] = useState(initialData?.amount || 0);
-  
-  // Состояние для хранения времени
-  const [time, setTime] = useState(
-    initialData?.time || dayjs().format("HH:mm")
-  );
+  const [time, setTime] = useState(initialData?.time || dayjs().format("HH:mm"));
 
-  // Функция для изменения количества воды
-  const handleAmountChange = (delta, setFieldValue) => {
-    const newAmount = Math.max(0, waterAmount + delta); // Ограничиваем минимальное значение нулем
-    setWaterAmount(newAmount);
-    setFieldValue("manualAmount", newAmount); // Обновляем значение в форме
-  };
-
-  // Функция обработки отправки формы
   const handleSubmit = (values) => {
-    // Форматируем время
     const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    // Сохраняем данные
-    onSave({ ...values, amount: waterAmount, time: formattedTime });
-    // Закрываем модальное окно
+    onSave({ ...values, amount: values.manualAmount, time: formattedTime });
     onClose();
   };
 
-  // Обработчик клавиши Escape для закрытия модального окна
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === "Escape") {
@@ -47,7 +29,6 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
     [onClose]
   );
 
-  // Используем useEffect для добавления и удаления слушателя клавиш
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
@@ -62,7 +43,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
       <ModalBackdrop
         onClick={(e) => {
           if (e.target === e.currentTarget) {
-            onClose(); // Закрываем модальное окно при клике вне его
+            onClose();
           }
         }}
       >
@@ -84,7 +65,6 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
             </div>
           </div>
 
-          {/* Если модальное окно в режиме редактирования, показываем данные */}
           {mode === "edit" && initialData && (
             <div className={css.editInfo}>
               <div className={css.watericon}>
@@ -96,14 +76,20 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
           )}
 
           <Formik
-            initialValues={{ manualAmount: waterAmount, manualTime: time }}
+            initialValues={{
+              manualAmount: initialData?.amount || 0,
+              manualTime: time,
+            }}
+            enableReinitialize
             onSubmit={handleSubmit}
           >
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
                   <p>
-                    {mode === "add" ? "Choose a value:" : "Correct entered data:"}
+                    {mode === "add"
+                      ? "Choose a value:"
+                      : "Correct entered data:"}
                   </p>
                 </div>
 
@@ -113,17 +99,23 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                     <button
                       className={css.buttonWater}
                       type="button"
-                      onClick={() => handleAmountChange(-50, setFieldValue)}
+                      onClick={() =>
+                        setFieldValue(
+                          "manualAmount",
+                          Math.max(0, values.manualAmount - 50)
+                        )
+                      }
                     >
                       <MinusSmall />
                     </button>
                     <span className={css.amountTotalWater}>
-                      {waterAmount} ml
+                      {values.manualAmount} ml
                     </span>
-
                     <button
                       type="button"
-                      onClick={() => handleAmountChange(50, setFieldValue)}
+                      onClick={() =>
+                        setFieldValue("manualAmount", values.manualAmount + 50)
+                      }
                     >
                       <PlusSmall />
                     </button>
@@ -161,13 +153,14 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
                       setFieldValue("manualAmount", value);
-                      setWaterAmount(value);
                     }}
                   />
                 </div>
 
                 <div className={css.formFooter}>
-                  <span className={css.totalWater}> {waterAmount} ml</span>
+                  <span className={css.totalWater}>
+                    {values.manualAmount} ml
+                  </span>
                   <Button type="submit">Save</Button>
                 </div>
               </Form>
@@ -195,4 +188,3 @@ TodayListModal.defaultProps = {
 };
 
 export default TodayListModal;
-

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "../../components/HomePage/datePicker/DatePicker.jsx";
 import WaterListIItemToday from "../../components/HomePage/waterListItemToday/WaterListIItemToday.jsx";
 import Bottle from "../../components/HomePage/bottle.jsx";
@@ -12,27 +12,47 @@ import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
-import { selectWaterToday } from "../../redux/waterToday/waterTodayslice.js";
+import { selectWaterToday, addWater } from "../../redux/waterToday/waterTodayslice.js";
 import { dataMonth } from "../../tempData/homepagetempdata.js";
-import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
+import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
 import css from "./homepage.module.css";
 
 function HomePage() {
+  const dispatch = useDispatch();
   const [newData, setNewData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const dataToday = useSelector(selectWaterToday);
   const monthState = useSelector(changeMonthSelector);
+
+  // Открытие и закрытие модального окна
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // Обработчик сохранения данных из модального окна
   const handleSaveWaterData = (data) => {
-    console.log("Saved water data:", data);
-    // Здесь можно добавить логику для обновления состояния или сохранения данных
+    // Форматируем дату
+    const formattedDate = dayjs(data.date || new Date()).format("YYYY-MM-DD");
+
+    if (!dayjs(formattedDate).isValid()) {
+      console.error("Invalid date format:", data.date);
+      return;
+    }
+
+    // Добавляем данные в Redux
+    dispatch(
+      addWater({
+        id: Math.random().toString(36).substr(2, 9), // Генерация уникального ID
+        date: formattedDate,
+        amount: data.amount || 0, // Объем воды в миллилитрах
+      })
+    );
+
+    // Закрываем модалку
     closeModal();
   };
 
-
+  // Переформирование данных для текущего месяца
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
     const countDayofMonth = dayjs(currentMonth).daysInMonth();
@@ -56,6 +76,7 @@ function HomePage() {
     return newData;
   }
 
+  // Обновляем данные для месяца при изменении месяца
   useEffect(() => {
     setNewData(reorderData(dataMonth, monthState));
   }, [monthState]);
@@ -72,9 +93,7 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-
           <Button onClick={openModal}> {/* Кнопка открытия модального окна */}
-
             <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>
@@ -118,3 +137,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

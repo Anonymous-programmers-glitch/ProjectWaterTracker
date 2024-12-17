@@ -23,3 +23,4 @@ const slice = createSlice({
 export const { addWater, deleteWater } = slice.actions;
 
 export default slice.reducer;
+
