@@ -2,7 +2,7 @@ import { useEffect, useCallback } from "react";
 // import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import "./UserLogoutModal.css";
+import "./UserLogoutModal.module.css";
 import {
   closeLogoutModal,
   selectLogoutModal,
@@ -28,7 +28,7 @@ const UserLogoutModal = () => {
         dispatch(closeLogoutModal());
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {

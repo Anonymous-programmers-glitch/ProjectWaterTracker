@@ -14,12 +14,24 @@ import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { selectWaterToday } from "../../redux/waterToday/waterTodayslice.js";
 import { dataMonth } from "../../tempData/homepagetempdata.js";
+import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
 import css from "./homepage.module.css";
 
 function HomePage() {
   const [newData, setNewData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
   const dataToday = useSelector(selectWaterToday);
   const monthState = useSelector(changeMonthSelector);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  // Обработчик сохранения данных из модального окна
+  const handleSaveWaterData = (data) => {
+    console.log("Saved water data:", data);
+    // Здесь можно добавить логику для обновления состояния или сохранения данных
+    closeModal();
+  };
+
 
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
@@ -28,7 +40,7 @@ function HomePage() {
     for (let i = 1; i <= countDayofMonth; i++) {
       currentDay[0] = i;
       const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-"),
+        (data) => data.date === currentDay.join("-")
       );
 
       if (isDay) {
@@ -60,7 +72,9 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-          <Button>
+
+          <Button onClick={openModal}> {/* Кнопка открытия модального окна */}
+
             <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>
@@ -91,6 +105,14 @@ function HomePage() {
           ))}
         </WaterListMonth>
       </div>
+
+      {/* Модальное окно */}
+      <TodayListModal
+        isOpen={isModalOpen}
+        mode="add"
+        onSave={handleSaveWaterData} // Передаем функцию сохранения
+        onClose={closeModal} // Передаем функцию закрытия
+      />
     </section>
   );
 }
