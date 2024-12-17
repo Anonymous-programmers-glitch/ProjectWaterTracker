@@ -1,35 +1,42 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../../redux/auth/operations.js";
+//import { signup } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
-import css from "./signInForm.module.css";
-import EyeOutline from "../../ui/icons/EyeOutline.jsx";
-import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
+import Input from "../ui/Inputs/Inputs.jsx";
+import Button from "../ui/Button/Button.jsx";
+import css from "./AuthForm.module.css";
+import EyeOutline from "../ui/icons/EyeOutline.jsx";
+import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
 
 const initialValues = {
   email: "",
   password: "",
+  repeatPassword: "",
 };
 
-export default function SignInForm() {
-  const SignInSchema = Yup.object().shape({
-    email: Yup.string().email().required(),
+export default function AuthForm() {
+  const ForgotSchema = Yup.object().shape({
     password: Yup.string()
-      .required()
-      .min(8, "Password is too short - should be 6 chars minimum.")
+      .required("Please confirm your password")
+      .min(8, "Password is too short - should be 8 chars minimum.")
       .max(64, "Password is too long - should be 64 chars maximum."),
+    repeatPassword: Yup.string()
+      .required("Please confirm your password")
+      .oneOf([Yup.ref("password")], "Password must match"),
   });
+
   const dispatch = useDispatch();
 
   const size = "24";
 
-  const signinId = useId();
   const passwordId = useId();
+  const repeatPasswordId = useId();
 
   const handleSubmit = (values, actions) => {
-    dispatch(login(values));
+    const { password } = values;
+
+    //dispatch(signup({ password }));
     actions.resetForm();
   };
 
@@ -52,53 +59,40 @@ export default function SignInForm() {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={SignInSchema}
+      validationSchema={ForgotSchema}
     >
       {() => {
         return (
           <Form autoComplete="off" className={css.wrapper}>
-            <h3 className={css.h3}>Sign In</h3>
-            <label className={css.label} htmlFor={signinId}>
-              Enter your email
-              <Field
-                type="email"
-                name="email"
-                className={css.input}
-                placeholder="E-mail"
-                id={signinId}
-              />
-              <ErrorMessage
-                name="email"
-                component="span"
-                className={css.errorEmail}
-              />
-            </label>
             <label className={css.label} htmlFor={passwordId}>
-              Enter your password
+              Enter a new password
               <div className={css.psw}>
-                <Field
+                <Input
                   type={inputType}
                   name="password"
                   placeholder="Password"
                   id={passwordId}
-                  className={css.field}
                 />
                 <span className={css.icon} onClick={togglePasswordVisibility}>
                   {passwordVisible}
                 </span>
               </div>
-              <ErrorMessage
-                name="password"
-                component="span"
-                className={css.errorPswrd}
-              />
             </label>
-            <button type="submit" className={css.btn}>
-              Sign In
-            </button>
-            <NavLink to="/signup" className={css.link}>
-              <p>Sign up</p>
-            </NavLink>
+            <label className={css.label} htmlFor={repeatPasswordId}>
+              Repeat new password
+              <div className={css.psw}>
+                <Input
+                  type={inputType}
+                  name="repeatPassword"
+                  placeholder="Repeat password"
+                  id={repeatPasswordId}
+                />
+                <span className={css.icon} onClick={togglePasswordVisibility}>
+                  {passwordVisible}
+                </span>
+              </div>
+            </label>
+            <Button cssstyle="signup">Create new password</Button>
           </Form>
         );
       }}

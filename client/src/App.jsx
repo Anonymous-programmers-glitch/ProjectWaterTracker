@@ -1,11 +1,8 @@
 import "./App.css";
-import { lazy, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
-import HomePage from "./pages/HomePage/HomePage.jsx";
-import Layout from "./components/layout/Layout.jsx";
-import SignInPage from "./pages/SignIn/SignIn.jsx";
-import SignUpPage from "./pages/SignUp/SignUp.jsx";
-import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
+import SuspenseFallback from "./components/SuspenseFallback/SuspenseFallback.jsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,10 +11,11 @@ import PrivateRoute from "./PrivateRoute.jsx";
 import RestrictedRoute from "./RestrictedRoute.jsx";
 import { selectIsRefreshing } from "./redux/auth/selectors.js";
 
-// const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
-// const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
-// const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-// const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
+const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
+const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
+const SigninPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
+const SignupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
+const Layout = lazy(() => import("./components/layout/Layout.jsx"));
 
 function App() {
   const dispatch = useDispatch();
@@ -31,17 +29,33 @@ function App() {
     <b>Please wait, updating user info...</b>
   ) : (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route
+        path="/"
+        element={
+          <Suspense fallback={<SuspenseFallback />}>
+            <Layout />
+          </Suspense>
+        }
+      >
         <Route
           index
           element={
-            <RestrictedRoute
-              redirectTo="/homepage"
-              component={<WelcomePage />}
-            />
+            <Suspense fallback={<SuspenseFallback />}>
+              <RestrictedRoute
+                redirectTo="/homepage"
+                component={<WelcomePage />}
+              />
+            </Suspense>
           }
         />
-        <Route path="/welcome" element={<WelcomePage />} />
+        <Route
+          path="/welcome"
+          element={
+            <Suspense fallback={<>Load</>}>
+              <WelcomePage />
+            </Suspense>
+          }
+        />
         <Route
           path="/homepage"
           element={
@@ -53,15 +67,16 @@ function App() {
           element={
             <RestrictedRoute
               redirectTo="/homepage"
-              component={<SignInPage />}
+              component={<SigninPage />}
             />
           }
         />
 
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route path="/success" element={<SuccessPage />} />
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
     </Routes>
   );
 }
