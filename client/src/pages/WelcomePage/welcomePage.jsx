@@ -6,8 +6,11 @@ import {
 import WhyDrinkWaterList from "../../components/WelcomePage/WhyDrinkWaterList/WhyDrinkWaterList.jsx";
 import css from "./welcomePage.module.css";
 import Button from "../../components/ui/Button/Button.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function WelcomePage() {
+  const navigateTo = useNavigate();
+  const handleRedirect = () => navigateTo("/signup");
   return (
     <section className={css.welcomePage}>
       <div className={css.background}></div>
@@ -17,7 +20,9 @@ export default function WelcomePage() {
           <p className={css.subTitle}>Record daily water intake and track</p>
         </div>
         <TrackerBenefitsList data={trackerBennefits} />
-        <Button cssstyle="trytracker">Try tracker</Button>
+        <Button onClick={handleRedirect} cssstyle="trytracker">
+          Try tracker
+        </Button>
       </div>
       <WhyDrinkWaterList data={whyDrinkWater} />
     </section>

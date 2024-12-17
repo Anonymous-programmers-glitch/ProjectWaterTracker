@@ -6,6 +6,15 @@
   justify-content: center;
   gap: 8px;
   padding: 0 4px;
+  color: #407BFF;
+  /* color: var(--primery-color-blue); */
+  transition: color 300ms ease;
+}
+
+.userAuthBtn:hover,
+.userAuthBtn:focus {
+  color: #FF9D43;
+  /* color: var(--secondary-color-5); */
 }
 
 .userAuthBtnText {
@@ -16,16 +25,9 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
-  color: #407BFF;
-  /* color: var(--primery-color-blue); */
+  text-align: right;
   flex-shrink: 0;
   padding: 2px 0;
-}
-
-.userAuthBtnText:hover,
-.userAuthBtnText:focus {
-  color: #FF9D43;
-  /* color: var(--secondary-color-5); */
 }
 
 .icon {

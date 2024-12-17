@@ -10,7 +10,7 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/', ctrlWrapper(waterControllers.getAllWaterController));
+// router.get('/', ctrlWrapper(waterControllers.getAllWaterController));
 
 router.get(
   '/day/:date',
@@ -34,6 +34,11 @@ router.delete(
   '/:id',
   isValidId,
   ctrlWrapper(waterControllers.deleteWaterController),
+);
+
+router.get(
+  '/:month/:year',
+  ctrlWrapper(waterControllers.getWaterByMonthController),
 );
 
 export default router;

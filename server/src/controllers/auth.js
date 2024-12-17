@@ -30,22 +30,20 @@ export const signupUserController = async (req, res) => {
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: user,
+    data: { user: { email: user.email } },
   });
 };
 
 export const verifyUserController = async (req, res) => {
   const { token } = req.query;
+
   await verifyUser(token);
 
-  res.json({
-    status: 200,
-    message: 'User verified successfully!',
-  });
+  res.redirect('http://localhost:5173/success');
 };
 
 export const loginUserController = async (req, res) => {
-  const session = await login(req.body);
+  const { user, session } = await login(req.body);
 
   setupSession(res, session);
 
@@ -53,6 +51,14 @@ export const loginUserController = async (req, res) => {
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        gender: user.gender,
+        dailyNorma: user.dailyNorma,
+        avatarUrl: user.avatarUrl,
+      },
       accessToken: session.accessToken,
     },
   });

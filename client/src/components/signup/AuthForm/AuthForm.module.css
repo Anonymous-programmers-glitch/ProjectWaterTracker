@@ -1,0 +1,137 @@
+.wrapper {
+  width: 280px;
+  height: 396px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  text-align: left;
+  justify-content: space-between;
+}
+
+.h3 {
+  height: 24px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 26px;
+}
+
+.label {
+  height: 76px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  text-align: left;
+  justify-content: space-between;
+  color: var(--primery-color-black);
+}
+
+.psw {
+  border: 1px solid var(--secondary-color-4);
+  border-radius: 6px;
+  width: 280px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.field {
+  color: var(--primery-color-blue);
+}
+
+.field:invalid {
+  color: var(--secondary-color-3);
+}
+
+.field::placeholder {
+  color: var(--secondary-color-4);
+}
+
+.icon {
+  stroke: var(--primery-color-blue);
+}
+
+.input {
+  border: 1px solid var(--secondary-color-4);
+  border-radius: 6px;
+  color: var(--primery-color-blue);
+  width: 280px;
+  height: 44px;
+  padding: 10px;
+}
+
+.input::placeholder {
+  color: var(--secondary-color-4);
+}
+
+.input:invalid {
+  color: var(--secondary-color-3);
+  border: 1px solid var(--secondary-color-3);
+}
+
+/*.btn {
+  background-color: #407bff;
+  color: white;
+  border-radius: 6px;
+  width: 280px;
+  height: 36px;
+}*/
+
+.link {
+  height: 20px;
+  color: var(--primery-color-blue);
+}
+
+.link:hover {
+  color: var(--secondary-color-5);
+}
+
+.errorEmail,
+.errorPswrd,
+.errorRepeatPswrd {
+  color: var(--secondary-color-3);
+}
+
+/*____________________ TABLET _______________________*/
+
+@media screen and (min-width: 768px) and (max-width: 1439.9px) {
+  .wrapper {
+    width: 336px;
+    height: 312px;
+  }
+
+  .h3 {
+    height: 32px;
+  }
+  .psw {
+    width: 336px;
+  }
+  .input {
+    width: 336px;
+  }
+  .btn {
+    width: 336px;
+    height: 44px;
+  }
+}
+
+/*____________________ DESKTOP _______________________*/
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    width: 384px;
+  }
+  .psw {
+    width: 384px;
+  }
+  .input {
+    width: 384px;
+  }
+  .btn {
+    width: 384px;
+    height: 44px;
+  }
+}

@@ -35,7 +35,7 @@
         "tags": [
           "Auth"
         ],
-        "operationId": "registerUser",
+        "operationId": "signupUser",
         "security": [
           {
             "bearerAuth": []
@@ -61,6 +61,8 @@
                   "password": {
                     "description": "User's password.",
                     "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64,
                     "example": "P@ssword123"
                   }
                 }
@@ -69,8 +71,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Successfully logged in user.",
+          "201": {
+            "description": "Successfully registered a user.",
             "content": {
               "application/json": {
                 "schema": {
@@ -83,22 +85,30 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 201
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully logged in user!"
+                      "example": "Successfully registered a user!"
                     },
                     "data": {
                       "type": "object",
                       "required": [
-                        "accessToken"
+                        "user"
                       ],
                       "properties": {
-                        "accessToken": {
-                          "type": "string",
-                          "description": "Access token for user authentication.",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "email"
+                          ],
+                          "properties": {
+                            "email": {
+                              "type": "string",
+                              "description": "User's email.",
+                              "example": "johndoe@mail.com"
+                            }
+                          }
                         }
                       }
                     }
@@ -122,7 +132,7 @@
     "/auth/verify": {
       "get": {
         "summary": "Verify user's account",
-        "description": "This endpoint verifies a user account via a token.",
+        "description": "This endpoint verifies a user account via a token and redirects to the success page.",
         "tags": [
           "Auth"
         ],
@@ -142,7 +152,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Account verified successfully.",
+            "description": "Account verified successfully, user is redirected.",
             "content": {
               "application/json": {
                 "schema": {
@@ -158,7 +168,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Account verified successfully!"
+                      "example": "Account verified successfully! User is being redirected."
                     }
                   }
                 }
@@ -183,7 +193,7 @@
     "/auth/login": {
       "post": {
         "summary": "User login",
-        "description": "Authenticate a user and return an access token.",
+        "description": "Authenticate a user and return an access token along with user details.",
         "tags": [
           "Auth"
         ],
@@ -211,6 +221,8 @@
                   },
                   "password": {
                     "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64,
                     "format": "password",
                     "example": "StrongP@ssw0rd"
                   }
@@ -221,7 +233,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully logged in the user.",
+            "description": "Successfully logged in an user.",
             "content": {
               "application/json": {
                 "schema": {
@@ -241,6 +253,40 @@
                         "accessToken": {
                           "type": "string",
                           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "675d7c92d8489ab3f0b3b7ed"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "John Doe"
+                            },
+                            "email": {
+                              "type": "string",
+                              "example": "user@example.com"
+                            },
+                            "gender": {
+                              "type": "string",
+                              "enum": [
+                                "female",
+                                "male"
+                              ],
+                              "default": "female",
+                              "example": "female"
+                            },
+                            "dailyNorma": {
+                              "type": "number",
+                              "example": 2000
+                            },
+                            "avatarUrl": {
+                              "type": "string",
+                              "example": "http://example.com/avatar.jpg"
+                            }
+                          }
                         }
                       }
                     }
@@ -290,7 +336,7 @@
     "/auth/refresh": {
       "post": {
         "summary": "Refresh user session",
-        "description": "Refreshes the user's session using the refresh token.",
+        "description": "Refreshes the user's session using the refresh token from cookies.",
         "tags": [
           "Auth"
         ],
@@ -300,30 +346,6 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "sessionId": {
-                    "type": "string",
-                    "description": "The session ID of the user."
-                  },
-                  "refreshToken": {
-                    "type": "string",
-                    "description": "The refresh token to refresh the session."
-                  }
-                },
-                "required": [
-                  "sessionId",
-                  "refreshToken"
-                ]
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successfully refreshed session",
@@ -682,14 +704,14 @@
                             "gender": {
                               "type": "string",
                               "enum": [
-                                "woman",
-                                "man",
-                                "other"
+                                "female",
+                                "male"
                               ],
-                              "example": "woman"
+                              "default": "female",
+                              "example": "female"
                             },
-                            "daylyNorm": {
-                              "type": "integer",
+                            "dailyNorm": {
+                              "type": "number",
                               "example": 2000
                             },
                             "avatarUrl": {
@@ -763,14 +785,13 @@
                   "gender": {
                     "type": "string",
                     "enum": [
-                      "woman",
-                      "man",
-                      "other"
+                      "female",
+                      "male"
                     ],
-                    "default": "woman",
-                    "example": "woman"
+                    "default": "female",
+                    "example": "female"
                   },
-                  "daylyNorm": {
+                  "dailyNorm": {
                     "type": "integer",
                     "minimum": 50,
                     "maximum": 5000,
@@ -824,14 +845,14 @@
                             "gender": {
                               "type": "string",
                               "enum": [
-                                "woman",
-                                "man",
-                                "other"
+                                "female",
+                                "male"
                               ],
-                              "example": "woman"
+                              "default": "female",
+                              "example": "female"
                             },
-                            "daylyNorm": {
-                              "type": "integer",
+                            "dailyNorm": {
+                              "type": "number",
                               "example": 2000
                             },
                             "avatarUrl": {
@@ -851,6 +872,456 @@
             "$ref": "#/components/responses/400"
           },
           "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/day/{date}/get-water-records-by-day": {
+      "get": {
+        "summary": "Get water records by day",
+        "description": "This endpoint retrieves water records for a given date.",
+        "tags": [
+          "Water"
+        ],
+        "operationId": "getWaterByDate",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "description": "The date for which to retrieve the water records (ISO format YYYY-MM-DD).",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2024-12-16"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the water records for the given date.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found water records by this date."
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "waterRecords",
+                        "recordsCount",
+                        "totalDayWater",
+                        "percentage"
+                      ],
+                      "properties": {
+                        "waterRecords": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "_id",
+                              "userId",
+                              "date",
+                              "amount",
+                              "currentDailyNorm"
+                            ],
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Unique identifier for the water record.",
+                                "example": "64f5b992c4b3f1567e63a179"
+                              },
+                              "userId": {
+                                "type": "string",
+                                "description": "ID of the user who logged the water record.",
+                                "example": "64f5b992c4b3f1567e63a178"
+                              },
+                              "date": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The date and time of the water consumption record.",
+                                "example": "2024-12-16T08:30:00Z"
+                              },
+                              "amount": {
+                                "type": "number",
+                                "description": "The amount of water consumed (in milliliters).",
+                                "example": 300
+                              },
+                              "currentDailyNorm": {
+                                "type": "number",
+                                "description": "The current daily water consumption norm for the user (in milliliters).",
+                                "example": 2000
+                              }
+                            }
+                          }
+                        },
+                        "recordsCount": {
+                          "type": "integer",
+                          "description": "The number of records found for the given date.",
+                          "example": 3
+                        },
+                        "totalDayWater": {
+                          "type": "number",
+                          "description": "The total amount of water consumed for the given date (in milliliters).",
+                          "example": 900
+                        },
+                        "percentage": {
+                          "type": "integer",
+                          "description": "The percentage of the daily water consumption norm met for the given date.",
+                          "example": 45
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "No records found for the given date.",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/post-water-record": {
+      "post": {
+        "summary": "Add water record",
+        "description": "This endpoint creates a new water record for registered user",
+        "tags": [
+          "Water"
+        ],
+        "operationId": "postWaterRecord",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "date",
+                  "amount"
+                ],
+                "properties": {
+                  "date": {
+                    "description": "The date and time of the water consumption record.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-16T08:30:00Z"
+                  },
+                  "amount": {
+                    "description": "The amount of water consumed (in milliliters).",
+                    "type": "number",
+                    "minimum": 50,
+                    "maximum": 5000,
+                    "example": 250
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully added the water record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data",
+                    "accessToken"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully added the water record."
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "_id",
+                        "userId",
+                        "date",
+                        "amount",
+                        "currentDailyNorm"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Unique identifier for the water record.",
+                          "example": "64f5b992c4b3f1567e63a179"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "description": "ID of the user who logged the water record.",
+                          "example": "64f5b992c4b3f1567e63a178"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The date and time of the water consumption record.",
+                          "example": "2024-12-16T08:30:00Z"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "description": "The amount of water consumed (in milliliters).",
+                          "example": 250
+                        },
+                        "currentDailyNorm": {
+                          "type": "number",
+                          "description": "The current daily water consumption norm for the user (in milliliters).",
+                          "example": 2000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/{id}/update-water-record": {
+      "patch": {
+        "summary": "Update water record by ID",
+        "description": "This endpoint updates an existing water record for the user.",
+        "tags": [
+          "Water"
+        ],
+        "operationId": "patchWaterRecord",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the water record to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "64f5b992c4b3f1567e63a179"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "description": "The updated date and time of the water consumption record.",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-12-16T09:00:00Z"
+                  },
+                  "amount": {
+                    "description": "The updated amount of water consumed (in milliliters).",
+                    "type": "number",
+                    "minimum": 50,
+                    "maximum": 5000,
+                    "example": 300
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the water record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the water record."
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "_id",
+                        "userId",
+                        "date",
+                        "amount",
+                        "currentDailyNorm"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Unique identifier for the water record.",
+                          "example": "64f5b992c4b3f1567e63a179"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "description": "ID of the user who logged the water record.",
+                          "example": "64f5b992c4b3f1567e63a178"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The updated date and time of the water consumption record.",
+                          "example": "2024-12-16T09:00:00Z"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "description": "The updated amount of water consumed (in milliliters).",
+                          "example": 300
+                        },
+                        "currentDailyNorm": {
+                          "type": "number",
+                          "description": "The current daily water consumption norm for the user (in milliliters).",
+                          "example": 2000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water record not found.",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/{id}/delete-water-record": {
+      "delete": {
+        "summary": "Delete water record",
+        "description": "This endpoint deletes an existing water record for the user by ID.",
+        "tags": [
+          "Water"
+        ],
+        "operationId": "deleteWaterRecord",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the water record to delete.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "64f5b992c4b3f1567e63a179"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted the water record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully deleted the water record."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "Water record not found.",
             "$ref": "#/components/responses/404"
           },
           "500": {
