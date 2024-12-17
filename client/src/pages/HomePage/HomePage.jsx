@@ -22,8 +22,6 @@ function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
   const dataToday = useSelector(selectWaterToday);
   const monthState = useSelector(changeMonthSelector);
-
-  // Функции для управления модальным окном
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -33,6 +31,7 @@ function HomePage() {
     // Здесь можно добавить логику для обновления состояния или сохранения данных
     closeModal();
   };
+
 
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
@@ -73,7 +72,9 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
+
           <Button onClick={openModal}> {/* Кнопка открытия модального окна */}
+
             <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>

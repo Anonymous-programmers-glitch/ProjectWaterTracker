@@ -28,7 +28,7 @@ const refreshAccessToken = async () => {
   } catch (error) {
     console.error(
       "Failed to refresh token:",
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     throw error;
   }
@@ -59,14 +59,14 @@ axios.interceptors.response.use(
         console.error("Token refresh failed. Redirecting to login.");
 
         // Наприклад, перенаправлення на сторінку логіну
-        window.location.href = "/login";
+        window.location.href = "/signin";
         throw refreshError;
       }
     }
 
     // Якщо це інша помилка, передаємо її далі
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axios;
