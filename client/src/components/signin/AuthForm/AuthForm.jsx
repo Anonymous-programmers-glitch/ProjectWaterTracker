@@ -108,7 +108,7 @@ export default function SignInForm() {
               />
             </label>
             <Button cssstyle="signin">Sign In</Button>
-            <NavLink to="/forgot-password-page" className={css.link}>
+            <NavLink to="/forgotpassword" className={css.link}>
               <p>Forgot password?</p>
             </NavLink>
             <NavLink to="/signup" className={css.link}>
