@@ -34,9 +34,9 @@ patch:
               example: 'StrongPassword123!'
             gender:
               type: string
-              enum: [woman, man, other]
-              default: 'woman'
-              example: 'woman'
+              enum: ['female', 'male']
+              default: 'female'
+              example: 'female'
             dailyNorm:
               type: integer
               minimum: 50
@@ -69,7 +69,7 @@ patch:
                     properties:
                       id:
                         type: string
-                        example: '1234567890abcdef12345678'
+                        example: 1234567890abcdef12345678
                       email:
                         type: string
                         example: 'jane.doe@example.com'
@@ -78,10 +78,11 @@ patch:
                         example: 'Jane Doe'
                       gender:
                         type: string
-                        enum: [woman, man, other]
-                        example: 'woman'
-                      daylyNorm:
-                        type: integer
+                        enum: ['female', 'male']
+                        default: 'female'
+                        example: female
+                      dailyNorm:
+                        type: number
                         example: 2000
                       avatarUrl:
                         type: string
