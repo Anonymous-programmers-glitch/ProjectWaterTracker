@@ -3,8 +3,8 @@ import { lazy, useEffect } from "react";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
-import SignInPage from "./pages/SignIn/SignIn.jsx";
-import SignUpPage from "./pages/SignUp/SignUp.jsx";
+import SigninPage from "./pages/SigninPage/SigninPage.jsx";
+import SignupPage from "./pages/SignupPage/SignupPage.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
@@ -15,8 +15,8 @@ import RestrictedRoute from "./RestrictedRoute.jsx";
 
 // const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 // const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
-// const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-// const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
+// const SigninPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
+// const SignupPage = lazy(() =>import("./pages/SignupPage/SignupPage.jsx"));
 
 function App() {
   const dispatch = useDispatch();
@@ -49,12 +49,12 @@ function App() {
           element={
             <RestrictedRoute
               redirectTo="/homepage"
-              component={<SignInPage />}
+              component={<SigninPage />}
             />
           }
         />
 
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route path="/success" element={<SuccessPage />} />
       <Route path="*" element={<NotFoundPage />} />
