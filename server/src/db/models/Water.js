@@ -5,14 +5,14 @@ import { handleSaveError, setUpdateSettings } from './hooks.js';
 const waterSchema = new Schema(
   {
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
     amount: {
       type: Number,
       required: true,
     },
-    currentDailyNorm: {
+    currentDailyNorma: {
       type: Number,
       default: 2000,
     },
