@@ -22,7 +22,7 @@ const persistedWaterTodayReducer = persistReducer(
     key: "water-today",
     storage,
   },
-  waterTodayReducer,
+  waterTodayReducer
 );
 
 const persistedThemeReducer = persistReducer(
@@ -30,12 +30,20 @@ const persistedThemeReducer = persistReducer(
     key: "theme",
     storage,
   },
-  themeReducer,
+  themeReducer
+);
+const persistedAccessToken = persistReducer(
+  {
+    key: "accessToken",
+    storage,
+    whitelist: ["accessToken"],
+  },
+  authReducer
 );
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth: persistedAccessToken,
     waterToday: persistedWaterTodayReducer,
     changeMonth: changeMonthReducer,
     user: userReducer,

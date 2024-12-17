@@ -41,7 +41,6 @@ export default function SignInForm() {
   const passwordId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
     dispatch(login(values));
     actions.resetForm();
   };

@@ -92,7 +92,7 @@ export const verifyUser = async (token) => {
 };
 
 export const login = async ({ email, password }) => {
-  const user = await UserCollection.findOne({ email });
+  const user = await findUser({ email });
   if (!user) {
     throw createHttpError(401, 'Email or password invalid!');
   }

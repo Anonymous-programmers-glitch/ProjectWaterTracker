@@ -45,3 +45,22 @@ export const updateUserController = async (req, res, next) => {
     next(error);
   }
 };
+
+export const currentUserController = async (req, res, next) => {
+  const user = req.user;
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged in an user!',
+    data: {
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        gender: user.gender,
+        dailyNorma: user.dailyNorma,
+        avatarUrl: user.avatarUrl,
+      },
+    },
+  });
+};
