@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import SigninPage from "./pages/SigninPage/SigninPage.jsx";
 import SignupPage from "./pages/SignupPage/SignupPage.jsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
@@ -32,6 +33,7 @@ function App() {
         {/* <Route path="/registration" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<RegisterPage />}/>} /> */}
 
         <Route path="/homepage" element={<HomePage />} />
+        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
       </Route>
       <Route path="/success" element={<SuccessPage />} />
       <Route path="*" element={<NotFoundPage />} />
