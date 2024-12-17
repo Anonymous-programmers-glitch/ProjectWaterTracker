@@ -33,17 +33,17 @@ paths:
     $ref: '../swagger/paths/auth/get-oauth-url/get.yaml'
   /auth/confirm-oauth:
     $ref: '../swagger/paths/auth/confirm-oauth/post.yaml'
-  /user/{id}:
+  /user/{id}/get-user-info:
     $ref: '../swagger/paths/user/{id}/get.yaml'
-  /user/{id}:
+  /user/{id}/update-user:
     $ref: '../swagger/paths/user/{id}/patch.yaml'
-  /water/day/{date}:
+  /water/day/{date}/get-water-records-by-day:
     $ref: '../swagger/paths/water/{date}/get.yaml'
-  /water:
+  /water/post-water-record:
     $ref: '../swagger/paths/water/post.yaml'
-  /water/{id}:
+  /water/{id}/update-water-record:
     $ref: '../swagger/paths/water/{id}/patch.yaml'
-  /water/{id}:
+  /water/{id}/delete-water-record:
     $ref: '../swagger/paths/water/{id}/delete.yaml'
 
 components:
