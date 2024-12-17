@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice/themeSlice";
-import Button from "../ui/Button/Button";
+import TextButton from "../ui/TextButton/TextButton";
+import OnMoon from "../ui/icons/onMoon";
+import OnSun from "../ui/icons/onSun";
 
 const ThemeSwitcher = () => {
   const theme = useSelector((state) => state.theme.theme || "light");
@@ -17,9 +19,9 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <Button
+    <TextButton
       onClick={handleToggle}
-      children={theme === "light" ? "Dark Theme" : "Light Theme"}
+      children={theme === "light" ? <OnMoon /> : <OnSun />}
     />
   );
 };
