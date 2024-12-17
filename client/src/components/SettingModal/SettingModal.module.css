@@ -56,6 +56,11 @@
   display: flex;
   gap: 8px;
   color: #407bff;
+  position: relative;
+}
+
+.uploadPhotoInput {
+  display: none;
 }
 
 .wrapperTwoBlocks {
