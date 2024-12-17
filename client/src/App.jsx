@@ -8,10 +8,11 @@ import SignUpPage from "./pages/SignUp/SignUp.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "./redux/auth/operations.js";
 import PrivateRoute from "./PrivateRoute.jsx";
 import RestrictedRoute from "./RestrictedRoute.jsx";
+import { selectIsRefreshing } from "./redux/auth/selectors.js";
 
 // const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 // const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
@@ -20,12 +21,15 @@ import RestrictedRoute from "./RestrictedRoute.jsx";
 
 function App() {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    <b>Please wait, updating user info...</b>
+  ) : (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route

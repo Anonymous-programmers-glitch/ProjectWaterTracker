@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, logout, refreshUser, signup, verifyUser } from "./operations";
-import { clearAuthHeader, setAuthHeader } from "../../api/operationsAPI";
+import { login, logout, refreshUser, signup } from "./operations";
 
 const initialState = {
   user: null,
-  accessToken: localStorage.getItem("accessToken") || null,
+  accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
   isLoading: false,
@@ -14,19 +13,7 @@ const initialState = {
 const slice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setAccessToken: (state, action) => {
-      state.accessToken = action.payload;
-      setAuthHeader(action.payload);
-    },
-    clearAuth: (state) => {
-      state.user = null;
-      state.accessToken = null;
-      state.isLoggedIn = false;
-      clearAuthHeader();
-      localStorage.removeItem("accessToken");
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(signup.pending, (state) => {
@@ -41,19 +28,7 @@ const slice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-    builder
-      .addCase(verifyUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(verifyUser.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isLoggedIn = true;
-      })
-      .addCase(verifyUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
+
     builder
       .addCase(login.pending, (state) => {
         state.isLoading = true;
@@ -64,8 +39,6 @@ const slice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
-        setAuthHeader(action.payload.accessToken);
-        localStorage.setItem("accessToken", action.payload.accessToken);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -78,8 +51,6 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(logout.fulfilled, () => {
-        clearAuthHeader();
-        localStorage.removeItem("accessToken");
         return initialState;
       })
       .addCase(logout.rejected, (state, action) => {
@@ -93,11 +64,9 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
         state.isRefreshing = false;
         state.isLoggedIn = true;
-        state.accessToken = action.payload.accessToken;
-        setAuthHeader(action.payload.accessToken);
-        localStorage.setItem("accessToken", action.payload.accessToken);
       })
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
@@ -111,13 +80,5 @@ const slice = createSlice({
 //   );
 // },
 // });
-export const { setAccessToken, clearAuth } = slice.actions;
-
-export const selectUser = (state) => state.auth.user;
-export const selectLoading = (state) => state.auth.isLoading;
-export const selectError = (state) => state.auth.error;
-export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
-export const selectIsRefreshing = (state) => state.auth.isRefreshing;
-export const selectAccessToken = (state) => state.auth.accessToken;
 
 export default slice.reducer;

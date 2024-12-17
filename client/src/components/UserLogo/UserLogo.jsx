@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
-// import user from "../../testUser.json";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import {
   closeLogoModal,
@@ -15,7 +14,7 @@ import {
 import css from "./UserLogo.module.css";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
 import Settings from "../Settings/Settings";
-import { selectUser } from "../../redux/auth/authSlice";
+import { selectUser } from "../../redux/auth/selectors";
 
 const UserLogo = () => {
   const buttonRef = useRef(null);
@@ -34,7 +33,7 @@ const UserLogo = () => {
   const user = useSelector(selectUser);
   if (!user) return null;
 
-  const userName = user.name ?? "Guest";
+  const userName = user.name ?? user.email;
 
   const avatarContent = user.avatar ? (
     <img
