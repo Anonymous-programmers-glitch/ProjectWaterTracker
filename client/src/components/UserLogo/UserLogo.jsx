@@ -14,7 +14,7 @@ import {
 
 import css from "./UserLogo.module.css";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
-import Settings from "../Settings/Settings";
+import SettingModal from "../SettingModal/SettingModal";
 import { selectUser } from "../../redux/auth/authSlice";
 
 const UserLogo = () => {
@@ -60,7 +60,7 @@ const UserLogo = () => {
 
       {isLogoModalOpen && <UserLogoModal targetRef={buttonRef} />}
 
-      {isSettingModalOpen && <Settings />}
+      {isSettingModalOpen && <SettingModal />}
       {isLogoutModalOpen && <UserLogoutModal />}
     </>
   );
