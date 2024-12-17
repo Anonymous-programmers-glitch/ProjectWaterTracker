@@ -31,25 +31,27 @@ function HomePage() {
 
   // Обработчик сохранения данных из модального окна
   const handleSaveWaterData = (data) => {
-    // Форматируем дату
-    const formattedDate = dayjs(data.date || new Date()).format("YYYY-MM-DD");
+    const formattedDate = dayjs().format("YYYY-MM-DD"); // Текущая дата
+    const formattedTime = dayjs(data.manualTime, "HH:mm").isValid()
+      ? dayjs(data.manualTime, "HH:mm").format("HH:mm")
+      : dayjs().format("HH:mm"); // Формат времени
 
-    if (!dayjs(formattedDate).isValid()) {
-      console.error("Invalid date format:", data.date);
+    if (!data.amount || isNaN(data.amount)) {
+      console.error("Invalid water amount:", data.amount);
       return;
     }
 
     // Добавляем данные в Redux
     dispatch(
       addWater({
-        id: Math.random().toString(36).substr(2, 9), // Генерация уникального ID
-        date: formattedDate,
-        amount: data.amount || 0, // Объем воды в миллилитрах
+        id: Math.random().toString(36).substr(2, 9), // Уникальный ID
+        date: formattedDate, // Дата
+        time: formattedTime, // Время
+        amount: data.amount, // Объем воды
       })
     );
 
-    // Закрываем модалку
-    closeModal();
+    closeModal(); // Закрываем модальное окно
   };
 
   // Переформирование данных для текущего месяца
@@ -93,7 +95,7 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-          <Button onClick={openModal}> {/* Кнопка открытия модального окна */}
+          <Button onClick={openModal}> 
             <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>
