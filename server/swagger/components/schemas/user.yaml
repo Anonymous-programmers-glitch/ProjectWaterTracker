@@ -19,6 +19,7 @@ properties:
     type: string
     minLength: 8
     maxLength: 64
+    pattern: '^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])'
     example: 'password123'
   verify:
     description: 'Indicates if the user is verified'
@@ -28,20 +29,20 @@ properties:
   name:
     description: "User's name"
     type: string
+    maxLength: 32
     example: 'John Doe'
   gender:
     description: "User's gender"
     type: string
-    enum:
-      - woman
-      - man
-      - other
-    default: 'woman'
-    example: 'woman'
-  daylyNorm:
+    enum: ['female', 'male']
+    default: 'female'
+    example: 'female'
+  dailyNorm:
     description: "User's daily norm value"
     type: number
     default: 2000
+    minimum: 50
+    maximum: 5000
     example: 2000
   avatarUrl:
     description: "URL of the user's avatar image"
