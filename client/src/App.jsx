@@ -15,7 +15,7 @@ const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
 const SigninPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
 const SignupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
-const Layout = lazy(() => import("./components/layout/Layout.jsx"));
+const Layout = lazy(() => import("./components/Layout/Layout.jsx"));
 
 function App() {
   const dispatch = useDispatch();
