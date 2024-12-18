@@ -23,6 +23,7 @@ import {
 } from "../../redux/waterToday/selectors.js";
 
 import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
+import { dataMonth } from "../../tempData/homepagetempdata.js";
 import css from "./homepage.module.css";
 
 function HomePage() {
@@ -75,7 +76,7 @@ function HomePage() {
     for (let i = 1; i <= countDayofMonth; i++) {
       currentDay[0] = i;
       const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-")
+        (data) => data.date === currentDay.join("-"),
       );
 
       if (isDay) {
@@ -95,10 +96,9 @@ function HomePage() {
     dispatch(openAddModal());
   }
 
-  // Обновляем данные для месяца при изменении месяца
-  // useEffect(() => {
-  //   setNewData(reorderData(dataMonth, monthState));
-  // }, [monthState]);
+  useEffect(() => {
+    setNewData(reorderData(dataMonth, monthState));
+  }, [monthState]);
 
   return (
     <section className={css.homepage}>
