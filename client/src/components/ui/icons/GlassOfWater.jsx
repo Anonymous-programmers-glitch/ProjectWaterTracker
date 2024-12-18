@@ -1,5 +1,3 @@
-import React from "react";
-
 function GlassOfWater({ size }) {
   return (
     <svg

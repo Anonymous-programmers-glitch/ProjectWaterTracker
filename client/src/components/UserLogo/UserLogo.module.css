@@ -6,22 +6,18 @@
   justify-content: center;
   gap: 8px;
   padding: 0;
-  color: #2F2F2F;
-  /* color: var(--primery-color-black); */
+  color: var(--primery-color-black);
   transition: color 300ms ease;
 }
 
 .userLogoBtn:hover,
 .userLogoBtn:focus {
-  color: #FF9D43;
-  /* color: var(--secondary-color-5); */
+  color: var(--secondary-color-5);
 }
 
 .userLogoBtnText {
   min-width: 66px;
   height: 20px;
-  font-family: "Roboto", sans-serif;
-  /* font-family: var(--font-family); */
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
@@ -44,7 +40,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1px solid #2F2F2F;
+  border: 1px solid var(--primery-color-black);
   overflow: hidden;
 }
 

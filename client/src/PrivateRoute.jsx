@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "./redux/auth/authSlice";
-
+import { selectIsLoggedIn } from "./redux/user/selectors";
 
 /**
  * - If the route is private and the user is logged in, render the component

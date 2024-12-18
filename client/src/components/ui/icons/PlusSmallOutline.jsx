@@ -10,8 +10,8 @@ function PlusSmallOutline({ size = "24" }) {
       <path
         d="M12 6V18M18 12H6"
         stroke="#2F2F2F"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -2,7 +2,7 @@
   border-radius: 6px;
   padding: 12px 10px;
   border: 1px solid var(--secondary-color---5);
-  width: 256px;
+  width: 280px;
   height: 44px;
   background: var(--primery-color-white);
   font-size: 16px;
@@ -29,6 +29,12 @@
 
 @media screen and (min-width: 768px) {
   .field {
-    width: 392px;
+    width: 336px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .field {
+    width: 384px;
   }
 }

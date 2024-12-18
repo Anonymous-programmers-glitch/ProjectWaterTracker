@@ -1,46 +1,82 @@
 import "./App.css";
-import { lazy, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
-import HomePage from "./pages/HomePage/HomePage.jsx";
-import Layout from "./components/layout/Layout.jsx";
-import MyDailyNorma from "./components/MyDailyNorma/MyDailyNorma.jsx";
-import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
+import SuspenseFallback from "./components/SuspenseFallback/SuspenseFallback.jsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
+import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { refresh } from "./redux/user/operations.js";
+import PrivateRoute from "./PrivateRoute.jsx";
+import RestrictedRoute from "./RestrictedRoute.jsx";
+import { selectIsRefreshing } from "./redux/user/selectors.js";
 
-
-// import PrivateRoute from "./PrivateRoute.jsx";
-// import RestrictedRoute from "./RestrictedRoute.jsx";
-
-
-// const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
-// const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
-// const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
-// const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
+const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
+const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
+const SigninPage = lazy(() => import("./pages/SigninPage/SigninPage.jsx"));
+const SignupPage = lazy(() => import("./pages/SignupPage/SignupPage.jsx"));
+const Layout = lazy(() => import("./components/Layout/Layout.jsx"));
 
 function App() {
-const [modalActive, setModalActive] = useState(false);
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
+  useEffect(() => {
+    dispatch(refresh());
+  }, [dispatch]);
 
-  return (
-   
-<>
+  return isRefreshing ? (
+    <b>Please wait, updating user info...</b>
+  ) : (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<WelcomePage />} />
+      <Route
+        path="/"
+        element={
+          <Suspense fallback={<SuspenseFallback />}>
+            <Layout />
+          </Suspense>
+        }
+      >
+        <Route
+          index
+          element={
+            <Suspense fallback={<SuspenseFallback />}>
+              <RestrictedRoute
+                redirectTo="/homepage"
+                component={<WelcomePage />}
+              />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/welcome"
+          element={
+            <Suspense fallback={<>Load</>}>
+              <WelcomePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/homepage"
+          element={
+            <PrivateRoute redirectTo="/signin" component={<HomePage />} />
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <RestrictedRoute
+              redirectTo="/homepage"
+              component={<SigninPage />}
+            />
+          }
+        />
 
-        <Route path="/welcome" element={<WelcomePage />} />
-        {/* <Route path="/welcome" element={ <PrivateRoute redirectTo="/login" component={<WelcomePage />} /> }/> */}
-        
-        <Route path="/login" element={<h1>Login Page</h1>} />
-        {/* <Route path="/login" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<LoginPage />} />}/> */}
-
-        <Route path="/registration" element={<h1>Registion Page</h1>} />
-        {/* <Route path="/registration" element={ <RestrictedRoute redirectTo="/WelcomePage" component={<RegisterPage />}/>} /> */}
-        
-        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Route>
       
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
     </Routes>
     
      {/* Semple button for open modal myDailyNorma */}

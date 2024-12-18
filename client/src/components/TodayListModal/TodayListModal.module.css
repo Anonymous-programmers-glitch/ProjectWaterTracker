@@ -180,7 +180,7 @@ button[type="submit"]:active {
 }
 
 /* Custom Input Styles */
-.customInput {
+.customField {
   border: 1px solid #407bff;
   border-radius: 6px;
   padding: 12px 10px;
@@ -188,22 +188,21 @@ button[type="submit"]:active {
   color: #407bff;
   outline: none;
   transition: border-color 0.3s ease;
-  width: 100%; /* Инпуты растягиваются по ширине контейнера */
+  width: 100%; 
 }
 
-.customInput:focus {
+.customField:focus {
   border-color: #0056b3;
 }
 
-.customInput::placeholder {
+.customField::placeholder {
   color: #a3a3a3;
-  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 125%;
 }
 
-.customInput[type="time"] {
+.customField[type="time"] {
   color: #407bff;
 }
 
@@ -285,7 +284,7 @@ button[type="submit"]:active {
     padding: 12px 40px;
   }
 
-  .customInput {
+  .customField {
     border: 1px solid #d7e3ff;
     border-radius: 6px;
     width: 544px;
@@ -305,7 +304,7 @@ button[type="submit"]:active {
     padding: 14px 50px;
   }
 
-  .customInput {
+  .customField {
     border: 1px solid #d7e3ff;
     border-radius: 6px;
     width: 544px;

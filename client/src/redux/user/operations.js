@@ -10,29 +10,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  * After successful registration, you will need to go through verification. An email with a link has been sent to the email address you provided during registration.
  */
 export const signup = createAsyncThunk(
-  "auth/signup",
+  "user/signup",
   async (credentials, thunkAPI) => {
     try {
       const { user } = (await axios.post("/auth/register", credentials)).data;
       return user;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-/*
- * GET @ /auth/verify
- *
- *
- * After successful verification, add the access token to the HTTP header
- */
-export const verifyUser = createAsyncThunk(
-  "auth/verifyUser",
-  async (token, thunkAPI) => {
-    try {
-      const response = (await axios.get(`/auth/verify?token=${token}`)).data;
-      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -46,7 +28,7 @@ export const verifyUser = createAsyncThunk(
  * After successful login, add the access token to the HTTP header
  */
 export const login = createAsyncThunk(
-  "auth/login",
+  "user/login",
   async (credentials, thunkAPI) => {
     try {
       const response = (await axios.post("/auth/login", credentials)).data;
@@ -64,7 +46,7 @@ export const login = createAsyncThunk(
  *
  *  After successful logout, remove the access token from the HTTP header
  */
-export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
     clearAuthHeader();
@@ -74,24 +56,72 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 });
 
 /*
- * GET @ /auth/refresh
+ * GET @ /users/current
  * headers: Authorization: Bearer token
  */
-export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+
+export const refresh = createAsyncThunk(
+  "user/refresh",
   async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    if (!reduxState.user.accessToken) {
+      return thunkAPI.rejectWithValue("No access token available");
+    }
     try {
-      const response = (
-        await axios.post("/auth/refresh", null, { withCredentials: true })
-      ).data;
-      console.log("response :>> ", response);
+      setAuthHeader(reduxState.user.accessToken);
+
+      const response = (await axios.get("/users/current")).data;
       setAuthHeader(response.data.accessToken);
-      return response;
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const reduxState = thunkAPI.getState();
+      return reduxState.user.accessToken !== null;
+    },
   }
 );
+
+/*
+ * PATCH @ /users
+ * headers: Authorization: Bearer token
+ */
+
+export const update = createAsyncThunk(
+  "user/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = (await axios.patch(`/users`, data)).data;
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.massage);
+    }
+  }
+);
+
+/*
+//  * GET @ /auth/refresh
+//  * headers: Authorization: Bearer token
+//  */
+// export const refreshUser = createAsyncThunk(
+//   "auth/refresh",
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = (
+//         await axios.post("/auth/refresh", null, { withCredentials: true })
+//       ).data;
+//       console.log("response :>> ", response);
+//       console.log("response.data.accessToken :>> ", response.data.accessToken);
+//       setAuthHeader(response.data.accessToken);
+//       return response;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // // Операція запиту на скидання паролю
 // export const requestResetToken = createAsyncThunk(

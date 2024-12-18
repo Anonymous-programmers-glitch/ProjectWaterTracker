@@ -9,8 +9,7 @@
   transition: var(--transition);
 }
 
-.button:hover,
-.button:focus {
+.button:hover {
   color: var(--secondary-color-5);
 }
 
