@@ -21,10 +21,10 @@ export const userInfoUpdatedSchema = Joi.object({
       'string.pattern.base':
         'Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*).',
     }),
-  gender: Joi.string().valid('man', 'woman').default('woman').messages({
+  gender: Joi.string().valid('male', 'female').default('female').messages({
     'string.base': 'Gender must be a string.',
     'any.only':
-      'Gender must be one of the following values: man, woman, other.',
+      'Gender must be one of the following values: male, female, other.',
   }),
   dailyNorma: Joi.number().min(50).max(5000).default(2000).messages({
     'number.base': 'Daily norm must be a number.',
