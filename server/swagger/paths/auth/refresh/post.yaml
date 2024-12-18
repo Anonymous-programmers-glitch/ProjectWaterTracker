@@ -1,32 +1,31 @@
-post:
-  summary: Refresh user session
-  description: Refreshes the user's session using the refresh token from cookies.
-  tags:
-    - Auth
-  operationId: refreshUserSession
-  security:
-    - bearerAuth: []
-  responses:
-    '200':
-      description: Successfully refreshed session
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: integer
-                example: 200
-              message:
-                type: string
-                example: 'Successfully refreshed a session!'
-              data:
-                type: object
-                properties:
-                  accessToken:
-                    type: string
-                    description: The new access token.
-    '401':
-      $ref: '../../../components/responses/401.yaml'
-    '500':
-      $ref: '../../../components/responses/500.yaml'
+tags:
+  - Auth
+summary: Refresh user session
+description: Refreshes the user's session using the refresh token from cookies.
+operationId: refreshUserSession
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully refreshed session
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully refreshed a session!'
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  description: The new access token.
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
