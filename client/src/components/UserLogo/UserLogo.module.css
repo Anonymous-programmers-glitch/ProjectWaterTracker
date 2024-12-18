@@ -1,12 +1,20 @@
 .userLogoBtn {
   width: auto;
   height: 28px;
-
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 0;
+  color: #2F2F2F;
+  /* color: var(--primery-color-black); */
+  transition: color 300ms ease;
+}
+
+.userLogoBtn:hover,
+.userLogoBtn:focus {
+  color: #FF9D43;
+  /* color: var(--secondary-color-5); */
 }
 
 .userLogoBtnText {
@@ -18,8 +26,6 @@
   font-size: 16px;
   line-height: 1.25;
   text-align: right;
-  color: #2F2F2F;
-  /* color: var(--primery-color-black); */
   flex-shrink: 0;
   padding: 2px 0;
 }

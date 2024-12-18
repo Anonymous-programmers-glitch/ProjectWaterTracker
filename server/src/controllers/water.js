@@ -1,20 +1,22 @@
 import createHttpError from 'http-errors';
 import * as waterServices from '../services/water.js';
 
-export const getAllWaterController = async (req, res, next) => {
-  const { _id: userId } = req.user;
+// export const getAllWaterController = async (req, res, next) => {
+//   const { _id: userId } = req.user;
 
-  const waterRecords = await waterServices.getAllWater(userId);
+//   const waterRecords = await waterServices.getAllWater(userId);
 
-  res.json({
-    status: 200,
-    message: 'Successfully found water records',
-    waterRecords,
-  });
-};
+//   res.json({
+//     status: 200,
+//     message: 'Successfully found water records',
+//     waterRecords,
+//   });
+// };
 
 export const getWaterByDateController = async (req, res, next) => {
   const { _id: userId } = req.user;
+
+  const currentDailyNorm = req.user.dailyNorm;
   const date = new Date(req.params.date);
 
   if (isNaN(date.getTime())) {
@@ -47,8 +49,7 @@ export const getWaterByDateController = async (req, res, next) => {
     0,
   );
 
-  const currentDailyNorm = req.user.daylyNorm;
-  const percentage = ((totalDayWater / currentDailyNorm) * 100).toFixed(2);
+  const percentage = Math.round((totalDayWater / currentDailyNorm) * 100);
   res.json({
     status: 200,
     message: `Successfully found water records by this date ${date}`,
@@ -66,7 +67,7 @@ export const addWaterController = async (req, res) => {
   const waterRecord = await waterServices.addWater({
     ...req.body,
     userId,
-    currentDailyNorm: req.user.daylyNorm,
+    currentDailyNorm: req.user.dailyNorm,
   });
 
   res.status(201).json({
@@ -108,4 +109,19 @@ export const deleteWaterController = async (req, res, next) => {
   }
 
   res.status(204).send({ message: 'Water record is deleted successfully' });
+};
+
+export const getWaterByMonthController = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { month, year } = req.params;
+  const dailyNorm = req.user.dailyNorm || 2000;
+
+  const data = await waterServices.getWaterConsumptionByMonth(
+    userId,
+    parseInt(month),
+    parseInt(year),
+    dailyNorm,
+  );
+
+  res.json({ status: 200, data });
 };

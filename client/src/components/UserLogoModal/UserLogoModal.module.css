@@ -1,5 +1,6 @@
 .modal {
   position: absolute;
+  /* z-index: 10000; */
   width: 118px;
   height: 88px;
   padding: 16px;
@@ -13,13 +14,18 @@
 }
 
 .modalBtn {
-  padding: 0;
-}
-
-.modalWrapper {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 0;
+  color: #407BFF;
+  transition: color 300ms ease;
+}
+
+.modalBtn:hover,
+.modalBtn:focus {
+  color: #FF9D43;
+  /* color: var(--secondary-color-5); */
 }
 
 .modalText {
@@ -28,9 +34,9 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
-  color: #407BFF;
-  /* color: var(--primery-color-blue); */
 }
+
+
 
 .icon {
   flex-shrink: 0;

@@ -69,7 +69,7 @@
     background-image: url("../../assets/welcomePage/background2DesktopWelcomePage.svg"),
         url("../../assets/welcomePage/background1DesktopWelcomePage.svg");
     background-size: contain, contain;
-    background-position: center, center 100%;
+    background-position: center;
 }
 .container {
     padding-top: 160px;

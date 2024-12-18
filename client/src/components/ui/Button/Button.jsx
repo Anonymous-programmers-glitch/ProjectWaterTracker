@@ -8,7 +8,6 @@ const Button = (props) => {
   return (
     <button
       className={clsx(css.button, css[cssstyle])}
-      // `${css.button} ${css[cssStyle]}`}
       onClick={onClick}
       {...props}
     >

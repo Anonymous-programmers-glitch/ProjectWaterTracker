@@ -1,0 +1,41 @@
+type: object
+required:
+  - date
+  - amount
+  - userId
+properties:
+  _id:
+    description: "Water record's unique identifier"
+    type: string
+    example: '64f5b992c4b3f1567e63a179'
+  userId:
+    description: 'ID of the user associated with the water record'
+    type: string
+    example: '64f5b992c4b3f1567e63a178'
+  date:
+    description: 'The date and time of the water consumption record'
+    type: string
+    format: date-time
+    example: '2024-12-16T08:30:00Z'
+  amount:
+    description: 'The amount of water consumed (in milliliters)'
+    type: number
+    minimum: 50
+    maximum: 5000
+    example: 250
+  currentDailyNorm:
+    description: "User's daily water consumption norm (in milliliters)"
+    type: number
+    default: 2000
+    minimum: 500
+    example: 2000
+  createdAt:
+    description: 'Timestamp when the water record was created'
+    type: string
+    format: date-time
+    example: '2024-12-16T08:31:00Z'
+  updatedAt:
+    description: 'Timestamp when the water record was last updated'
+    type: string
+    format: date-time
+    example: '2024-12-16T10:15:00Z'

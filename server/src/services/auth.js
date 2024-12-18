@@ -110,10 +110,15 @@ export const login = async ({ email, password }) => {
 
   const newSession = createSession();
 
-  return await SessionCollection.create({
+  const session = await SessionCollection.create({
     userId: user._id,
     ...newSession,
   });
+
+  return {
+    user,
+    session,
+  };
 };
 
 export const logout = async (sessionId) => {

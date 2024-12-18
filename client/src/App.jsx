@@ -3,7 +3,7 @@ import { lazy, useState } from "react";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
-// import MyDailyNorma from "./components/MyDailyNorma/MyDailyNorma.jsx";
+import MyDailyNorma from "./components/MyDailyNorma/MyDailyNorma.jsx";
 import WelcomePage from "./pages/WelcomePage/welcomePage.jsx";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 
@@ -18,7 +18,7 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
 // const RegisterPage = lazy(() =>import("./pages/RegisterPage/RegisterPage"));
 
 function App() {
-// const [modalActive, setModalActive] = useState();
+const [modalActive, setModalActive] = useState(false);
 
 
   return (
@@ -44,8 +44,8 @@ function App() {
     </Routes>
     
      {/* Semple button for open modal myDailyNorma */}
-   {/* <button  className="open-btn" onClick={()=> setModalActive(true)}>Open modal</button>
-   <MyDailyNorma active={modalActive} setActive={setModalActive}/>  */}
+   <button  className="open-btn" onClick={()=> setModalActive(true)}>Open modal</button>
+   <MyDailyNorma active={modalActive} setActive={setModalActive}/> 
 
 </>
   );

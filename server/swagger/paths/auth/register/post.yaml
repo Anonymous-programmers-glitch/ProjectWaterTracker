@@ -3,7 +3,7 @@ post:
   description: This endpoint creates a new user.
   tags:
     - Auth
-  operationId: registerUser
+  operationId: signupUser
   security:
     - bearerAuth: []
   requestBody:
@@ -24,10 +24,12 @@ post:
             password:
               description: User's password.
               type: string
+              minLength: 8
+              maxLength: 64
               example: 'P@ssword123'
   responses:
-    '200':
-      description: Successfully logged in user.
+    '201':
+      description: Successfully registered a user.
       content:
         application/json:
           schema:
@@ -39,19 +41,24 @@ post:
             properties:
               status:
                 type: integer
-                example: 200
+                example: 201
               message:
                 type: string
-                example: Successfully logged in user!
+                example: Successfully registered a user!
               data:
                 type: object
                 required:
-                  - accessToken
+                  - user
                 properties:
-                  accessToken:
-                    type: string
-                    description: Access token for user authentication.
-                    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+                  user:
+                    type: object
+                    required:
+                      - email
+                    properties:
+                      email:
+                        type: string
+                        description: User's email.
+                        example: 'johndoe@mail.com'
     '400':
       $ref: ../../../components/responses/400.yaml
     '409':

@@ -1,0 +1,92 @@
+patch:
+  summary: Update water record by ID
+  description: This endpoint updates an existing water record for the user.
+  tags:
+    - Water
+  operationId: patchWaterRecord
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: id
+      in: path
+      description: The ID of the water record to update.
+      required: true
+      schema:
+        type: string
+        example: '64f5b992c4b3f1567e63a179'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            date:
+              description: The updated date and time of the water consumption record.
+              type: string
+              format: date-time
+              example: '2024-12-16T09:00:00Z'
+            amount:
+              description: The updated amount of water consumed (in milliliters).
+              type: number
+              minimum: 50
+              maximum: 5000
+              example: 300
+          additionalProperties: false
+  responses:
+    '200':
+      description: Successfully updated the water record.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - message
+              - data
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Successfully updated the water record.
+              data:
+                type: object
+                required:
+                  - _id
+                  - userId
+                  - date
+                  - amount
+                  - currentDailyNorm
+                properties:
+                  _id:
+                    type: string
+                    description: Unique identifier for the water record.
+                    example: '64f5b992c4b3f1567e63a179'
+                  userId:
+                    type: string
+                    description: ID of the user who logged the water record.
+                    example: '64f5b992c4b3f1567e63a178'
+                  date:
+                    type: string
+                    format: date-time
+                    description: The updated date and time of the water consumption record.
+                    example: '2024-12-16T09:00:00Z'
+                  amount:
+                    type: number
+                    description: The updated amount of water consumed (in milliliters).
+                    example: 300
+                  currentDailyNorm:
+                    type: number
+                    description: The current daily water consumption norm for the user (in milliliters).
+                    example: 2000
+    '400':
+      $ref: ../../../components/responses/400.yaml
+    '401':
+      $ref: ../../../components/responses/401.yaml
+    '404':
+      description: Water record not found.
+      $ref: ../../../components/responses/404.yaml
+    '500':
+      $ref: ../../../components/responses/500.yaml

@@ -1,5 +1,5 @@
 .card {
-    background: #fff;
+    background: var(--primery-color-white);
     max-width: 164px;
     max-height: 76px;
     width: 100%;
@@ -10,10 +10,9 @@
     justify-content: center;
     gap: 12px;
     border-radius: 10px;
-    border: 1px solid #ecf2ff;
-    /*border: 1px solid var(--secondary-color-2);*/
+    border: 1px solid var(--secondary-color-2);
     box-shadow: 0 4px 8px 0 rgba(158, 187, 255, 0.12);
-    /*background: var(--primery-color-white);*/
+
 }
 
 .title {
@@ -21,16 +20,15 @@
     font-weight: 500;
     font-size: 18px;
     line-height: 133%;
-    color: #2f2f2f;
-    /*color: var(--primery-color-black);*/
+    color: var(--primery-color-black);
 }
 
 .text {
-    color: #407bff;
+    color: var(--primery-color-blue);
     font-weight: 700;
     font-size: 22px;
     line-height: 100%;
-    /*color: var(--primery-color-blue);*/
+
 }
 .cardfooter {
     display: flex;

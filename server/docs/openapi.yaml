@@ -37,6 +37,14 @@ paths:
     $ref: '../swagger/paths/user/{id}/get.yaml'
   /user/{id}/update-user:
     $ref: '../swagger/paths/user/{id}/patch.yaml'
+  /water/day/{date}/get-water-records-by-day:
+    $ref: '../swagger/paths/water/{date}/get.yaml'
+  /water/post-water-record:
+    $ref: '../swagger/paths/water/post.yaml'
+  /water/{id}/update-water-record:
+    $ref: '../swagger/paths/water/{id}/patch.yaml'
+  /water/{id}/delete-water-record:
+    $ref: '../swagger/paths/water/{id}/delete.yaml'
 
 components:
   securitySchemes:

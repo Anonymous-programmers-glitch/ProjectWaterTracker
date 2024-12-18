@@ -43,10 +43,11 @@ get:
                         example: 'John Doe'
                       gender:
                         type: string
-                        enum: [woman, man, other]
-                        example: 'woman'
-                      daylyNorm:
-                        type: integer
+                        enum: ['female', 'male']
+                        default: 'female'
+                        example: 'female'
+                      dailyNorm:
+                        type: number
                         example: 2000
                       avatarUrl:
                         type: string

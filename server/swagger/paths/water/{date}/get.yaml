@@ -1,0 +1,95 @@
+get:
+  summary: Get water records by day
+  description: This endpoint retrieves water records for a given date.
+  tags:
+    - Water
+  operationId: getWaterByDate
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: date
+      in: path
+      description: The date for which to retrieve the water records (ISO format YYYY-MM-DD).
+      required: true
+      schema:
+        type: string
+        example: '2024-12-16'
+  responses:
+    '200':
+      description: Successfully retrieved the water records for the given date.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - message
+              - data
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Successfully found water records by this date.
+              data:
+                type: object
+                required:
+                  - waterRecords
+                  - recordsCount
+                  - totalDayWater
+                  - percentage
+                properties:
+                  waterRecords:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - _id
+                        - userId
+                        - date
+                        - amount
+                        - currentDailyNorm
+                      properties:
+                        _id:
+                          type: string
+                          description: Unique identifier for the water record.
+                          example: '64f5b992c4b3f1567e63a179'
+                        userId:
+                          type: string
+                          description: ID of the user who logged the water record.
+                          example: '64f5b992c4b3f1567e63a178'
+                        date:
+                          type: string
+                          format: date-time
+                          description: The date and time of the water consumption record.
+                          example: '2024-12-16T08:30:00Z'
+                        amount:
+                          type: number
+                          description: The amount of water consumed (in milliliters).
+                          example: 300
+                        currentDailyNorm:
+                          type: number
+                          description: The current daily water consumption norm for the user (in milliliters).
+                          example: 2000
+                  recordsCount:
+                    type: integer
+                    description: The number of records found for the given date.
+                    example: 3
+                  totalDayWater:
+                    type: number
+                    description: The total amount of water consumed for the given date (in milliliters).
+                    example: 900
+                  percentage:
+                    type: integer
+                    description: The percentage of the daily water consumption norm met for the given date.
+                    example: 45
+    '400':
+      $ref: ../../../components/responses/400.yaml
+    '401':
+      $ref: ../../../components/responses/401.yaml
+    '404':
+      description: No records found for the given date.
+      $ref: ../../../components/responses/404.yaml
+    '500':
+      $ref: ../../../components/responses/500.yaml

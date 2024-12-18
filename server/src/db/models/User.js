@@ -7,14 +7,14 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, minlength: 8, maxlength: 64, required: true },
     verify: { type: Boolean, default: false, required: true },
-    name: { type: String, required: false },
-    gender: { type: String, enum: typeList, required: true, default: 'woman' },
-    dailyNorm: {
+    name: { type: String, maxlength: 32, required: false },
+    gender: { type: String, enum: typeList, required: true, default: 'female' },
+    dailyNorma: {
       type: Number,
       required: false,
       min: 50,
       max: 5000,
-      default: '2000',
+      default: 2000,
     },
     avatarUrl: { type: String, required: false, default: null },
   },

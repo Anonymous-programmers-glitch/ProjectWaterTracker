@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./MyDailyNorma.module.css";
 import { useEffect, useState } from "react";
+import Button from "../../components/ui/Button/Button";
+import CloseIcon from "../../components/ui/icons/CloseIcon";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -15,8 +17,8 @@ const DailySchema = Yup.object().shape({
     .required("This field is required"),
   waterYouDrink: Yup.number()
     .min(1, "Enter how much water you will drink")
-    .max(100, "Too long, max 100 numbers")
-    .required("This field is required"),
+    .max(5, "Too long, max 10 numbers")
+    .required("More then limit"),
   option: Yup.string()
     .oneOf(["For woman", "For man"])
     .required("This field is required"),
@@ -28,7 +30,13 @@ const MyDailyNorma = ({ active, setActive }) => {
     const [norma2, setNorma2] = useState("");
     const [result, setResult] = useState("");
     const [isWoman, setIsWoman] = useState(true);
+    const [waterYouDrink, setWaterYouDrink] = useState("");
 
+
+   function  onClickHandle(){
+console.log('Klik');
+   }
+    
     // for woman
 useEffect(() => {
     if ( isWoman ) {
@@ -57,16 +65,17 @@ useEffect(() => {
         console.log(values);
         action.resetForm();
       }}
+    
     >
-      <Form
-        className={active ? css.modal.active : css.modal}
-        onClick={() => setActive(false)}
-      >
+      <Form className={active ? css.modal.active : css.modal}
+        onClick={() => setActive(false)}>
+        <div className={css.modalWrapper}>
         <div className={css.modalContent} onClick={e => e.stopPropagation()}>
           <h2 className={css.text1}>My daily norma</h2>
-          <button className={css.closeBtn} onClick={() => setActive(false)}>
+          <CloseIcon className={css.closeIcon} onClick={() => setActive(false)}></CloseIcon>
+          {/* <button className={css.closeBtn} onClick={() => setActive(false)}> 
             &times;
-          </button>
+          </button> */}
           <div className={css.cover}>
             <p className={css.for}>
               For girl:{" "}
@@ -138,24 +147,29 @@ useEffect(() => {
           <p className={css.text}>
             The required amount of water in liters per day:
           </p>
-          <p className="textRadioBtn">
-            Write down how much water you will drink:{result}L
+          <p className={css.textRadioBtn2}>
+            Write down how much water you will drink: <span className={css.spanResult}>{result} L</span>
           </p>
           <Field
             className={css.modalInput}
             type="number"
             name="waterYouDrink"
+            value={waterYouDrink}
+            onChange={(e) => setWaterYouDrink(e.target.value)}
             placeholder="0"
           />
+    
           <ErrorMessage
             name="waterYouDrink"
             component="span"
             className={css.error}
           />
+          <Button cssstyle="cssstyle" disabled={waterYouDrink >= 5 || !waterYouDrink}
+          onClick={onClickHandle} type="submit">Save</Button>
+                    {/* <button className="cssstyle" disabled={waterYouDrink < 5 || !waterYouDrink}
+          onClick={onClickHandle} type="submit">Save</button> */}
+        </div>
 
-          <button className={css.submitBtn} type="submit">
-            Save
-          </button>
         </div>
       </Form>
     </Formik>
