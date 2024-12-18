@@ -12,6 +12,7 @@ import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
+import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { openAddModal } from "../../redux/modal/slice.js";
 import { selectAddModal } from "../../redux/modal/selectors.js";
@@ -29,46 +30,17 @@ import css from "./homepage.module.css";
 function HomePage() {
   const dispatch = useDispatch();
   const [newData, setNewData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    dispatch(fetchWaterToday("2024-12-17"));
-  }, [dispatch]);
-
-  const isOpenAdd = useSelector(selectAddModal);
+  const dateNow = dayjs().format("YYYY-MM-DD");
 
   const { waterRecords } = useSelector(getIsWaterToday);
-
-  // const isLoad = useSelector(getIsLoading);
-  // const isError = useSelector(getError);
+  const IsLoading = useSelector(getIsLoading);
+  const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
 
-  // Обработчик сохранения данных из модального окна
-  // const handleSaveWaterData = (data) => {
-  //   const formattedDate = dayjs().format("YYYY-MM-DD"); // Текущая дата
-  //   const formattedTime = dayjs(data.manualTime, "HH:mm").isValid()
-  //     ? dayjs(data.manualTime, "HH:mm").format("HH:mm")
-  //     : dayjs().format("HH:mm"); // Формат времени
-  //
-  //   if (!data.amount || isNaN(data.amount)) {
-  //     console.error("Invalid water amount:", data.amount);
-  //     return;
-  //   }
-  //
-  //   Добавляем данные в Redux
-  //   dispatch(
-  //     addWater({
-  //       id: Math.random().toString(36).substr(2, 9), // Уникальный ID
-  //       date: formattedDate, // Дата
-  //       time: formattedTime, // Время
-  //       amount: data.amount, // Объем воды
-  //     }),
-  //   );
-  //
-  //   closeModal(); // Закрываем модальное окно
-  // };
+  useEffect(() => {
+    dispatch(fetchWaterToday(dateNow));
+  }, [dispatch]);
 
-  // Переформирование данных для текущего месяца
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
     const countDayofMonth = dayjs(currentMonth).daysInMonth();
@@ -112,7 +84,6 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-
           <Button onClick={handleAdd}>
             <div className={css.btn}>
               <PlusCircleOutline />
@@ -124,7 +95,7 @@ function HomePage() {
       <div className={css.today}>
         <h2 className={css.title}>Today</h2>
 
-        {waterRecords.length > 0 ? (
+        {!isError ? (
           <WaterListToday>
             {waterRecords.map((item) => (
               <WaterListIItemToday key={item._id} item={item} />
@@ -133,7 +104,7 @@ function HomePage() {
         ) : (
           <h2 className={css.list}>No notes yet</h2>
         )}
-        <h3>Add water</h3>
+        <TextButton onClick={handleAdd}>Add water</TextButton>
         <div className={css.month}>
           <h2 className={css.titlemonth}>Month</h2>
           <DatePicker />

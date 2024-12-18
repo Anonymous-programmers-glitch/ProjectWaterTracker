@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddModal } from "../../redux/modal/slice.js";
 import { selectAddModal } from "../../redux/modal/selectors.js";
+import { addWaterToday } from "../../redux/waterToday/operations.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
 import XMarkOutline from "../ui/icons/xMarkOutline";
@@ -15,7 +16,6 @@ import css from "./TodayListModal.module.css";
 const AddWaterModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAddModal);
-  console.log(isOpen);
 
   function onClose() {
     dispatch(closeAddModal());
@@ -23,10 +23,11 @@ const AddWaterModal = () => {
 
   const [time, setTime] = useState(dayjs().format("HH:mm"));
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    // const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    // onSave({ ...values, amount: values.manualAmount, time: formattedTime });
+  const handleSubmit = (value) => {
+    const { manualAmount, manualTime } = value;
+    const dateNow = dayjs().format("YYYY-MM-DD");
+    const date = dayjs(`${dateNow} ${manualTime}`).toISOString();
+    dispatch(addWaterToday({ amount: manualAmount, date: date }));
     onClose();
   };
 
@@ -36,7 +37,7 @@ const AddWaterModal = () => {
         onClose();
       }
     },
-    [onClose]
+    [onClose],
   );
 
   useEffect(() => {
@@ -94,7 +95,7 @@ const AddWaterModal = () => {
                       onClick={() =>
                         setFieldValue(
                           "manualAmount",
-                          Math.max(0, values.manualAmount - 50)
+                          Math.max(0, values.manualAmount - 50),
                         )
                       }
                     >
