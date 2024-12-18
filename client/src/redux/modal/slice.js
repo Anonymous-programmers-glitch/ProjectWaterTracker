@@ -44,8 +44,4 @@ export const {
   closeLogoutModal,
 } = modalSlice.actions;
 
-export const selectLogoModal = (state) => state.modal.isLogoModalOpen;
-export const selectSettingModal = (state) => state.modal.isSettingModalOpen;
-export const selectLogoutModal = (state) => state.modal.isLogoutModalOpen;
-
 export default modalSlice.reducer;

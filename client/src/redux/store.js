@@ -12,9 +12,8 @@ import {
 import storage from "redux-persist/lib/storage";
 import changeMonthReducer from "./changeMonth/changeMonth.js";
 import waterTodayReducer from "./waterToday/waterTodayslice.js";
-import userReducer from "./userSlice";
-import modalReducer from "./modal/modalSlice.js";
-import authReducer from "./auth/authSlice.js";
+import modalReducer from "./modal/slice.js";
+import userReducer from "./user/slice.js";
 import themeReducer from "./themeSlice/themeSlice.jsx";
 
 const persistedWaterTodayReducer = persistReducer(
@@ -38,15 +37,14 @@ const persistedAccessToken = persistReducer(
     storage,
     whitelist: ["accessToken"],
   },
-  authReducer
+  userReducer
 );
 
 export const store = configureStore({
   reducer: {
-    auth: persistedAccessToken,
+    user: persistedAccessToken,
     waterToday: persistedWaterTodayReducer,
     changeMonth: changeMonthReducer,
-    user: userReducer,
     modal: modalReducer,
     theme: persistedThemeReducer,
   },
