@@ -2,25 +2,26 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
-import user from "../../testUser.json";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import {
   closeLogoModal,
   openLogoModal,
   selectLogoModal,
   selectLogoutModal,
-  // selectSettingModal,
+  selectSettingModal,
 } from "../../redux/modal/modalSlice";
 
 import css from "./UserLogo.module.css";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
-import { selectUser } from "../../redux/auth/authSlice";
+
+import SettingModal from "../SettingModal/SettingModal";
+import { selectUser } from "../../redux/auth/selectors";
 
 const UserLogo = () => {
   const buttonRef = useRef(null);
   const dispatch = useDispatch();
   const isLogoModalOpen = useSelector(selectLogoModal);
-  // const isSettingModalOpen = useSelector(selectSettingModal);
+  const isSettingModalOpen = useSelector(selectSettingModal);
   const isLogoutModalOpen = useSelector(selectLogoutModal);
   const toggleModal = () => {
     if (isLogoModalOpen) {
@@ -33,7 +34,7 @@ const UserLogo = () => {
   const user = useSelector(selectUser);
   if (!user) return null;
 
-  const userName = user.name ?? "Guest";
+  const userName = user.name ?? user.email;
 
   const avatarContent = user.avatar ? (
     <img
@@ -59,7 +60,7 @@ const UserLogo = () => {
 
       {isLogoModalOpen && <UserLogoModal targetRef={buttonRef} />}
 
-      {/* { isSettingModalOpen&&<SettingModal />} */}
+      {isSettingModalOpen && <SettingModal />}
       {isLogoutModalOpen && <UserLogoutModal />}
     </>
   );

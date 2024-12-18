@@ -15,4 +15,4 @@ function onSun({ size = "32" }) {
   );
 }
 
-export default onSun;
+export default OnSun;

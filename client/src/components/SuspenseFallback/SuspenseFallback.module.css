@@ -1,0 +1,28 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  height: 50px;
+  width: 160px;
+}
+
+.text {
+  font-size: 32px;
+  line-height: 1.14;
+  color: var(--primery-color-black);
+  margin-bottom: auto;
+}
+
+.loader {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.wraper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+}

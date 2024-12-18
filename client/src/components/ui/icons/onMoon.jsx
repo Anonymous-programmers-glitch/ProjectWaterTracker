@@ -19,4 +19,4 @@ function onMoon({ size = "32" }) {
   );
 }
 
-export default onMoon;
+export default OnMoon;

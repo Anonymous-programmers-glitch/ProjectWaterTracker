@@ -1,6 +1,6 @@
 get:
   summary: Verify user's account
-  description: This endpoint verifies a user account via a token.
+  description: This endpoint verifies a user account via a token and redirects to the success page.
   tags:
     - Auth
   operationId: verifyAccount
@@ -15,7 +15,7 @@ get:
         example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
   responses:
     '200':
-      description: Account verified successfully.
+      description: Account verified successfully, user is redirected.
       content:
         application/json:
           schema:
@@ -29,12 +29,12 @@ get:
                 example: 200
               message:
                 type: string
-                example: Account verified successfully!
+                example: 'Account verified successfully! User is being redirected.'
     '400':
       $ref: '../../../components/responses/400.yaml'
     '401':
       $ref: '../../../components/responses/401.yaml'
     '404':
-      $ref: ../../../components/responses/404.yaml
+      $ref: '../../../components/responses/404.yaml'
     '500':
       $ref: '../../../components/responses/500.yaml'

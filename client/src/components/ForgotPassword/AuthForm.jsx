@@ -1,12 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signUp } from "../../../redux/auth/operations.js";
+//import { signup } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
-import css from "./signUpForm.module.css";
-import EyeOutline from "../../ui/icons/EyeOutline.jsx";
-import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
+import Input from "../ui/Inputs/Inputs.jsx";
+import Button from "../ui/Button/Button.jsx";
+import css from "./AuthForm.module.css";
+import EyeOutline from "../ui/icons/EyeOutline.jsx";
+import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
 
 const initialValues = {
   email: "",
@@ -14,12 +15,12 @@ const initialValues = {
   repeatPassword: "",
 };
 
-export default function SignUpForm() {
-  const SignUpSchema = Yup.object().shape({
-    email: Yup.string().email().required(),
+export default function AuthForm() {
+  const ForgotSchema = Yup.object().shape({
     password: Yup.string()
-      .required()
-      .min(6, "Password is too short - should be 6 chars minimum."),
+      .required("Please confirm your password")
+      .min(8, "Password is too short - should be 8 chars minimum.")
+      .max(64, "Password is too long - should be 64 chars maximum."),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -29,13 +30,13 @@ export default function SignUpForm() {
 
   const size = "24";
 
-  const signupId = useId();
   const passwordId = useId();
   const repeatPasswordId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    dispatch(signUp(values));
+    const { password } = values;
+
+    //dispatch(signup({ password }));
     actions.resetForm();
   };
 
@@ -58,73 +59,40 @@ export default function SignUpForm() {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={SignUpSchema}
+      validationSchema={ForgotSchema}
     >
       {() => {
         return (
           <Form autoComplete="off" className={css.wrapper}>
-            <h3 className={css.h3}>Sign Up</h3>
-            <label className={css.label} htmlFor={signupId}>
-              Enter your email
-              <Field
-                type="email"
-                name="email"
-                className={css.input}
-                placeholder="E-mail"
-                id={signupId}
-              />
-              <ErrorMessage
-                name="email"
-                component="span"
-                className={css.errorEmail}
-              />
-            </label>
             <label className={css.label} htmlFor={passwordId}>
-              Enter your password
+              Enter a new password
               <div className={css.psw}>
-                <Field
+                <Input
                   type={inputType}
                   name="password"
                   placeholder="Password"
                   id={passwordId}
-                  className={css.field}
                 />
                 <span className={css.icon} onClick={togglePasswordVisibility}>
                   {passwordVisible}
                 </span>
               </div>
-              <ErrorMessage
-                name="password"
-                component="span"
-                className={css.errorPswrd}
-              />
             </label>
             <label className={css.label} htmlFor={repeatPasswordId}>
-              Repeat password
+              Repeat new password
               <div className={css.psw}>
-                <Field
+                <Input
                   type={inputType}
                   name="repeatPassword"
                   placeholder="Repeat password"
                   id={repeatPasswordId}
-                  className={css.field}
                 />
                 <span className={css.icon} onClick={togglePasswordVisibility}>
                   {passwordVisible}
                 </span>
               </div>
-              <ErrorMessage
-                name="repeatPassword"
-                component="span"
-                className={css.errorRepeatPswrd}
-              />
             </label>
-            <button type="submit" className={css.btn}>
-              Sign Up
-            </button>
-            <NavLink to="/login" className={css.link}>
-              <p>Sign in</p>
-            </NavLink>
+            <Button cssstyle="signup">Create new password</Button>
           </Form>
         );
       }}

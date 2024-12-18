@@ -23,7 +23,7 @@ export const setupServer = () => {
       },
     }),
   );
-  app.use('/public', express.static(path.resolve('public')));
+  // app.use('/public', express.static(path.resolve('public')));
 
   app.use(router);
 

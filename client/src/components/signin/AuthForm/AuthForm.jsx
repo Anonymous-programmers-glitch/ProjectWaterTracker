@@ -2,9 +2,11 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signIn } from "../../../redux/auth/operations.js";
+import { login } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
-import css from "./signInForm.module.css";
+import css from "./AuthForm.module.css";
+//import Input from "../../ui/Inputs/Inputs.jsx";
+import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 
@@ -13,12 +15,23 @@ const initialValues = {
   password: "",
 };
 
+function validateEmail(value) {
+  let error;
+  if (!value) {
+    error = "Required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    error = "Invalid email address";
+  }
+  return error;
+}
+
 export default function SignInForm() {
   const SignInSchema = Yup.object().shape({
     email: Yup.string().email().required(),
     password: Yup.string()
       .required()
-      .min(6, "Password is too short - should be 6 chars minimum."),
+      .min(8, "Should be 8 chars minimum.")
+      .max(64, "Should be 64 chars maximum."),
   });
   const dispatch = useDispatch();
 
@@ -28,8 +41,7 @@ export default function SignInForm() {
   const passwordId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
-    dispatch(signIn(values));
+    dispatch(login(values));
     actions.resetForm();
   };
 
@@ -66,11 +78,12 @@ export default function SignInForm() {
                 className={css.input}
                 placeholder="E-mail"
                 id={signinId}
+                validate={validateEmail}
               />
               <ErrorMessage
                 name="email"
                 component="span"
-                className={css.errorEmail}
+                className={css.error}
               />
             </label>
             <label className={css.label} htmlFor={passwordId}>
@@ -90,13 +103,14 @@ export default function SignInForm() {
               <ErrorMessage
                 name="password"
                 component="span"
-                className={css.errorPswrd}
+                className={css.error}
               />
             </label>
-            <button type="submit" className={css.btn}>
-              Sign In
-            </button>
-            <NavLink to="/registration" className={css.link}>
+            <Button cssstyle="signin">Sign In</Button>
+            <NavLink to="/forgotpassword" className={css.link}>
+              <p>Forgot password?</p>
+            </NavLink>
+            <NavLink to="/signup" className={css.link}>
               <p>Sign up</p>
             </NavLink>
           </Form>

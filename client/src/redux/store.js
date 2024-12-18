@@ -24,6 +24,7 @@ const persistedWaterTodayReducer = persistReducer(
   },
   waterTodayReducer
 );
+
 const persistedThemeReducer = persistReducer(
   {
     key: "theme",
@@ -31,16 +32,25 @@ const persistedThemeReducer = persistReducer(
   },
   themeReducer
 );
+const persistedAccessToken = persistReducer(
+  {
+    key: "accessToken",
+    storage,
+    whitelist: ["accessToken"],
+  },
+  authReducer
+);
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth: persistedAccessToken,
     waterToday: persistedWaterTodayReducer,
     changeMonth: changeMonthReducer,
     user: userReducer,
     modal: modalReducer,
     theme: persistedThemeReducer,
   },
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
