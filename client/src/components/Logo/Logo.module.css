@@ -5,13 +5,11 @@
 }
 
 .iconText {
-  font-family: var(--font-family);
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
-  /* color: #407BFF; */
   color: var(--primery-color-blue);
   width: 60px;
   height: 28px;
-  /* color: var(--primery-color-blue); */
+
 }
