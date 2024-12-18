@@ -1,4 +1,4 @@
-function ToggleOn({ size = "24" }) {
+function ToggleOn({ size = "42" }) {
   return (
     <svg
       height={size}
