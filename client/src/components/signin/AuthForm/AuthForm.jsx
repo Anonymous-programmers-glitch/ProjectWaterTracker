@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../../redux/auth/operations.js";
+import { login } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
 import css from "./AuthForm.module.css";
 //import Input from "../../ui/Inputs/Inputs.jsx";
@@ -41,7 +41,6 @@ export default function SignInForm() {
   const passwordId = useId();
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
     dispatch(login(values));
     actions.resetForm();
   };
@@ -108,7 +107,7 @@ export default function SignInForm() {
               />
             </label>
             <Button cssstyle="signin">Sign In</Button>
-            <NavLink to="/forgot-password-page" className={css.link}>
+            <NavLink to="/forgotpassword" className={css.link}>
               <p>Forgot password?</p>
             </NavLink>
             <NavLink to="/signup" className={css.link}>

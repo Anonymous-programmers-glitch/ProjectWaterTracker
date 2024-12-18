@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "../../components/HomePage/datePicker/DatePicker.jsx";
 import WaterListIItemToday from "../../components/HomePage/waterListItemToday/WaterListIItemToday.jsx";
 import Bottle from "../../components/HomePage/bottle.jsx";
@@ -9,29 +9,36 @@ import WaterListIItemMonth from "../../components/HomePage/waterListItemMonth/Wa
 import WaterListMonth from "../../components/HomePage/waterListMonth/WaterListMonth.jsx";
 import WaterListToday from "../../components/HomePage/waterListToday/WaterListToday.jsx";
 import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
+import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
+import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
+import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
-import { selectWaterToday } from "../../redux/waterToday/waterTodayslice.js";
+import { openAddModal } from "../../redux/modal/slice.js";
+import { fetchWaterToday } from "../../redux/waterToday/operations.js";
+import {
+  getError,
+  getIsLoading,
+  getIsWaterToday,
+} from "../../redux/waterToday/selectors.js";
+
 import { dataMonth } from "../../tempData/homepagetempdata.js";
-import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
 import css from "./homepage.module.css";
 
 function HomePage() {
+  const dispatch = useDispatch();
   const [newData, setNewData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние модального окна
-  const dataToday = useSelector(selectWaterToday);
+  const dateNow = dayjs().format("YYYY-MM-DD");
+
+  const { waterRecords } = useSelector(getIsWaterToday);
+  const IsLoading = useSelector(getIsLoading);
+  const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
-  // Обработчик сохранения данных из модального окна
-  const handleSaveWaterData = (data) => {
-    console.log("Saved water data:", data);
-    // Здесь можно добавить логику для обновления состояния или сохранения данных
-    closeModal();
-  };
-
+  useEffect(() => {
+    dispatch(fetchWaterToday(dateNow));
+  }, [dispatch]);
 
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
@@ -40,7 +47,7 @@ function HomePage() {
     for (let i = 1; i <= countDayofMonth; i++) {
       currentDay[0] = i;
       const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-")
+        (data) => data.date === currentDay.join("-"),
       );
 
       if (isDay) {
@@ -54,6 +61,10 @@ function HomePage() {
     }
 
     return newData;
+  }
+
+  function handleAdd() {
+    dispatch(openAddModal());
   }
 
   useEffect(() => {
@@ -72,9 +83,7 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange />
-
-          <Button onClick={openModal}> {/* Кнопка открытия модального окна */}
-
+          <Button onClick={handleAdd}>
             <div className={css.btn}>
               <PlusCircleOutline />
               <p>Add Water</p>
@@ -85,16 +94,16 @@ function HomePage() {
       <div className={css.today}>
         <h2 className={css.title}>Today</h2>
 
-        {dataToday.length > 0 ? (
+        {!isError ? (
           <WaterListToday>
-            {dataToday.map((item) => (
-              <WaterListIItemToday key={item.id} item={item} />
+            {waterRecords.map((item) => (
+              <WaterListIItemToday key={item._id} item={item} />
             ))}
           </WaterListToday>
         ) : (
           <h2 className={css.list}>No notes yet</h2>
         )}
-        <h3>Add water</h3>
+        <TextButton onClick={handleAdd}>Add water</TextButton>
         <div className={css.month}>
           <h2 className={css.titlemonth}>Month</h2>
           <DatePicker />
@@ -105,14 +114,8 @@ function HomePage() {
           ))}
         </WaterListMonth>
       </div>
-
-      {/* Модальное окно */}
-      <TodayListModal
-        isOpen={isModalOpen}
-        mode="add"
-        onSave={handleSaveWaterData} // Передаем функцию сохранения
-        onClose={closeModal} // Передаем функцию закрытия
-      />
+      <AddWaterModal />
+      <TodayListModal />
     </section>
   );
 }

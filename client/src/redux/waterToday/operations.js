@@ -1,13 +1,16 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setAuthHeader } from "../../api/operationsAPI.js";
 import { condition } from "../conditions.js";
 
 export const fetchWaterToday = createAsyncThunk(
   "today/fetchAllWaterToday",
-  async (_, thunkAPI) => {
+  async (date, thunkAPI) => {
     try {
-      const { data } = await axios.get("/water/day");
-      return data;
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(reduxState.user.accessToken);
+      const { data } = await axios.get(`/water/day/${date}`);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -51,9 +54,11 @@ export const editWaterToday = createAsyncThunk(
 
 export const addWaterToday = createAsyncThunk(
   "today/addWaterToday",
-  async ({ date, time, amount }, thunkAPI) => {
+  async ({ date, amount }, thunkAPI) => {
     try {
-      const { data } = await axios.post("/water/", { date, time, amount });
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(reduxState.user.accessToken);
+      const { data } = await axios.post("/water/", { date, amount });
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
