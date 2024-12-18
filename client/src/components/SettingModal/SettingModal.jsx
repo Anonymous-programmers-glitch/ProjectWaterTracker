@@ -43,13 +43,13 @@ export default function SettingModal() {
   const dispatch = useDispatch();
 
   const initialValues = {
-    avatarUrl: value?.photo || user.avatarUrl || "",
     name: value?.name || "",
     email: value?.email || "",
-    gender: value?.gender || "woman",
-    outdatedPassword: "",
-    newPassword: "",
-    repeatNewPassword: "",
+    gender: value?.gender || "female",
+    // outdatedPassword: "",
+    // newPassword: "",
+    // repeatNewPassword: "",
+    password: "",
   };
 
   const handleKeyDown = useCallback(
@@ -66,13 +66,13 @@ export default function SettingModal() {
   };
 
   const handleSubmit = (values, actions) => {
-    const userData = {
-      ...values,
-      idUser: value.id,
-    };
-    console.log(userData);
-    update;
-    dispatch(update(userData));
+    // const userData = {
+    //   ...values,
+    //   idUser: value.id,
+    // };
+    console.log(values);
+
+    dispatch(update(values));
 
     actions.resetForm();
   };
@@ -167,18 +167,30 @@ export default function SettingModal() {
 
                   <div className={css.genderOptions}>
                     <div className={css.genderWrapper}>
-                      <Field type="radio" name="gender" id="woman" checked />
+                      <Field
+                        type="radio"
+                        name="gender"
+                        id="woman"
+                        value="female"
+                        checked
+                      />
                       <label
                         htmlFor="woman"
                         name="gender"
                         className={css.genderInput}
-                        value="woman"
+                        // value="woman"
                       >
                         Woman
                       </label>
                     </div>
                     <div className={css.genderWrapper}>
-                      <Field type="radio" name="gender" id="man" value="man" />
+                      <Field
+                        type="radio"
+                        name="gender"
+                        id="man"
+                        // value="man"
+                        value="male"
+                      />
                       <label htmlFor="man" className={css.genderInput}>
                         Man
                       </label>
@@ -212,7 +224,8 @@ export default function SettingModal() {
                     Outdated password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      name="outdatedPassword"
+                      // name="outdatedPassword"
+                      name="password"
                       placeholder="Password"
                     />
                     {openPassword ? (
@@ -231,7 +244,8 @@ export default function SettingModal() {
                     New password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      name="newPassword"
+                      // name="newPassword"
+                      name="password"
                       placeholder="Password"
                     />
                     {openPassword ? (
@@ -250,7 +264,8 @@ export default function SettingModal() {
                     Repeat new password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      name="repeatNewPassword"
+                      // name="repeatNewPassword"
+                      name="password"
                       placeholder="Password"
                     />
                     {openPassword ? (
