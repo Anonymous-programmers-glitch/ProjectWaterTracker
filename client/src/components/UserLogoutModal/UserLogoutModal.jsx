@@ -3,11 +3,9 @@ import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import "./UserLogoutModal.module.css";
-import {
-  closeLogoutModal,
-  selectLogoutModal,
-} from "../../redux/modal/modalSlice";
-import { logout } from "../../redux/auth/operations";
+import { closeLogoutModal } from "../../redux/modal/slice";
+import { selectLogoutModal } from "../../redux/modal/selectors";
+import { logout } from "../../redux/user/operations";
 
 const UserLogoutModal = () => {
   const dispatch = useDispatch();
@@ -28,7 +26,7 @@ const UserLogoutModal = () => {
         dispatch(closeLogoutModal());
       }
     },
-    [dispatch],
+    [dispatch]
   );
 
   useEffect(() => {

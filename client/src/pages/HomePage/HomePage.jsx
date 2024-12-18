@@ -12,9 +12,9 @@ import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
-import { refreshUser } from "../../redux/auth/operations.js";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
-import { openAddModal, selectAddModal } from "../../redux/modal/modalSlice.js";
+import { openAddModal } from "../../redux/modal/slice.js";
+import { selectAddModal } from "../../redux/modal/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
 import {
   getError,
@@ -75,7 +75,7 @@ function HomePage() {
     for (let i = 1; i <= countDayofMonth; i++) {
       currentDay[0] = i;
       const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-"),
+        (data) => data.date === currentDay.join("-")
       );
 
       if (isDay) {

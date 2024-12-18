@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
-import { closeAddModal, selectAddModal } from "../../redux/modal/modalSlice.js";
+import { closeAddModal } from "../../redux/modal/slice.js";
+import { selectAddModal } from "../../redux/modal/selectors.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
 import XMarkOutline from "../ui/icons/xMarkOutline";
@@ -35,7 +36,7 @@ const AddWaterModal = () => {
         onClose();
       }
     },
-    [onClose],
+    [onClose]
   );
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const AddWaterModal = () => {
                       onClick={() =>
                         setFieldValue(
                           "manualAmount",
-                          Math.max(0, values.manualAmount - 50),
+                          Math.max(0, values.manualAmount - 50)
                         )
                       }
                     >
