@@ -4,10 +4,10 @@ import { condition } from "../conditions.js";
 
 export const fetchWaterToday = createAsyncThunk(
   "today/fetchAllWaterToday",
-  async (_, thunkAPI) => {
+  async (date, thunkAPI) => {
     try {
-      const { data } = await axios.get("/water/day");
-      return data;
+      const { data } = await axios.get(`/water/day/${date}`);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
