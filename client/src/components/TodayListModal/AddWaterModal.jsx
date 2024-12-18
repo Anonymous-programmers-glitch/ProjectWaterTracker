@@ -1,23 +1,31 @@
 import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import dayjs from "dayjs";
+import { useDispatch, useSelector } from "react-redux";
+import { closeAddModal, selectAddModal } from "../../redux/modal/modalSlice.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
 import XMarkOutline from "../ui/icons/xMarkOutline";
-import GlassOfWater from "../ui/icons/GlassOfWater";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
 import css from "./TodayListModal.module.css";
 
-const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
-  const [time, setTime] = useState(
-    initialData?.time || dayjs().format("HH:mm"),
-  );
+const AddWaterModal = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector(selectAddModal);
+  console.log(isOpen);
+
+  function onClose() {
+    dispatch(closeAddModal());
+  }
+
+  const [time, setTime] = useState(dayjs().format("HH:mm"));
 
   const handleSubmit = (values) => {
-    const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    onSave({ ...values, amount: values.manualAmount, time: formattedTime });
+    console.log(values);
+    // const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
+    // onSave({ ...values, amount: values.manualAmount, time: formattedTime });
     onClose();
   };
 
@@ -51,11 +59,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
         <div className={css.modal}>
           <div className={css.modalHeaderWrapper}>
             <div className={css.modalHeader}>
-              <h2>
-                {mode === "add"
-                  ? "Add water"
-                  : "Edit the entered amount of water"}
-              </h2>
+              <h2>Add water</h2>
               <button
                 className={css.modalClose}
                 onClick={onClose}
@@ -66,19 +70,9 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
             </div>
           </div>
 
-          {mode === "edit" && initialData && (
-            <div className={css.editInfo}>
-              <div className={css.watericon}>
-                <GlassOfWater size={36} />
-              </div>
-              <strong>{initialData.amount} ml</strong>
-              <strong className={css.time}>{initialData.time}</strong>
-            </div>
-          )}
-
           <Formik
             initialValues={{
-              manualAmount: initialData?.amount || 0,
+              manualAmount: 0,
               manualTime: time,
             }}
             enableReinitialize
@@ -87,11 +81,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>
-                    {mode === "add"
-                      ? "Choose a value:"
-                      : "Correct entered data:"}
-                  </p>
+                  <p>"Choose a value:"</p>
                 </div>
 
                 <div className={css.formGroupWater}>
@@ -173,4 +163,4 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
   );
 };
 
-export default TodayListModal;
+export default AddWaterModal;
