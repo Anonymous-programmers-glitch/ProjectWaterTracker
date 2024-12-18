@@ -1,4 +1,4 @@
-function onSun({ size = "32" }) {
+function OnSun({ size = "32" }) {
   return (
     <svg
       height={size}

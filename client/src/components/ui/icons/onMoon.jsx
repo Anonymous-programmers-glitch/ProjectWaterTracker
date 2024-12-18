@@ -1,4 +1,4 @@
-function onMoon({ size = "32" }) {
+function OnMoon({ size = "32" }) {
   return (
     <svg
       height={size}
