@@ -42,7 +42,7 @@ export default function SettingModal() {
   const dispatch = useDispatch();
 
   const initialValues = {
-    avatar: value?.photo || "",
+    avatarUrl: value?.photo || user.avatarUrl || "",
     name: value?.name || "",
     email: value?.email || "",
     gender: value?.gender || "woman",
@@ -65,10 +65,13 @@ export default function SettingModal() {
   };
 
   const handleSubmit = (values, actions) => {
-    console.log(values);
+    const userData = {
+      ...values,
+      idUser: value.id,
+    };
+    console.log(userData);
 
-    dispatch(updateUser(values));
-    console.log(updateUser(values));
+    dispatch(updateUser(userData));
 
     actions.resetForm();
   };
@@ -87,6 +90,31 @@ export default function SettingModal() {
   return (
     <ModalBackdrop onClick={() => dispatch(closeSettingModal())}>
       <div className={css.container} onClick={(e) => e.stopPropagation()}>
+        <h3 className={css.photoTitle}>Your photo</h3>
+        <div className={css.imgWrapper}>
+          <img
+            src={initialValues.avatarUrl || user.avatar}
+            alt="User photo"
+            className={css.photo}
+          />
+          <button
+            type="button"
+            className={css.buttonUpload}
+            onClick={() => document.getElementById("avatarInput").click()}
+          >
+            {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
+            <div className={css.uploadSvg}>
+              <ArrowUpTrayOutline size="16" />
+            </div>
+            Upload a photo
+            <input
+              id="avatarInput"
+              type="file"
+              name="avatar"
+              className={css.uploadPhotoInput}
+            />
+          </button>
+        </div>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -107,39 +135,13 @@ export default function SettingModal() {
                 <MarkOutline />
               </div>
 
-              <h3 className={css.photoTitle}>Your photo</h3>
-              <div className={css.imgWrapper}>
-                <img src={user.avatar} alt="User photo" className={css.photo} />
-                <button
-                  type="button"
-                  className={css.buttonUpload}
-                  onClick={() => document.getElementById("avatarInput").click()}
-                >
-                  {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
-                  <div className={css.uploadSvg}>
-                    <ArrowUpTrayOutline size="16" />
-                  </div>
-                  Upload a photo
-                  <Field
-                    id="avatarInput"
-                    type="file"
-                    name="avatar"
-                    className={css.uploadPhotoInput}
-                  />
-                </button>
-              </div>
               <div className={css.wrapperTwoBlocks}>
                 <div className={css.firstWrapper}>
                   <h3 className={css.genderTitle}>Your gender identity</h3>
 
                   <div className={css.genderOptions}>
                     <div className={css.genderWrapper}>
-                      <input
-                        type="radio"
-                        name="gender"
-                        id="woman"
-                        defaultChecked
-                      />
+                      <Field type="radio" name="gender" id="woman" checked />
                       <label
                         htmlFor="woman"
                         name="gender"
@@ -150,7 +152,7 @@ export default function SettingModal() {
                       </label>
                     </div>
                     <div className={css.genderWrapper}>
-                      <input type="radio" name="gender" id="man" value="man" />
+                      <Field type="radio" name="gender" id="man" value="man" />
                       <label htmlFor="man" className={css.genderInput}>
                         Man
                       </label>
@@ -239,7 +241,11 @@ export default function SettingModal() {
                 </div>
               </div>
               <div className={css.btn}>
-                <Button type="submit" cssStyle={css.btn} onClick={handleSubmit}>
+                <Button
+                  type="submit"
+                  cssStyle={css.btn}
+                  // onClick={handleSubmit}
+                >
                   Submit
                 </Button>
               </div>
