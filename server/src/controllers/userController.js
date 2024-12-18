@@ -22,15 +22,10 @@ export const getUserInfo = async (req, res, next) => {
 
 export const updateUserController = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const updates = { ...req.body };
+    const { _id } = req.user;
+    const data = { ...req.body };
 
-    if (req.file) {
-      const avatarUrl = await saveFileToCloudinary(req.file);
-      updates.avatarUrl = avatarUrl;
-    }
-
-    const updatedUser = await updateUserInfo(id, updates);
+    const updatedUser = await updateUserInfo({ _id, data });
 
     if (!updatedUser) {
       return next(createHttpError(404, 'User not found'));
@@ -39,7 +34,7 @@ export const updateUserController = async (req, res, next) => {
     res.json({
       status: 200,
       message: 'User information updated successfully',
-      data: { updatedUser },
+      data: updatedUser,
     });
   } catch (error) {
     next(error);
