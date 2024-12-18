@@ -10,12 +10,12 @@ import WaterListMonth from "../../components/HomePage/waterListMonth/WaterListMo
 import WaterListToday from "../../components/HomePage/waterListToday/WaterListToday.jsx";
 import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
+import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { openAddModal } from "../../redux/modal/slice.js";
-import { selectAddModal } from "../../redux/modal/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
 import {
   getError,
@@ -23,7 +23,6 @@ import {
   getIsWaterToday,
 } from "../../redux/waterToday/selectors.js";
 
-import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
 import { dataMonth } from "../../tempData/homepagetempdata.js";
 import css from "./homepage.module.css";
 
@@ -116,6 +115,7 @@ function HomePage() {
         </WaterListMonth>
       </div>
       <AddWaterModal />
+      <TodayListModal />
     </section>
   );
 }

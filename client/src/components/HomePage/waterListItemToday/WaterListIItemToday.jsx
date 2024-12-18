@@ -1,12 +1,11 @@
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
+import { openEditModal } from "../../../redux/modal/slice.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
 import TrashOutline from "../../ui/icons/TrashOutline.jsx";
-import TodayListModal from "../../TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
 import css from "./waterlistitemtoday.module.css";
-import { useState } from "react";
 
 function WaterListIItemToday({ item }) {
   const dispatch = useDispatch();
@@ -15,24 +14,8 @@ function WaterListIItemToday({ item }) {
   const size = isMobile ? "26" : "36";
   const { _id, amount, date } = item;
 
-  // Состояние для отображения модального окна
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  // Открытие модального окна
   const handleEdit = () => {
-    setIsEditModalOpen(true);
-  };
-
-  // Закрытие модального окна
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-  };
-
-  // Сохранение изменений
-  const handleSave = (updatedData) => {
-    console.log("Updated data:", updatedData);
-    // Здесь нужно добавить логику для обновления записи (например, обновление в Redux)
-    closeEditModal();
+    dispatch(openEditModal({ _id, amount, date }));
   };
 
   const handleDelete = () => {};
@@ -56,15 +39,6 @@ function WaterListIItemToday({ item }) {
           </button>
         </div>
       </li>
-
-      {/* Модальное окно редактирования */}
-      {/*<TodayListModal*/}
-      {/*  isOpen={isEditModalOpen}*/}
-      {/*  mode="edit"*/}
-      {/*  initialData={{ amount: volumeOfWater, time }}*/}
-      {/*  onSave={handleSave}*/}
-      {/*  onClose={closeEditModal}*/}
-      {/*/>*/}
     </>
   );
 }
