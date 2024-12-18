@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signup } from "../../../redux/auth/operations.js";
+import { signup } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
 import Button from "../../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";

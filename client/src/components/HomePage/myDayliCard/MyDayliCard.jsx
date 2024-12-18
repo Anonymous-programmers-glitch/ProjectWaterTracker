@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../redux/auth/selectors.js";
-
+import { selectUser } from "../../../redux/user/selectors";
 import css from "./mydailycard.module.css";
 
 function MyDailyCard() {

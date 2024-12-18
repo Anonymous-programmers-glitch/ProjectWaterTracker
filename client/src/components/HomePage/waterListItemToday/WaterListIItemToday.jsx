@@ -1,43 +1,24 @@
+import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-import { deleteWater } from "../../../redux/waterToday/waterTodayslice.js";
+import { openEditModal } from "../../../redux/modal/slice.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
 import TrashOutline from "../../ui/icons/TrashOutline.jsx";
-import TodayListModal from "../../TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
 import css from "./waterlistitemtoday.module.css";
-import { useState } from "react";
 
 function WaterListIItemToday({ item }) {
   const dispatch = useDispatch();
   const sizeWindow = resizeWindow();
   const isMobile = sizeWindow <= 767;
   const size = isMobile ? "26" : "36";
-  const { id, volumeOfWater, time } = item;
+  const { _id, amount, date } = item;
 
-  // Состояние для отображения модального окна
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  // Открытие модального окна
   const handleEdit = () => {
-    setIsEditModalOpen(true);
+    dispatch(openEditModal({ _id, amount, date }));
   };
 
-  // Закрытие модального окна
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-  };
-
-  // Сохранение изменений
-  const handleSave = (updatedData) => {
-    console.log("Updated data:", updatedData);
-    // Здесь нужно добавить логику для обновления записи (например, обновление в Redux)
-    closeEditModal();
-  };
-
-  const handleDelete = () => {
-    dispatch(deleteWater(id));
-  };
+  const handleDelete = () => {};
 
   return (
     <>
@@ -46,8 +27,8 @@ function WaterListIItemToday({ item }) {
           <div className={css.watericon}>
             <GlassOfWater size={size} />
           </div>
-          <p className={css.volumewater}>{volumeOfWater} mL</p>
-          <p className={css.time}>{time}</p>
+          <p className={css.volumewater}>{amount} mL</p>
+          <p className={css.time}>{dayjs(date).format("HH:mm")}</p>
         </div>
         <div className={css.rightcontent}>
           <button className={css.pencilicon} onClick={handleEdit}>
@@ -58,18 +39,8 @@ function WaterListIItemToday({ item }) {
           </button>
         </div>
       </li>
-
-      {/* Модальное окно редактирования */}
-      <TodayListModal
-        isOpen={isEditModalOpen}
-        mode="edit"
-        initialData={{ amount: volumeOfWater, time }}
-        onSave={handleSave}
-        onClose={closeEditModal}
-      />
     </>
   );
 }
 
 export default WaterListIItemToday;
-
