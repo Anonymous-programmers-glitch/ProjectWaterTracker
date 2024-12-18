@@ -9,6 +9,6 @@ export const getUserById = async (userId) => {
   return user;
 };
 
-export const updateUserInfo = async (userId, updates) => {
-  return await UserCollection.findByIdAndUpdate(userId, updates, { new: true });
+export const updateUserInfo = async ({ _id, data }) => {
+  return await UserCollection.findByIdAndUpdate(_id, data, { new: true });
 };
