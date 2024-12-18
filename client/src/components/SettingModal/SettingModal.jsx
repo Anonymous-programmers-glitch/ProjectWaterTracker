@@ -16,7 +16,7 @@ import ArrowUpTrayOutline from "../ui/icons/ArrowUpTrayOutline.jsx";
 import { closeSettingModal } from "../../redux/modal/slice.js";
 import { selectSettingModal } from "../../redux/modal/selectors.js";
 import { update } from "../../redux/user/operations.js";
-import { uploadAvatar } from "../../redux/settings/operations.js";
+import { updateUserPhoto } from "../../redux/settings/operations.js";
 // import isLoading from "../../redux/user/selectors.js";
 
 const FeedbackSchema = Yup.object().shape({
@@ -100,7 +100,7 @@ export default function SettingModal() {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("avatar", selectedFile);
-      dispatch(uploadAvatar(formData));
+      dispatch(updateUserPhoto(formData));
       setSelectedFile(null);
     } else {
       document.getElementById("avatarInput").click();
