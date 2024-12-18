@@ -2,70 +2,69 @@ import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectEditData,
-  selectEditModal,
-} from "../../redux/modal/selectors.js";
-import { closeEditModal, closeLogoutModal } from "../../redux/modal/slice.js";
+import { closeAddModal } from "../../redux/modal/slice.js";
+import { selectAddModal } from "../../redux/modal/selectors.js";
+import { addWaterToday } from "../../redux/waterToday/operations.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
 import XMarkOutline from "../ui/icons/xMarkOutline";
-import GlassOfWater from "../ui/icons/GlassOfWater";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
 import css from "./TodayListModal.module.css";
 
-const TodayListModal = () => {
-  // { isOpen, mode, initialData, onSave, onClose }
+const AddWaterModal = () => {
   const dispatch = useDispatch();
-  const isOpenModal = useSelector(selectEditModal);
-  const data = useSelector(selectEditData);
-  // const [time, setTime] = useState(
-  //   initialData?.time || dayjs().format("HH:mm"),
-  // );
-  //
-  const handleSubmit = (values) => {
-    // const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    // onSave({ ...values, amount: values.manualAmount, time: formattedTime });
-    // onClose();
+  const isOpen = useSelector(selectAddModal);
+
+  function onClose() {
+    dispatch(closeAddModal());
+  }
+
+  const [time, setTime] = useState(dayjs().format("HH:mm"));
+
+  const handleSubmit = (value) => {
+    const { manualAmount, manualTime } = value;
+    const dateNow = dayjs().format("YYYY-MM-DD");
+    const date = dayjs(`${dateNow} ${manualTime}`).toISOString();
+    dispatch(addWaterToday({ amount: manualAmount, date: date }));
+    onClose();
   };
 
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === "Escape") {
+        onClose();
       }
     },
-    [isOpenModal],
+    [onClose],
   );
-  function handelCloseModal() {
-    dispatch(closeEditModal());
-  }
+
   useEffect(() => {
-    if (isOpenModal) {
+    if (isOpen) {
       document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpenModal, handleKeyDown]);
+  }, [isOpen, handleKeyDown]);
 
   return (
-    isOpenModal && (
+    isOpen && (
       <ModalBackdrop
         onClick={(e) => {
           if (e.target === e.currentTarget) {
-            handelCloseModal();
+            onClose();
           }
         }}
       >
         <div className={css.modal}>
           <div className={css.modalHeaderWrapper}>
             <div className={css.modalHeader}>
-              <h2>Edit the entered amount of water</h2>
+              <h2>Add water</h2>
               <button
                 className={css.modalClose}
-                onClick={handelCloseModal}
+                onClick={onClose}
                 aria-label="Close"
               >
                 <XMarkOutline className={css.modalCloseIcon} />
@@ -73,20 +72,10 @@ const TodayListModal = () => {
             </div>
           </div>
 
-          {/*{mode === "edit" && initialData && (*/}
-          {/*  <div className={css.editInfo}>*/}
-          {/*    <div className={css.watericon}>*/}
-          {/*      <GlassOfWater size={36} />*/}
-          {/*    </div>*/}
-          {/*    <strong>{initialData.amount} ml</strong>*/}
-          {/*    <strong className={css.time}>{initialData.time}</strong>*/}
-          {/*  </div>*/}
-          {/*)}*/}
-
           <Formik
             initialValues={{
               manualAmount: 0,
-              manualTime: 0,
+              manualTime: time,
             }}
             enableReinitialize
             onSubmit={handleSubmit}
@@ -94,7 +83,7 @@ const TodayListModal = () => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>Choose a value:</p>
+                  <p>"Choose a value:"</p>
                 </div>
 
                 <div className={css.formGroupWater}>
@@ -176,4 +165,4 @@ const TodayListModal = () => {
   );
 };
 
-export default TodayListModal;
+export default AddWaterModal;

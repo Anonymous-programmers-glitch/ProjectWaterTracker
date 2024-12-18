@@ -10,7 +10,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  * After successful registration, you will need to go through verification. An email with a link has been sent to the email address you provided during registration.
  */
 export const signup = createAsyncThunk(
-  "auth/signup",
+  "user/signup",
   async (credentials, thunkAPI) => {
     try {
       const { user } = (await axios.post("/auth/register", credentials)).data;
@@ -28,11 +28,10 @@ export const signup = createAsyncThunk(
  * After successful login, add the access token to the HTTP header
  */
 export const login = createAsyncThunk(
-  "auth/login",
+  "user/login",
   async (credentials, thunkAPI) => {
     try {
       const response = (await axios.post("/auth/login", credentials)).data;
-      // localStorage.setItem("accessToken", response.data.accessToken);
       setAuthHeader(response.data.accessToken);
       return response.data;
     } catch (error) {
@@ -47,7 +46,7 @@ export const login = createAsyncThunk(
  *
  *  After successful logout, remove the access token from the HTTP header
  */
-export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
     clearAuthHeader();
@@ -60,19 +59,19 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
  * GET @ /users/current
  * headers: Authorization: Bearer token
  */
-export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+
+export const refresh = createAsyncThunk(
+  "user/refresh",
   async (_, thunkAPI) => {
     const reduxState = thunkAPI.getState();
-    if (!reduxState.auth.accessToken) {
+    if (!reduxState.user.accessToken) {
       return thunkAPI.rejectWithValue("No access token available");
     }
     try {
-      setAuthHeader(reduxState.auth.accessToken);
+      setAuthHeader(reduxState.user.accessToken);
 
       const response = (await axios.get("/users/current")).data;
       setAuthHeader(response.data.accessToken);
-      console.log("response.data.accessToken :>> ", response.data.accessToken);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -81,8 +80,25 @@ export const refreshUser = createAsyncThunk(
   {
     condition: (_, thunkAPI) => {
       const reduxState = thunkAPI.getState();
-      return reduxState.auth.accessToken !== null;
+      return reduxState.user.accessToken !== null;
     },
+  }
+);
+
+/*
+ * PATCH @ /users
+ * headers: Authorization: Bearer token
+ */
+
+export const update = createAsyncThunk(
+  "user/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = (await axios.patch(`/users`, data)).data;
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.massage);
+    }
   }
 );
 
