@@ -7,6 +7,7 @@ import { upload } from '../middlewares/uploid.js';
 import { userInfoUpdatedSchema } from '../validation/user.js';
 
 import {
+  currentUserController,
   getUserInfo,
   updateUserController,
 } from '../controllers/userController.js';
@@ -14,6 +15,7 @@ import {
 const router = express.Router();
 
 router.use(authenticate);
+router.get('/current', authenticate, ctrlWrapper(currentUserController));
 
 router.get('/:id', isValidId, ctrlWrapper(getUserInfo));
 

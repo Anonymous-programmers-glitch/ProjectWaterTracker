@@ -12,7 +12,7 @@ const waterSchema = new Schema(
       type: Number,
       required: true,
     },
-    currentDailyNorm: {
+    currentDailyNorma: {
       type: Number,
       default: 2000,
     },

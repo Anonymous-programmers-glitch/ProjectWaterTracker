@@ -18,7 +18,12 @@ function handleRejected(state, action) {
 const slice = createSlice({
   name: "today",
   initialState: {
-    items: [],
+    items: {
+      percentage: 0,
+      recordsCount: 0,
+      totalDayWater: 0,
+      waterRecords: [],
+    },
     loading: false,
     error: null,
   },
@@ -64,4 +69,4 @@ const slice = createSlice({
       .addCase(editWaterToday.rejected, handleRejected);
   },
 });
-export const waterTodayReducer = slice.reducer;
+export default slice.reducer;

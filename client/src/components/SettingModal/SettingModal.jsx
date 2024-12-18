@@ -16,10 +16,8 @@ import MarkOutline from "../ui/icons/xMarkOutline.jsx";
 import EyeOutline from "../../components/ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
 import ArrowUpTrayOutline from "../ui/icons/ArrowUpTrayOutline.jsx";
-import {
-  closeSettingModal,
-  selectSettingModal,
-} from "../../redux/modal/modalSlice.js";
+import { closeSettingModal } from "../../redux/modal/slice.js";
+import { selectSettingModal } from "../../redux/modal/selectors.js";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string().min(1, "Name is Too Short."),
