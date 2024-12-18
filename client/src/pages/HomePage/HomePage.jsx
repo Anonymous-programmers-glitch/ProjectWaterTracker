@@ -32,16 +32,15 @@ function HomePage() {
   const [newData, setNewData] = useState([]);
   const dateNow = dayjs().format("YYYY-MM-DD");
 
-  useEffect(() => {
-    dispatch(fetchWaterToday(dateNow));
-  }, [dispatch]);
-
   const { waterRecords } = useSelector(getIsWaterToday);
   const IsLoading = useSelector(getIsLoading);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
 
-  // Переформирование данных для текущего месяца
+  useEffect(() => {
+    dispatch(fetchWaterToday(dateNow));
+  }, [dispatch]);
+
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
     const countDayofMonth = dayjs(currentMonth).daysInMonth();
@@ -96,7 +95,7 @@ function HomePage() {
       <div className={css.today}>
         <h2 className={css.title}>Today</h2>
 
-        {waterRecords.length > 0 ? (
+        {!isError ? (
           <WaterListToday>
             {waterRecords.map((item) => (
               <WaterListIItemToday key={item._id} item={item} />

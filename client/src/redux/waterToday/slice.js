@@ -42,7 +42,8 @@ const slice = createSlice({
       .addCase(addWaterToday.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items.push(action.payload);
+        console.log(action.payload);
+        state.items.waterRecords.push(action.payload.waterRecord);
       })
       .addCase(addWaterToday.rejected, handleRejected);
     builder
