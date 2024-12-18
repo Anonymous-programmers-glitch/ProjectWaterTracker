@@ -5,7 +5,7 @@ function ToggleOff({ size = "42" }) {
       width={size}
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >
