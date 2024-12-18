@@ -1,11 +1,15 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { setAuthHeader } from "../../api/operationsAPI.js";
 import { condition } from "../conditions.js";
 
 export const fetchWaterToday = createAsyncThunk(
   "today/fetchAllWaterToday",
   async (date, thunkAPI) => {
     try {
+      const reduxState = thunkAPI.getState();
+
+      setAuthHeader(reduxState.auth.accessToken);
       const { data } = await axios.get(`/water/day/${date}`);
       return data.data;
     } catch (error) {
