@@ -9,6 +9,7 @@
   line-height: 125%;
   text-align: center;
   color: var(--primery-color-white);
+  transition: box-shadow 0.3s ease;
 }
 
 .button:hover {
