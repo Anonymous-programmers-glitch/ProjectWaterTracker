@@ -111,7 +111,7 @@ export const deleteWaterController = async (req, res, next) => {
 
   // res.status(204).send({ message: 'Water record is deleted successfully' });
   res.json({
-    status: 204,
+    status: 200,
     message: 'Water record is deleted successfully',
     _id,
   });
