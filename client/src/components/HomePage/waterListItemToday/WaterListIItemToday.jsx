@@ -14,8 +14,12 @@ function WaterListIItemToday({ item }) {
   const isMobile = sizeWindow <= 767;
   const size = isMobile ? "26" : "36";
   const { _id, amount, date } = item;
+  // getIsWaterToday
 
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    const elem = e.currentTarget;
+    const id = elem.closest("li").id;
+    console.log(id);
     dispatch(openEditModal({ _id, amount, date }));
   };
 
