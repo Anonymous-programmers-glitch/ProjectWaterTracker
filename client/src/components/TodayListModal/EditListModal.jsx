@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,8 +12,9 @@ import XMarkOutline from "../ui/icons/xMarkOutline.jsx";
 import MinusSmall from "../ui/icons/MinusSmall.jsx";
 import PlusSmall from "../ui/icons/PlusSmall.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
+import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
-import { editWaterToday } from "../../redux/waterToday/operations.js"; 
+import { editWaterToday } from "../../redux/waterToday/operations.js";
 
 const EditListModal = () => {
   const dispatch = useDispatch();
@@ -26,15 +27,14 @@ const EditListModal = () => {
 
   const handleSubmit = (values) => {
     if (data?.id) {
-      // Перезаписываем данные на сервере и сохраняем в Redux
       dispatch(
         editWaterToday({
-          id: data.id,  // ID записи для обновления
-          manualAmount: values.manualAmount,  // Новое количество воды
-          manualTime: values.manualTime,  // Новое время
+          id: data.id,
+          manualAmount: values.manualAmount,
+          manualTime: values.manualTime,
         })
       );
-      handelCloseModal();  // Закрываем модальное окно после сохранения
+      handelCloseModal();
     } else {
       console.error("Invalid data ID");
     }
@@ -46,7 +46,7 @@ const EditListModal = () => {
         handelCloseModal();
       }
     },
-    [handelCloseModal]  // Добавлена зависимость от handelCloseModal
+    [handelCloseModal]
   );
 
   useEffect(() => {
@@ -81,10 +81,18 @@ const EditListModal = () => {
             </div>
           </div>
 
+          <div className={css.editInfo}>
+            <div className={css.watericon}>
+              <GlassOfWater size={36} />
+            </div>
+            <strong>{data?.manualAmount || 0} ml</strong>
+            <strong className={css.time}>{data?.manualTime || "00:00"}</strong>
+          </div>
+
           <Formik
             initialValues={{
-              manualAmount: data?.manualAmount || 0,  // Инициализация значением из данных
-              manualTime: data?.manualTime || "00:00",  // Инициализация значением из данных
+              manualAmount: data?.manualAmount || 0,
+              manualTime: data?.manualTime || "00:00",
             }}
             enableReinitialize
             onSubmit={handleSubmit}
@@ -92,11 +100,11 @@ const EditListModal = () => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>Choose a value:</p>
+                  <p>Correct entered data:</p>
                 </div>
 
                 <div className={css.formGroupWater}>
-                  <label className={css.labelWater}>Amount of water:</label>
+                  <label className={css.label}>Amount of water:</label>
                   <div className={css.amountButtons}>
                     <button
                       className={css.buttonWater}
@@ -136,6 +144,24 @@ const EditListModal = () => {
                     value={values.manualTime}
                     onChange={(e) => {
                       setFieldValue("manualTime", e.target.value);
+                    }}
+                  />
+                </div>
+
+                <div className={css.formGroupTime}>
+                  <label htmlFor="manualAmount" className={css.labelWater}>
+                    Enter the value of the water used:
+                  </label>
+                  <Inputs
+                    className={css.customField}
+                    type="number"
+                    name="manualAmount"
+                    placeholder="Enter amount"
+                    step="50"
+                    value={values.manualAmount}
+                    onChange={(e) => {
+                      const value = Math.max(0, Number(e.target.value));
+                      setFieldValue("manualAmount", value);
                     }}
                   />
                 </div>
