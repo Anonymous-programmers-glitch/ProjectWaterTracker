@@ -70,8 +70,9 @@ export default function SignInForm() {
         return (
           <Form autoComplete="off" className={css.wrapper}>
             <h3 className={css.h3}>Sign In</h3>
-            <label className={css.label} htmlFor={signinId}>
-              Enter your email
+            <div>
+              <label className={css.label} htmlFor={signinId}>
+                Enter your email </label>
               <Field
                 type="email"
                 name="email"
@@ -85,9 +86,10 @@ export default function SignInForm() {
                 component="span"
                 className={css.error}
               />
-            </label>
-            <label className={css.label} htmlFor={passwordId}>
-              Enter your password
+            </div>
+            <div>
+              <label className={css.label} htmlFor={passwordId}>
+                Enter your password </label>
               <div className={css.psw}>
                 <Field
                   type={inputType}
@@ -105,16 +107,16 @@ export default function SignInForm() {
                 component="span"
                 className={css.error}
               />
-            </label>
-            <Button cssstyle="signin">Sign In</Button>
-            <NavLink to="/forgotpassword" className={css.link}>
-              <p>Forgot password?</p>
-            </NavLink>
-            <NavLink to="/signup" className={css.link}>
-              <p>Sign up</p>
-            </NavLink>
+            </div>
+              <Button cssstyle="signin">Sign In</Button>
+              <NavLink to="/forgotpassword" className={css.link}>
+                <p>Forgot password?</p>
+              </NavLink>
+              <NavLink to="/signup" className={css.link}>
+                <p>Sign up</p>
+              </NavLink>
           </Form>
-        );
+      );
       }}
     </Formik>
   );

@@ -1,8 +1,16 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { login, logout, refresh, signup, update } from "./operations";
+import {
+  login,
+  logout,
+  refresh,
+  signup,
+  update,
+  updateAvatar,
+} from "./operations";
 
 const initialState = {
   user: null,
+  avatarUrl: null,
   accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -64,10 +72,21 @@ const slice = createSlice({
           ...state.user,
           ...action.payload.user,
         };
+
+        builder.addCase(updateAvatar.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.avatarUrl = action.payload.data.avatarUrl;
+        });
       })
 
       .addMatcher(
-        isAnyOf(signup.pending, login.pending, logout.pending, update.pending),
+        isAnyOf(
+          signup.pending,
+          login.pending,
+          logout.pending,
+          update.pending,
+          updateAvatar.pending
+        ),
         handlePending
       )
       .addMatcher(
@@ -75,7 +94,8 @@ const slice = createSlice({
           signup.rejected,
           login.rejected,
           logout.rejected,
-          update.rejected
+          update.rejected,
+          updateAvatar.rejected
         ),
         handleRejected
       );
