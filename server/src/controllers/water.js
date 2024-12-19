@@ -109,7 +109,12 @@ export const deleteWaterController = async (req, res, next) => {
     return next(createHttpError(404, "Water record isn't foudn"));
   }
 
-  res.status(204).send({ message: 'Water record is deleted successfully' });
+  // res.status(204).send({ message: 'Water record is deleted successfully' });
+  res.json({
+    status: 204,
+    message: 'Water record is deleted successfully',
+    _id,
+  });
 };
 
 // export const getWaterByMonthController = async (req, res) => {
