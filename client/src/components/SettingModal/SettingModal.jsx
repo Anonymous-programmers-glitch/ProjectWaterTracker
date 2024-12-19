@@ -7,7 +7,7 @@ import Button from "../ui/Button/Button.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { useState, useEffect, useCallback } from "react";
-import { selectUser } from "../../redux/settings/selectors.js";
+import { selectUser } from "../../redux/user/selectors.js";
 import { useSelector } from "react-redux";
 import MarkOutline from "../ui/icons/xMarkOutline.jsx";
 import EyeOutline from "../../components/ui/icons/EyeOutline.jsx";
@@ -20,6 +20,10 @@ import { updateUserPhoto } from "../../redux/settings/operations.js";
 // import isLoading from "../../redux/user/selectors.js";
 
 const FeedbackSchema = Yup.object().shape({
+  gender: Yup.string().oneOf(
+    ["female", "male"],
+    "Please select a valid gender."
+  ),
   name: Yup.string().min(1, "Name is Too Short."),
   email: Yup.string().email().required("Email is Required."),
   outdatedPassword: Yup.string()
@@ -32,6 +36,28 @@ const FeedbackSchema = Yup.object().shape({
     .min(8, "Password is too short - should be 8 chars minimum.")
     .matches(/(?=.*[0-9])/, "Password must contain a number."),
 });
+
+// const FeedbackSchema = Yup.object().shape({
+//   name: Yup.string().min(1, "Name is Too Short."),
+//   email: Yup.string().email().required("Email is Required."),
+
+//   outdatedPassword: Yup.string()
+//     .min(8, "Password is too short - should be 8 chars minimum.")
+//     .matches(/(?=.*[0-9])/, "Password must contain a number."),
+
+//   newPassword: Yup.string()
+//     .min(8, "Password is too short - should be 8 chars minimum.")
+//     .matches(/(?=.*[0-9])/, "Password must contain a number.")
+//     .notOneOf(
+//       [Yup.ref("outdatedPassword")],
+//       "New password cannot be the same as the old password"
+//     ),
+
+//   repeatNewPassword: Yup.string()
+//     .min(8, "Password is too short - should be 8 chars minimum.")
+//     .matches(/(?=.*[0-9])/, "Password must contain a number.")
+//     .oneOf([Yup.ref("newPassword")], "Passwords must match"),
+// });
 
 export default function SettingModal() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -49,7 +75,7 @@ export default function SettingModal() {
     // outdatedPassword: "",
     // newPassword: "",
     // repeatNewPassword: "",
-    password: "",
+    // password: "",
   };
 
   const handleKeyDown = useCallback(
@@ -76,6 +102,25 @@ export default function SettingModal() {
 
     actions.resetForm();
   };
+
+  // const handleSubmit = (values, actions) => {
+  //   console.log(values);
+
+  //   const updatedValues = {};
+
+  //   Object.keys(values).forEach((key) => {
+  //     if (values[key] !== initialValues[key]) {
+  //       updatedValues[key] = values[key];
+  //     }
+  //   });
+
+  //   if (Object.keys(updatedValues).length > 0) {
+  //     dispatch(update(updatedValues));
+  //   }
+  //   console.log(updatedValues);
+
+  //   actions.resetForm();
+  // };
 
   useEffect(() => {
     if (isSettingsOpen) {
@@ -172,7 +217,6 @@ export default function SettingModal() {
                         name="gender"
                         id="woman"
                         value="female"
-                        checked
                       />
                       <label
                         htmlFor="woman"
@@ -191,7 +235,11 @@ export default function SettingModal() {
                         // value="man"
                         value="male"
                       />
-                      <label htmlFor="man" className={css.genderInput}>
+                      <label
+                        htmlFor="man"
+                        name="gender"
+                        className={css.genderInput}
+                      >
                         Man
                       </label>
                     </div>
@@ -200,11 +248,9 @@ export default function SettingModal() {
                   <div className={css.userInfo}>
                     <label className={css.labelUserName}>
                       Name
-                      <Inputs
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                      ></Inputs>
+                      <Inputs type="text" name="name" placeholder="Name">
+                        {value.name}
+                      </Inputs>
                       <ErrorMessage name="name" component="span" />
                     </label>
 
@@ -218,7 +264,7 @@ export default function SettingModal() {
                   </div>
                 </div>
 
-                <div className={css.passwordWrapper}>
+                {/* <div className={css.passwordWrapper}>
                   <h3>Password</h3>
                   <label className={css.labelPassword}>
                     Outdated password:
@@ -279,7 +325,7 @@ export default function SettingModal() {
                     )}
                     <ErrorMessage name="repeatNewPassword" component="span" />
                   </label>
-                </div>
+                </div> */}
               </div>
               <div className={css.btn}>
                 <Button

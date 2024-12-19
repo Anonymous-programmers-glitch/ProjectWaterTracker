@@ -3,7 +3,7 @@
   padding: 32px 24px;
   max-width: 1008px;
   max-height: 592px;
-  background: #fff;
+  background: var(--primery-color-white);
   position: relative;
 }
 
