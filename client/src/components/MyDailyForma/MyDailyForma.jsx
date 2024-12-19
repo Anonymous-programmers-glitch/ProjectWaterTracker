@@ -6,7 +6,7 @@ import css from "./MyDailyForma.module.css";
 import Button from "../../components/ui/Button/Button";
 
 import { useDispatch, useSelector } from "react-redux";
-import MarkOutline from "../ui/icons/xMarkOutline.jsx";
+import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import {
   closeDailyNormaModal,

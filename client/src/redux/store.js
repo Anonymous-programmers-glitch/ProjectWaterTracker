@@ -15,13 +15,14 @@ import modalReducer from "./modal/slice.js";
 import userReducer from "./user/slice.js";
 import themeReducer from "./themeSlice/themeSlice.jsx";
 import waterTodayReducer from "./waterToday/slice.js";
+import waterMonthReducer from "./waterMonth/slice.js";
 
 const persistedThemeReducer = persistReducer(
   {
     key: "theme",
     storage,
   },
-  themeReducer
+  themeReducer,
 );
 const persistedAccessToken = persistReducer(
   {
@@ -29,7 +30,7 @@ const persistedAccessToken = persistReducer(
     storage,
     whitelist: ["accessToken"],
   },
-  userReducer
+  userReducer,
 );
 
 export const store = configureStore({
@@ -39,6 +40,7 @@ export const store = configureStore({
     modal: modalReducer,
     theme: persistedThemeReducer,
     today: waterTodayReducer,
+    month: waterMonthReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
