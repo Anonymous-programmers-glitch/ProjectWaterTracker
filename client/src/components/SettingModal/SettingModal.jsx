@@ -181,10 +181,10 @@ export default function SettingModal() {
 
       dispatch(closeSettingModal());
       // toast.success("Зміни успішно збережено!");
-      console.log("Успішна операція!");
+      alert("Успішна операція!");
     } catch (error) {
       // toast.error("Щось пішло не так.");
-      console.log("Щось пішло не так: " + error.message);
+      alert("Щось пішло не так: " + error.message);
     }
 
     actions.resetForm();
