@@ -28,7 +28,7 @@ router.get('/current', authenticate, ctrlWrapper(currentUserController));
 // );
 router.patch(
   '/',
-  validateBody(userInfoUpdatedSchema),
+  // validateBody(userInfoUpdatedSchema),
   ctrlWrapper(updateUserController),
 );
 
