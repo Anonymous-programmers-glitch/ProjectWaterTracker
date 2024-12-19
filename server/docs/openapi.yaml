@@ -12,7 +12,6 @@ tags:
   - name: User
     description: User operations.
 servers:
-  - url: http://localhost:3000
   - url: https://projectwatertrackerteam4.onrender.com
 paths:
   /auth/register:
@@ -39,14 +38,15 @@ paths:
   /auth/get-oauth-url:
     get:
       $ref: '../swagger/paths/auth/get-oauth-url/get.yaml'
-  /auth/confirm-oauth:
-    post:
-      $ref: '../swagger/paths/auth/confirm-oauth/post.yaml'
-  /user/{id}:
+  /users/current:
     get:
-      $ref: '../swagger/paths/user/{id}/get.yaml'
+      $ref: '../swagger/paths/users/current/get.yaml'
+  /users:
     patch:
-      $ref: '../swagger/paths/user/{id}/patch.yaml'
+      $ref: '../swagger/paths/users/patch.yaml'
+  /users/avatar:
+    patch:
+      $ref: '../swagger/paths/users/avatar/patch.yaml'
   /water/day/{date}:
     get:
       $ref: '../swagger/paths/water/{date}/get.yaml'
@@ -61,6 +61,9 @@ paths:
   /water/{month}/{year}:
     get:
       $ref: '../swagger/paths/water/water-by-month/get.yaml'
+  /userNormaHistory:
+    put:
+      $ref: '../swagger/paths/userNormaHistory/put.yaml'
 
 components:
   securitySchemes:

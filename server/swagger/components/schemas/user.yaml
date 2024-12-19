@@ -47,7 +47,7 @@ properties:
   avatarUrl:
     description: "URL of the user's avatar image"
     type: string
-    default: null
+    default: ''
     example: 'https://example.com/avatar.jpg'
   createdAt:
     description: 'Timestamp when the user was created'
