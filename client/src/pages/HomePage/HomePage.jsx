@@ -52,7 +52,7 @@ function HomePage() {
     for (let i = 1; i <= countDayofMonth; i++) {
       currentDay[0] = i;
       const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-"),
+        (data) => data.date === currentDay.join("-")
       );
 
       if (isDay) {
