@@ -50,10 +50,13 @@ export const getWaterConsumptionByMonth = async (
   const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
   const endDate = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
 
+  // Додаємо вибірковий запит у WaterCollection
   const records = await WaterCollection.find({
     userId,
     date: { $gte: startDate, $lt: endDate },
-  }).sort({ date: 1 });
+  })
+    .sort({ date: 1 }) // Сортуємо записи за датою у порядку зростання
+    .select('date amount'); // Вибираємо лише необхідні поля для зменшення обсягу отриманих даних
 
   const daysInMonth = new Date(year, month, 0).getDate();
   const fullMonthData = [];

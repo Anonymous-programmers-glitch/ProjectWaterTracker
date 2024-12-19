@@ -5,7 +5,7 @@
   border-radius: 10px;
   padding: 24px 16px;
   width: 280px;
-  box-shadow: 0 4px 14px rgba(64, 123, 255, 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
   background: var(--secondary-color-2);
 }
 
