@@ -47,12 +47,12 @@ const UserLogo = () => {
   return (
     <>
       <button className={css.userLogoBtn} onClick={toggleModal} ref={buttonRef}>
-        <div className={css.userLogoBtnText}>{userName}</div>
+        <p className={css.userLogoBtnText}>{userName}</p>
 
         <div className={css.userLogoBtnWrapper}>
           <div className={css.userLogoBtnAvatarWrapper}>{avatarContent}</div>
 
-          <ChevronDoubleUp size="16" fill="#407BFF" />
+          <ChevronDoubleUp size="16" />
         </div>
       </button>
 
