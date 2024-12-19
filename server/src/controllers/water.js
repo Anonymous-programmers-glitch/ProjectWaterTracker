@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import * as waterServices from '../services/water.js';
+import { userNormaHistoryCollection } from '../db/models/userNormaHistory.js';
 
 // export const getAllWaterController = async (req, res, next) => {
 //   const { _id: userId } = req.user;
@@ -116,6 +117,39 @@ export const deleteWaterController = async (req, res, next) => {
   });
 };
 
+// export const getWaterByMonthController = async (req, res) => {
+//   const { _id: userId } = req.user;
+//   const { month, year } = req.params;
+
+//   const monthInt = parseInt(month, 10);
+//   const yearInt = parseInt(year, 10);
+
+//   if (
+//     isNaN(monthInt) ||
+//     isNaN(yearInt) ||
+//     monthInt < 1 ||
+//     monthInt > 12 ||
+//     yearInt < 1970 ||
+//     yearInt > 2100
+//   ) {
+//     throw createHttpError(400, 'Invalid month or year provided');
+//   }
+
+//   const dailyNorma = req.user.dailyNorma || 2000;
+
+//   const data = await waterServices.getWaterConsumptionByMonth(
+//     userId,
+//     monthInt,
+//     yearInt,
+//     dailyNorma,
+//   );
+
+//   res.status(200).json({
+//     status: 200,
+//     data,
+//   });
+// };
+
 export const getWaterByMonthController = async (req, res) => {
   const { _id: userId } = req.user;
   const { month, year } = req.params;
@@ -134,7 +168,15 @@ export const getWaterByMonthController = async (req, res) => {
     throw createHttpError(400, 'Invalid month or year provided');
   }
 
-  const dailyNorma = req.user.dailyNorma || 2000;
+  // Отримуємо останню актуальну норму користувача з історії
+  const lastDailyNormRecord = await userNormaHistoryCollection
+    .findOne({ userId }) // Шукаємо останній запис норми для конкретного користувача
+    .sort({ date: -1 }); // Сортуємо записи в порядку спадання за датою (останній запис буде першим)
+
+  // Якщо записів немає, використовуємо стандартну норму
+  const dailyNorma = lastDailyNormRecord
+    ? lastDailyNormRecord.dailyNorma // Беремо норму з останнього запису, якщо він існує
+    : 2000; // Якщо записів немає, використовуємо значення за замовчуванням
 
   const data = await waterServices.getWaterConsumptionByMonth(
     userId,
