@@ -13,23 +13,31 @@ import MinusSmall from "../ui/icons/MinusSmall.jsx";
 import PlusSmall from "../ui/icons/PlusSmall.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import css from "./TodayListModal.module.css";
-import { editWaterToday } from "../../redux/waterToday/operations.js"; // Импортируем операцию редактирования
+import { editWaterToday } from "../../redux/waterToday/operations.js"; 
 
 const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
 
+  const handelCloseModal = useCallback(() => {
+    dispatch(closeEditModal());
+  }, [dispatch]);
+
   const handleSubmit = (values) => {
-    // Перезаписываем данные на сервере и сохраняем в Redux
-    dispatch(
-      editWaterToday({
-        id: data.id,  // ID записи для обновления
-        manualAmount: values.manualAmount,  // Новое количество воды
-        manualTime: values.manualTime,  // Новое время
-      })
-    );
-    handelCloseModal();  // Закрываем модальное окно после сохранения
+    if (data?.id) {
+      // Перезаписываем данные на сервере и сохраняем в Redux
+      dispatch(
+        editWaterToday({
+          id: data.id,  // ID записи для обновления
+          manualAmount: values.manualAmount,  // Новое количество воды
+          manualTime: values.manualTime,  // Новое время
+        })
+      );
+      handelCloseModal();  // Закрываем модальное окно после сохранения
+    } else {
+      console.error("Invalid data ID");
+    }
   };
 
   const handleKeyDown = useCallback(
@@ -38,12 +46,8 @@ const EditListModal = () => {
         handelCloseModal();
       }
     },
-    [isOpenModal]
+    [handelCloseModal]  // Добавлена зависимость от handelCloseModal
   );
-
-  function handelCloseModal() {
-    dispatch(closeEditModal());
-  }
 
   useEffect(() => {
     if (isOpenModal) {
@@ -152,5 +156,3 @@ const EditListModal = () => {
 };
 
 export default EditListModal;
-
-

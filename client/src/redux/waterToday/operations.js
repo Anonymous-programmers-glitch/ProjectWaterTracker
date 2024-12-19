@@ -10,7 +10,7 @@ export const fetchWaterToday = createAsyncThunk(
       const reduxState = thunkAPI.getState();
       setAuthHeader(reduxState.user.accessToken);
       const { data } = await axios.get(`/water/day/${date}`);
-      return data.data;
+      return data.data; // Возвращаем данные, чтобы они могли быть использованы в reducer
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -26,8 +26,8 @@ export const deleteWaterToday = createAsyncThunk(
     try {
       const reduxState = thunkAPI.getState();
       setAuthHeader(reduxState.user.accessToken);
-      const { data } = await axios.delete(`/water/${id}`);
-      return id;
+      await axios.delete(`/water/${id}`);
+      return id; // Возвращаем id, так как он нужен для обновления состояния
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -43,7 +43,7 @@ export const editWaterToday = createAsyncThunk(
     try {
       const { id, ...updatedFields } = water;
       const { data } = await axios.patch(`/water/${id}`, updatedFields);
-      return data;  // Возвращаем обновленные данные
+      return data;  // Возвращаем обновленные данные, чтобы они могли быть использованы в reducer
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -60,7 +60,7 @@ export const addWaterToday = createAsyncThunk(
       const reduxState = thunkAPI.getState();
       setAuthHeader(reduxState.user.accessToken);
       const { data } = await axios.post("/water/", { date, amount });
-      return data;
+      return data; // Возвращаем данные, чтобы они могли быть использованы в reducer
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

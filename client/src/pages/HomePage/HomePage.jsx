@@ -39,7 +39,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch, waterRecords.length]);
+  }, [dispatch, dateNow]); // добавили dateNow в зависимости
 
   useEffect(() => {
     setNewData(reorderData(dataMonth, monthState));
