@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "../../components/HomePage/datePicker/DatePicker.jsx";
 import WaterListIItemToday from "../../components/HomePage/waterListItemToday/WaterListIItemToday.jsx";
@@ -30,7 +30,6 @@ import css from "./homepage.module.css";
 
 function HomePage() {
   const dispatch = useDispatch();
-  const [newData, setNewData] = useState([]);
   const dateNow = dayjs().format("YYYY-MM-DD");
   const { waterRecords } = useSelector(getIsWaterToday);
   const { percentage } = useSelector(getIsWaterToday);
