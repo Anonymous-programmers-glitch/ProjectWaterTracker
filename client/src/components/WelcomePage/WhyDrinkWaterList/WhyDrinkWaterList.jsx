@@ -1,4 +1,4 @@
-import Point from "../../ui/icons/point";
+import Point from "../../ui/icons/Point.jsx";
 import css from "./WhyDrinkWaterList.module.css";
 export default function WhyDrinkWaterList({ data }) {
   return (
