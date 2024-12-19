@@ -101,6 +101,26 @@ export const update = createAsyncThunk(
     }
   }
 );
+/*
+ * PATCH @ /users/avatar
+ * headers: Authorization: Bearer token
+ */
+
+export const updateAvatar = createAsyncThunk(
+  "user/updateAvatar",
+  async (formData, thunkAPI) => {
+    try {
+      const response = (
+        await axios.patch(`/users/avatar`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+      ).data;
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.massage);
+    }
+  }
+);
 
 /*
 //  * GET @ /auth/refresh
