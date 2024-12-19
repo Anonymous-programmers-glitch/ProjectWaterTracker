@@ -6,8 +6,8 @@ import css from "./waterlistitemmonth.module.css";
 function WaterListIItemMonth({ item }) {
   const [pointerIsOver, setPointerIsOver] = useState(null);
   const refDay = useRef(null);
-  const { id, date, percent } = item;
-  const day = date.split("-")[0];
+  const { id, date, percentageConsumed } = item;
+  const day = date.split("-")[2];
 
   return (
     <li key={id} className={css.item}>
@@ -15,12 +15,17 @@ function WaterListIItemMonth({ item }) {
         ref={refDay}
         onPointerEnter={() => setPointerIsOver(refDay.current.innerText)}
         onPointerLeave={() => setPointerIsOver(null)}
-        className={clsx(css.day, Number(percent) < 100 && css.border)}
+        className={clsx(
+          css.day,
+          Number(percentageConsumed) < 100 && css.border,
+        )}
       >
         {day}
       </p>
-      <p className={css.percent}>{percent}%</p>
-      {pointerIsOver && <PopUpDay data={{ pointerIsOver, percent }} />}
+      <p className={css.percent}>{percentageConsumed}%</p>
+      {pointerIsOver && (
+        <PopUpDay data={{ pointerIsOver, percentageConsumed }} />
+      )}
     </li>
   );
 }
