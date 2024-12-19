@@ -2,14 +2,14 @@ import { Form, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
-import user from "../../testUser.json";
+// import user from "../../testUser.json";
 import Button from "../ui/Button/Button.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { useState, useEffect, useCallback } from "react";
 import { selectUser } from "../../redux/user/selectors.js";
 import { useSelector } from "react-redux";
-import { updateUser } from "../../redux/settings/operations.js";
+// import { updateUser } from "../../redux/settings/operations.js";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import EyeOutline from "../../components/ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
@@ -25,17 +25,44 @@ const FeedbackSchema = Yup.object().shape({
     ["female", "male"],
     "Please select a valid gender."
   ),
-  name: Yup.string().min(1, "Name is Too Short."),
+  name: Yup.string().max(12, "Name is Too Long."),
   email: Yup.string().email().required("Email is Required."),
   outdatedPassword: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number."),
+    .max(64, "Password must be at most 64 characters long.")
+    .matches(/(?=.*[0-9])/, "Password must contain a number.")
+    .matches(
+      /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      "Password must contain a special character."
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter."
+    ),
   newPassword: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number."),
+    .max(64, "Password must be at most 64 characters long.")
+    .matches(/(?=.*[0-9])/, "Password must contain a number.")
+    .matches(
+      /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      "Password must contain a special character."
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter."
+    ),
   repeatNewPassword: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number."),
+    .max(64, "Password must be at most 64 characters long.")
+    .matches(/(?=.*[0-9])/, "Password must contain a number.")
+    .matches(
+      /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+      "Password must contain a special character."
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter."
+    ),
 });
 
 export default function SettingModal() {
@@ -117,6 +144,9 @@ export default function SettingModal() {
       dispatch(update(otherPayload));
     }
 
+    //
+    dispatch(closeSettingModal());
+
     actions.resetForm();
   };
 
@@ -150,6 +180,16 @@ export default function SettingModal() {
     }
   };
   //
+
+  const avatarContent = user.avatar ? (
+    <img
+      src={user.avatar}
+      alt="User Avatar"
+      className={css.userLogoBtnAvatar}
+    />
+  ) : (
+    <span>{(user.name || user.email[0]).charAt(0).toUpperCase()}</span>
+  );
 
   return (
     <ModalBackdrop onClick={() => dispatch(closeSettingModal())}>
