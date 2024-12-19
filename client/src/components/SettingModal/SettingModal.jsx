@@ -37,28 +37,6 @@ const FeedbackSchema = Yup.object().shape({
     .matches(/(?=.*[0-9])/, "Password must contain a number."),
 });
 
-// const FeedbackSchema = Yup.object().shape({
-//   name: Yup.string().min(1, "Name is Too Short."),
-//   email: Yup.string().email().required("Email is Required."),
-
-//   outdatedPassword: Yup.string()
-//     .min(8, "Password is too short - should be 8 chars minimum.")
-//     .matches(/(?=.*[0-9])/, "Password must contain a number."),
-
-//   newPassword: Yup.string()
-//     .min(8, "Password is too short - should be 8 chars minimum.")
-//     .matches(/(?=.*[0-9])/, "Password must contain a number.")
-//     .notOneOf(
-//       [Yup.ref("outdatedPassword")],
-//       "New password cannot be the same as the old password"
-//     ),
-
-//   repeatNewPassword: Yup.string()
-//     .min(8, "Password is too short - should be 8 chars minimum.")
-//     .matches(/(?=.*[0-9])/, "Password must contain a number.")
-//     .oneOf([Yup.ref("newPassword")], "Passwords must match"),
-// });
-
 export default function SettingModal() {
   const [selectedFile, setSelectedFile] = useState(null);
   // const [preview, setPreview] = useState(user?.avatarUrl || null);
@@ -72,9 +50,9 @@ export default function SettingModal() {
     name: value?.name || "",
     email: value?.email || "",
     gender: value?.gender || "female",
-    // outdatedPassword: "",
-    // newPassword: "",
-    // repeatNewPassword: "",
+    outdatedPassword: "",
+    newPassword: "",
+    repeatNewPassword: "",
     // password: "",
   };
 
@@ -91,36 +69,55 @@ export default function SettingModal() {
     setOpenPassword((prev) => !prev);
   };
 
-  const handleSubmit = (values, actions) => {
-    // const userData = {
-    //   ...values,
-    //   idUser: value.id,
-    // };
-    console.log(values);
-
-    dispatch(update(values));
-
-    actions.resetForm();
-  };
-
   // const handleSubmit = (values, actions) => {
+  //   // const userData = {
+  //   //   ...values,
+  //   //   idUser: value.id,
+  //   // };
   //   console.log(values);
 
-  //   const updatedValues = {};
-
-  //   Object.keys(values).forEach((key) => {
-  //     if (values[key] !== initialValues[key]) {
-  //       updatedValues[key] = values[key];
-  //     }
-  //   });
-
-  //   if (Object.keys(updatedValues).length > 0) {
-  //     dispatch(update(updatedValues));
-  //   }
-  //   console.log(updatedValues);
+  //   dispatch(update(values));
 
   //   actions.resetForm();
   // };
+
+  const handleSubmit = (values, actions) => {
+    const updatedValues = {};
+
+    Object.keys(values).forEach((key) => {
+      if (values[key] !== initialValues[key]) {
+        updatedValues[key] = values[key];
+      }
+    });
+
+    if (updatedValues.outdatedPassword && updatedValues.newPassword) {
+      const passwordPayload = {
+        outdatedPassword: updatedValues.outdatedPassword,
+        newPassword: updatedValues.newPassword,
+      };
+
+      dispatch(update(passwordPayload));
+      console.log("Пароль оновлено:", passwordPayload);
+      delete updatedValues.outdatedPassword;
+      delete updatedValues.newPassword;
+    }
+
+    // Обработка данных , кроме паролей
+    const otherFields = Object.keys(updatedValues).filter(
+      (key) => key !== "outdatedPassword" && key !== "newPassword"
+    );
+
+    if (otherFields.length > 0) {
+      const otherPayload = otherFields.reduce((acc, key) => {
+        acc[key] = updatedValues[key];
+        return acc;
+      }, {});
+
+      dispatch(update(otherPayload));
+    }
+
+    actions.resetForm();
+  };
 
   useEffect(() => {
     if (isSettingsOpen) {
@@ -144,7 +141,7 @@ export default function SettingModal() {
   const handleButtonClick = () => {
     if (selectedFile) {
       const formData = new FormData();
-      formData.append("avatar", selectedFile);
+      formData.append("avatarUrl", selectedFile);
       dispatch(updateUserPhoto(formData));
       setSelectedFile(null);
     } else {
@@ -160,7 +157,11 @@ export default function SettingModal() {
         <div className={css.imgWrapper}>
           <img
             // src={initialValues.avatarUrl || user.avatar}
-            src={selectedFile ? URL.createObjectURL(selectedFile) : user.avatar}
+            src={
+              selectedFile
+                ? URL.createObjectURL(selectedFile)
+                : value.avatarUrl || user.avatar
+            }
             alt="User photo"
             className={css.photo}
           />
@@ -264,14 +265,14 @@ export default function SettingModal() {
                   </div>
                 </div>
 
-                {/* <div className={css.passwordWrapper}>
+                <div className={css.passwordWrapper}>
                   <h3>Password</h3>
                   <label className={css.labelPassword}>
                     Outdated password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
                       // name="outdatedPassword"
-                      name="password"
+                      name="outdatedPassword"
                       placeholder="Password"
                     />
                     {openPassword ? (
@@ -290,8 +291,7 @@ export default function SettingModal() {
                     New password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      // name="newPassword"
-                      name="password"
+                      name="newPassword"
                       placeholder="Password"
                     />
                     {openPassword ? (
@@ -310,8 +310,7 @@ export default function SettingModal() {
                     Repeat new password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      // name="repeatNewPassword"
-                      name="password"
+                      name="repeatNewPassword"
                       placeholder="Password"
                     />
                     {openPassword ? (
@@ -325,7 +324,7 @@ export default function SettingModal() {
                     )}
                     <ErrorMessage name="repeatNewPassword" component="span" />
                   </label>
-                </div> */}
+                </div>
               </div>
               <div className={css.btn}>
                 <Button

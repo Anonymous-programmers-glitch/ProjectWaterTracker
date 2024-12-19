@@ -19,10 +19,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // );
 
 export const updateUserPhoto = createAsyncThunk(
-  "user/updatePhoto",
+  "users/updatePhoto",
   async (formData, thunkAPI) => {
     try {
-      const response = await axios.patch("/users/uploadPhoto", formData, {
+      const response = await axios.patch("/users/avatar", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
