@@ -11,21 +11,16 @@
 
 .h3 {
   height: 24px;
-  font-family: var(--font-family);
   font-weight: 500;
   font-size: 26px;
   color: var(--primery-color-black);
 }
 
 .label {
-  height: 76px;
-  gap: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
+  display: block;
   text-align: left;
-  justify-content: space-between;
   color: var(--primery-color-black);
+  margin-bottom: 8px;
 }
 
 .psw {
@@ -62,6 +57,7 @@
   width: 280px;
   height: 44px;
   padding: 10px;
+  margin-bottom: 6px
 }
 
 .input::placeholder {
