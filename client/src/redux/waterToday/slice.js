@@ -18,7 +18,12 @@ function handleRejected(state, action) {
 const slice = createSlice({
   name: "today",
   initialState: {
-    items: [],
+    items: {
+      percentage: 0,
+      recordsCount: 0,
+      totalDayWater: 0,
+      waterRecords: [],
+    },
     loading: false,
     error: null,
   },
@@ -37,7 +42,7 @@ const slice = createSlice({
       .addCase(addWaterToday.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items.push(action.payload);
+        state.items.waterRecords.push(action.payload.waterRecord);
       })
       .addCase(addWaterToday.rejected, handleRejected);
     builder
@@ -45,10 +50,12 @@ const slice = createSlice({
       .addCase(deleteWaterToday.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        const index = state.items.findIndex(
-          (contact) => contact.id === action.payload.id,
+        console.log(action.payload);
+        const index = state.items.waterRecords.findIndex(
+          (water) => water._id === action.payload,
         );
-        state.items.splice(index, 1);
+        console.log(index);
+        state.items.waterRecords.splice(index, 1);
       })
       .addCase(deleteWaterToday.rejected, handleRejected);
     builder
@@ -57,11 +64,11 @@ const slice = createSlice({
         state.isLoading = false;
         state.error = null;
         const index = state.items.findIndex(
-          (waterId) => waterId.id === action.payload.id,
+          (waterId) => waterId.id === action.payload._id,
         );
         state.items.splice(index, 1, action.payload);
       })
       .addCase(editWaterToday.rejected, handleRejected);
   },
 });
-export const waterTodayReducer = slice.reducer;
+export default slice.reducer;

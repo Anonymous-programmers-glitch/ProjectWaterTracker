@@ -30,11 +30,11 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "summary": "Register new user",
-        "description": "This endpoint creates a new user.",
         "tags": [
           "Auth"
         ],
+        "summary": "Register new user",
+        "description": "This endpoint creates a new user.",
         "operationId": "signupUser",
         "security": [
           {
@@ -131,11 +131,11 @@
     },
     "/auth/verify": {
       "get": {
-        "summary": "Verify user's account",
-        "description": "This endpoint verifies a user account via a token and redirects to the success page.",
         "tags": [
           "Auth"
         ],
+        "summary": "Verify user's account",
+        "description": "This endpoint verifies a user account via a token and redirects to the success page.",
         "operationId": "verifyAccount",
         "security": [],
         "parameters": [
@@ -192,11 +192,11 @@
     },
     "/auth/login": {
       "post": {
-        "summary": "User login",
-        "description": "Authenticate a user and return an access token along with user details.",
         "tags": [
           "Auth"
         ],
+        "summary": "User login",
+        "description": "Authenticate a user and return an access token along with user details.",
         "operationId": "loginUser",
         "security": [
           {
@@ -309,11 +309,11 @@
     },
     "/auth/logout": {
       "post": {
-        "summary": "Logout the user",
-        "description": "Logs out the user and clears the session",
         "tags": [
           "Auth"
         ],
+        "summary": "Logout the user",
+        "description": "Logs out the user and clears the session",
         "operationId": "logoutUser",
         "security": [
           {
@@ -335,11 +335,11 @@
     },
     "/auth/refresh": {
       "post": {
-        "summary": "Refresh user session",
-        "description": "Refreshes the user's session using the refresh token from cookies.",
         "tags": [
           "Auth"
         ],
+        "summary": "Refresh user session",
+        "description": "Refreshes the user's session using the refresh token from cookies.",
         "operationId": "refreshUserSession",
         "security": [
           {
@@ -387,11 +387,11 @@
     },
     "/auth/send-reset-email": {
       "post": {
-        "summary": "Send a password reset email",
-        "description": "Sends a password reset email to the user with a reset link.",
         "tags": [
           "Auth"
         ],
+        "summary": "Send a password reset email",
+        "description": "Sends a password reset email to the user with a reset link.",
         "operationId": "requestResetEmail",
         "security": [
           {
@@ -457,11 +457,11 @@
     },
     "/auth/reset-pwd": {
       "post": {
-        "summary": "Reset user password",
-        "description": "Allows the user to reset their password using a valid reset token.",
         "tags": [
           "Auth"
         ],
+        "summary": "Reset user password",
+        "description": "Allows the user to reset their password using a valid reset token.",
         "operationId": "resetPassword",
         "security": [
           {
@@ -536,11 +536,11 @@
     },
     "/auth/get-oauth-url": {
       "get": {
-        "summary": "Get Google OAuth URL",
-        "description": "Returns the Google OAuth URL that the user can visit to authenticate via Google.",
         "tags": [
           "Auth"
         ],
+        "summary": "Get Google OAuth URL",
+        "description": "Returns the Google OAuth URL that the user can visit to authenticate via Google.",
         "operationId": "getGoogleOAuthUrl",
         "security": [],
         "responses": {
@@ -584,11 +584,11 @@
     },
     "/auth/confirm-oauth": {
       "post": {
-        "summary": "Confirm Google OAuth and Log In or Sign Up",
-        "description": "Confirms the Google OAuth code and either logs in or signs up the user based on the code received from Google.",
         "tags": [
           "Auth"
         ],
+        "summary": "Confirm Google OAuth and Log In or Sign Up",
+        "description": "Confirms the Google OAuth code and either logs in or signs up the user based on the code received from Google.",
         "operationId": "loginWithGoogleOAuth",
         "security": [],
         "requestBody": {
@@ -647,13 +647,13 @@
         }
       }
     },
-    "/user/{id}/get-user-info": {
+    "/user/{id}": {
       "get": {
-        "summary": "Get user by ID",
-        "description": "Retrieve the details of a user by their unique ID.",
         "tags": [
           "User"
         ],
+        "summary": "Get user by ID",
+        "description": "Retrieve the details of a user by their unique ID.",
         "operationId": "getUserById",
         "security": [],
         "parameters": [
@@ -737,15 +737,13 @@
             "$ref": "#/components/responses/500"
           }
         }
-      }
-    },
-    "/user/{id}/update-user": {
+      },
       "patch": {
-        "summary": "Update user information by ID",
-        "description": "Update the details of a user by their unique ID. Allows updating fields such as name, email, password, gender, daily norm, and avatar.",
         "tags": [
           "User"
         ],
+        "summary": "Update user information by ID",
+        "description": "Update the details of a user by their unique ID. Allows updating fields such as name, email, password, gender, daily norm, and avatar.",
         "operationId": "updateUserInformation",
         "security": [],
         "parameters": [
@@ -880,13 +878,13 @@
         }
       }
     },
-    "/water/day/{date}/get-water-records-by-day": {
+    "/water/day/{date}": {
       "get": {
-        "summary": "Get water records by day",
-        "description": "This endpoint retrieves water records for a given date.",
         "tags": [
           "Water"
         ],
+        "summary": "Get water records by day",
+        "description": "This endpoint retrieves water records for a given date.",
         "operationId": "getWaterByDate",
         "security": [
           {
@@ -1014,13 +1012,13 @@
         }
       }
     },
-    "/water/post-water-record": {
+    "/water": {
       "post": {
-        "summary": "Add water record",
-        "description": "This endpoint creates a new water record for registered user",
         "tags": [
           "Water"
         ],
+        "summary": "Add water record",
+        "description": "This endpoint creates a new water record for registered user",
         "operationId": "postWaterRecord",
         "security": [
           {
@@ -1133,13 +1131,13 @@
         }
       }
     },
-    "/water/{id}/update-water-record": {
+    "/water/{id}": {
       "patch": {
-        "summary": "Update water record by ID",
-        "description": "This endpoint updates an existing water record for the user.",
         "tags": [
           "Water"
         ],
+        "summary": "Update water record by ID",
+        "description": "This endpoint updates an existing water record for the user.",
         "operationId": "patchWaterRecord",
         "security": [
           {
@@ -1262,15 +1260,13 @@
             "$ref": "#/components/responses/500"
           }
         }
-      }
-    },
-    "/water/{id}/delete-water-record": {
+      },
       "delete": {
-        "summary": "Delete water record",
-        "description": "This endpoint deletes an existing water record for the user by ID.",
         "tags": [
           "Water"
         ],
+        "summary": "Delete water record",
+        "description": "This endpoint deletes an existing water record for the user by ID.",
         "operationId": "deleteWaterRecord",
         "security": [
           {
@@ -1322,6 +1318,120 @@
           },
           "404": {
             "description": "Water record not found.",
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/{month}/{year}": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water consumption by month",
+        "description": "Retrieves the water consumption data for each day of a specified month.",
+        "operationId": "getWaterConsumptionByMonth",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "month",
+            "in": "path",
+            "description": "The month for which to retrieve water consumption data (1-12).",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12,
+              "example": 12
+            }
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "description": "The year for which to retrieve water consumption data.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 2024
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved water consumption data for the month.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "date",
+                          "dailyNorm",
+                          "percentageConsumed",
+                          "entries",
+                          "consumedWaterByDay"
+                        ],
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "description": "The date formatted as DD.MM.YYYY.",
+                            "example": "16.12.2024"
+                          },
+                          "dailyNorm": {
+                            "type": "string",
+                            "description": "The daily water consumption norm in milliliters.",
+                            "example": "2000"
+                          },
+                          "percentageConsumed": {
+                            "type": "string",
+                            "description": "The percentage of the daily norm consumed.",
+                            "example": "45"
+                          },
+                          "entries": {
+                            "type": "integer",
+                            "description": "The number of water consumption records for the day.",
+                            "example": 3
+                          },
+                          "consumedWaterByDay": {
+                            "type": "string",
+                            "description": "The total water consumed for the day in milliliters.",
+                            "example": "900"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "No records found for the given date.",
             "$ref": "#/components/responses/404"
           },
           "500": {

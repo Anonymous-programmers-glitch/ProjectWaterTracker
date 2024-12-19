@@ -16,7 +16,7 @@ import * as waterServices from '../services/water.js';
 export const getWaterByDateController = async (req, res, next) => {
   const { _id: userId } = req.user;
 
-  const currentDailyNorm = req.user.dailyNorm;
+  const currentDailyNorma = req.user.dailyNorma;
   const date = new Date(req.params.date);
 
   if (isNaN(date.getTime())) {
@@ -49,7 +49,7 @@ export const getWaterByDateController = async (req, res, next) => {
     0,
   );
 
-  const percentage = Math.round((totalDayWater / currentDailyNorm) * 100);
+  const percentage = Math.round((totalDayWater / currentDailyNorma) * 100);
   res.json({
     status: 200,
     message: `Successfully found water records by this date ${date}`,
@@ -114,14 +114,32 @@ export const deleteWaterController = async (req, res, next) => {
 export const getWaterByMonthController = async (req, res) => {
   const { _id: userId } = req.user;
   const { month, year } = req.params;
-  const dailyNorm = req.user.dailyNorm || 2000;
+
+  const monthInt = parseInt(month, 10);
+  const yearInt = parseInt(year, 10);
+
+  if (
+    isNaN(monthInt) ||
+    isNaN(yearInt) ||
+    monthInt < 1 ||
+    monthInt > 12 ||
+    yearInt < 1970 ||
+    yearInt > 2100
+  ) {
+    throw createHttpError(400, 'Invalid month or year provided');
+  }
+
+  const dailyNorma = req.user.dailyNorma || 2000;
 
   const data = await waterServices.getWaterConsumptionByMonth(
     userId,
-    parseInt(month),
-    parseInt(year),
-    dailyNorm,
+    monthInt,
+    yearInt,
+    dailyNorma,
   );
 
-  res.json({ status: 200, data });
+  res.status(200).json({
+    status: 200,
+    data,
+  });
 };

@@ -1,13 +1,11 @@
 import { useEffect, useCallback } from "react";
-// import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import "./UserLogoutModal.module.css";
-import {
-  closeLogoutModal,
-  selectLogoutModal,
-} from "../../redux/modal/modalSlice";
-import { logout } from "../../redux/auth/operations";
+import XMarkOutline from "../ui/icons/xMarkOutline";
+import css from "./UserLogoutModal.module.css";
+import { closeLogoutModal } from "../../redux/modal/slice";
+import { selectLogoutModal } from "../../redux/modal/selectors";
+import { logout } from "../../redux/user/operations";
 
 const UserLogoutModal = () => {
   const dispatch = useDispatch();
@@ -28,7 +26,7 @@ const UserLogoutModal = () => {
         dispatch(closeLogoutModal());
       }
     },
-    [dispatch],
+    [dispatch]
   );
 
   useEffect(() => {
@@ -44,29 +42,26 @@ const UserLogoutModal = () => {
 
   return (
     <ModalBackdrop onClick={() => dispatch(closeLogoutModal())}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header-container">
-          <h2 className="modal-header">Log out</h2>
+      <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
+        <div className={css.modalHeaderContainer}>
+          <h2 className={css.modalHeader}>Log out</h2>
           <button
-            className="modal-close"
-            onClick={() => dispatch(closeLogoutModal())}
+            className={css.modalClose}
+            onClick={() => dispatch(closeLogoutModal())} // Исправлено здесь
             aria-label="Close"
           >
-            <svg viewBox="0 0 24 24">
-              <line x1="4" y1="4" x2="20" y2="20" />
-              <line x1="4" y1="20" x2="20" y2="4" />
-            </svg>
+            <XMarkOutline className={css.modalCloseIcon} />
           </button>
         </div>
-        <p className="modal-text">Do you really want to leave?</p>
-        <div className="modal-buttons">
+        <p className={css.modalText}>Do you really want to leave?</p>
+        <div className={css.modalButtons}>
           <button
             onClick={() => dispatch(closeLogoutModal())}
-            className="btn-cancel"
+            className={css.btnCancel}
           >
             Cancel
           </button>
-          <button onClick={handleLogout} className="btn-logout">
+          <button onClick={handleLogout} className={css.btnLogout}>
             Log out
           </button>
         </div>
@@ -74,10 +69,5 @@ const UserLogoutModal = () => {
     </ModalBackdrop>
   );
 };
-
-// UserLogoutModal.propTypes = {
-//   isOpen: PropTypes.bool.isRequired,
-//   onClose: PropTypes.func.isRequired,
-// };
 
 export default UserLogoutModal;

@@ -16,35 +16,51 @@ servers:
   - url: https://projectwatertrackerteam4.onrender.com
 paths:
   /auth/register:
-    $ref: '../swagger/paths/auth/register/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/register/post.yaml'
   /auth/verify:
-    $ref: '../swagger/paths/auth/verify/get.yaml'
+    get:
+      $ref: '../swagger/paths/auth/verify/get.yaml'
   /auth/login:
-    $ref: '../swagger/paths/auth/login/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/login/post.yaml'
   /auth/logout:
-    $ref: '../swagger/paths/auth/logout/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/logout/post.yaml'
   /auth/refresh:
-    $ref: '../swagger/paths/auth/refresh/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/refresh/post.yaml'
   /auth/send-reset-email:
-    $ref: '../swagger/paths/auth/send-reset-email/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/send-reset-email/post.yaml'
   /auth/reset-pwd:
-    $ref: '../swagger/paths/auth/reset-pwd/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/reset-pwd/post.yaml'
   /auth/get-oauth-url:
-    $ref: '../swagger/paths/auth/get-oauth-url/get.yaml'
+    get:
+      $ref: '../swagger/paths/auth/get-oauth-url/get.yaml'
   /auth/confirm-oauth:
-    $ref: '../swagger/paths/auth/confirm-oauth/post.yaml'
+    post:
+      $ref: '../swagger/paths/auth/confirm-oauth/post.yaml'
   /user/{id}:
-    $ref: '../swagger/paths/user/{id}/get.yaml'
-  /user/{id}:
-    $ref: '../swagger/paths/user/{id}/patch.yaml'
+    get:
+      $ref: '../swagger/paths/user/{id}/get.yaml'
+    patch:
+      $ref: '../swagger/paths/user/{id}/patch.yaml'
   /water/day/{date}:
-    $ref: '../swagger/paths/water/{date}/get.yaml'
+    get:
+      $ref: '../swagger/paths/water/{date}/get.yaml'
   /water:
-    $ref: '../swagger/paths/water/post.yaml'
+    post:
+      $ref: '../swagger/paths/water/post.yaml'
   /water/{id}:
-    $ref: '../swagger/paths/water/{id}/patch.yaml'
-  /water/{id}:
-    $ref: '../swagger/paths/water/{id}/delete.yaml'
+    patch:
+      $ref: '../swagger/paths/water/{id}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/water/{id}/delete.yaml'
+  /water/{month}/{year}:
+    get:
+      $ref: '../swagger/paths/water/water-by-month/get.yaml'
 
 components:
   securitySchemes:

@@ -8,9 +8,8 @@ import {
   closeLogoModal,
   openLogoutModal,
   openSettingModal,
-  selectLogoModal,
-} from "../../redux/modal/modalSlice";
-
+} from "../../redux/modal/slice";
+import { selectLogoModal } from "../../redux/modal/selectors";
 import css from "./UserLogoModal.module.css";
 
 Modal.setAppElement("#root");
@@ -25,10 +24,9 @@ const UserLogoModal = ({ targetRef }) => {
     if (!targetRef.current) return {};
 
     const rect = targetRef.current.getBoundingClientRect();
-
     return {
       top: `${rect.bottom + window.scrollY}px`,
-      left: `${rect.left + window.scrollX + 4}px`,
+      left: `${rect.left + window.scrollX}px`,
     };
   };
 
@@ -53,7 +51,7 @@ const UserLogoModal = ({ targetRef }) => {
         <div className={css.icon}>
           <CogToothOutline size="16" color="currentColor" />
         </div>
-        <span className={css.modalText}>Setting</span>
+        <p className={css.modalText}>Setting</p>
       </button>
 
       <button
@@ -63,7 +61,7 @@ const UserLogoModal = ({ targetRef }) => {
         <div className={css.icon}>
           <ArrowRightOnRectangle size="16" color="currentColor" />
         </div>
-        <span className={css.modalText}>Log out</span>
+        <p className={css.modalText}>Log out</p>
       </button>
     </Modal>
   );

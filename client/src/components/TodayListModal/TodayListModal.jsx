@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import dayjs from "dayjs";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectEditData,
+  selectEditModal,
+} from "../../redux/modal/selectors.js";
+import { closeEditModal, closeLogoutModal } from "../../redux/modal/slice.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
 import XMarkOutline from "../ui/icons/xMarkOutline";
@@ -11,53 +16,56 @@ import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
 import css from "./TodayListModal.module.css";
 
-const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
-  const [time, setTime] = useState(initialData?.time || dayjs().format("HH:mm"));
-
+const TodayListModal = () => {
+  // { isOpen, mode, initialData, onSave, onClose }
+  const dispatch = useDispatch();
+  const isOpenModal = useSelector(selectEditModal);
+  const data = useSelector(selectEditData);
+  // const [time, setTime] = useState(
+  //   initialData?.time || dayjs().format("HH:mm"),
+  // );
+  //
   const handleSubmit = (values) => {
-    const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    onSave({ ...values, amount: values.manualAmount, time: formattedTime });
-    onClose();
+    // const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
+    // onSave({ ...values, amount: values.manualAmount, time: formattedTime });
+    // onClose();
   };
 
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === "Escape") {
-        onClose();
       }
     },
-    [onClose]
+    [isOpenModal],
   );
-
+  function handelCloseModal() {
+    dispatch(closeEditModal());
+  }
   useEffect(() => {
-    if (isOpen) {
+    if (isOpenModal) {
       document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, handleKeyDown]);
+  }, [isOpenModal, handleKeyDown]);
 
   return (
-    isOpen && (
+    isOpenModal && (
       <ModalBackdrop
         onClick={(e) => {
           if (e.target === e.currentTarget) {
-            onClose();
+            handelCloseModal();
           }
         }}
       >
         <div className={css.modal}>
           <div className={css.modalHeaderWrapper}>
             <div className={css.modalHeader}>
-              <h2>
-                {mode === "add"
-                  ? "Add water"
-                  : "Edit the entered amount of water"}
-              </h2>
+              <h2>Edit the entered amount of water</h2>
               <button
                 className={css.modalClose}
-                onClick={onClose}
+                onClick={handelCloseModal}
                 aria-label="Close"
               >
                 <XMarkOutline className={css.modalCloseIcon} />
@@ -65,20 +73,20 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
             </div>
           </div>
 
-          {mode === "edit" && initialData && (
-            <div className={css.editInfo}>
-              <div className={css.watericon}>
-                <GlassOfWater size={36} />
-              </div>
-              <strong>{initialData.amount} ml</strong>
-              <strong className={css.time}>{initialData.time}</strong>
-            </div>
-          )}
+          {/*{mode === "edit" && initialData && (*/}
+          {/*  <div className={css.editInfo}>*/}
+          {/*    <div className={css.watericon}>*/}
+          {/*      <GlassOfWater size={36} />*/}
+          {/*    </div>*/}
+          {/*    <strong>{initialData.amount} ml</strong>*/}
+          {/*    <strong className={css.time}>{initialData.time}</strong>*/}
+          {/*  </div>*/}
+          {/*)}*/}
 
           <Formik
             initialValues={{
-              manualAmount: initialData?.amount || 0,
-              manualTime: time,
+              manualAmount: 0,
+              manualTime: 0,
             }}
             enableReinitialize
             onSubmit={handleSubmit}
@@ -86,11 +94,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>
-                    {mode === "add"
-                      ? "Choose a value:"
-                      : "Correct entered data:"}
-                  </p>
+                  <p>Choose a value:</p>
                 </div>
 
                 <div className={css.formGroupWater}>
@@ -102,7 +106,7 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
                       onClick={() =>
                         setFieldValue(
                           "manualAmount",
-                          Math.max(0, values.manualAmount - 50)
+                          Math.max(0, values.manualAmount - 50),
                         )
                       }
                     >
@@ -170,21 +174,6 @@ const TodayListModal = ({ isOpen, mode, initialData, onSave, onClose }) => {
       </ModalBackdrop>
     )
   );
-};
-
-TodayListModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  mode: PropTypes.oneOf(["add", "edit"]).isRequired,
-  initialData: PropTypes.shape({
-    amount: PropTypes.number,
-    time: PropTypes.string,
-  }),
-  onSave: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
-
-TodayListModal.defaultProps = {
-  initialData: null,
 };
 
 export default TodayListModal;
