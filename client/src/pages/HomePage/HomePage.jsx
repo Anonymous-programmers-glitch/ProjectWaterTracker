@@ -9,6 +9,7 @@ import WaterListIItemMonth from "../../components/HomePage/waterListItemMonth/Wa
 import WaterListMonth from "../../components/HomePage/waterListMonth/WaterListMonth.jsx";
 import WaterListToday from "../../components/HomePage/waterListToday/WaterListToday.jsx";
 import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
+import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
 import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
@@ -116,6 +117,7 @@ function HomePage() {
       </div>
       <AddWaterModal />
       <TodayListModal />
+      <MyDailyNorma />
     </section>
   );
 }
