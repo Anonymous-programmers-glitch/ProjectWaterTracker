@@ -41,8 +41,7 @@ export const editWaterToday = createAsyncThunk(
     try {
       const { id, ...updatedFields } = water;
       const { data } = await axios.patch(`/water/${id}`, updatedFields);
-
-      return data;
+      return data;  // Возвращаем обновленные данные
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

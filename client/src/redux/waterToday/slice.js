@@ -52,7 +52,7 @@ const slice = createSlice({
         state.isLoading = false;
         state.error = null;
         const index = state.items.findIndex(
-          (contact) => contact.id === action.payload.id,
+          (contact) => contact.id === action.payload.id
         );
         state.items.splice(index, 1);
       })
@@ -62,10 +62,12 @@ const slice = createSlice({
       .addCase(editWaterToday.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        const index = state.items.findIndex(
-          (waterId) => waterId.id === action.payload.id,
+        const index = state.items.waterRecords.findIndex(
+          (waterId) => waterId.id === action.payload.id
         );
-        state.items.splice(index, 1, action.payload);
+        if (index !== -1) {
+          state.items.waterRecords[index] = action.payload; // Обновляем запись
+        }
       })
       .addCase(editWaterToday.rejected, handleRejected);
   },
