@@ -5,9 +5,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 4px;
-  color: var(--primery-color-black);
-  /* color: var(--primery-color-blue); */
+  padding: 0;
+  color: var(--primery-color-blue);
   transition: color 300ms ease;
 }
 
@@ -18,14 +17,11 @@
 
 .userAuthBtnText {
   min-width: 48px;
-  height: 20px;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
   text-align: right;
   flex-shrink: 0;
-  padding: 2px 0;
-  color: var(--primery-color-blue);
 }
 
 .icon {
@@ -33,11 +29,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  stroke: var(--primery-color-black);
+  transition: color 300ms ease;
 }
 
-/* .stroke {
-  stroke: var(--primery-color-black)
-} */
 
 @media screen and (min-width: 768px) {
   .userAuthBtnText {
