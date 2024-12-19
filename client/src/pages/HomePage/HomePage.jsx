@@ -11,12 +11,14 @@ import WaterListToday from "../../components/HomePage/waterListToday/WaterListTo
 import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
 import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
-import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
+import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { openAddModal } from "../../redux/modal/slice.js";
+import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
+import { getIsWaterMonth } from "../../redux/waterMonth/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
 import {
   getError,
@@ -24,7 +26,6 @@ import {
   getIsWaterToday,
 } from "../../redux/waterToday/selectors.js";
 
-import { dataMonth } from "../../tempData/homepagetempdata.js";
 import css from "./homepage.module.css";
 
 function HomePage() {
@@ -36,37 +37,19 @@ function HomePage() {
   const IsLoading = useSelector(getIsLoading);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
+  const dataMonth = useSelector(getIsWaterMonth);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
   }, [dispatch, waterRecords.length]);
 
   useEffect(() => {
-    setNewData(reorderData(dataMonth, monthState));
-  }, [monthState]);
-
-  function reorderData(dataMonth, currentMonth) {
-    const newData = [];
-    const countDayofMonth = dayjs(currentMonth).daysInMonth();
-    const currentDay = dayjs(currentMonth).format("D-MM-YYYY").split("-");
-    for (let i = 1; i <= countDayofMonth; i++) {
-      currentDay[0] = i;
-      const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-"),
-      );
-
-      if (isDay) {
-        newData.push(isDay);
-      } else {
-        const defaultData = { id: "", date: "", percent: "0" };
-        defaultData.id = Math.random().toString(36);
-        defaultData.date = currentDay.join("-");
-        newData.push(defaultData);
-      }
-    }
-
-    return newData;
-  }
+    const date = {
+      month: dayjs(monthState).format("MM"),
+      year: dayjs(monthState).format("YYYY"),
+    };
+    dispatch(fetchWaterMonth(date));
+  }, [dispatch, monthState, waterRecords.length]);
 
   function handleAdd() {
     dispatch(openAddModal());
@@ -110,8 +93,8 @@ function HomePage() {
           <DatePicker />
         </div>
         <WaterListMonth>
-          {newData.map((item) => (
-            <WaterListIItemMonth key={item.id} item={item} />
+          {dataMonth.map((item) => (
+            <WaterListIItemMonth key={item.date} item={item} />
           ))}
         </WaterListMonth>
       </div>
