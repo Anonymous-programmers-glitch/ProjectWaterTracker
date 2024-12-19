@@ -114,14 +114,32 @@ export const deleteWaterController = async (req, res, next) => {
 export const getWaterByMonthController = async (req, res) => {
   const { _id: userId } = req.user;
   const { month, year } = req.params;
+
+  const monthInt = parseInt(month, 10);
+  const yearInt = parseInt(year, 10);
+
+  if (
+    isNaN(monthInt) ||
+    isNaN(yearInt) ||
+    monthInt < 1 ||
+    monthInt > 12 ||
+    yearInt < 1970 ||
+    yearInt > 2100
+  ) {
+    throw createHttpError(400, 'Invalid month or year provided');
+  }
+
   const dailyNorma = req.user.dailyNorma || 2000;
 
   const data = await waterServices.getWaterConsumptionByMonth(
     userId,
-    parseInt(month),
-    parseInt(year),
+    monthInt,
+    yearInt,
     dailyNorma,
   );
 
-  res.json({ status: 200, data });
+  res.status(200).json({
+    status: 200,
+    data,
+  });
 };

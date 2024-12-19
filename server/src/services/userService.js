@@ -4,14 +4,6 @@ import { UserCollection } from '../db/models/User.js';
 
 export const findUser = (filter) => UserCollection.findOne(filter);
 
-export const getUserById = async (userId) => {
-  const user = await UserCollection.findById({ _id: userId });
-  if (!user) {
-    throw createHttpError(404, 'User not found');
-  }
-  return user;
-};
-
 export const updateUserInfo = async ({ _id, payload }) => {
   const user = await findUser({ _id });
   if (!user) {
@@ -48,4 +40,12 @@ export const updateUserInfo = async ({ _id, payload }) => {
   return {
     user: rawResult.value,
   };
+};
+
+export const updateUserAvatarUrl = async ({ _id, avatarUrl }) => {
+  return await UserCollection.findByIdAndUpdate(
+    _id,
+    { avatarUrl },
+    { new: true },
+  );
 };
