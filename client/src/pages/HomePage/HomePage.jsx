@@ -26,7 +26,6 @@ import {
   getIsWaterToday,
 } from "../../redux/waterToday/selectors.js";
 
-// import { dataMonth } from "../../tempData/homepagetempdata.js";
 import css from "./homepage.module.css";
 
 function HomePage() {
