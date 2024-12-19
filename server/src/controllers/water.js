@@ -129,13 +129,13 @@ export const getWaterByMonthController = async (req, res) => {
     throw createHttpError(400, 'Invalid month or year provided');
   }
 
-  const dailyNorm = req.user.dailyNorm || 2000;
+  const dailyNorma = req.user.dailyNorma || 2000;
 
   const data = await waterServices.getWaterConsumptionByMonth(
     userId,
     monthInt,
     yearInt,
-    dailyNorm,
+    dailyNorma,
   );
 
   res.status(200).json({
