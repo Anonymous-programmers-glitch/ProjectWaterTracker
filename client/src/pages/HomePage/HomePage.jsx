@@ -11,7 +11,7 @@ import WaterListToday from "../../components/HomePage/waterListToday/WaterListTo
 import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
 import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
-import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
+import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";

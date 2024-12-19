@@ -1,46 +1,54 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
-import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectEditData,
   selectEditModal,
 } from "../../redux/modal/selectors.js";
-import { closeEditModal, closeLogoutModal } from "../../redux/modal/slice.js";
-import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import Button from "../../components/ui/Button/Button";
-import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
-import GlassOfWater from "../ui/icons/GlassOfWater";
-import MinusSmall from "../ui/icons/MinusSmall";
-import PlusSmall from "../ui/icons/PlusSmall";
-import Inputs from "../ui/Inputs/Inputs";
+import { closeEditModal } from "../../redux/modal/slice.js";
+import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
+import Button from "../ui/Button/Button.jsx";
+import XMarkOutline from "../ui/icons/xMarkOutline.jsx";
+import MinusSmall from "../ui/icons/MinusSmall.jsx";
+import PlusSmall from "../ui/icons/PlusSmall.jsx";
+import Inputs from "../ui/Inputs/Inputs.jsx";
+import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
+import { editWaterToday } from "../../redux/waterToday/operations.js";
 
-const TodayListModal = () => {
-  // { isOpen, mode, initialData, onSave, onClose }
+const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
-  // const [time, setTime] = useState(
-  //   initialData?.time || dayjs().format("HH:mm"),
-  // );
-  //
+
+  const handelCloseModal = useCallback(() => {
+    dispatch(closeEditModal());
+  }, [dispatch]);
+
   const handleSubmit = (values) => {
-    // const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    // onSave({ ...values, amount: values.manualAmount, time: formattedTime });
-    // onClose();
+    if (data?.id) {
+      dispatch(
+        editWaterToday({
+          id: data.id,
+          manualAmount: values.manualAmount,
+          manualTime: values.manualTime,
+        })
+      );
+      handelCloseModal();
+    } else {
+      console.error("Invalid data ID");
+    }
   };
 
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === "Escape") {
+        handelCloseModal();
       }
     },
-    [isOpenModal],
+    [handelCloseModal]
   );
-  function handelCloseModal() {
-    dispatch(closeEditModal());
-  }
+
   useEffect(() => {
     if (isOpenModal) {
       document.addEventListener("keydown", handleKeyDown);
@@ -73,20 +81,18 @@ const TodayListModal = () => {
             </div>
           </div>
 
-          {/*{mode === "edit" && initialData && (*/}
-          {/*  <div className={css.editInfo}>*/}
-          {/*    <div className={css.watericon}>*/}
-          {/*      <GlassOfWater size={36} />*/}
-          {/*    </div>*/}
-          {/*    <strong>{initialData.amount} ml</strong>*/}
-          {/*    <strong className={css.time}>{initialData.time}</strong>*/}
-          {/*  </div>*/}
-          {/*)}*/}
+          <div className={css.editInfo}>
+            <div className={css.watericon}>
+              <GlassOfWater size={36} />
+            </div>
+            <strong>{data?.manualAmount || 0} ml</strong>
+            <strong className={css.time}>{data?.manualTime || "00:00"}</strong>
+          </div>
 
           <Formik
             initialValues={{
-              manualAmount: 0,
-              manualTime: 0,
+              manualAmount: data?.manualAmount || 0,
+              manualTime: data?.manualTime || "00:00",
             }}
             enableReinitialize
             onSubmit={handleSubmit}
@@ -94,11 +100,11 @@ const TodayListModal = () => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>Choose a value:</p>
+                  <p>Correct entered data:</p>
                 </div>
 
                 <div className={css.formGroupWater}>
-                  <label className={css.labelWater}>Amount of water:</label>
+                  <label className={css.label}>Amount of water:</label>
                   <div className={css.amountButtons}>
                     <button
                       className={css.buttonWater}
@@ -106,7 +112,7 @@ const TodayListModal = () => {
                       onClick={() =>
                         setFieldValue(
                           "manualAmount",
-                          Math.max(0, values.manualAmount - 50),
+                          Math.max(0, values.manualAmount - 50)
                         )
                       }
                     >
@@ -138,7 +144,6 @@ const TodayListModal = () => {
                     value={values.manualTime}
                     onChange={(e) => {
                       setFieldValue("manualTime", e.target.value);
-                      setTime(e.target.value);
                     }}
                   />
                 </div>
@@ -176,4 +181,5 @@ const TodayListModal = () => {
   );
 };
 
-export default TodayListModal;
+export default EditListModal;
+
