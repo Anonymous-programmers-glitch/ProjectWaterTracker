@@ -22,10 +22,7 @@ function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  const [modalActive, setModalActive]= useState(true);
-
-
-
+  const [modalActive, setModalActive] = useState(true);
 
   useEffect(() => {
     dispatch(refresh());
@@ -35,60 +32,59 @@ function App() {
     <b>Please wait, updating user info...</b>
   ) : (
     <>
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Suspense fallback={<SuspenseFallback />}>
-            <Layout />
-          </Suspense>
-        }
-      >
+      <Routes>
         <Route
-          index
+          path="/"
           element={
             <Suspense fallback={<SuspenseFallback />}>
+              <Layout />
+            </Suspense>
+          }
+        >
+          <Route
+            index
+            element={
+              <Suspense fallback={<SuspenseFallback />}>
+                <RestrictedRoute
+                  redirectTo="/homepage"
+                  component={<WelcomePage />}
+                />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/welcome"
+            element={
+              <Suspense fallback={<>Load</>}>
+                <WelcomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/homepage"
+            element={
+              <PrivateRoute redirectTo="/signin" component={<HomePage />} />
+            }
+          />
+          <Route
+            path="/signin"
+            element={
               <RestrictedRoute
                 redirectTo="/homepage"
-                component={<WelcomePage />}
+                component={<SigninPage />}
               />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/welcome"
-          element={
-            <Suspense fallback={<>Load</>}>
-              <WelcomePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/homepage"
-          element={
-            <PrivateRoute redirectTo="/signin" component={<HomePage />} />
-          }
-        />
-        <Route
-          path="/signin"
-          element={
-            <RestrictedRoute
-              redirectTo="/homepage"
-              component={<SigninPage />}
-            />
-          }
-        />
+            }
+          />
 
-        <Route path="/signup" element={<SignupPage />} />
-      </Route>
-      <Route path="/success" element={<SuccessPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-      <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-    </Routes>
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
+      </Routes>
 
-    <MyDailyNorma active={modalActive} setActive={setModalActive}/>
-
-</>
+      {/*<MyDailyNorma active={modalActive} setActive={setModalActive}/>*/}
+    </>
   );
 }
 
