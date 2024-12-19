@@ -1,5 +1,6 @@
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
+// import { toast } from "react-toastify";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
 // import user from "../../testUser.json";
@@ -7,7 +8,7 @@ import Button from "../ui/Button/Button.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { useState, useEffect, useCallback } from "react";
-import { selectUser } from "../../redux/user/selectors.js";
+import { selectAvatarUrl, selectUser } from "../../redux/user/selectors.js";
 import { useSelector } from "react-redux";
 // import { updateUser } from "../../redux/settings/operations.js";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
@@ -70,6 +71,11 @@ export default function SettingModal() {
   // const [preview, setPreview] = useState(user?.avatarUrl || null);
   //
   const value = useSelector(selectUser);
+  const avatar = useSelector(selectAvatarUrl);
+  console.log(value.avatarUrl);
+
+  console.log(avatar);
+
   const [openPassword, setOpenPassword] = useState(false);
   const isSettingsOpen = useSelector(selectSettingModal);
   const dispatch = useDispatch();
@@ -98,18 +104,47 @@ export default function SettingModal() {
   };
 
   // const handleSubmit = (values, actions) => {
-  //   // const userData = {
-  //   //   ...values,
-  //   //   idUser: value.id,
-  //   // };
-  //   console.log(values);
+  //   const updatedValues = {};
 
-  //   dispatch(update(values));
+  //   Object.keys(values).forEach((key) => {
+  //     if (values[key] !== initialValues[key]) {
+  //       updatedValues[key] = values[key];
+  //     }
+  //   });
+
+  //   if (updatedValues.outdatedPassword && updatedValues.newPassword) {
+  //     const passwordPayload = {
+  //       outdatedPassword: updatedValues.outdatedPassword,
+  //       newPassword: updatedValues.newPassword,
+  //     };
+
+  //     dispatch(update(passwordPayload));
+  //     console.log("Пароль оновлено:", passwordPayload);
+  //     delete updatedValues.outdatedPassword;
+  //     delete updatedValues.newPassword;
+  //   }
+
+  //   // Обработка данных , кроме паролей
+  //   const otherFields = Object.keys(updatedValues).filter(
+  //     (key) => key !== "outdatedPassword" && key !== "newPassword"
+  //   );
+
+  //   if (otherFields.length > 0) {
+  //     const otherPayload = otherFields.reduce((acc, key) => {
+  //       acc[key] = updatedValues[key];
+  //       return acc;
+  //     }, {});
+
+  //     dispatch(update(otherPayload));
+  //   }
+
+  //   //
+  //   dispatch(closeSettingModal());
 
   //   actions.resetForm();
   // };
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const updatedValues = {};
 
     Object.keys(values).forEach((key) => {
@@ -118,34 +153,39 @@ export default function SettingModal() {
       }
     });
 
-    if (updatedValues.outdatedPassword && updatedValues.newPassword) {
-      const passwordPayload = {
-        outdatedPassword: updatedValues.outdatedPassword,
-        newPassword: updatedValues.newPassword,
-      };
+    try {
+      if (updatedValues.outdatedPassword && updatedValues.newPassword) {
+        const passwordPayload = {
+          outdatedPassword: updatedValues.outdatedPassword,
+          newPassword: updatedValues.newPassword,
+        };
 
-      dispatch(update(passwordPayload));
-      console.log("Пароль оновлено:", passwordPayload);
-      delete updatedValues.outdatedPassword;
-      delete updatedValues.newPassword;
+        await dispatch(update(passwordPayload));
+        console.log("Пароль оновлено:", passwordPayload);
+        delete updatedValues.outdatedPassword;
+        delete updatedValues.newPassword;
+      }
+
+      const otherFields = Object.keys(updatedValues).filter(
+        (key) => key !== "outdatedPassword" && key !== "newPassword"
+      );
+
+      if (otherFields.length > 0) {
+        const otherPayload = otherFields.reduce((acc, key) => {
+          acc[key] = updatedValues[key];
+          return acc;
+        }, {});
+
+        await dispatch(update(otherPayload));
+      }
+
+      dispatch(closeSettingModal());
+      // toast.success("Зміни успішно збережено!");
+      console.log("Успішна операція!");
+    } catch (error) {
+      // toast.error("Щось пішло не так.");
+      console.log("Щось пішло не так: " + error.message);
     }
-
-    // Обработка данных , кроме паролей
-    const otherFields = Object.keys(updatedValues).filter(
-      (key) => key !== "outdatedPassword" && key !== "newPassword"
-    );
-
-    if (otherFields.length > 0) {
-      const otherPayload = otherFields.reduce((acc, key) => {
-        acc[key] = updatedValues[key];
-        return acc;
-      }, {});
-
-      dispatch(update(otherPayload));
-    }
-
-    //
-    dispatch(closeSettingModal());
 
     actions.resetForm();
   };
@@ -181,31 +221,27 @@ export default function SettingModal() {
   };
   //
 
-  const avatarContent = user.avatar ? (
-    <img
-      src={user.avatar}
-      alt="User Avatar"
-      className={css.userLogoBtnAvatar}
-    />
-  ) : (
-    <span>{(user.name || user.email[0]).charAt(0).toUpperCase()}</span>
-  );
-
   return (
     <ModalBackdrop onClick={() => dispatch(closeSettingModal())}>
       <div className={css.container} onClick={(e) => e.stopPropagation()}>
         <h3 className={css.photoTitle}>Your photo</h3>
         <div className={css.imgWrapper}>
-          <img
-            // src={initialValues.avatarUrl || user.avatar}
-            src={
-              selectedFile
-                ? URL.createObjectURL(selectedFile)
-                : value.avatarUrl || user.avatar
-            }
-            alt="User photo"
-            className={css.photo}
-          />
+          {selectedFile || value.avatarUrl ? (
+            <img
+              src={
+                selectedFile
+                  ? URL.createObjectURL(selectedFile)
+                  : value.avatarUrl
+              }
+              alt="User photo"
+              className={css.photo}
+            />
+          ) : (
+            <div className={css.spanValue}>
+              {(value.name || value.email[0]).charAt(0).toUpperCase()}
+            </div>
+          )}
+
           <button
             type="button"
             className={css.buttonUpload}
@@ -370,7 +406,7 @@ export default function SettingModal() {
               <div className={css.btn}>
                 <Button
                   type="submit"
-                  cssStyle={css.btn}
+                  cssstyle={css.btn}
                   // onClick={handleSubmit}
                 >
                   Submit

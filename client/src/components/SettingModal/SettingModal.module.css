@@ -59,6 +59,32 @@
   position: relative;
 }
 
+.userLogoBtnAvatarWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid var(--primery-color-black);
+  overflow: hidden;
+  transition: border 300ms ease;
+}
+
+.spanValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid var(--primery-color-black);
+  overflow: hidden;
+  transition: border 300ms ease;
+  font-size: x-large;
+  color: var(--primery-color-blue);
+}
+
 .uploadPhotoInput {
   display: none;
 }
