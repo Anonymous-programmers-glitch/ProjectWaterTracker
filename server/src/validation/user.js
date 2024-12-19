@@ -31,8 +31,4 @@ export const userInfoUpdatedSchema = Joi.object({
     'number.min': 'Daily norm must be at least 50.',
     'number.max': 'Daily norm must be at most 5000.',
   }),
-  // ,  avatarUrl: Joi.string().uri().allow(null).default(null).messages({
-  //   'string.base': 'Avatar URL must be a string.',
-  //   'string.uri': 'Avatar URL must be a valid URI.',
-  // }),
 });
