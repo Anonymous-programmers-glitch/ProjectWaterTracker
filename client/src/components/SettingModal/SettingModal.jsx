@@ -12,7 +12,7 @@ import { useState, useEffect, useCallback } from "react";
 import { selectUser } from "../../redux/settings/selectors.js";
 import { useSelector } from "react-redux";
 import { updateUser } from "../../redux/settings/operations.js";
-import MarkOutline from "../ui/icons/xMarkOutline.jsx";
+import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import EyeOutline from "../../components/ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
 import ArrowUpTrayOutline from "../ui/icons/ArrowUpTrayOutline.jsx";
@@ -55,7 +55,7 @@ export default function SettingModal() {
         dispatch(closeSettingModal());
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleOpenPassword = () => {

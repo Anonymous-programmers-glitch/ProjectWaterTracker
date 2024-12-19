@@ -9,7 +9,7 @@ import {
 import { closeEditModal, closeLogoutModal } from "../../redux/modal/slice.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
-import XMarkOutline from "../ui/icons/xMarkOutline";
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import GlassOfWater from "../ui/icons/GlassOfWater";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";

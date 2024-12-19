@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import XMarkOutline from "../ui/icons/xMarkOutline";
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import css from "./UserLogoutModal.module.css";
 import { closeLogoutModal } from "../../redux/modal/slice";
 import { selectLogoutModal } from "../../redux/modal/selectors";
@@ -26,7 +26,7 @@ const UserLogoutModal = () => {
         dispatch(closeLogoutModal());
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {
