@@ -1,8 +1,7 @@
 .modal {
   position: absolute;
-  top:0;
+  top: 0;
   right: 20px;
-  /* z-index: 10000; */
   width: 118px;
   height: 88px;
   padding: 16px;
@@ -19,7 +18,7 @@
   align-items: center;
   gap: 8px;
   padding: 0;
-  color: #407bff;
+  color: var(--primery-color-blue);
   transition: color 300ms ease;
 }
 
@@ -29,7 +28,6 @@
 }
 
 .modalText {
-  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
