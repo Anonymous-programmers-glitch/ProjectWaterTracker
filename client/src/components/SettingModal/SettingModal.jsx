@@ -1,6 +1,6 @@
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
-// import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
 // import user from "../../testUser.json";
@@ -164,6 +164,7 @@ export default function SettingModal() {
         console.log("Пароль оновлено:", passwordPayload);
         delete updatedValues.outdatedPassword;
         delete updatedValues.newPassword;
+        delete updatedValues.repeatNewPassword;
       }
 
       const otherFields = Object.keys(updatedValues).filter(
@@ -180,11 +181,14 @@ export default function SettingModal() {
       }
 
       dispatch(closeSettingModal());
-      // toast.success("Зміни успішно збережено!");
+
       alert("Успішна операція!");
+      // toast.success("Успішна операція!", {
+      //   autoClose: 3000,
+      // });
     } catch (error) {
-      // toast.error("Щось пішло не так.");
       alert("Щось пішло не так: " + error.message);
+      // toast.error("Щось пішло не так: " + error.message, { autoClose: 2000 });
     }
 
     actions.resetForm();
