@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { openEditModal } from "../../../redux/modal/slice.js";
+import { deleteWaterToday } from "../../../redux/waterToday/operations.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
@@ -18,11 +19,15 @@ function WaterListIItemToday({ item }) {
     dispatch(openEditModal({ _id, amount, date }));
   };
 
-  const handleDelete = () => {};
+  const handleDelete = (e) => {
+    const elem = e.currentTarget;
+    const id = elem.closest("li").id;
+    dispatch(deleteWaterToday(id));
+  };
 
   return (
     <>
-      <li className={css.item}>
+      <li className={css.item} id={item._id}>
         <div className={css.leftcontent}>
           <div className={css.watericon}>
             <GlassOfWater size={size} />
