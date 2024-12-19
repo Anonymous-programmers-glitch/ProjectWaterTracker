@@ -11,10 +11,10 @@ const UserAuth = () => {
 
   return (
     <button className={css.userAuthBtn} onClick={handleSignInClick}>
-      <span className={css.userAuthBtnText}>Sign in</span>
-      <span className={css.icon}>
+      <p className={css.userAuthBtnText}>Sign in</p>
+      <div className={css.icon}>
         <UserOutline size="28" />
-      </span>
+      </div>
     </button>
   );
 };
