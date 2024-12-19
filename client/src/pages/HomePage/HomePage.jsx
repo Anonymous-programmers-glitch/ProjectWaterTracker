@@ -9,13 +9,16 @@ import WaterListIItemMonth from "../../components/HomePage/waterListItemMonth/Wa
 import WaterListMonth from "../../components/HomePage/waterListMonth/WaterListMonth.jsx";
 import WaterListToday from "../../components/HomePage/waterListToday/WaterListToday.jsx";
 import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
+import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
-import TodayListModal from "../../components/TodayListModal/TodayListModal.jsx";
+import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
 import { openAddModal } from "../../redux/modal/slice.js";
+import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
+import { getIsWaterMonth } from "../../redux/waterMonth/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
 import {
   getError,
@@ -23,22 +26,30 @@ import {
   getIsWaterToday,
 } from "../../redux/waterToday/selectors.js";
 
-import { dataMonth } from "../../tempData/homepagetempdata.js";
 import css from "./homepage.module.css";
 
 function HomePage() {
   const dispatch = useDispatch();
   const [newData, setNewData] = useState([]);
   const dateNow = dayjs().format("YYYY-MM-DD");
-
   const { waterRecords } = useSelector(getIsWaterToday);
+  const { percentage } = useSelector(getIsWaterToday);
   const IsLoading = useSelector(getIsLoading);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
+  const dataMonth = useSelector(getIsWaterMonth);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch]);
+  }, [dispatch, waterRecords.length]);
+
+  useEffect(() => {
+    const date = {
+      month: dayjs(monthState).format("MM"),
+      year: dayjs(monthState).format("YYYY"),
+    };
+    dispatch(fetchWaterMonth(date));
+  }, [dispatch, monthState, waterRecords.length]);
 
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
@@ -47,7 +58,7 @@ function HomePage() {
     for (let i = 1; i <= countDayofMonth; i++) {
       currentDay[0] = i;
       const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-"),
+        (data) => data.date === currentDay.join("-")
       );
 
       if (isDay) {
@@ -67,10 +78,6 @@ function HomePage() {
     dispatch(openAddModal());
   }
 
-  useEffect(() => {
-    setNewData(reorderData(dataMonth, monthState));
-  }, [monthState]);
-
   return (
     <section className={css.homepage}>
       <div className={css.background}></div>
@@ -82,7 +89,7 @@ function HomePage() {
           <Bottle />
         </div>
         <div className={css.rangeblok}>
-          <WaterRange />
+          <WaterRange percentage={percentage} />
           <Button onClick={handleAdd}>
             <div className={css.btn}>
               <PlusCircleOutline />
@@ -109,13 +116,14 @@ function HomePage() {
           <DatePicker />
         </div>
         <WaterListMonth>
-          {newData.map((item) => (
-            <WaterListIItemMonth key={item.id} item={item} />
+          {dataMonth.map((item) => (
+            <WaterListIItemMonth key={item.date} item={item} />
           ))}
         </WaterListMonth>
       </div>
       <AddWaterModal />
       <TodayListModal />
+      <MyDailyNorma />
     </section>
   );
 }

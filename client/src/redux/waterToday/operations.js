@@ -24,8 +24,10 @@ export const deleteWaterToday = createAsyncThunk(
   "today/deleteWaterToday",
   async (id, thunkAPI) => {
     try {
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(reduxState.user.accessToken);
       const { data } = await axios.delete(`/water/${id}`);
-      return data;
+      return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

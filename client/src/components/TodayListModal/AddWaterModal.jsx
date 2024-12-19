@@ -7,7 +7,7 @@ import { selectAddModal } from "../../redux/modal/selectors.js";
 import { addWaterToday } from "../../redux/waterToday/operations.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
-import XMarkOutline from "../ui/icons/xMarkOutline";
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
@@ -17,9 +17,9 @@ const AddWaterModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAddModal);
 
-  function onClose() {
+  const onClose = useCallback(() => {
     dispatch(closeAddModal());
-  }
+  }, [dispatch]);
 
   const [time, setTime] = useState(dayjs().format("HH:mm"));
 
@@ -83,7 +83,7 @@ const AddWaterModal = () => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>"Choose a value:"</p>
+                  <p>Choose a value:</p>
                 </div>
 
                 <div className={css.formGroupWater}>

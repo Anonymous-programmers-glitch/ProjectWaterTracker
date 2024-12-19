@@ -45,15 +45,18 @@ export const getWaterConsumptionByMonth = async (
   userId,
   month,
   year,
-  dailyNorm,
+  dailyNorma,
 ) => {
   const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
   const endDate = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
 
+  // Додаємо вибірковий запит у WaterCollection
   const records = await WaterCollection.find({
     userId,
     date: { $gte: startDate, $lt: endDate },
-  }).sort({ date: 1 });
+  })
+    .sort({ date: 1 }) // Сортуємо записи за датою у порядку зростання
+    .select('date amount'); // Вибираємо лише необхідні поля для зменшення обсягу отриманих даних
 
   const daysInMonth = new Date(year, month, 0).getDate();
   const fullMonthData = [];
@@ -69,13 +72,13 @@ export const getWaterConsumptionByMonth = async (
     }, 0);
 
     const percentageConsumed =
-      dailyNorm > 0 ? Math.round((consumedWaterByDay / dailyNorm) * 100) : 0;
+      dailyNorma > 0 ? Math.round((consumedWaterByDay / dailyNorma) * 100) : 0;
 
     fullMonthData.push({
-      date: `${day.toString().padStart(2, '0')}.${month
+      date: `${year}-${month.toString().padStart(2, '0')}-${day
         .toString()
-        .padStart(2, '0')}.${year}`,
-      dailyNorm: dailyNorm.toString(),
+        .padStart(2, '0')}`,
+      dailyNorma: dailyNorma.toString(),
       percentageConsumed: percentageConsumed.toString(),
       entries: dayRecords.length,
       consumedWaterByDay: consumedWaterByDay.toString(),

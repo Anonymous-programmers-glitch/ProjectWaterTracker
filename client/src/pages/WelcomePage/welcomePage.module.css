@@ -12,9 +12,9 @@
   top: 0;
   left: 0;
   background-repeat: no-repeat;
-  background-image: url("../../assets/welcomePage/backgroundMobileWelcomePage.svg");
+  background-image: url("../../assets/welcomePage/lightTheme/backgroundMobileWelcomePage.svg");
   background-size: cover;
-  background-position: center ;
+  background-position: center;
   z-index: -2;
 }
 
@@ -43,7 +43,7 @@
     gap: 60px;
   }
   .background {
-    background-image: url("../../assets/welcomePage/backgroundTabletWelcomePage.svg");
+    background-image: url("../../assets/welcomePage/lightTheme/backgroundTabletWelcomePage.svg");
     background-position: center 20%;
     background-size: cover;
   }
@@ -70,8 +70,8 @@
     align-items: end;
   }
   .background {
-    background-image: url("../../assets/welcomePage/background2DesktopWelcomePage.svg"),
-      url("../../assets/welcomePage/background1DesktopWelcomePage.svg");
+    background-image: url("../../assets/welcomePage/lightTheme/background2DesktopWelcomePage.svg"),
+      url("../../assets/welcomePage/lightTheme/background1DesktopWelcomePage.svg");
     background-size: contain, contain;
     background-position: center, center 100%;
   }

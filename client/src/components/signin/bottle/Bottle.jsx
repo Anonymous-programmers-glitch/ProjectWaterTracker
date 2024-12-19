@@ -1,4 +1,3 @@
-//import css from "./bottle.mobile.css";
 import React from "react";
 
 export default function BottleContainer() {
