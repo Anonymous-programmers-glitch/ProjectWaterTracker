@@ -30,15 +30,19 @@ function HomePage() {
   const dispatch = useDispatch();
   const [newData, setNewData] = useState([]);
   const dateNow = dayjs().format("YYYY-MM-DD");
-
   const { waterRecords } = useSelector(getIsWaterToday);
+  const { percentage } = useSelector(getIsWaterToday);
   const IsLoading = useSelector(getIsLoading);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch]);
+  }, [dispatch, waterRecords.length]);
+
+  useEffect(() => {
+    setNewData(reorderData(dataMonth, monthState));
+  }, [monthState]);
 
   function reorderData(dataMonth, currentMonth) {
     const newData = [];
@@ -67,10 +71,6 @@ function HomePage() {
     dispatch(openAddModal());
   }
 
-  useEffect(() => {
-    setNewData(reorderData(dataMonth, monthState));
-  }, [monthState]);
-
   return (
     <section className={css.homepage}>
       <div className={css.background}></div>
@@ -82,7 +82,7 @@ function HomePage() {
           <Bottle />
         </div>
         <div className={css.rangeblok}>
-          <WaterRange />
+          <WaterRange percentage={percentage} />
           <Button onClick={handleAdd}>
             <div className={css.btn}>
               <PlusCircleOutline />
