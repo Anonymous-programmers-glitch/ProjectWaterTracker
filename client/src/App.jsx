@@ -1,5 +1,5 @@
 import "./App.css";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
 import SuspenseFallback from "./components/SuspenseFallback/SuspenseFallback.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
@@ -10,6 +10,7 @@ import { refresh } from "./redux/user/operations.js";
 import PrivateRoute from "./PrivateRoute.jsx";
 import RestrictedRoute from "./RestrictedRoute.jsx";
 import { selectIsRefreshing } from "./redux/user/selectors.js";
+import MyDailyNorma from "./components/MyDailyForma/MyDailyForma.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
@@ -21,6 +22,11 @@ function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
+  const [modalActive, setModalActive]= useState(true);
+
+
+
+
   useEffect(() => {
     dispatch(refresh());
   }, [dispatch]);
@@ -28,6 +34,7 @@ function App() {
   return isRefreshing ? (
     <b>Please wait, updating user info...</b>
   ) : (
+    <>
     <Routes>
       <Route
         path="/"
@@ -78,6 +85,10 @@ function App() {
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
     </Routes>
+
+    <MyDailyNorma active={modalActive} setActive={setModalActive}/>
+
+</>
   );
 }
 
