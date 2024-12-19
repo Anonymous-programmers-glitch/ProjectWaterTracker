@@ -1,8 +1,6 @@
 import css from "./waterrange.module.css";
 
-function WaterRange() {
-  const value = 50;
-
+function WaterRange({ percentage }) {
   return (
     <div className={css.slidercontainer}>
       <p className={css.slidertitle}>Today</p>
@@ -11,7 +9,7 @@ function WaterRange() {
           type="range"
           min="0"
           max="100"
-          value={value}
+          value={percentage}
           onChange={() => {}}
           className={css.slider}
         />

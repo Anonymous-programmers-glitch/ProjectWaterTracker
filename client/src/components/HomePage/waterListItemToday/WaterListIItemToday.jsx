@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
+import { openEditModal } from "../../../redux/modal/slice.js";
+import { deleteWaterToday } from "../../../redux/waterToday/operations.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
 import TrashOutline from "../../ui/icons/TrashOutline.jsx";
-import TodayListModal from "../../TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
 import css from "./waterlistitemtoday.module.css";
-import { useState } from "react";
 
 function WaterListIItemToday({ item }) {
   const dispatch = useDispatch();
@@ -15,31 +15,19 @@ function WaterListIItemToday({ item }) {
   const size = isMobile ? "26" : "36";
   const { _id, amount, date } = item;
 
-  // Состояние для отображения модального окна
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  // Открытие модального окна
   const handleEdit = () => {
-    setIsEditModalOpen(true);
+    dispatch(openEditModal({ _id, amount, date }));
   };
 
-  // Закрытие модального окна
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
+  const handleDelete = (e) => {
+    const elem = e.currentTarget;
+    const id = elem.closest("li").id;
+    dispatch(deleteWaterToday(id));
   };
-
-  // Сохранение изменений
-  const handleSave = (updatedData) => {
-    console.log("Updated data:", updatedData);
-    // Здесь нужно добавить логику для обновления записи (например, обновление в Redux)
-    closeEditModal();
-  };
-
-  const handleDelete = () => {};
 
   return (
     <>
-      <li className={css.item}>
+      <li className={css.item} id={item._id}>
         <div className={css.leftcontent}>
           <div className={css.watericon}>
             <GlassOfWater size={size} />
@@ -56,15 +44,6 @@ function WaterListIItemToday({ item }) {
           </button>
         </div>
       </li>
-
-      {/* Модальное окно редактирования */}
-      {/*<TodayListModal*/}
-      {/*  isOpen={isEditModalOpen}*/}
-      {/*  mode="edit"*/}
-      {/*  initialData={{ amount: volumeOfWater, time }}*/}
-      {/*  onSave={handleSave}*/}
-      {/*  onClose={closeEditModal}*/}
-      {/*/>*/}
     </>
   );
 }
