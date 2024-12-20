@@ -45,23 +45,40 @@ export const getWaterConsumptionByMonth = async (
   userId,
   month,
   year,
-  dailyNorma,
+  userHistoryRecords,
+  defaultDailyNorma,
 ) => {
   const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
   const endDate = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
 
-  // Додаємо вибірковий запит у WaterCollection
   const records = await WaterCollection.find({
     userId,
     date: { $gte: startDate, $lt: endDate },
   })
-    .sort({ date: 1 }) // Сортуємо записи за датою у порядку зростання
-    .select('date amount'); // Вибираємо лише необхідні поля для зменшення обсягу отриманих даних
+    .sort({ date: 1 })
+    .select('date amount');
 
   const daysInMonth = new Date(year, month, 0).getDate();
   const fullMonthData = [];
 
+  // Ініціалізація останньої доступної норми (початково — стандартна)
+  let lastDailyNorma = defaultDailyNorma;
+
   for (let day = 1; day <= daysInMonth; day++) {
+    const currentDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+
+    // Знаходимо норму для конкретного дня
+    const dailyNormaRecord = userHistoryRecords.find(
+      (record) => new Date(record.date).getTime() === currentDate.getTime(),
+    );
+
+    // Оновлюємо останню доступну норму, якщо є новий запис в історії
+    if (dailyNormaRecord) {
+      lastDailyNorma = dailyNormaRecord.dailyNorma;
+    }
+
+    const dailyNorma = lastDailyNorma; // Використовуємо останню доступну норму
+
     const dayRecords = records.filter((record) => {
       const recordDate = new Date(record.date);
       return recordDate.getUTCDate() === day;
