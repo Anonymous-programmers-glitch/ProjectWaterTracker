@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +9,9 @@ import {
 import { closeEditModal } from "../../redux/modal/slice.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import Button from "../ui/Button/Button.jsx";
-import XMarkOutline from "../ui/icons/xMarkOutline.jsx";
 import MinusSmall from "../ui/icons/MinusSmall.jsx";
 import PlusSmall from "../ui/icons/PlusSmall.jsx";
+import XMarkOutline from '../ui/icons/XMarkOutline.jsx';
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
@@ -20,24 +21,20 @@ const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
+  const {amount,date, _id}=data
+  const time = dayjs(date).format("HH:mm");
+  const day = dayjs(date).format("YYYY-MM-DD");
 
   const handelCloseModal = useCallback(() => {
     dispatch(closeEditModal());
   }, [dispatch]);
 
+
   const handleSubmit = (values) => {
-    if (data?.id) {
-      dispatch(
-        editWaterToday({
-          id: data.id,
-          manualAmount: values.manualAmount,
-          manualTime: values.manualTime,
-        })
-      );
-      handelCloseModal();
-    } else {
-      console.error("Invalid data ID");
-    }
+     const data= {_id:_id,amount:values.amount,date:dayjs(`${day} ${values.time}`).toISOString()}
+    dispatch(editWaterToday(data))
+    handelCloseModal();
+ 
   };
 
   const handleKeyDown = useCallback(
@@ -85,14 +82,14 @@ const EditListModal = () => {
             <div className={css.watericon}>
               <GlassOfWater size={36} />
             </div>
-            <strong>{data?.manualAmount || 0} ml</strong>
-            <strong className={css.time}>{data?.manualTime || "00:00"}</strong>
+            <strong>{amount || 0}ml</strong>
+            <strong className={css.time}>{time || "00:00"}</strong>
           </div>
 
           <Formik
             initialValues={{
-              manualAmount: data?.manualAmount || 0,
-              manualTime: data?.manualTime || "00:00",
+              amount: Number(amount) || 0,
+              time: time || "00:00",
             }}
             enableReinitialize
             onSubmit={handleSubmit}
@@ -111,20 +108,20 @@ const EditListModal = () => {
                       type="button"
                       onClick={() =>
                         setFieldValue(
-                          "manualAmount",
-                          Math.max(0, values.manualAmount - 50)
+                          "amount",
+                          Math.max(0, values.amount - 50)
                         )
                       }
                     >
                       <MinusSmall />
                     </button>
                     <span className={css.amountTotalWater}>
-                      {values.manualAmount} ml
+                      {values.amount} ml
                     </span>
                     <button
                       type="button"
                       onClick={() =>
-                        setFieldValue("manualAmount", values.manualAmount + 50)
+                        setFieldValue("amount", values.amount + 50)
                       }
                     >
                       <PlusSmall />
@@ -133,42 +130,42 @@ const EditListModal = () => {
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualTime" className={css.label}>
+                  <label htmlFor="time" className={css.label}>
                     Recording time:
                   </label>
                   <Inputs
                     className={css.customField}
                     type="time"
-                    name="manualTime"
+                    name="time"
                     placeholder="HH:mm"
-                    value={values.manualTime}
+                    value={values.time}
                     onChange={(e) => {
-                      setFieldValue("manualTime", e.target.value);
+                      setFieldValue("time", e.target.value);
                     }}
                   />
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualAmount" className={css.labelWater}>
+                  <label htmlFor="amount" className={css.labelWater}>
                     Enter the value of the water used:
                   </label>
                   <Inputs
                     className={css.customField}
                     type="number"
-                    name="manualAmount"
+                    name="amount"
                     placeholder="Enter amount"
                     step="50"
-                    value={values.manualAmount}
+                    value={values.amount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
-                      setFieldValue("manualAmount", value);
+                      setFieldValue("amount", value);
                     }}
                   />
                 </div>
 
                 <div className={css.formFooter}>
                   <span className={css.totalWater}>
-                    {values.manualAmount} ml
+                    {values.amount} ml
                   </span>
                   <Button type="submit">Save</Button>
                 </div>

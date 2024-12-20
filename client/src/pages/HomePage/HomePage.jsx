@@ -21,10 +21,11 @@ import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
 import { getIsWaterMonth } from "../../redux/waterMonth/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
 import {
+  getEdit,
   getError,
   getIsLoading,
   getIsWaterToday,
-} from "../../redux/waterToday/selectors.js";
+} from '../../redux/waterToday/selectors.js';
 
 import css from "./homepage.module.css";
 
@@ -34,13 +35,14 @@ function HomePage() {
   const { waterRecords } = useSelector(getIsWaterToday);
   const { percentage } = useSelector(getIsWaterToday);
   const IsLoading = useSelector(getIsLoading);
+  const isEdit=useSelector(getEdit);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
   const dataMonth = useSelector(getIsWaterMonth);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch, waterRecords.length]);
+  }, [dispatch, waterRecords.length,isEdit]);
 
   useEffect(() => {
     const date = {
@@ -79,8 +81,8 @@ function HomePage() {
 
         {!isError ? (
           <WaterListToday>
-            {waterRecords.map((item) => (
-              <WaterListIItemToday key={item._id} item={item} />
+            {waterRecords.map((item,index) => (
+              <WaterListIItemToday  key={index} item={item} />
             ))}
           </WaterListToday>
         ) : (
