@@ -77,7 +77,6 @@ const MyDailyNorma = () => {
                   <div className={css.closeBtn} onClick={handleCloseModal}>
                     <MarkOutline />
                   </div>
-                  {/* <CloseIcon className={css.closeIcon} onClick={() => setActive(false)}></CloseIcon> */}
                   <div className={css.cover}>
                     <p className={css.for}>
                       For girl:{" "}
@@ -126,7 +125,6 @@ const MyDailyNorma = () => {
 
                   <p className={css.text}>Your weight in kilograms:</p>
                   <Field
-                    // className={css.modalInput}
                     className={`${css.modalInput} ${errors.weightInKg ? css.modalInputError : ""}`}
                     type="number"
                     name="weightInKg"
@@ -146,7 +144,6 @@ const MyDailyNorma = () => {
                     activities with a high physical. load in hours:
                   </p>
                   <Field
-                    // className={css.modalInput}
                     className={`${css.modalInput} ${errors.loadInHours ? css.modalInputError : ""}`}
                     type="number"
                     name="loadInHours"
@@ -165,7 +162,7 @@ const MyDailyNorma = () => {
                   </p>
                   <p className={css.textRadioBtn2}>
                     Write down how much water you will drink:{" "}
-                    {/* <span className={css.spanResult}>{result} L</span> */}
+                
                     <span className={css.spanResult}>
                       {calculateWaterNorm(
                         parseFloat(values.weightInKg || 0),
@@ -177,12 +174,10 @@ const MyDailyNorma = () => {
                   </p>
 
                   <Field
-                    // className={css.modalInput}
+
                     className={`${css.modalInput} ${errors.waterYouDrink ? css.modalInputError : ""}`}
                     type="number"
                     name="waterYouDrink"
-                    // value={waterYouDrink}
-                    // onChange={(e) => setWaterYouDrink(e.target.value)}
                     placeholder="0"
                     min="0"
                     max="5"
