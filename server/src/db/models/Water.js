@@ -12,10 +12,6 @@ const waterSchema = new Schema(
       type: Number,
       required: true,
     },
-    currentDailyNorma: {
-      type: Number,
-      default: 2000,
-    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',
