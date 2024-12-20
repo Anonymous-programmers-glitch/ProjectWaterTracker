@@ -4,7 +4,7 @@ import { selectDailyNormaModal } from "../../redux/modal/selectors.js";
 import css from "./MyDailyForma.module.css";
 // import { useEffect, useState } from "react";
 // import Button from "../../components/ui/Button/Button";
-
+import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from "react-redux";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
@@ -56,6 +56,7 @@ const MyDailyNorma = () => {
     dispatch(closeDailyNormaModal());
   };
 
+  const notify = ()=>toast('Personal data updated');
   return (
     isOpen && (
       <ModalBackdrop onClick={handleCloseModal}>
@@ -191,11 +192,13 @@ const MyDailyNorma = () => {
                   <div className={css.btn}>
                     
                     <button
+                    onClick={notify}
                       className={css.cssstyleBtn}
                       type="submit"
                     >
                       Save
                     </button>
+                    <Toaster/>
 
                     {/* <div className={css.cssstyle}>
                         <Button cssstyle={css.cssstyle} type="submit">Save</Button>
