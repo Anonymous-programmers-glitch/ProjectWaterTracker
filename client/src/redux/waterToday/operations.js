@@ -40,9 +40,12 @@ export const deleteWaterToday = createAsyncThunk(
 export const editWaterToday = createAsyncThunk(
   "today/editWaterToday",
   async (water, thunkAPI) => {
+     const reduxState = thunkAPI.getState();
+
+    setAuthHeader(reduxState.user.accessToken);
     try {
-      const { id, ...updatedFields } = water;
-      const { data } = await axios.patch(`/water/${id}`, updatedFields);
+      const { _id, ...updatedFields } = water;
+      const { data } = await axios.patch(`/water/${_id}`, updatedFields);
 
       return data;
     } catch (error) {
