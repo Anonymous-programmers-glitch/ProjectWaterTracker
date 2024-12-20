@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { openEditModal} from "../../../redux/modalToggle/slice.js";
+import { deleteWaterToday } from "../../../redux/waterToday/operations.js";
+import { getIsWaterToday } from "../../../redux/waterToday/selectors.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
 import TrashOutline from "../../ui/icons/TrashOutline.jsx";
-import TodayListModal from "../../TodayListModal/TodayListModal.jsx"; // Импортируем модальное окно
 import css from "./waterlistitemtoday.module.css";
-import { useState } from "react";
 
 function WaterListIItemToday({ item }) {
   const dispatch = useDispatch();
@@ -14,32 +15,25 @@ function WaterListIItemToday({ item }) {
   const isMobile = sizeWindow <= 767;
   const size = isMobile ? "26" : "36";
   const { _id, amount, date } = item;
+  const dataToday = useSelector(getIsWaterToday);
 
-  // Состояние для отображения модального окна
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  // Открытие модального окна
-  const handleEdit = () => {
-    setIsEditModalOpen(true);
+  const handleEdit = (e) => {
+    const elem = e.currentTarget;
+    const id = elem.closest("li").id;
+    const index = dataToday.waterRecords.findIndex((item) => item._id === id);
+    const data = dataToday.waterRecords[index];
+     dispatch(openEditModal(data));
   };
 
-  // Закрытие модального окна
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
+  const handleDelete = (e) => {
+    const elem = e.currentTarget;
+    const id = elem.closest("li").id;
+    dispatch(deleteWaterToday(id));
   };
-
-  // Сохранение изменений
-  const handleSave = (updatedData) => {
-    console.log("Updated data:", updatedData);
-    // Здесь нужно добавить логику для обновления записи (например, обновление в Redux)
-    closeEditModal();
-  };
-
-  const handleDelete = () => {};
 
   return (
-    <>
-      <li className={css.item}>
+
+      <li className={css.item} key={item._id} id={item._id}>
         <div className={css.leftcontent}>
           <div className={css.watericon}>
             <GlassOfWater size={size} />
@@ -57,15 +51,6 @@ function WaterListIItemToday({ item }) {
         </div>
       </li>
 
-      {/* Модальное окно редактирования */}
-      {/*<TodayListModal*/}
-      {/*  isOpen={isEditModalOpen}*/}
-      {/*  mode="edit"*/}
-      {/*  initialData={{ amount: volumeOfWater, time }}*/}
-      {/*  onSave={handleSave}*/}
-      {/*  onClose={closeEditModal}*/}
-      {/*/>*/}
-    </>
   );
 }
 

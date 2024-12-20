@@ -10,18 +10,19 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import changeMonthReducer from "./changeMonth/changeMonth.js";
-import modalReducer from "./modal/slice.js";
+import changeMonthReducer from "./changeMonth/changeMonthSlice.js";
+import modalReducer from "./modalToggle/slice.js";
 import userReducer from "./user/slice.js";
-import themeReducer from "./themeSlice/themeSlice.jsx";
+import themeReducer from "./changeTheme/changeThemeSlice.js";
 import waterTodayReducer from "./waterToday/slice.js";
+import waterMonthReducer from "./waterMonth/slice.js";
 
 const persistedThemeReducer = persistReducer(
   {
     key: "theme",
     storage,
   },
-  themeReducer
+  themeReducer,
 );
 const persistedAccessToken = persistReducer(
   {
@@ -29,7 +30,7 @@ const persistedAccessToken = persistReducer(
     storage,
     whitelist: ["accessToken"],
   },
-  userReducer
+  userReducer,
 );
 
 export const store = configureStore({
@@ -39,6 +40,7 @@ export const store = configureStore({
     modal: modalReducer,
     theme: persistedThemeReducer,
     today: waterTodayReducer,
+    month: waterMonthReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -47,7 +49,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  // devTools: process.env.NODE_ENV === "development",
+
 });
 
 export const persistor = persistStore(store);

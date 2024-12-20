@@ -1,0 +1,40 @@
+tags:
+  - Water
+summary: Get waterToday consumption by month
+description: Retrieves the waterToday consumption data for each day of a specified month.
+operationId: getWaterConsumptionByMonth
+security:
+  - bearerAuth: []
+parameters:
+  - name: month
+    in: path
+    description: The month for which to retrieve waterToday consumption data (1-12).
+    required: true
+    schema:
+      type: integer
+      minimum: 1
+      maximum: 12
+      example: 12
+  - name: year
+    in: path
+    description: The year for which to retrieve waterToday consumption data.
+    required: true
+    schema:
+      type: integer
+      example: 2024
+responses:
+  '200':
+    description: Successfully retrieved waterToday consumption data for the month.
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/water.yaml
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: No records found for the given date.
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

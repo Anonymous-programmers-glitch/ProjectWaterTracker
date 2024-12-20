@@ -5,13 +5,13 @@ import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import SettingModal from "../SettingModal/SettingModal";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
-import { closeLogoModal, openLogoModal } from "../../redux/modal/slice";
+import { closeLogoModal, openLogoModal } from "../../redux/modalToggle/slice";
 import { selectUser } from "../../redux/user/selectors";
 import {
   selectLogoModal,
   selectLogoutModal,
   selectSettingModal,
-} from "../../redux/modal/selectors";
+} from "../../redux/modalToggle/selectors";
 
 import css from "./UserLogo.module.css";
 
@@ -47,12 +47,12 @@ const UserLogo = () => {
   return (
     <>
       <button className={css.userLogoBtn} onClick={toggleModal} ref={buttonRef}>
-        <div className={css.userLogoBtnText}>{userName}</div>
+        <p className={css.userLogoBtnText}>{userName}</p>
 
         <div className={css.userLogoBtnWrapper}>
           <div className={css.userLogoBtnAvatarWrapper}>{avatarContent}</div>
 
-          <ChevronDoubleUp size="16" fill="#407BFF" />
+          <ChevronDoubleUp size="16" />
         </div>
       </button>
 

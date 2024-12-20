@@ -1,7 +1,7 @@
 tags:
   - Water
-summary: Add water record
-description: This endpoint creates a new water record for registered user
+summary: Add waterToday record
+description: This endpoint creates a new waterToday record for registered user
 operationId: postWaterRecord
 security:
   - bearerAuth: []
@@ -16,19 +16,19 @@ requestBody:
           - amount
         properties:
           date:
-            description: The date and time of the water consumption record.
+            description: The date and time of the waterToday consumption record.
             type: string
             format: date-time
             example: '2024-12-16T08:30:00Z'
           amount:
-            description: The amount of water consumed (in milliliters).
+            description: The amount of waterToday consumed (in milliliters).
             type: number
             minimum: 50
             maximum: 5000
             example: 250
 responses:
   '201':
-    description: Successfully added the water record.
+    description: Successfully added the waterToday record.
     content:
       application/json:
         schema:
@@ -44,7 +44,7 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully added the water record.
+              example: Successfully added the waterToday record.
             data:
               type: object
               required:
@@ -56,24 +56,24 @@ responses:
               properties:
                 _id:
                   type: string
-                  description: Unique identifier for the water record.
+                  description: Unique identifier for the waterToday record.
                   example: '64f5b992c4b3f1567e63a179'
                 userId:
                   type: string
-                  description: ID of the user who logged the water record.
+                  description: ID of the user who logged the waterToday record.
                   example: '64f5b992c4b3f1567e63a178'
                 date:
                   type: string
                   format: date-time
-                  description: The date and time of the water consumption record.
+                  description: The date and time of the waterToday consumption record.
                   example: '2024-12-16T08:30:00Z'
                 amount:
                   type: number
-                  description: The amount of water consumed (in milliliters).
+                  description: The amount of waterToday consumed (in milliliters).
                   example: 250
                 currentDailyNorm:
                   type: number
-                  description: The current daily water consumption norm for the user (in milliliters).
+                  description: The current daily waterToday consumption norm for the user (in milliliters).
                   example: 2000
   '400':
     $ref: ../../components/responses/400.yaml

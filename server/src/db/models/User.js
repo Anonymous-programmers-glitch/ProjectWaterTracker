@@ -16,7 +16,7 @@ const userSchema = new Schema(
       max: 5000,
       default: 2000,
     },
-    avatarUrl: { type: String, required: false, default: null },
+    avatarUrl: { type: String, required: false, default: '' },
   },
   { timestamps: true, versionKey: false },
 );

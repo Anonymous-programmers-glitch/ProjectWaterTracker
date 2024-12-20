@@ -1,5 +1,19 @@
 import createHttpError from 'http-errors';
 import * as waterServices from '../services/water.js';
+import { userNormaHistoryCollection } from '../db/models/userNormaHistory.js';
+import { UserCollection } from '../db/models/User.js';
+
+// export const getAllWaterController = async (req, res, next) => {
+//   const { _id: userId } = req.user;
+
+//   const waterRecords = await waterServices.getAllWater(userId);
+
+//   res.json({
+//     status: 200,
+//     message: 'Successfully found waterToday records',
+//     waterRecords,
+//   });
+// };
 
 export const getWaterByDateController = async (req, res, next) => {
   const { _id: userId } = req.user;
@@ -61,7 +75,7 @@ export const addWaterController = async (req, res) => {
 
   res.status(201).json({
     status: 201,
-    message: 'Successfully created a water record',
+    message: 'Successfully created a waterToday record',
     waterRecord,
   });
 };
@@ -82,7 +96,7 @@ export const updateWaterController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully updated a water record',
+    message: 'Successfully updated a waterToday record',
     data: result.data,
   });
 };
@@ -108,14 +122,41 @@ export const deleteWaterController = async (req, res, next) => {
 export const getWaterByMonthController = async (req, res) => {
   const { _id: userId } = req.user;
   const { month, year } = req.params;
-  const dailyNorma = req.user.dailyNorma || 2000;
 
+  const monthInt = parseInt(month, 10);
+  const yearInt = parseInt(year, 10);
+
+  if (
+    isNaN(monthInt) ||
+    isNaN(yearInt) ||
+    monthInt < 1 ||
+    monthInt > 12 ||
+    yearInt < 1970 ||
+    yearInt > 2100
+  ) {
+    throw createHttpError(400, 'Invalid month or year provided');
+  }
+
+  // Знаходимо історичну норму для кожного дня
+  const userHistoryRecords = await userNormaHistoryCollection
+    .find({ userId })
+    .sort({ date: -1 }); // Сортуємо записи в порядку спадання за датою
+
+  // Якщо записів історії немає, беремо стандартну норму з профілю користувача
+  const user = await UserCollection.findById(userId);
+  const defaultDailyNorma = user?.dailyNorma || 2000;
+
+  // Передаємо всю історію і стандартну норму в сервіс
   const data = await waterServices.getWaterConsumptionByMonth(
     userId,
-    parseInt(month),
-    parseInt(year),
-    dailyNorma,
+    monthInt,
+    yearInt,
+    userHistoryRecords,
+    defaultDailyNorma, // Стандартна норма, якщо історія відсутня
   );
 
-  res.json({ status: 200, data });
+  res.status(200).json({
+    status: 200,
+    data,
+  });
 };

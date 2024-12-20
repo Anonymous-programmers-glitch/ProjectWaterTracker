@@ -8,8 +8,8 @@ export const waterAddSchema = Joi.object({
   }),
   amount: Joi.number().integer().min(50).max(5000).required().messages({
     'number.base': '"amount" must be a number.',
-    'number.min': 'The amount of water must be at least 50 ml.',
-    'number.max': 'The amount of water cannot exceed 5,000 ml.',
+    'number.min': 'The amount of waterToday must be at least 50 ml.',
+    'number.max': 'The amount of waterToday cannot exceed 5,000 ml.',
     'number.empty': '"amount" field is required.',
   }),
 });
@@ -22,8 +22,8 @@ export const waterUpdateSchema = Joi.object({
   }),
   amount: Joi.number().integer().min(50).max(5000).messages({
     'number.base': '"amount" must be a number.',
-    'number.min': 'The amount of water must be at least 50 ml.',
-    'number.max': 'The amount of water cannot exceed 5,000 ml.',
+    'number.min': 'The amount of waterToday must be at least 50 ml.',
+    'number.max': 'The amount of waterToday cannot exceed 5,000 ml.',
     'number.empty': '"amount" field is required.',
   }),
 });
