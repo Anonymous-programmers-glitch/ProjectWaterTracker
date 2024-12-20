@@ -93,24 +93,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "user"
-                      ],
-                      "properties": {
-                        "user": {
-                          "type": "object",
-                          "required": [
-                            "email"
-                          ],
-                          "properties": {
-                            "email": {
-                              "type": "string",
-                              "description": "User's email.",
-                              "example": "johndoe@mail.com"
-                            }
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }
@@ -582,35 +565,22 @@
         }
       }
     },
-    "/auth/confirm-oauth": {
-      "post": {
+    "/users/current": {
+      "get": {
         "tags": [
-          "Auth"
+          "User"
         ],
-        "summary": "Confirm Google OAuth and Log In or Sign Up",
-        "description": "Confirms the Google OAuth code and either logs in or signs up the user based on the code received from Google.",
-        "operationId": "loginWithGoogleOAuth",
-        "security": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "code": {
-                    "type": "string",
-                    "description": "The OAuth code received from Google after user authentication.",
-                    "example": "4/0AX4XfWhJjh5rZ-8l3_lXX8Hr0VK0A7k5Fzss8DS0GsTpUE44xnbp4XYu-0S9_w7GZX0GAw"
-                  }
-                }
-              }
-            }
+        "summary": "Get current user",
+        "description": "Retrieve the details of the currently authenticated user.",
+        "operationId": "getCurrentUser",
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Successfully logged in or signed up via Google OAuth",
+            "description": "Successfully retrieved the current user",
             "content": {
               "application/json": {
                 "schema": {
@@ -622,14 +592,50 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully logged in via Google OAuth!"
+                      "example": "Successfully logged in an user!"
                     },
                     "data": {
                       "type": "object",
                       "properties": {
-                        "accessToken": {
-                          "type": "string",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        "user": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/user"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "example": "1234567890abcdef12345678"
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "example": "user@example.com"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": "John Doe"
+                                },
+                                "gender": {
+                                  "type": "string",
+                                  "enum": [
+                                    "female",
+                                    "male"
+                                  ],
+                                  "example": "female"
+                                },
+                                "dailyNorma": {
+                                  "type": "number",
+                                  "example": 2000
+                                },
+                                "avatarUrl": {
+                                  "type": "string",
+                                  "example": "https://res.cloudinary.com/demo/image/upload/v1616161616/sample.jpg"
+                                }
+                              }
+                            }
+                          ]
                         }
                       }
                     }
@@ -647,114 +653,17 @@
         }
       }
     },
-    "/user/{id}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Get user by ID",
-        "description": "Retrieve the details of a user by their unique ID.",
-        "operationId": "getUserById",
-        "security": [],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The unique identifier of the user."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User retrieved successfully"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "example": "1234567890abcdef12345678"
-                            },
-                            "email": {
-                              "type": "string",
-                              "example": "user@example.com"
-                            },
-                            "name": {
-                              "type": "string",
-                              "example": "John Doe"
-                            },
-                            "gender": {
-                              "type": "string",
-                              "enum": [
-                                "female",
-                                "male"
-                              ],
-                              "default": "female",
-                              "example": "female"
-                            },
-                            "dailyNorm": {
-                              "type": "number",
-                              "example": 2000
-                            },
-                            "avatarUrl": {
-                              "type": "string",
-                              "example": "https://res.cloudinary.com/demo/image/upload/v1616161616/sample.jpg"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
+    "/users": {
       "patch": {
         "tags": [
           "User"
         ],
-        "summary": "Update user information by ID",
-        "description": "Update the details of a user by their unique ID. Allows updating fields such as name, email, password, gender, daily norm, and avatar.",
-        "operationId": "updateUserInformation",
-        "security": [],
-        "parameters": [
+        "summary": "Update user information",
+        "description": "Allows updating fields such as name, email, password, gender, daily norm, and avatar.",
+        "operationId": "updateUserInfo",
+        "security": [
           {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The unique identifier of the user."
+            "bearerAuth": []
           }
         ],
         "requestBody": {
@@ -766,7 +675,7 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "maxLength": 12,
+                    "maxLength": 32,
                     "example": "Jane Doe"
                   },
                   "email": {
@@ -789,7 +698,7 @@
                     "default": "female",
                     "example": "female"
                   },
-                  "dailyNorm": {
+                  "dailyNorma": {
                     "type": "integer",
                     "minimum": 50,
                     "maximum": 5000,
@@ -824,40 +733,78 @@
                     },
                     "data": {
                       "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/avatar": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user avatar",
+        "description": "Update the avatar of the currently authenticated user. Requires the user to upload an image file.",
+        "operationId": "updateUserAvatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatarUrl": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The avatar image file to be uploaded."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated user avatar"
+                    },
+                    "data": {
+                      "type": "object",
                       "properties": {
-                        "updatedUser": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "example": "1234567890abcdef12345678"
-                            },
-                            "email": {
-                              "type": "string",
-                              "example": "jane.doe@example.com"
-                            },
-                            "name": {
-                              "type": "string",
-                              "example": "Jane Doe"
-                            },
-                            "gender": {
-                              "type": "string",
-                              "enum": [
-                                "female",
-                                "male"
-                              ],
-                              "default": "female",
-                              "example": "female"
-                            },
-                            "dailyNorm": {
-                              "type": "number",
-                              "example": 2000
-                            },
-                            "avatarUrl": {
-                              "type": "string",
-                              "example": "https://res.cloudinary.com/demo/image/upload/v1616161616/sample.jpg"
-                            }
-                          }
+                        "avatarUrl": {
+                          "type": "string",
+                          "format": "uri",
+                          "example": "https://res.cloudinary.com/demo/image/upload/v1616161616/sample.jpg"
                         }
                       }
                     }
@@ -1369,57 +1316,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "required": [
-                          "date",
-                          "dailyNorm",
-                          "percentageConsumed",
-                          "entries",
-                          "consumedWaterByDay"
-                        ],
-                        "properties": {
-                          "date": {
-                            "type": "string",
-                            "description": "The date formatted as DD.MM.YYYY.",
-                            "example": "16.12.2024"
-                          },
-                          "dailyNorm": {
-                            "type": "string",
-                            "description": "The daily water consumption norm in milliliters.",
-                            "example": "2000"
-                          },
-                          "percentageConsumed": {
-                            "type": "string",
-                            "description": "The percentage of the daily norm consumed.",
-                            "example": "45"
-                          },
-                          "entries": {
-                            "type": "integer",
-                            "description": "The number of water consumption records for the day.",
-                            "example": 3
-                          },
-                          "consumedWaterByDay": {
-                            "type": "string",
-                            "description": "The total water consumed for the day in milliliters.",
-                            "example": "900"
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/water"
                 }
               }
             }
@@ -1439,6 +1336,118 @@
           }
         }
       }
+    },
+    "/userNormaHistory": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Upsert user daily norm history",
+        "description": "Insert or update the user's daily norm history for the current day. The date is automatically set to today's date.",
+        "operationId": "upsertUserNormaHistory",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserNormaHistory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user norm history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully upserted user's history"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "example": "1234567890abcdef12345678"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date",
+                          "example": "2024-12-19"
+                        },
+                        "dailyNorma": {
+                          "type": "integer",
+                          "example": 2000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully created user norm history entry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully upserted user's history"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "example": "1234567890abcdef12345678"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date",
+                          "example": "2024-12-19"
+                        },
+                        "dailyNorma": {
+                          "type": "integer",
+                          "example": 2000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1446,6 +1455,164 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "verify",
+          "gender"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's unique identifier",
+            "type": "string",
+            "example": "64f5b992c4b3f1567e63a178"
+          },
+          "email": {
+            "description": "User's email address",
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "password": {
+            "description": "User's password",
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 64,
+            "pattern": "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])",
+            "example": "password123"
+          },
+          "verify": {
+            "description": "Indicates if the user is verified",
+            "type": "boolean",
+            "default": false,
+            "example": false
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "maxLength": 32,
+            "example": "John Doe"
+          },
+          "gender": {
+            "description": "User's gender",
+            "type": "string",
+            "enum": [
+              "female",
+              "male"
+            ],
+            "default": "female",
+            "example": "female"
+          },
+          "dailyNorm": {
+            "description": "User's daily norm value",
+            "type": "number",
+            "default": 2000,
+            "minimum": 50,
+            "maximum": 5000,
+            "example": 2000
+          },
+          "avatarUrl": {
+            "description": "URL of the user's avatar image",
+            "type": "string",
+            "default": "",
+            "example": "https://example.com/avatar.jpg"
+          },
+          "createdAt": {
+            "description": "Timestamp when the user was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-22T12:34:56Z"
+          },
+          "updatedAt": {
+            "description": "Timestamp when the user was last updated",
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-11-01T14:22:11Z"
+          }
+        }
+      },
+      "water": {
+        "type": "object",
+        "required": [
+          "date",
+          "amount",
+          "userId"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Water record's unique identifier",
+            "type": "string",
+            "example": "64f5b992c4b3f1567e63a179"
+          },
+          "userId": {
+            "description": "ID of the user associated with the water record",
+            "type": "string",
+            "example": "64f5b992c4b3f1567e63a178"
+          },
+          "date": {
+            "description": "The date and time of the water consumption record",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-16T08:30:00Z"
+          },
+          "amount": {
+            "description": "The amount of water consumed (in milliliters)",
+            "type": "number",
+            "minimum": 50,
+            "maximum": 5000,
+            "example": 250
+          },
+          "currentDailyNorm": {
+            "description": "User's daily water consumption norm (in milliliters)",
+            "type": "number",
+            "default": 2000,
+            "minimum": 500,
+            "example": 2000
+          },
+          "createdAt": {
+            "description": "Timestamp when the water record was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-16T08:31:00Z"
+          },
+          "updatedAt": {
+            "description": "Timestamp when the water record was last updated",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-16T10:15:00Z"
+          }
+        }
+      },
+      "UserNormaHistory": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the user's daily norm entry.",
+            "example": "2024-12-19"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The unique identifier of the user.",
+            "example": "1234567890abcdef12345678"
+          },
+          "dailyNorma": {
+            "type": "integer",
+            "description": "The user's daily norm value.",
+            "default": 2000,
+            "example": 2000
+          }
+        },
+        "required": [
+          "date",
+          "userId"
+        ]
       }
     },
     "responses": {

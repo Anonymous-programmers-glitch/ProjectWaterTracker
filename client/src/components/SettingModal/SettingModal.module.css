@@ -3,7 +3,7 @@
   padding: 32px 24px;
   max-width: 1008px;
   max-height: 592px;
-  background: #fff;
+  background: var(--primery-color-white);
   position: relative;
 }
 
@@ -43,9 +43,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  max-width: 80px;
-  max-height: 80px;
-  border-radius: 50px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 
 .uploadSvg {
@@ -57,6 +57,32 @@
   gap: 8px;
   color: #407bff;
   position: relative;
+}
+
+.userLogoBtnAvatarWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid var(--primery-color-black);
+  overflow: hidden;
+  transition: border 300ms ease;
+}
+
+.spanValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid var(--primery-color-black);
+  overflow: hidden;
+  transition: border 300ms ease;
+  font-size: x-large;
+  color: var(--primery-color-blue);
 }
 
 .uploadPhotoInput {
@@ -149,5 +175,9 @@
   .container {
     max-width: 280px;
     max-height: 852px;
+  }
+  .btn {
+    position: inherit;
+    padding-top: 24px;
   }
 }
