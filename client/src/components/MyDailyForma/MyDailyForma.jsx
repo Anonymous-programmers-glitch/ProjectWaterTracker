@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { selectDailyNormaModal } from "../../redux/modal/selectors.js";
+import { selectDailyNormaModal } from "../../redux/modalToggle/selectors.js";
 import css from "./MyDailyForma.module.css";
 // import { useEffect, useState } from "react";
 // import Button from "../../components/ui/Button/Button";
@@ -11,7 +11,7 @@ import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import {
   closeDailyNormaModal,
   // closeSettingModal,
-} from "../../redux/modal/slice.js";
+} from "../../redux/modalToggle/slice.js";
 import { update } from "../../redux/user/operations.js";
 
 const DailySchema = Yup.object().shape({

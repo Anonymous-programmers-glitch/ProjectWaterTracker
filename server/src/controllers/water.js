@@ -10,7 +10,7 @@ import { UserCollection } from '../db/models/User.js';
 
 //   res.json({
 //     status: 200,
-//     message: 'Successfully found water records',
+//     message: 'Successfully found waterToday records',
 //     waterRecords,
 //   });
 // };
@@ -74,7 +74,7 @@ export const addWaterController = async (req, res) => {
 
   res.status(201).json({
     status: 201,
-    message: 'Successfully created a water record',
+    message: 'Successfully created a waterToday record',
     waterRecord,
   });
 };
@@ -95,7 +95,7 @@ export const updateWaterController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully updated a water record',
+    message: 'Successfully updated a waterToday record',
     data: result.data,
   });
 };

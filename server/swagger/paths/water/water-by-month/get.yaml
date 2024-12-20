@@ -1,14 +1,14 @@
 tags:
   - Water
-summary: Get water consumption by month
-description: Retrieves the water consumption data for each day of a specified month.
+summary: Get waterToday consumption by month
+description: Retrieves the waterToday consumption data for each day of a specified month.
 operationId: getWaterConsumptionByMonth
 security:
   - bearerAuth: []
 parameters:
   - name: month
     in: path
-    description: The month for which to retrieve water consumption data (1-12).
+    description: The month for which to retrieve waterToday consumption data (1-12).
     required: true
     schema:
       type: integer
@@ -17,14 +17,14 @@ parameters:
       example: 12
   - name: year
     in: path
-    description: The year for which to retrieve water consumption data.
+    description: The year for which to retrieve waterToday consumption data.
     required: true
     schema:
       type: integer
       example: 2024
 responses:
   '200':
-    description: Successfully retrieved water consumption data for the month.
+    description: Successfully retrieved waterToday consumption data for the month.
     content:
       application/json:
         schema:

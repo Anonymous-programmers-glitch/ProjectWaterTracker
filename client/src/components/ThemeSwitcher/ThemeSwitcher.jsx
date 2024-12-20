@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../../redux/themeSlice/themeSlice";
+import { toggleTheme } from "../../redux/changeTheme/changeThemeSlice.js";
 import TextButton from "../ui/TextButton/TextButton";
 import OnMoon from "../ui/icons/OnMoon.jsx";
 import OnSun from "../ui/icons/OnSun.jsx";
