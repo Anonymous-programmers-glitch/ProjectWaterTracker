@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
-import { openEditModal} from "../../../redux/modal/slice.js";
+import { openEditModal} from "../../../redux/modalToggle/slice.js";
 import { deleteWaterToday } from "../../../redux/waterToday/operations.js";
 import { getIsWaterToday } from "../../../redux/waterToday/selectors.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";

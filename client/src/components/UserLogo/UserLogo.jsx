@@ -5,13 +5,13 @@ import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import SettingModal from "../SettingModal/SettingModal";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
-import { closeLogoModal, openLogoModal } from "../../redux/modal/slice";
+import { closeLogoModal, openLogoModal } from "../../redux/modalToggle/slice";
 import { selectUser } from "../../redux/user/selectors";
 import {
   selectLogoModal,
   selectLogoutModal,
   selectSettingModal,
-} from "../../redux/modal/selectors";
+} from "../../redux/modalToggle/selectors";
 
 import css from "./UserLogo.module.css";
 
