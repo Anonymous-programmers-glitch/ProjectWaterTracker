@@ -1,12 +1,7 @@
-.main {
-  background-image: url("../../components/ui/signIcon/wighttheme/bg_mob.svg");
-  width: 100%;
-  max-height: 100%;
-}
 
 .background {
   position: absolute;
-  background-image: url("../../components/ui/signIcon/wighttheme/bg_mob.svg");
+  background-image: var(--backgroundmanemob2);
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
@@ -44,7 +39,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1439.9px) {
   .background {
-    background-image: url("../../components/ui/signIcon/wighttheme/bg_tab.svg");
+    background-image: var(--backgroundmanetab2);
   }
 
   .wrapper {
@@ -90,7 +85,7 @@
 
 @media screen and (min-width: 1440px) {
   .background {
-    background-image: url("../../components/ui/signIcon/wighttheme/bg_desk.svg");
+    background-image: var(--backgroundmanedesc2);
   }
 
   .wrapper {

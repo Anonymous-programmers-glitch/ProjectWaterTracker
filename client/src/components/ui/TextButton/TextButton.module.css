@@ -6,7 +6,7 @@
   font-size: 16px;
   line-height: 125%;
   color: var(--primery-color-blue);
-  transition: var(--transition);
+  transition: box-shadow 0.3s ease;
 }
 
 .button:hover {
