@@ -1,8 +1,5 @@
 import axios, { setAuthHeader, clearAuthHeader } from "../../api/operationsAPI";
-// import $api from "../../api/operationsAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
-// axios.defaults.baseURL = "http://localhost:3000";
 
 /*
  * POST @ /auth/register
@@ -106,11 +103,11 @@ export const update = createAsyncThunk(
     }
   }
 );
+
 /*
  * PATCH @ /users/avatar
  * headers: Authorization: Bearer token
  */
-
 export const updateAvatar = createAsyncThunk(
   "user/updateAvatar",
   async (formData, thunkAPI) => {
@@ -120,11 +117,6 @@ export const updateAvatar = createAsyncThunk(
           headers: { "Content-Type": "multipart/form-data" },
         })
       ).data;
-      // const response = (
-      //   await $api.patch(`/users/avatar`, formData, {
-      //     headers: { "Content-Type": "multipart/form-data" },
-      //   })
-      // ).data;
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -132,52 +124,52 @@ export const updateAvatar = createAsyncThunk(
   }
 );
 
-/*
- * GET @ /auth/refresh
- * headers: Authorization: Bearer token
- */
-export const refreshToken = createAsyncThunk(
-  "user/refreshToken",
-  async (_, thunkAPI) => {
-    try {
-      const response = (
-        await axios.post("/auth/refresh", null, { withCredentials: true })
-      ).data;
-      console.log("response :>> ", response);
-      // console.log("response.data.accessToken :>> ", response.data.accessToken);
-      setAuthHeader(response.data.accessToken);
-      return response;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// /*
+//  * GET @ /auth/refresh
+//  * headers: Authorization: Bearer token
+//  */
+// // export const refreshToken = createAsyncThunk(
+// //   "user/refreshToken",
+// //   async (_, thunkAPI) => {
+// //     try {
+// //       const response = (
+// //         await axios.post("/auth/refresh", null, { withCredentials: true })
+// //       ).data;
+// //       console.log("response :>> ", response);
+// //       // console.log("response.data.accessToken :>> ", response.data.accessToken);
+// //       setAuthHeader(response.data.accessToken);
+// //       return response;
+// //     } catch (error) {
+// //       return thunkAPI.rejectWithValue(error.message);
+// //     }
+// //   }
+// // );
 
-// Операція запиту на скидання паролю
-export const requestResetToken = createAsyncThunk(
-  "user/requestResetToken",
-  async (email, thunkAPI) => {
-    try {
-      const response = await axios.post("/auth/send-reset-email", { email });
-      return response.data.message;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// // Операція запиту на скидання паролю
+// export const requestResetToken = createAsyncThunk(
+//   "user/requestResetToken",
+//   async (email, thunkAPI) => {
+//     try {
+//       const response = await axios.post("/auth/send-reset-email", { email });
+//       return response.data.message;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
-// Операція скидання паролю
-export const resetPassword = createAsyncThunk(
-  "user/resetPassword",
-  async (payload, thunkAPI) => {
-    try {
-      const response = await axios.post("/auth/reset-pwd", payload);
-      return response.data.massage;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// // Операція скидання паролю
+// export const resetPassword = createAsyncThunk(
+//   "user/resetPassword",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const response = await axios.post("/auth/reset-pwd", payload);
+//       return response.data.massage;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // // Операція отримання URL для OAuth авторизації через Google
 // export const getGoogleOAuthUrl = createAsyncThunk(

@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login, requestResetToken } from "../../../redux/user/operations.js";
+import { login } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
 import css from "./AuthForm.module.css";
 //import Input from "../../ui/Inputs/Inputs.jsx";
@@ -60,10 +60,6 @@ export default function SignInForm() {
     }
   };
 
-  const handleS = (e) => {
-    e.preventDefault();
-    dispatch(requestResetToken("baracuda20162016@gmail.com"));
-  };
   return (
     <Formik
       initialValues={initialValues}
@@ -115,7 +111,7 @@ export default function SignInForm() {
               />
             </div>
             <Button cssstyle="signin">Sign In</Button>
-            {/* <Button
+            <Button
               cssstyle="signin"
               onClick={() => {
                 dispatch(
@@ -124,11 +120,7 @@ export default function SignInForm() {
               }}
             >
               RedetPassword
-            </Button> */}
-            <button type="submit" onClick={handleS}>
-              {" "}
-              ResetPassword
-            </button>
+            </Button>
             <NavLink to="/forgotpassword" className={css.link}>
               <p>Forgot password?</p>
             </NavLink>
