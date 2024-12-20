@@ -83,7 +83,7 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
       </Routes>
 
-      {/*<MyDailyNorma active={modalActive} setActive={setModalActive}/>*/}
+      <MyDailyNorma active={modalActive} setActive={setModalActive}/>
     </>
   );
 }

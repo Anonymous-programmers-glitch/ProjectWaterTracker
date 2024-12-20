@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { selectDailyNormaModal } from "../../redux/modal/selectors.js";
 import css from "./MyDailyForma.module.css";
 // import { useEffect, useState } from "react";
-import Button from "../../components/ui/Button/Button";
+// import Button from "../../components/ui/Button/Button";
 
 import { useDispatch, useSelector } from "react-redux";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
@@ -17,15 +17,15 @@ import { update } from "../../redux/user/operations.js";
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
     .min(2, "Enter your weight in kilograms")
-    .max(200, "Too long, max 200 numbers"),
-  // .required("This field is required"),
+    .max(200, "Max weight 200 kilograms")
+    .required("Weight is required"),
   loadInHours: Yup.number()
     .min(0, "Active hours cannot be negative")
-    .max(24, "Maximum hours is 24"),
-  // .required("This field is required"),
+    .max(24, "Maximum hours is 24")
+    .required("Hours is required"),
   waterYouDrink: Yup.number()
     .min(0.1, "Enter at least 0.1 liters")
-    .max(5, "Maximum 10 liters")
+    .max(5.0, "Maximum 5 liters")
     .required("This field is required"),
   option: Yup.string()
     .oneOf(["female", "male"])
@@ -35,12 +35,6 @@ const DailySchema = Yup.object().shape({
 const MyDailyNorma = () => {
   const isOpen = useSelector(selectDailyNormaModal);
   const dispatch = useDispatch();
-
-  // const [norma, setNorma] = useState("");
-  // const [norma2, setNorma2] = useState("");
-  // const [result, setResult] = useState("");
-  // const [isWoman, setIsWoman] = useState(true);
-  // const [waterYouDrink, setWaterYouDrink] = useState("");
 
   const calculateWaterNorm = (weight, hours, isWoman) => {
     const weightFactor = isWoman ? 0.03 : 0.04;
@@ -58,26 +52,12 @@ const MyDailyNorma = () => {
     handleCloseModal();
   };
 
-  // // for woman
-  // useEffect(() => {
-  //   if (isWoman) {
-  //     setResult(norma * 0.03 + norma2 * 0.04);
-  //   }
-  // }, [norma, norma2, isWoman]);
-
-  // // for man
-  // useEffect(() => {
-  //   if (!isWoman) {
-  //     setResult(norma * 0.04 + norma2 * 0.06);
-  //   }
-  // }, [norma, norma2, isWoman]);
-
   const handleCloseModal = () => {
     dispatch(closeDailyNormaModal());
   };
 
   return (
-    isOpen && (
+    // isOpen && (
       <ModalBackdrop onClick={handleCloseModal}>
         <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
           <Formik
@@ -88,13 +68,9 @@ const MyDailyNorma = () => {
               option: "female",
             }}
             validationSchema={DailySchema}
-            // onSubmit={(values, action) => {
-            //   console.log(values);
-            //   action.resetForm();
-            // }}
             onSubmit={handleSubmit}
           >
-            {({ values }) => (
+            {({ values, errors }) => (
               <Form className={css.modalForm}>
                 <h2 className={css.text1}>My daily norma</h2>
                 <div className={css.coverToBtn}>
@@ -125,10 +101,6 @@ const MyDailyNorma = () => {
                       type="radio"
                       name="option"
                       value="female"
-                      // value="woman"
-                      // checked={isWoman === true}
-                      // id="For woman"
-                      // onChange={() => setIsWoman(true)}
                     />
                     <ErrorMessage
                       component="span"
@@ -143,10 +115,6 @@ const MyDailyNorma = () => {
                       type="radio"
                       name="option"
                       value="male"
-                      // value="man"
-                      // checked={isWoman === false}
-                      // id="For man"
-                      // onChange={() => setIsWoman(false)}
                     />
                     <ErrorMessage
                       name="option"
@@ -158,12 +126,14 @@ const MyDailyNorma = () => {
 
                   <p className={css.text}>Your weight in kilograms:</p>
                   <Field
-                    className={css.modalInput}
+                    // className={css.modalInput}
+                    className={`${css.modalInput} ${errors.weightInKg ? css.modalInputError : ""}`}
                     type="number"
                     name="weightInKg"
                     placeholder="0"
-                    // value={norma}
-                    // onChange={(e) => setNorma(e.target.value)}
+                    min="0"
+                    max="200"
+
                   />
                   <ErrorMessage
                     name="weightInKg"
@@ -176,12 +146,13 @@ const MyDailyNorma = () => {
                     activities with a high physical. load in hours:
                   </p>
                   <Field
-                    className={css.modalInput}
+                    // className={css.modalInput}
+                    className={`${css.modalInput} ${errors.loadInHours ? css.modalInputError : ""}`}
                     type="number"
                     name="loadInHours"
                     placeholder="0"
-                    // value={norma2}
-                    // onChange={(e) => setNorma2(e.target.value)}
+                    min="0"
+                    max="24"
                   />
                   <ErrorMessage
                     name="loadInHours"
@@ -206,12 +177,15 @@ const MyDailyNorma = () => {
                   </p>
 
                   <Field
-                    className={css.modalInput}
+                    // className={css.modalInput}
+                    className={`${css.modalInput} ${errors.waterYouDrink ? css.modalInputError : ""}`}
                     type="number"
                     name="waterYouDrink"
                     // value={waterYouDrink}
                     // onChange={(e) => setWaterYouDrink(e.target.value)}
                     placeholder="0"
+                    min="0"
+                    max="5"
                   />
 
                   <ErrorMessage
@@ -220,22 +194,18 @@ const MyDailyNorma = () => {
                     className={css.error}
                   />
                   <div className={css.btn}>
-                    {/* <Button
-                    cssstyle={css.btn}
-                    disabled={waterYouDrink >= 5 || !waterYouDrink}
-                    type="submit"
-                  >
-                    Save
-                  </Button> */}
-                    {/* <button className="cssstyle" disabled={waterYouDrink < 5 || !waterYouDrink}
-          onClick={onClickHandle} type="submit">Save</button> */}
+                    
                     <button
-                      className="cssstyle"
-                      // disabled={waterYouDrink < 5 || !waterYouDrink}
+                      className={css.cssstyleBtn}
                       type="submit"
                     >
                       Save
                     </button>
+
+                    {/* <div className={css.cssstyle}>
+                        <Button cssstyle={css.cssstyle} type="submit">Save</Button>
+                    </div> */}
+                    
                   </div>
                 </div>
               </Form>
@@ -243,7 +213,7 @@ const MyDailyNorma = () => {
           </Formik>
         </div>
       </ModalBackdrop>
-    )
+    // )
   );
 };
 
