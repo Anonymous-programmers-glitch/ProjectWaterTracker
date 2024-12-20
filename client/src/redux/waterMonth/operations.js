@@ -4,7 +4,7 @@ import { setAuthHeader } from "../../api/operationsAPI.js";
 import { condition } from "../conditions.js";
 
 export const fetchWaterMonth = createAsyncThunk(
-  "monTh/fetchAllWaterMonth",
+  "month/fetchAllWaterMonth",
   async (date, thunkAPI) => {
     const { month, year } = date;
     try {

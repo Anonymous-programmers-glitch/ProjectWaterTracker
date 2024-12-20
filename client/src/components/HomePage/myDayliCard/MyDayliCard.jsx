@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { openDailyNormaModal } from "../../../redux/modal/slice.js";
+import { openDailyNormaModal } from "../../../redux/modalToggle/slice.js";
 import { selectUser } from "../../../redux/user/selectors";
 import css from "./mydailycard.module.css";
 

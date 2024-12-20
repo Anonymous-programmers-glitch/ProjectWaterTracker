@@ -1,21 +1,21 @@
 tags:
   - Water
-summary: Delete water record
-description: This endpoint deletes an existing water record for the user by ID.
+summary: Delete waterToday record
+description: This endpoint deletes an existing waterToday record for the user by ID.
 operationId: deleteWaterRecord
 security:
   - bearerAuth: []
 parameters:
   - name: id
     in: path
-    description: The ID of the water record to delete.
+    description: The ID of the waterToday record to delete.
     required: true
     schema:
       type: string
       example: '64f5b992c4b3f1567e63a179'
 responses:
   '200':
-    description: Successfully deleted the water record.
+    description: Successfully deleted the waterToday record.
     content:
       application/json:
         schema:
@@ -29,7 +29,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully deleted the water record.
+              example: Successfully deleted the waterToday record.
   '400':
     $ref: ../../../components/responses/400.yaml
   '401':

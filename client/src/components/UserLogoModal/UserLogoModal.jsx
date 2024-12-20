@@ -8,8 +8,8 @@ import {
   closeLogoModal,
   openLogoutModal,
   openSettingModal,
-} from "../../redux/modal/slice";
-import { selectLogoModal } from "../../redux/modal/selectors";
+} from "../../redux/modalToggle/slice";
+import { selectLogoModal } from "../../redux/modalToggle/selectors";
 import css from "./UserLogoModal.module.css";
 
 Modal.setAppElement("#root");
