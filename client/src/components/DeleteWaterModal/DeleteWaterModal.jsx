@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { selectDeleteData } from '../../redux/modalToggle/selectors.js';
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import XMarkOutline from "../ui/icons/XMarkOutline";
 import css from "./DeleteWaterModal.module.css";
@@ -7,11 +8,14 @@ import { closeDeleteModal } from "../../redux/modal/slice";
 import { selectDeleteModal } from "../../redux/modal/selectors"; 
 import { deleteWaterToday } from "../../redux/waterToday/operations"; 
 
-const DeleteWaterModal = () => {
+const DeleteWaterModal = ({id}) => {
   const dispatch = useDispatch();
-  const isDeleteModalOpen = useSelector(selectDeleteModal);
-
+  const isDeleteModalOpen = useSelector(selectDeleteData);
+  console.log(isDeleteModalOpen);
   const handleDelete = () => {
+
+    dispatch(deleteWaterToday(isDeleteModalOpen));
+
     dispatch(deleteWaterToday())
       .unwrap()
       .then(() => dispatch(closeDeleteModal()))
