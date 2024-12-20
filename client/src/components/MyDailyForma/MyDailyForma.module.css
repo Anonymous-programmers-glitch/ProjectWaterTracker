@@ -100,6 +100,7 @@
         margin-top: 10px;
         border: 1px solid #D7E3FF;
         border-radius: 5px;
+        padding: 10px;
         
     }
     .modalInput:focus{
