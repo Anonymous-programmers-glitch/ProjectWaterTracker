@@ -2,7 +2,7 @@ tags:
   - User
 summary: Get current user
 description: Retrieve the details of the currently authenticated user.
-operationId: getCurrentUser
+operationId: currentUser
 security:
   - bearerAuth: []
 responses:
