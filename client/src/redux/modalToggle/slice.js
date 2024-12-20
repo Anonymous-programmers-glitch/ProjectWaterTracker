@@ -120,7 +120,7 @@ const modalSlice = createSlice({
 
     },
     closeDeleteModal: (state) => {
-      state.isDailyNormaModalOpen = true;
+      state.isDeleteModalOpen = false;
       state.deleteModalData ={id:""}
 
     },

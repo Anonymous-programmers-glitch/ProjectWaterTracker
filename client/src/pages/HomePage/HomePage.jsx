@@ -9,6 +9,7 @@ import WaterListIItemMonth from "../../components/ComponentsForHomePage/waterLis
 import WaterListMonth from "../../components/ComponentsForHomePage/waterListMonth/WaterListMonth.jsx";
 import WaterListToday from "../../components/ComponentsForHomePage/waterListToday/WaterListToday.jsx";
 import WaterRange from "../../components/ComponentsForHomePage/waterRange/WaterRange.jsx";
+import DeleteWaterModal from '../../components/DeleteWaterModal/DeleteWaterModal.jsx';
 import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
 import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
@@ -102,6 +103,7 @@ function HomePage() {
       <AddWaterModal />
       <TodayListModal />
       <MyDailyNorma />
+      <DeleteWaterModal/>
     </section>
   );
 }

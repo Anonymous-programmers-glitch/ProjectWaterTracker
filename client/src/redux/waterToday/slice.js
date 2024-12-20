@@ -37,7 +37,7 @@ const slice = createSlice({
       .addCase(fetchWaterToday.pending, handlePending)
       .addCase(fetchWaterToday.fulfilled, (state, action) => {
         state.loading = false;
-        state.edit=false;
+        state.edit = false;
         state.error = null;
         state.items = action.payload;
       })
@@ -55,11 +55,11 @@ const slice = createSlice({
       .addCase(deleteWaterToday.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        console.log(action.payload);
+
         const index = state.items.waterRecords.findIndex(
           (water) => water._id === action.payload,
         );
-        console.log(index);
+
         state.items.waterRecords.splice(index, 1);
       })
       .addCase(deleteWaterToday.rejected, handleRejected);
