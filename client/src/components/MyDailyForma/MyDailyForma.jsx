@@ -57,7 +57,7 @@ const MyDailyNorma = () => {
   };
 
   return (
-    // isOpen && (
+    isOpen && (
       <ModalBackdrop onClick={handleCloseModal}>
         <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
           <Formik
@@ -213,7 +213,7 @@ const MyDailyNorma = () => {
           </Formik>
         </div>
       </ModalBackdrop>
-    // )
+    )
   );
 };
 
