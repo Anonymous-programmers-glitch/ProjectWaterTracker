@@ -57,6 +57,7 @@ export const getWaterByDateController = async (req, res, next) => {
     message: `Successfully found water records by this date ${date}`,
     data: {
       waterRecords,
+      currentDailyNorma,
       recordsCount: waterRecords.length,
       totalDayWater,
       percentage,
