@@ -13,7 +13,7 @@ router.use('/auth', authRouter);
 
 router.use('/users', userRoutes);
 
-router.use('/waterToday', waterRouter);
+router.use('/water', waterRouter);
 
 router.use('/userNormaHistory', userNormaHistoryRouter);
 

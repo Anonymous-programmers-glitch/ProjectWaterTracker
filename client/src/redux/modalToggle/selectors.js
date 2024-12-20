@@ -6,3 +6,5 @@ export const selectEditModal = (state) => state.modal.isEditModalOpen;
 export const selectEditData = (state) => state.modal.editModalData;
 export const selectDailyNormaModal = (state) =>
   state.modal.isDailyNormaModalOpen;
+export const selectDeleteModal = (state) => state.modal.isDeleteModalOpen;
+export const selectDeleteData = (state) => state.modal.deleteModalData;

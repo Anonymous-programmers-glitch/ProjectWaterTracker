@@ -3,17 +3,6 @@ import * as waterServices from '../services/water.js';
 import { userNormaHistoryCollection } from '../db/models/userNormaHistory.js';
 import { UserCollection } from '../db/models/User.js';
 
-// export const getAllWaterController = async (req, res, next) => {
-//   const { _id: userId } = req.user;
-
-//   const waterRecords = await waterServices.getAllWater(userId);
-
-//   res.json({
-//     status: 200,
-//     message: 'Successfully found waterToday records',
-//     waterRecords,
-//   });
-// };
 
 export const getWaterByDateController = async (req, res, next) => {
   const { _id: userId } = req.user;
@@ -57,6 +46,7 @@ export const getWaterByDateController = async (req, res, next) => {
     message: `Successfully found water records by this date ${date}`,
     data: {
       waterRecords,
+      currentDailyNorma,
       recordsCount: waterRecords.length,
       totalDayWater,
       percentage,
