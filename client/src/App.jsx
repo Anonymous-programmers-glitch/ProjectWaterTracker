@@ -4,13 +4,12 @@ import { Route, Routes } from "react-router";
 import SuspenseFallback from "./components/SuspenseFallback/SuspenseFallback.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
 import SuccessPage from "./pages/SuccessPage/SuccessPage.jsx";
-import NotFoundPage from "./components/NotFoundPage/NotFoundPage.jsx";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { refresh } from "./redux/user/operations.js";
 import PrivateRoute from "./PrivateRoute.jsx";
 import RestrictedRoute from "./RestrictedRoute.jsx";
 import { selectIsRefreshing } from "./redux/user/selectors.js";
-import MyDailyNorma from "./components/MyDailyForma/MyDailyForma.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
