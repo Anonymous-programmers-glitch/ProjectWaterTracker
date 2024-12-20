@@ -9,7 +9,11 @@ const modalSlice = createSlice({
     isAddModalOpen: false,
     isEditModalOpen: false,
     isDailyNormaModalOpen: false,
-    editModalData: null,
+    editModalData: {
+      amount: "",
+      date: "",
+      _id: "",
+    },
   },
   reducers: {
     openLogoModal: (state) => {
@@ -68,11 +72,19 @@ const modalSlice = createSlice({
       state.isAddModalOpen = false;
       state.isEditModalOpen = true;
       state.isDailyNormaModalOpen = false;
-      state.editModalData = actions.payload || null;
+      state.editModalData = actions.payload || {
+        amount: "",
+        date: "",
+        _id: "",
+      };
     },
     closeEditModal: (state) => {
       state.isEditModalOpen = false;
-      state.editModalData = null;
+      state.editModalData = {
+        amount: "",
+        date: "",
+        _id: "",
+      };
     },
 
     openDailyNormaModal: (state) => {
