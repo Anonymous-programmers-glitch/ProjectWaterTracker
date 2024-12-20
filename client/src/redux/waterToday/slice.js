@@ -74,6 +74,7 @@ const slice = createSlice({
 
         state.items.waterRecords.splice(index, 1, action.payload.data);
         state.edit = true;
+
       })
       .addCase(editWaterToday.rejected, handleRejected);
   },
