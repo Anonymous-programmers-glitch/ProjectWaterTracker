@@ -198,7 +198,20 @@ const MyDailyNorma = () => {
                     >
                       Save
                     </button>
-                    <Toaster/>
+                    <Toaster 
+                    position="top-center"
+                    reverseOrder={false}
+                    gutter={8}
+                    containerClassName=""
+                    containerStyle={{}}
+                    toastOptions={{
+                      className: '',
+                      duration: 5000,
+                      style: {
+                        background: 'rgba(64, 123, 255, 0.54)',
+                        color: '#fff',
+                      },
+                    }}/>
 
                     {/* <div className={css.cssstyle}>
                         <Button cssstyle={css.cssstyle} type="submit">Save</Button>
