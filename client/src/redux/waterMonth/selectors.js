@@ -1,4 +1,4 @@
-export const getIsMonthData = (state) => state.month.items;
+export const getIsWaterMonth = (state) => state.month.items;
 
 export const getIsLoading = (state) => state.month.loading;
 

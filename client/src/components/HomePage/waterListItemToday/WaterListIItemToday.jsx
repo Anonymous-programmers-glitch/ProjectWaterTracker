@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
-import { openEditModal } from "../../../redux/modal/slice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { openEditModal} from "../../../redux/modalToggle/slice.js";
 import { deleteWaterToday } from "../../../redux/waterToday/operations.js";
+import { getIsWaterToday } from "../../../redux/waterToday/selectors.js";
 import { resizeWindow } from "../../../utils/resizeWindow.js";
 import GlassOfWater from "../../ui/icons/GlassOfWater.jsx";
 import PencilSquareOutline from "../../ui/icons/PencilSquareOutline.jsx";
@@ -14,9 +15,14 @@ function WaterListIItemToday({ item }) {
   const isMobile = sizeWindow <= 767;
   const size = isMobile ? "26" : "36";
   const { _id, amount, date } = item;
+  const dataToday = useSelector(getIsWaterToday);
 
-  const handleEdit = () => {
-    dispatch(openEditModal({ _id, amount, date }));
+  const handleEdit = (e) => {
+    const elem = e.currentTarget;
+    const id = elem.closest("li").id;
+    const index = dataToday.waterRecords.findIndex((item) => item._id === id);
+    const data = dataToday.waterRecords[index];
+     dispatch(openEditModal(data));
   };
 
   const handleDelete = (e) => {
@@ -26,8 +32,8 @@ function WaterListIItemToday({ item }) {
   };
 
   return (
-    <>
-      <li className={css.item} id={item._id}>
+
+      <li className={css.item} key={item._id} id={item._id}>
         <div className={css.leftcontent}>
           <div className={css.watericon}>
             <GlassOfWater size={size} />
@@ -44,7 +50,7 @@ function WaterListIItemToday({ item }) {
           </button>
         </div>
       </li>
-    </>
+
   );
 }
 

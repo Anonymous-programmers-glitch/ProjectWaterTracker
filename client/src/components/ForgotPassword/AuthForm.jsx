@@ -8,6 +8,8 @@ import Button from "../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
 import EyeOutline from "../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
+import { resetPassword } from "../../redux/user/operations.js";
+import { useSearchParams } from "react-router";
 
 const initialValues = {
   email: "",
@@ -16,6 +18,7 @@ const initialValues = {
 };
 
 export default function AuthForm() {
+  const [searchParams] = useSearchParams();
   const ForgotSchema = Yup.object().shape({
     password: Yup.string()
       .required("Please confirm your password")
@@ -34,9 +37,10 @@ export default function AuthForm() {
   const repeatPasswordId = useId();
 
   const handleSubmit = (values, actions) => {
+    const token = searchParams.get("token");
     const { password } = values;
 
-    //dispatch(signup({ password }));
+    dispatch(resetPassword({ password, token }));
     actions.resetForm();
   };
 

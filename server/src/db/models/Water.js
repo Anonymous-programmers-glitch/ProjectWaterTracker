@@ -33,6 +33,6 @@ waterSchema.post('findOneAndUpdate', handleSaveError);
 
 export const sortByList = ['date'];
 
-const WaterCollection = model('water', waterSchema);
+const WaterCollection = model('waterToday', waterSchema);
 
 export default WaterCollection;

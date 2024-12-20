@@ -115,16 +115,16 @@ export const updateAvatar = createAsyncThunk(
   "user/updateAvatar",
   async (formData, thunkAPI) => {
     try {
-      // const response = (
-      //   await axios.patch(`/users/avatar`, formData, {
-      //     headers: { "Content-Type": "multipart/form-data" },
-      //   })
-      // ).data;
       const response = (
-        await $api.patch(`/users/avatar`, formData, {
+        await axios.patch(`/users/avatar`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
       ).data;
+      // const response = (
+      //   await $api.patch(`/users/avatar`, formData, {
+      //     headers: { "Content-Type": "multipart/form-data" },
+      //   })
+      // ).data;
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -153,29 +153,31 @@ export const refreshToken = createAsyncThunk(
   }
 );
 
-// // Операція запиту на скидання паролю
-// export const requestResetToken = createAsyncThunk(
-//   "auth/requestResetToken",
-//   async (email, thunkAPI) => {
-//     try {
-//       await axios.post("/auth/send-reset-email", { email });
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+// Операція запиту на скидання паролю
+export const requestResetToken = createAsyncThunk(
+  "user/requestResetToken",
+  async (email, thunkAPI) => {
+    try {
+      const response = await axios.post("/auth/send-reset-email", { email });
+      return response.data.message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-// // Операція скидання паролю
-// export const resetPassword = createAsyncThunk(
-//   "auth/resetPassword",
-//   async (payload, thunkAPI) => {
-//     try {
-//       await axios.post("/auth/reset-pwd", payload);
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+// Операція скидання паролю
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.post("/auth/reset-pwd", payload);
+      return response.data.massage;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 // // Операція отримання URL для OAuth авторизації через Google
 // export const getGoogleOAuthUrl = createAsyncThunk(

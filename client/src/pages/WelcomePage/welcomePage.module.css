@@ -12,7 +12,7 @@
   top: 0;
   left: 0;
   background-repeat: no-repeat;
-  background-image: url("../../assets/welcomePage/lightTheme/backgroundMobileWelcomePage.svg");
+  background-image:var(--backgroundmanemob);
   background-size: cover;
   background-position: center;
   z-index: -2;
@@ -43,7 +43,7 @@
     gap: 60px;
   }
   .background {
-    background-image: url("../../assets/welcomePage/lightTheme/backgroundTabletWelcomePage.svg");
+    background-image:var(--backgroundmanetab);
     background-position: center 20%;
     background-size: cover;
   }
@@ -70,8 +70,7 @@
     align-items: end;
   }
   .background {
-    background-image: url("../../assets/welcomePage/lightTheme/background2DesktopWelcomePage.svg"),
-      url("../../assets/welcomePage/lightTheme/background1DesktopWelcomePage.svg");
+      background-image:var(--backgroundmanedesc);
     background-size: contain, contain;
     background-position: center, center 100%;
   }

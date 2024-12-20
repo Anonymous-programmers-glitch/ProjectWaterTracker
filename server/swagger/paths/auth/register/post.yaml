@@ -46,18 +46,7 @@ responses:
               example: Successfully registered a user!
             data:
               type: object
-              required:
-                - user
-              properties:
-                user:
-                  type: object
-                  required:
-                    - email
-                  properties:
-                    email:
-                      type: string
-                      description: User's email.
-                      example: 'johndoe@mail.com'
+              $ref: ../../../components/schemas/user.yaml
   '400':
     $ref: ../../../components/responses/400.yaml
   '409':

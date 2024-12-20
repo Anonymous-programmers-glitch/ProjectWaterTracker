@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../../redux/user/operations.js";
+import { login, requestResetToken } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
 import css from "./AuthForm.module.css";
 //import Input from "../../ui/Inputs/Inputs.jsx";
@@ -60,6 +60,10 @@ export default function SignInForm() {
     }
   };
 
+  const handleS = (e) => {
+    e.preventDefault();
+    dispatch(requestResetToken("baracuda20162016@gmail.com"));
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -70,8 +74,10 @@ export default function SignInForm() {
         return (
           <Form autoComplete="off" className={css.wrapper}>
             <h3 className={css.h3}>Sign In</h3>
-            <label className={css.label} htmlFor={signinId}>
-              Enter your email
+            <div>
+              <label className={css.label} htmlFor={signinId}>
+                Enter your email{" "}
+              </label>
               <Field
                 type="email"
                 name="email"
@@ -85,9 +91,11 @@ export default function SignInForm() {
                 component="span"
                 className={css.error}
               />
-            </label>
-            <label className={css.label} htmlFor={passwordId}>
-              Enter your password
+            </div>
+            <div>
+              <label className={css.label} htmlFor={passwordId}>
+                Enter your password{" "}
+              </label>
               <div className={css.psw}>
                 <Field
                   type={inputType}
@@ -105,8 +113,22 @@ export default function SignInForm() {
                 component="span"
                 className={css.error}
               />
-            </label>
+            </div>
             <Button cssstyle="signin">Sign In</Button>
+            {/* <Button
+              cssstyle="signin"
+              onClick={() => {
+                dispatch(
+                  requestResetToken({ email: "baracuda20162016@gmail.com" })
+                );
+              }}
+            >
+              RedetPassword
+            </Button> */}
+            <button type="submit" onClick={handleS}>
+              {" "}
+              ResetPassword
+            </button>
             <NavLink to="/forgotpassword" className={css.link}>
               <p>Forgot password?</p>
             </NavLink>

@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
-import { closeAddModal } from "../../redux/modal/slice.js";
-import { selectAddModal } from "../../redux/modal/selectors.js";
+import { closeAddModal } from "../../redux/modalToggle/slice.js";
+import { selectAddModal } from "../../redux/modalToggle/selectors.js";
 import { addWaterToday } from "../../redux/waterToday/operations.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button";
-import XMarkOutline from "../ui/icons/xMarkOutline";
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
@@ -166,4 +166,3 @@ const AddWaterModal = () => {
 };
 
 export default AddWaterModal;
-

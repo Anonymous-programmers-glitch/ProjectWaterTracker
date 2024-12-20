@@ -1,46 +1,51 @@
-import { useState, useEffect, useCallback } from "react";
+import dayjs from 'dayjs';
+import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
-import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectEditData,
   selectEditModal,
-} from "../../redux/modal/selectors.js";
-import { closeEditModal, closeLogoutModal } from "../../redux/modal/slice.js";
-import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import Button from "../../components/ui/Button/Button";
-import XMarkOutline from "../ui/icons/xMarkOutline";
-import GlassOfWater from "../ui/icons/GlassOfWater";
-import MinusSmall from "../ui/icons/MinusSmall";
-import PlusSmall from "../ui/icons/PlusSmall";
-import Inputs from "../ui/Inputs/Inputs";
+} from "../../redux/modalToggle/selectors.js";
+import { closeEditModal } from "../../redux/modalToggle/slice.js";
+import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
+import Button from "../ui/Button/Button.jsx";
+import MinusSmall from "../ui/icons/MinusSmall.jsx";
+import PlusSmall from "../ui/icons/PlusSmall.jsx";
+import XMarkOutline from '../ui/icons/XMarkOutline.jsx';
+import Inputs from "../ui/Inputs/Inputs.jsx";
+import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
+import { editWaterToday } from "../../redux/waterToday/operations.js";
 
-const TodayListModal = () => {
-  // { isOpen, mode, initialData, onSave, onClose }
+const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
-  // const [time, setTime] = useState(
-  //   initialData?.time || dayjs().format("HH:mm"),
-  // );
-  //
+  const {amount,date, _id}=data
+  const time = dayjs(date).format("HH:mm");
+  const day = dayjs(date).format("YYYY-MM-DD");
+
+  const handelCloseModal = useCallback(() => {
+    dispatch(closeEditModal());
+  }, [dispatch]);
+
+
   const handleSubmit = (values) => {
-    // const formattedTime = dayjs(values.manualTime, "HH:mm").format("h:mm A");
-    // onSave({ ...values, amount: values.manualAmount, time: formattedTime });
-    // onClose();
+     const data= {_id:_id,amount:values.amount,date:dayjs(`${day} ${values.time}`).toISOString()}
+    dispatch(editWaterToday(data))
+    handelCloseModal();
+ 
   };
 
   const handleKeyDown = useCallback(
     (event) => {
       if (event.key === "Escape") {
+        handelCloseModal();
       }
     },
-    [isOpenModal],
+    [handelCloseModal]
   );
-  function handelCloseModal() {
-    dispatch(closeEditModal());
-  }
+
   useEffect(() => {
     if (isOpenModal) {
       document.addEventListener("keydown", handleKeyDown);
@@ -73,20 +78,18 @@ const TodayListModal = () => {
             </div>
           </div>
 
-          {/*{mode === "edit" && initialData && (*/}
-          {/*  <div className={css.editInfo}>*/}
-          {/*    <div className={css.watericon}>*/}
-          {/*      <GlassOfWater size={36} />*/}
-          {/*    </div>*/}
-          {/*    <strong>{initialData.amount} ml</strong>*/}
-          {/*    <strong className={css.time}>{initialData.time}</strong>*/}
-          {/*  </div>*/}
-          {/*)}*/}
+          <div className={css.editInfo}>
+            <div className={css.watericon}>
+              <GlassOfWater size={36} />
+            </div>
+            <strong>{amount || 0}ml</strong>
+            <strong className={css.time}>{time || "00:00"}</strong>
+          </div>
 
           <Formik
             initialValues={{
-              manualAmount: 0,
-              manualTime: 0,
+              amount: Number(amount) || 0,
+              time: time || "00:00",
             }}
             enableReinitialize
             onSubmit={handleSubmit}
@@ -94,31 +97,31 @@ const TodayListModal = () => {
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
-                  <p>Choose a value:</p>
+                  <p>Correct entered data:</p>
                 </div>
 
                 <div className={css.formGroupWater}>
-                  <label className={css.labelWater}>Amount of water:</label>
+                  <label className={css.label}>Amount of water:</label>
                   <div className={css.amountButtons}>
                     <button
                       className={css.buttonWater}
                       type="button"
                       onClick={() =>
                         setFieldValue(
-                          "manualAmount",
-                          Math.max(0, values.manualAmount - 50),
+                          "amount",
+                          Math.max(0, values.amount - 50)
                         )
                       }
                     >
                       <MinusSmall />
                     </button>
                     <span className={css.amountTotalWater}>
-                      {values.manualAmount} ml
+                      {values.amount} ml
                     </span>
                     <button
                       type="button"
                       onClick={() =>
-                        setFieldValue("manualAmount", values.manualAmount + 50)
+                        setFieldValue("amount", values.amount + 50)
                       }
                     >
                       <PlusSmall />
@@ -127,43 +130,42 @@ const TodayListModal = () => {
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualTime" className={css.label}>
+                  <label htmlFor="time" className={css.label}>
                     Recording time:
                   </label>
                   <Inputs
                     className={css.customField}
                     type="time"
-                    name="manualTime"
+                    name="time"
                     placeholder="HH:mm"
-                    value={values.manualTime}
+                    value={values.time}
                     onChange={(e) => {
-                      setFieldValue("manualTime", e.target.value);
-                      setTime(e.target.value);
+                      setFieldValue("time", e.target.value);
                     }}
                   />
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualAmount" className={css.labelWater}>
+                  <label htmlFor="amount" className={css.labelWater}>
                     Enter the value of the water used:
                   </label>
                   <Inputs
                     className={css.customField}
                     type="number"
-                    name="manualAmount"
+                    name="amount"
                     placeholder="Enter amount"
                     step="50"
-                    value={values.manualAmount}
+                    value={values.amount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
-                      setFieldValue("manualAmount", value);
+                      setFieldValue("amount", value);
                     }}
                   />
                 </div>
 
                 <div className={css.formFooter}>
                   <span className={css.totalWater}>
-                    {values.manualAmount} ml
+                    {values.amount} ml
                   </span>
                   <Button type="submit">Save</Button>
                 </div>
@@ -176,4 +178,5 @@ const TodayListModal = () => {
   );
 };
 
-export default TodayListModal;
+export default EditListModal;
+

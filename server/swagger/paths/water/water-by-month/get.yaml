@@ -1,14 +1,14 @@
 tags:
   - Water
-summary: Get water consumption by month
-description: Retrieves the water consumption data for each day of a specified month.
+summary: Get waterToday consumption by month
+description: Retrieves the waterToday consumption data for each day of a specified month.
 operationId: getWaterConsumptionByMonth
 security:
   - bearerAuth: []
 parameters:
   - name: month
     in: path
-    description: The month for which to retrieve water consumption data (1-12).
+    description: The month for which to retrieve waterToday consumption data (1-12).
     required: true
     schema:
       type: integer
@@ -17,56 +17,18 @@ parameters:
       example: 12
   - name: year
     in: path
-    description: The year for which to retrieve water consumption data.
+    description: The year for which to retrieve waterToday consumption data.
     required: true
     schema:
       type: integer
       example: 2024
 responses:
   '200':
-    description: Successfully retrieved water consumption data for the month.
+    description: Successfully retrieved waterToday consumption data for the month.
     content:
       application/json:
         schema:
-          type: object
-          required:
-            - status
-            - data
-          properties:
-            status:
-              type: integer
-              example: 200
-            data:
-              type: array
-              items:
-                type: object
-                required:
-                  - date
-                  - dailyNorm
-                  - percentageConsumed
-                  - entries
-                  - consumedWaterByDay
-                properties:
-                  date:
-                    type: string
-                    description: The date formatted as DD.MM.YYYY.
-                    example: '16.12.2024'
-                  dailyNorm:
-                    type: string
-                    description: The daily water consumption norm in milliliters.
-                    example: '2000'
-                  percentageConsumed:
-                    type: string
-                    description: The percentage of the daily norm consumed.
-                    example: '45'
-                  entries:
-                    type: integer
-                    description: The number of water consumption records for the day.
-                    example: 3
-                  consumedWaterByDay:
-                    type: string
-                    description: The total water consumed for the day in milliliters.
-                    example: '900'
+          $ref: ../../../components/schemas/water.yaml
   '400':
     $ref: ../../../components/responses/400.yaml
   '401':
