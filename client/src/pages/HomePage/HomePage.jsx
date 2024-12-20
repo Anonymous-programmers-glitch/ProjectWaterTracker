@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "../../components/HomePage/datePicker/DatePicker.jsx";
 import WaterListIItemToday from "../../components/HomePage/waterListItemToday/WaterListIItemToday.jsx";
@@ -21,27 +21,28 @@ import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
 import { getIsWaterMonth } from "../../redux/waterMonth/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
 import {
+  getEdit,
   getError,
   getIsLoading,
   getIsWaterToday,
-} from "../../redux/waterToday/selectors.js";
+} from '../../redux/waterToday/selectors.js';
 
 import css from "./homepage.module.css";
 
 function HomePage() {
   const dispatch = useDispatch();
-  const [newData, setNewData] = useState([]);
   const dateNow = dayjs().format("YYYY-MM-DD");
   const { waterRecords } = useSelector(getIsWaterToday);
   const { percentage } = useSelector(getIsWaterToday);
   const IsLoading = useSelector(getIsLoading);
+  const isEdit=useSelector(getEdit);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
   const dataMonth = useSelector(getIsWaterMonth);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch, waterRecords.length]);
+  }, [dispatch, waterRecords.length,isEdit]);
 
   useEffect(() => {
     const date = {
@@ -50,29 +51,6 @@ function HomePage() {
     };
     dispatch(fetchWaterMonth(date));
   }, [dispatch, monthState, waterRecords.length]);
-
-  function reorderData(dataMonth, currentMonth) {
-    const newData = [];
-    const countDayofMonth = dayjs(currentMonth).daysInMonth();
-    const currentDay = dayjs(currentMonth).format("D-MM-YYYY").split("-");
-    for (let i = 1; i <= countDayofMonth; i++) {
-      currentDay[0] = i;
-      const isDay = dataMonth.find(
-        (data) => data.date === currentDay.join("-")
-      );
-
-      if (isDay) {
-        newData.push(isDay);
-      } else {
-        const defaultData = { id: "", date: "", percent: "0" };
-        defaultData.id = Math.random().toString(36);
-        defaultData.date = currentDay.join("-");
-        newData.push(defaultData);
-      }
-    }
-
-    return newData;
-  }
 
   function handleAdd() {
     dispatch(openAddModal());
@@ -103,8 +81,8 @@ function HomePage() {
 
         {!isError ? (
           <WaterListToday>
-            {waterRecords.map((item) => (
-              <WaterListIItemToday key={item._id} item={item} />
+            {waterRecords.map((item,index) => (
+              <WaterListIItemToday  key={index} item={item} />
             ))}
           </WaterListToday>
         ) : (
