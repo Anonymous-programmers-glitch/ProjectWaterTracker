@@ -16,6 +16,7 @@ import userReducer from "./user/slice.js";
 import themeReducer from "./changeTheme/changeThemeSlice.js";
 import waterTodayReducer from "./waterToday/slice.js";
 import waterMonthReducer from "./waterMonth/slice.js";
+import historyReducer from "./updateHistori/slice.js";
 
 const persistedThemeReducer = persistReducer(
   {
@@ -41,6 +42,7 @@ export const store = configureStore({
     theme: persistedThemeReducer,
     today: waterTodayReducer,
     month: waterMonthReducer,
+    history:historyReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
