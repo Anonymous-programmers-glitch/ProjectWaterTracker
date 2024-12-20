@@ -14,6 +14,7 @@
   font-weight: 500;
   font-size: 26px;
   color: var(--primery-color-black);
+  margin-bottom: 16px;
 }
 
 .label {
@@ -32,6 +33,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  margin-bottom: 6px;
 }
 
 .field {
@@ -57,7 +59,7 @@
   width: 280px;
   height: 44px;
   padding: 10px;
-  margin-bottom: 6px
+  margin-bottom: 6px;
 }
 
 .input::placeholder {
@@ -112,6 +114,8 @@
     height: 44px;
   }
 }
+
+/*____________________ DESKTOP _______________________*/
 
 @media screen and (min-width: 1440px) {
   .wrapper {

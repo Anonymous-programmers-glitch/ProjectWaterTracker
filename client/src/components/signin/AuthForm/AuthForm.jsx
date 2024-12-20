@@ -72,7 +72,8 @@ export default function SignInForm() {
             <h3 className={css.h3}>Sign In</h3>
             <div>
               <label className={css.label} htmlFor={signinId}>
-                Enter your email </label>
+                Enter your email{" "}
+              </label>
               <Field
                 type="email"
                 name="email"
@@ -89,7 +90,8 @@ export default function SignInForm() {
             </div>
             <div>
               <label className={css.label} htmlFor={passwordId}>
-                Enter your password </label>
+                Enter your password{" "}
+              </label>
               <div className={css.psw}>
                 <Field
                   type={inputType}
@@ -108,15 +110,15 @@ export default function SignInForm() {
                 className={css.error}
               />
             </div>
-              <Button cssstyle="signin">Sign In</Button>
-              <NavLink to="/forgotpassword" className={css.link}>
-                <p>Forgot password?</p>
-              </NavLink>
-              <NavLink to="/signup" className={css.link}>
-                <p>Sign up</p>
-              </NavLink>
+            <Button cssstyle="signin">Sign In</Button>
+            <NavLink to="/forgotpassword" className={css.link}>
+              <p>Forgot password?</p>
+            </NavLink>
+            <NavLink to="/signup" className={css.link}>
+              <p>Sign up</p>
+            </NavLink>
           </Form>
-      );
+        );
       }}
     </Formik>
   );

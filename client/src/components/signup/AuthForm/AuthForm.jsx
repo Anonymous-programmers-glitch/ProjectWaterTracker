@@ -8,6 +8,8 @@ import Button from "../../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
+import toast from "react-hot-toast";
+//import { CheckEmail } from "../../signin/errorMsgFn.jsx";
 
 const initialValues = {
   email: "",
@@ -20,8 +22,8 @@ export default function SignUpForm() {
     email: Yup.string().email().required(),
     password: Yup.string()
       .required("Please confirm your password")
-      .min(8, "Password is too short - should be 6 chars minimum.")
-      .max(64, "Password is too long - should be 64 chars maximum."),
+      .min(8, "Should be 8 chars minimum.")
+      .max(64, "Should be 64 chars maximum."),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -39,6 +41,14 @@ export default function SignUpForm() {
     const { email, password } = values;
 
     dispatch(signup({ email, password }));
+    toast((t) => (
+      <span>
+        Check your email to confirm it!
+        <button onClick={() => toast.dismiss(t.id)}>
+          <b>OK</b>
+        </button>
+      </span>
+    ));
     actions.resetForm();
   };
 
@@ -67,8 +77,10 @@ export default function SignUpForm() {
         return (
           <Form autoComplete="off" className={css.wrapper}>
             <h3 className={css.h3}>Sign Up</h3>
-            <label className={css.label} htmlFor={signupId}>
-              Enter your email
+            <div>
+              <label className={css.label} htmlFor={signupId}>
+                Enter your email{" "}
+              </label>
               <Field
                 type="email"
                 name="email"
@@ -81,9 +93,11 @@ export default function SignUpForm() {
                 component="span"
                 className={css.errorEmail}
               />
-            </label>
-            <label className={css.label} htmlFor={passwordId}>
-              Enter your password
+            </div>
+            <div>
+              <label className={css.label} htmlFor={passwordId}>
+                Enter your password{" "}
+              </label>
               <div className={css.psw}>
                 <Field
                   type={inputType}
@@ -101,9 +115,11 @@ export default function SignUpForm() {
                 component="span"
                 className={css.errorPswrd}
               />
-            </label>
-            <label className={css.label} htmlFor={repeatPasswordId}>
-              Repeat password
+            </div>
+            <div>
+              <label className={css.label} htmlFor={repeatPasswordId}>
+                Repeat password{" "}
+              </label>
               <div className={css.psw}>
                 <Field
                   type={inputType}
@@ -121,7 +137,7 @@ export default function SignUpForm() {
                 component="span"
                 className={css.errorRepeatPswrd}
               />
-            </label>
+            </div>
             <Button cssstyle="signup">Sign Up</Button>
             <NavLink to="/signin" className={css.link}>
               <p>Sign in</p>
