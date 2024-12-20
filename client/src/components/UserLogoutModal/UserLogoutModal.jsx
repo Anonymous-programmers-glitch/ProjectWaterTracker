@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import css from "./UserLogoutModal.module.css";
-import { closeLogoutModal } from "../../redux/modal/slice";
-import { selectLogoutModal } from "../../redux/modal/selectors";
+import { closeLogoutModal } from "../../redux/modalToggle/slice";
+import { selectLogoutModal } from "../../redux/modalToggle/selectors";
 import { logout } from "../../redux/user/operations";
 
 const UserLogoutModal = () => {

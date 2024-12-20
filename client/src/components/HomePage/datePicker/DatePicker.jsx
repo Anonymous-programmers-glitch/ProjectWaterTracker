@@ -4,7 +4,7 @@ import {
   changeMonthSelector,
   nextMonth,
   prevMonth,
-} from "../../../redux/changeMonth/changeMonth.js";
+} from "../../../redux/changeMonth/changeMonthSlice.js";
 import css from "./datePicker.module.css";
 
 function DatePicker() {

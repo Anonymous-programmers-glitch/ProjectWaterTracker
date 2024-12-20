@@ -1,21 +1,21 @@
 tags:
   - Water
-summary: Get water records by day
-description: This endpoint retrieves water records for a given date.
+summary: Get waterToday records by day
+description: This endpoint retrieves waterToday records for a given date.
 operationId: getWaterByDate
 security:
   - bearerAuth: []
 parameters:
   - name: date
     in: path
-    description: The date for which to retrieve the water records (ISO format YYYY-MM-DD).
+    description: The date for which to retrieve the waterToday records (ISO format YYYY-MM-DD).
     required: true
     schema:
       type: string
       example: '2024-12-16'
 responses:
   '200':
-    description: Successfully retrieved the water records for the given date.
+    description: Successfully retrieved the waterToday records for the given date.
     content:
       application/json:
         schema:
@@ -30,7 +30,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully found water records by this date.
+              example: Successfully found waterToday records by this date.
             data:
               type: object
               required:
@@ -52,24 +52,24 @@ responses:
                     properties:
                       _id:
                         type: string
-                        description: Unique identifier for the water record.
+                        description: Unique identifier for the waterToday record.
                         example: '64f5b992c4b3f1567e63a179'
                       userId:
                         type: string
-                        description: ID of the user who logged the water record.
+                        description: ID of the user who logged the waterToday record.
                         example: '64f5b992c4b3f1567e63a178'
                       date:
                         type: string
                         format: date-time
-                        description: The date and time of the water consumption record.
+                        description: The date and time of the waterToday consumption record.
                         example: '2024-12-16T08:30:00Z'
                       amount:
                         type: number
-                        description: The amount of water consumed (in milliliters).
+                        description: The amount of waterToday consumed (in milliliters).
                         example: 300
                       currentDailyNorm:
                         type: number
-                        description: The current daily water consumption norm for the user (in milliliters).
+                        description: The current daily waterToday consumption norm for the user (in milliliters).
                         example: 2000
                 recordsCount:
                   type: integer
@@ -77,11 +77,11 @@ responses:
                   example: 3
                 totalDayWater:
                   type: number
-                  description: The total amount of water consumed for the given date (in milliliters).
+                  description: The total amount of waterToday consumed for the given date (in milliliters).
                   example: 900
                 percentage:
                   type: integer
-                  description: The percentage of the daily water consumption norm met for the given date.
+                  description: The percentage of the daily waterToday consumption norm met for the given date.
                   example: 45
   '400':
     $ref: ../../../components/responses/400.yaml
