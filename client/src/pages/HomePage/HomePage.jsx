@@ -18,6 +18,7 @@ import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonthSlice.js";
 import { openAddModal } from "../../redux/modalToggle/slice.js";
+import { selectEditUser } from '../../redux/user/selectors.js';
 import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
 import { getIsWaterMonth } from "../../redux/waterMonth/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
@@ -40,10 +41,11 @@ function HomePage() {
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
   const dataMonth = useSelector(getIsWaterMonth);
+  const userEdit=useSelector(selectEditUser)
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch, waterRecords.length,isEdit]);
+  }, [dispatch, waterRecords.length,isEdit,userEdit]);
 
   useEffect(() => {
     const date = {
@@ -51,7 +53,7 @@ function HomePage() {
       year: dayjs(monthState).format("YYYY"),
     };
     dispatch(fetchWaterMonth(date));
-  }, [dispatch, monthState, waterRecords.length]);
+  }, [dispatch, monthState, waterRecords.length,isEdit,userEdit]);
 
   function handleAdd() {
     dispatch(openAddModal());

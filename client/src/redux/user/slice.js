@@ -16,10 +16,13 @@ const initialState = {
   isRefreshing: false,
   isLoading: false,
   error: null,
+  isEdit: false,
+
 };
 
 const handlePending = (state) => {
   state.isLoading = true;
+  state.isEdit = false;
   state.error = null;
 };
 
@@ -137,11 +140,13 @@ const slice = createSlice({
       .addCase(refresh.rejected, (state, action) => {
         state.isRefreshing = false;
         state.error = action.payload;
+
       });
 
     builder.addCase(update.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
+      state.isEdit = true;
       state.user = {
         ...state.user,
         ...action.payload.user,
