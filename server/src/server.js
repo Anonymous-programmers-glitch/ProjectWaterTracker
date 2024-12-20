@@ -1,5 +1,5 @@
 import express from 'express';
-import path from 'node:path';
+// import path from 'node:path';
 import pino from 'pino-http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -17,6 +17,7 @@ export const setupServer = () => {
 
   app.use(express.json());
   app.use(cors());
+  // app.use(cors({ credentials: true, origin: 'http://localhost:5173/' }));
   app.use(cookieParser());
   app.use(
     pino({

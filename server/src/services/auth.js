@@ -11,6 +11,7 @@ import { SessionCollection } from '../db/models/Session.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
 import {
+  // FIFTEEN_SECONDS,
   FIFTEEN_MINUTES,
   THIRTY_DAYS,
   SMTP,
@@ -33,6 +34,7 @@ const createSession = () => {
     accessToken,
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    // accessTokenValidUntil: new Date(Date.now() + FIFTEEN_SECONDS),
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
   };
 };

@@ -1,4 +1,5 @@
 import axios, { setAuthHeader, clearAuthHeader } from "../../api/operationsAPI";
+// import $api from "../../api/operationsAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // axios.defaults.baseURL = "http://localhost:3000";
@@ -14,6 +15,7 @@ export const signup = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { user } = (await axios.post("/auth/register", credentials)).data;
+      // const { user } = (await $api.post("/auth/register", credentials)).data;
       return user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -32,6 +34,7 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const response = (await axios.post("/auth/login", credentials)).data;
+      // const response = (await $api.post("/auth/login", credentials)).data;
       setAuthHeader(response.data.accessToken);
       return response.data;
     } catch (error) {
@@ -49,6 +52,7 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
+    // await $api.post("/auth/logout");
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -95,6 +99,7 @@ export const update = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = (await axios.patch(`/users`, data)).data;
+      // const response = (await $api.patch(`/users`, data)).data;
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -110,8 +115,13 @@ export const updateAvatar = createAsyncThunk(
   "user/updateAvatar",
   async (formData, thunkAPI) => {
     try {
+      // const response = (
+      //   await axios.patch(`/users/avatar`, formData, {
+      //     headers: { "Content-Type": "multipart/form-data" },
+      //   })
+      // ).data;
       const response = (
-        await axios.patch(`/users/avatar`, formData, {
+        await $api.patch(`/users/avatar`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
       ).data;
@@ -123,25 +133,25 @@ export const updateAvatar = createAsyncThunk(
 );
 
 /*
-//  * GET @ /auth/refresh
-//  * headers: Authorization: Bearer token
-//  */
-// export const refreshUser = createAsyncThunk(
-//   "auth/refresh",
-//   async (_, thunkAPI) => {
-//     try {
-//       const response = (
-//         await axios.post("/auth/refresh", null, { withCredentials: true })
-//       ).data;
-//       console.log("response :>> ", response);
-//       console.log("response.data.accessToken :>> ", response.data.accessToken);
-//       setAuthHeader(response.data.accessToken);
-//       return response;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+ * GET @ /auth/refresh
+ * headers: Authorization: Bearer token
+ */
+export const refreshToken = createAsyncThunk(
+  "user/refreshToken",
+  async (_, thunkAPI) => {
+    try {
+      const response = (
+        await axios.post("/auth/refresh", null, { withCredentials: true })
+      ).data;
+      console.log("response :>> ", response);
+      // console.log("response.data.accessToken :>> ", response.data.accessToken);
+      setAuthHeader(response.data.accessToken);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 // // Операція запиту на скидання паролю
 // export const requestResetToken = createAsyncThunk(

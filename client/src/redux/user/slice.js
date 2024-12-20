@@ -3,6 +3,7 @@ import {
   login,
   logout,
   refresh,
+  refreshToken,
   signup,
   update,
   updateAvatar,
@@ -64,19 +65,33 @@ const slice = createSlice({
         state.error = action.payload;
       });
 
-    builder
-      .addCase(update.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.user = {
-          ...state.user,
-          ...action.payload.user,
-        };
+    builder.addCase(update.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.user = {
+        ...state.user,
+        ...action.payload.user,
+      };
+    });
 
-        builder.addCase(updateAvatar.fulfilled, (state, action) => {
-          state.isLoading = false;
-          state.avatarUrl = action.payload.data.avatarUrl;
-        });
+    builder.addCase(updateAvatar.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.avatarUrl = action.payload.avatarUrl;
+    });
+
+    builder
+      .addCase(refreshToken.pending, (state) => {
+        state.isRefreshing = true;
+        state.error = null;
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        state.isRefreshing = false;
+        state.isLoggedIn = true;
+        state.accessToken = action.payload;
+      })
+      .addCase(refreshToken.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload;
       })
 
       .addMatcher(

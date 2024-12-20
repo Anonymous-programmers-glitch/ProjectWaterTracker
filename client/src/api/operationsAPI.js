@@ -10,30 +10,48 @@ export const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
 
-// // Функція для оновлення токена
-// const refreshAccessToken = async () => {
-//   try {
-//     const { data } = await axios.post("/auth/refresh", null, {
-//       withCredentials: true,
-//     });
-//     const { accessToken } = data.data;
+// const $api = axios.create({
+//   baseURL: "http://localhost:3000",
+// });
 
-//     // Зберігаємо токен у localStorage
-//     localStorage.setItem("accessToken", accessToken);
+// $api.interceptors.request.use((config) => {
+//   config.headers.Authorization = `Bearer ${localStorage.getItem(
+//     "accessToken"
+//   )}`;
+//   return config;
+// });
 
-//     // Оновлюємо заголовок авторизації
-//     setAuthHeader(accessToken);
+// $api.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const originalRequest = error.config;
 
-//     return accessToken;
-//   } catch (error) {
-//     console.error(
-//       "Failed to refresh token:",
-//       error.response?.data || error.message
-//     );
-//     throw error;
+//     if (error.response?.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
+
+//       try {
+// const response = await axios.post(
+//   "http://localhost:3000/auth/refresh"
+//   // { withCredentials: true }
+// );
+// console.log("response :>> ", response);
+// const { accessToken } = response.data.data;
+// setAuthHeader(accessToken);
+// localStorage.setItem("accessToken", accessToken);
+// return $api.request(originalRequest);
+// } catch (refreshError) {
+// clearAuthHeader();
+//     localStorage.removeItem("accessToken");
+//     console.error("Token refresh failed. Redirecting to login.");
+
+//     window.location.href = "/signin";
+//     throw refreshError;
 //   }
-// };
+// }
 
+//     return Promise.reject(error);
+//   }
+// );
 // axios.interceptors.response.use(
 //   (response) => response, // Якщо відповідь успішна, просто повертаємо її
 //   async (error) => {
@@ -70,3 +88,4 @@ export const clearAuthHeader = () => {
 // );
 
 export default axios;
+// export default $api;
