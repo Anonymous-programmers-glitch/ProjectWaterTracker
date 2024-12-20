@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
+import * as Yup from "yup"; // Import Yup for validation
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddModal } from "../../redux/modalToggle/slice.js";
@@ -49,6 +50,14 @@ const AddWaterModal = () => {
     };
   }, [isOpen, handleKeyDown]);
 
+  // Validation schema
+  const validationSchema = Yup.object().shape({
+    manualAmount: Yup.number()
+      .min(50, "Minimum water amount is 50 ml")
+      .max(5000, "Maximum water amount is 5000 ml")
+      .required("This field is required"),
+  });
+
   return (
     isOpen && (
       <ModalBackdrop
@@ -77,10 +86,11 @@ const AddWaterModal = () => {
               manualAmount: 0,
               manualTime: time,
             }}
+            validationSchema={validationSchema}
             enableReinitialize
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue }) => (
+            {({ values, setFieldValue, errors, touched }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
                   <p>Choose a value:</p>
@@ -113,6 +123,9 @@ const AddWaterModal = () => {
                       <PlusSmall />
                     </button>
                   </div>
+                  {touched.manualAmount && errors.manualAmount && (
+                    <div className={css.error}>{errors.manualAmount}</div>
+                  )}
                 </div>
 
                 <div className={css.formGroupTime}>
@@ -148,6 +161,7 @@ const AddWaterModal = () => {
                       setFieldValue("manualAmount", value);
                     }}
                   />
+                  
                 </div>
 
                 <div className={css.formFooter}>
@@ -166,3 +180,4 @@ const AddWaterModal = () => {
 };
 
 export default AddWaterModal;
+
