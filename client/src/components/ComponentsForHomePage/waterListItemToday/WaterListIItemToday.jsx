@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
+import { selectDeleteData, selectDeleteModal } from '../../../redux/modalToggle/selectors.js';
 import { openDeleteModal, openEditModal } from '../../../redux/modalToggle/slice.js';
 import { deleteWaterToday } from "../../../redux/waterToday/operations.js";
 import { getIsWaterToday } from "../../../redux/waterToday/selectors.js";
@@ -17,6 +18,8 @@ function WaterListIItemToday({ item }) {
   const { _id, amount, date } = item;
   const dataToday = useSelector(getIsWaterToday);
 
+
+
   const handleEdit = (e) => {
     const elem = e.currentTarget;
     const id = elem.closest("li").id;
@@ -29,6 +32,8 @@ function WaterListIItemToday({ item }) {
     const elem = e.currentTarget;
     const id = elem.closest("li").id;
     dispatch(openDeleteModal(id));
+
+
 
   };
 
