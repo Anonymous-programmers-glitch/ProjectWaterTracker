@@ -15,7 +15,6 @@
   left: 0;
   background-repeat: no-repeat;
   background-image: url("../../assets/welcomePage/lightTheme/backgroundMobileWelcomePage.svg");
-  /* background-image: var(--backgroundmanemob); */
   background-size: cover;
   background-position: center;
   z-index: -2;
@@ -36,7 +35,7 @@
   }
 
   .background {
-    background-image: var(--backgroundmanetab);
+    background-image: url("../../assets/welcomePage/lightTheme/backgroundTabletWelcomePage.svg");
     background-position: center 20%;
     background-size: cover;
   }
@@ -54,7 +53,8 @@
 
 @media screen and (min-width: 1440px) {
   .background {
-    background-image: var(--backgroundmanedesc);
+    background-image: url("../../assets/welcomePage/lightTheme/background2DesktopWelcomePage.svg"),
+      url("../../assets/welcomePage/lightTheme/background1DesktopWelcomePage.svg");
     background-size: contain, contain;
     background-position: center, center 100%;
   }
