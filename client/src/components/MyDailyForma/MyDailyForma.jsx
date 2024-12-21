@@ -212,15 +212,15 @@ const MyDailyNorma = () => {
           </div>
         </ModalBackdrop>
         <Toaster
-          position="top-right"
-          reverseOrder={false}
-          toastOptions={{
-            style: {
-              background: "#333",
-              color: "#fff",
-              zIndex: 1050,
-            },
-          }}
+        // position="top-right"
+        // reverseOrder={false}
+        // toastOptions={{
+        //   style: {
+        //     background: "#333",
+        //     color: "#fff",
+        //     zIndex: 999,
+        //   },
+        // }}
         />
       </>
     )
