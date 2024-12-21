@@ -155,13 +155,16 @@
   padding-right: 152px;
 }
 
+.passwordTitle {
+  color: var(--primery-color-black);
+}
+
 .labelPassword {
   display: flex;
   flex-direction: column;
   gap: 8px;
   position: relative;
   color: var(--primery-color-black);
-  /* margin-bottom: 20px; */
 }
 
 .eyeIcon {
@@ -175,6 +178,25 @@
   position: absolute;
   right: 24px;
   bottom: 32px;
+  border: none;
+  border-radius: 10px;
+  height: 36px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: var(--primery-color-blue);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: var(--primery-color-white);
+  transition: box-shadow 0.3s ease;
+  width: 160px;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.btn:active {
+  box-shadow: none;
 }
 
 .formik-error {
@@ -206,8 +228,8 @@
   }
   .btn {
     position: inherit;
-    padding-top: 24px;
-    max-width: 256px;
+    width: 256px;
+    margin-top: 24px;
   }
 
   .passwordWrapper {
