@@ -11,6 +11,7 @@ import { SessionCollection } from '../db/models/Session.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
 import {
+  // FIFTEEN_SECONDS,
   FIFTEEN_MINUTES,
   THIRTY_DAYS,
   SMTP,
@@ -33,6 +34,7 @@ const createSession = () => {
     accessToken,
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    // accessTokenValidUntil: new Date(Date.now() + FIFTEEN_SECONDS),
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
   };
 };
@@ -176,7 +178,8 @@ export const requestResetToken = async (email) => {
 
   const html = template({
     name: user.name ?? 'Guest',
-    link: `${appDomain}/auth/reset-password?token=${resetToken}`,
+    // link: `${appDomain}/auth/reset-pwd?token=${resetToken}`,
+    link: `http://localhost:5173/forgotpassword?token=${resetToken}`,
     currentYear: new Date().getFullYear(),
   });
 

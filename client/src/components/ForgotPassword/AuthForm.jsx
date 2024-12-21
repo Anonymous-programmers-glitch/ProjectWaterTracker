@@ -8,14 +8,17 @@ import Button from "../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
 import EyeOutline from "../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
+// import { resetPassword } from "../../redux/user/operations.js";
+// import { useSearchParams } from "react-router";
 
 const initialValues = {
-  email: "",
   password: "",
   repeatPassword: "",
 };
 
 export default function AuthForm() {
+  // const [searchParams] = useSearchParams();
+  // const dispatch = useDispatch();
   const ForgotSchema = Yup.object().shape({
     password: Yup.string()
       .required("Please confirm your password")
@@ -26,19 +29,18 @@ export default function AuthForm() {
       .oneOf([Yup.ref("password")], "Password must match"),
   });
 
-  const dispatch = useDispatch();
-
   const size = "24";
 
   const passwordId = useId();
   const repeatPasswordId = useId();
 
-  const handleSubmit = (values, actions) => {
-    const { password } = values;
+  // const handleSubmit = (values, actions) => {
+  //   const token = searchParams.get("token");
+  //   const { password } = values;
 
-    //dispatch(signup({ password }));
-    actions.resetForm();
-  };
+  //   dispatch(resetPassword({ password, token }));
+  //   actions.resetForm();
+  // };
 
   const [passwordVisible, setPasswordVisible] = useState(
     <EyeOutline size={size} />
@@ -58,7 +60,7 @@ export default function AuthForm() {
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
       validationSchema={ForgotSchema}
     >
       {() => {
