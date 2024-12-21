@@ -125,7 +125,7 @@ const MyDailyNorma = () => {
                           <ErrorMessage
                             name="option"
                             component="span"
-                            // className={css.error}
+                            className={css.error}
                           />
                           <span className={css.span}>For man</span>
                         </label>
