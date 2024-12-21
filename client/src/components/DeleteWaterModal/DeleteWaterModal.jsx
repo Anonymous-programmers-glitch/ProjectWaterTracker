@@ -4,9 +4,10 @@ import {
   selectDeleteData,
   selectDeleteModal,
 } from "../../redux/modalToggle/selectors.js";
-import { closeDeleteModal } from '../../redux/modalToggle/slice.js';
+import { closeDeleteModal } from "../../redux/modalToggle/slice.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import XMarkOutline from "../ui/icons/XMarkOutline";
+import Button from "../ui/Button/Button.jsx";
 import css from "./DeleteWaterModal.module.css";
 
 import { deleteWaterToday } from "../../redux/waterToday/operations";
@@ -16,20 +17,18 @@ const DeleteWaterModal = () => {
   const isDeleteModalOpen = useSelector(selectDeleteModal);
   const data = useSelector(selectDeleteData);
 
-
   const handleDelete = () => {
-     dispatch(deleteWaterToday(data));
-     dispatch(closeDeleteModal());
-
+    dispatch(deleteWaterToday(data));
+    dispatch(closeDeleteModal());
   };
 
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key === "Escape") {
-      dispatch(closeDeleteModal());
+        dispatch(closeDeleteModal());
       }
     },
-    [dispatch],
+    [dispatch]
   );
 
   useEffect(() => {
@@ -40,7 +39,6 @@ const DeleteWaterModal = () => {
       };
     }
   }, [isDeleteModalOpen, handleKeyDown]);
-
 
   return (
     isDeleteModalOpen && (
@@ -53,22 +51,22 @@ const DeleteWaterModal = () => {
               onClick={() => dispatch(closeDeleteModal())}
               aria-label="Close"
             >
-              <XMarkOutline className={css.modalCloseIcon} />
+              <XMarkOutline size={24} />
             </button>
           </div>
           <p className={css.modalText}>
             Are you sure you want to delete the entry?
           </p>
           <div className={css.modalButtons}>
-            <button
+            <Button
               onClick={() => dispatch(closeDeleteModal())}
-              className={css.btnCancel}
+              cssstyle="cancel"
             >
               Cancel
-            </button>
-            <button onClick={handleDelete} className={css.btnDelete}>
+            </Button>
+            <Button cssstyle="delete" onClick={handleDelete}>
               Delete
-            </button>
+            </Button>
           </div>
         </div>
       </ModalBackdrop>

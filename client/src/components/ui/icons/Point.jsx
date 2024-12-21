@@ -7,7 +7,7 @@ export default function Point({ size }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="4" cy="4" r="4" fill="#407bff" />
+      <circle cx="4" cy="4" r="4" fill="var(--primery-color-blue)" />
     </svg>
   );
 }

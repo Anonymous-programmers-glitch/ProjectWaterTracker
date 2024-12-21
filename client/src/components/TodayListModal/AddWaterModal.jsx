@@ -6,21 +6,20 @@ import { closeAddModal } from "../../redux/modalToggle/slice.js";
 import { selectAddModal } from "../../redux/modalToggle/selectors.js";
 import { addWaterToday } from "../../redux/waterToday/operations.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
-import Button from "../../components/ui/Button/Button";
+import Button from "../../components/ui/Button/Button.jsx";
 import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
-import * as Yup from "yup"; 
+import * as Yup from "yup";
 import css from "./TodayListModal.module.css";
-
 
 const validationSchema = Yup.object({
   manualAmount: Yup.number()
-    .min(50, "Minimum amount is 50 ml") 
-    .max(5000, "Maximum amount is 5000 ml") 
+    .min(50, "Minimum amount is 50 ml")
+    .max(5000, "Maximum amount is 5000 ml")
     .required("Amount of water is required")
-    .typeError("Please enter a valid number"), 
+    .typeError("Please enter a valid number"),
 });
 
 const AddWaterModal = () => {
@@ -47,7 +46,7 @@ const AddWaterModal = () => {
         onClose();
       }
     },
-    [onClose],
+    [onClose]
   );
 
   useEffect(() => {
@@ -69,17 +68,15 @@ const AddWaterModal = () => {
         }}
       >
         <div className={css.modal}>
-          <div className={css.modalHeaderWrapper}>
-            <div className={css.modalHeader}>
-              <h2>Add water</h2>
-              <button
-                className={css.modalClose}
-                onClick={onClose}
-                aria-label="Close"
-              >
-                <XMarkOutline className={css.modalCloseIcon} />
-              </button>
-            </div>
+          <div className={css.modalHeader}>
+            <h2>Add water</h2>
+            <button
+              className={css.modalClose}
+              onClick={onClose}
+              aria-label="Close"
+            >
+              <XMarkOutline size={24} />
+            </button>
           </div>
 
           <Formik
@@ -89,15 +86,12 @@ const AddWaterModal = () => {
             }}
             enableReinitialize
             onSubmit={handleSubmit}
-            validationSchema={validationSchema} 
+            validationSchema={validationSchema}
           >
             {({ values, setFieldValue, errors, touched }) => (
               <Form className={css.form}>
-                <div className={css.formGroup}>
-                  <p>Choose a value:</p>
-                </div>
-
                 <div className={css.formGroupWater}>
+                  <p className={css.text}>Choose a value:</p>
                   <label className={css.labelWater}>Amount of water:</label>
                   <div className={css.amountButtons}>
                     <button
@@ -106,36 +100,37 @@ const AddWaterModal = () => {
                       onClick={() =>
                         setFieldValue(
                           "manualAmount",
-                          Math.max(0, values.manualAmount - 50),
+                          Math.max(0, values.manualAmount - 50)
                         )
                       }
                     >
-                      <MinusSmall />
+                      <MinusSmall size={24} />
                     </button>
                     <span className={css.amountTotalWater}>
                       {values.manualAmount} ml
                     </span>
                     <button
                       type="button"
+                      className={css.buttonWater}
                       onClick={() =>
                         setFieldValue("manualAmount", values.manualAmount + 50)
                       }
                     >
-                      <PlusSmall />
+                      <PlusSmall size={24} />
                     </button>
                   </div>
-                 
+
                   {errors.manualAmount && touched.manualAmount && (
                     <div className={css.error}>{errors.manualAmount}</div>
                   )}
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualTime" className={css.label}>
+                  <label htmlFor="manualTime" className={css.labelWater}>
                     Recording time:
                   </label>
                   <Inputs
-                    className={css.customField}
+                    className={css.field}
                     type="time"
                     name="manualTime"
                     placeholder="HH:mm"
@@ -148,11 +143,11 @@ const AddWaterModal = () => {
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="manualAmount" className={css.labelWater}>
+                  <label htmlFor="manualAmount" className={css.label}>
                     Enter the value of the water used:
                   </label>
                   <Inputs
-                    className={css.customField}
+                    className={css.field}
                     type="number"
                     name="manualAmount"
                     placeholder="Enter amount"
@@ -169,7 +164,9 @@ const AddWaterModal = () => {
                   <span className={css.totalWater}>
                     {values.manualAmount} ml
                   </span>
-                  <Button type="submit">Save</Button>
+                  <Button cssstyle="save" type="submit">
+                    Save
+                  </Button>
                 </div>
               </Form>
             )}
