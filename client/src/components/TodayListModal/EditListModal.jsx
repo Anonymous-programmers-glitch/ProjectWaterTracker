@@ -58,11 +58,13 @@ const EditListModal = () => {
     };
   }, [isOpenModal, handleKeyDown]);
 
-  const validationSchema = Yup.object().shape({
-    amount: Yup.number()
-      .min(50, "Minimum water amount is 50 ml")
-      .max(5000, "Maximum water amount is 5000 ml")
-      .required("This field is required"),
+  const validationSchema = Yup.object({
+    manualAmount: Yup.number()
+      .min(50, "Minimum amount is 50 ml")
+      .max(5000, "Maximum amount is 5000 ml")
+      .integer("Amount must be an integer")
+      .required("Amount of water is required")
+      .typeError("Please enter a valid number"),
   });
 
   return (
@@ -159,13 +161,26 @@ const EditListModal = () => {
                   <Inputs
                     className={css.field}
                     type="number"
-                    name="amount"
-                    placeholder="Enter amount"
+                    name="manualAmount"
+                    placeholder="Введите количество"
                     step="50"
-                    value={values.amount}
+                    min="0"
+                    value={values.manualAmount}
                     onChange={(e) => {
-                      const value = Math.max(0, Number(e.target.value));
-                      setFieldValue("amount", value);
+                      const value = e.target.value.replace(/[^0-9]/g, ""); // Убираем всё, кроме цифр
+                      if (value.length <= 4) {
+                        // Ограничиваем длину значения 4 цифрами
+                        setFieldValue(
+                          "manualAmount",
+                          Math.max(0, Number(value))
+                        ); // Убираем отрицательные значения
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      // Блокируем ввод '-', '+', и букв 'e' или 'E'
+                      if (["e", "E", "+", "-"].includes(e.key)) {
+                        e.preventDefault();
+                      }
                     }}
                   />
                 </div>
