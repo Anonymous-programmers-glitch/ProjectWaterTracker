@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
 import css from "./AuthForm.module.css";
-//import Input from "../../ui/Inputs/Inputs.jsx";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
@@ -31,7 +30,11 @@ export default function SignInForm() {
     password: Yup.string()
       .required()
       .min(8, "Should be 8 chars minimum.")
-      .max(64, "Should be 64 chars maximum."),
+      .max(64, "Should be 64 chars maximum.")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)."
+      ),
   });
   const dispatch = useDispatch();
 
@@ -46,17 +49,17 @@ export default function SignInForm() {
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeOutline size={size} />
+    <EyeSlashOutline size={size} />
   );
   const [inputType, setInputType] = useState("password");
 
   const togglePasswordVisibility = () => {
     if (inputType === "password") {
       setInputType("text");
-      setPasswordVisible(EyeSlashOutline);
+      setPasswordVisible(EyeOutline);
     } else {
       setInputType("password");
-      setPasswordVisible(EyeOutline);
+      setPasswordVisible(EyeSlashOutline);
     }
   };
 
