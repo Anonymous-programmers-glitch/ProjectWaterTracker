@@ -1,82 +1,84 @@
 .slidercontainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 16px;
 }
 
 .slider {
-    width: 100%;
-    pointer-events: none;
-
+  width: 100%;
+  pointer-events: none;
 }
 
 .divslider {
-    width: 100%;
-    padding: 0 14px 0 10px;
+  width: 100%;
+  padding: 0 14px 0 10px;
 }
 .sliderlabels {
-    height: 30px;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-
+  height: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: var(--primery-color-blue);
 }
 
 .sliderlabelleft {
-    width: 30px;
-    margin-left: -15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 4px;
+  width: 30px;
+  margin-left: -15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .sliderlabelcenter {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 4px;
-
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
 }
 .sliderlabelright {
-    width: 30px;
-    margin-right: -15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 4px;
+  width: 30px;
+  margin-right: -15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .trot {
-    height: 8px;
-    border: 1px solid var(--secondary-color---5);
-
+  height: 8px;
+  border: 1px solid var(--secondary-color---5);
 }
 
 .slidertitle {
-    width: 100%;
+  width: 100%;
+  color: var(--primery-color-blue);
+  font-weight: 400;
 }
 
 .span {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 133%;
-    text-align: center;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  text-align: center;
 }
 
 .spancentr {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 125%;
-    text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
 }
 
-@media screen and (min-width: 768px){
-    .slidercontainer {
-        width: 50%;}
+@media screen and (min-width: 768px) {
+  .slidercontainer {
+    width: 50%;
+  }
 }
