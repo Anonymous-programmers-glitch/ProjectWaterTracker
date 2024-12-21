@@ -11,17 +11,7 @@ import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import MinusSmall from "../ui/icons/MinusSmall";
 import PlusSmall from "../ui/icons/PlusSmall";
 import Inputs from "../ui/Inputs/Inputs";
-import * as Yup from "yup"; 
 import css from "./TodayListModal.module.css";
-
-
-const validationSchema = Yup.object({
-  manualAmount: Yup.number()
-    .min(50, "Minimum amount is 50 ml") 
-    .max(5000, "Maximum amount is 5000 ml") 
-    .required("Amount of water is required")
-    .typeError("Please enter a valid number"), 
-});
 
 const AddWaterModal = () => {
   const dispatch = useDispatch();
@@ -89,9 +79,8 @@ const AddWaterModal = () => {
             }}
             enableReinitialize
             onSubmit={handleSubmit}
-            validationSchema={validationSchema} 
           >
-            {({ values, setFieldValue, errors, touched }) => (
+            {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
                   <p>Choose a value:</p>
@@ -124,10 +113,6 @@ const AddWaterModal = () => {
                       <PlusSmall />
                     </button>
                   </div>
-                 
-                  {errors.manualAmount && touched.manualAmount && (
-                    <div className={css.error}>{errors.manualAmount}</div>
-                  )}
                 </div>
 
                 <div className={css.formGroupTime}>

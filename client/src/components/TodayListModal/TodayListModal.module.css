@@ -115,13 +115,7 @@
   margin-bottom: 12px;
 }
 
-.error {
-  color: var(--secondary-color-3); 
-  font-size: 12px; 
-  margin-top: 5px; 
-  
-}
-
+/* Amount Buttons */
 .amountButtons {
   display: flex;
   align-items: center;
@@ -153,7 +147,7 @@
   height: 36px;
   border-radius: 40px;
   color: var(--primery-color-blue);
-  background-color: var(--secondary-color---5);
+  background-color: var(--primery-color-white);
   display: flex;
   align-items: center;
   justify-content: center;
