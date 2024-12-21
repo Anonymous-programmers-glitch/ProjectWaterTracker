@@ -12,7 +12,7 @@ const Inputs = (props) => {
         name={name}
         placeholder={placeholder}
       />
-      <ErrorMessage name={name} component="span" className={css.error} />
+      <ErrorMessage name={name} component="span" className={css.errormes} />
     </div>
   );
 };
