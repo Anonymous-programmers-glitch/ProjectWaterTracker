@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Water
 summary: Upsert user daily norm history
 description: Insert or update the user's daily norm history for the current day. The date is automatically set to today's date.
 operationId: upsertUserNormaHistory

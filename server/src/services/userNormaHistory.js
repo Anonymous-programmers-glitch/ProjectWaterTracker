@@ -27,7 +27,6 @@ export const upsertUserNormaHistory = async (userId, payload, options = {}) => {
   const date = payload.date
     ? new Date(payload.date).toISOString().split('T')[0]
     : new Date().toISOString().split('T')[0];
-
   if (isNaN(new Date(date))) {
     throw new Error('Invalid date format. Please provide a valid ISO date.');
   }

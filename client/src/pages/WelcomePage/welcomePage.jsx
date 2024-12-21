@@ -2,7 +2,7 @@ import TrackerBenefitsList from "../../components/WelcomePage/TrackerBenefitsLis
 import {
   trackerBennefits,
   whyDrinkWater,
-} from "../../tempData/welcomePagedata.jsx";
+} from "../../data/welcomePagedata.jsx";
 import WhyDrinkWaterList from "../../components/WelcomePage/WhyDrinkWaterList/WhyDrinkWaterList.jsx";
 import css from "./welcomePage.module.css";
 import Button from "../../components/ui/Button/Button.jsx";

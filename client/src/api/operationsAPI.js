@@ -10,63 +10,41 @@ export const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
 
-// // Функція для оновлення токена
-// const refreshAccessToken = async () => {
-//   try {
-//     const { data } = await axios.post("/auth/refresh", null, {
-//       withCredentials: true,
-//     });
-//     const { accessToken } = data.data;
+// const api = axios.create({
+//   baseURL: "http://localhost:3000",
+// });
 
-//     // Зберігаємо токен у localStorage
-//     localStorage.setItem("accessToken", accessToken);
-
-//     // Оновлюємо заголовок авторизації
-//     setAuthHeader(accessToken);
-
-//     return accessToken;
-//   } catch (error) {
-//     console.error(
-//       "Failed to refresh token:",
-//       error.response?.data || error.message
-//     );
-//     throw error;
-//   }
+// export const setAuthHeader = (token) => {
+//   api.defaults.headers.common.Authorization = `Bearer ${token}`;
 // };
 
-// axios.interceptors.response.use(
-//   (response) => response, // Якщо відповідь успішна, просто повертаємо її
+// export const clearAuthHeader = () => {
+//   api.defaults.headers.common.Authorization = "";
+// };
+
+// api.interceptors.response.use(
+//   (response) => response,
 //   async (error) => {
 //     const originalRequest = error.config;
-
-//     // Перевірка на 401 помилку та запобігання зацикленню
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true; // Позначаємо, що вже намагалися оновити токен
-
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
 //       try {
-//         const response = await axios.post(
-//           "http://localhost:3000/auth/refresh",
-//           { withCredentials: true }
-//         );
-//         const { accessToken } = response.data.data;
+//         const response = await axios.post("/auth/refresh");
+//         const { accessToken } = response.data;
 //         setAuthHeader(accessToken);
 //         localStorage.setItem("accessToken", accessToken);
-//         return axios(originalRequest);
-//       } catch (refreshError) {
-//         // Якщо оновлення токена не вдалося, очищуємо локальні дані та перенаправляємо користувача
-//         clearAuthHeader();
-//         localStorage.removeItem("accessToken");
-//         console.error("Token refresh failed. Redirecting to login.");
 
-//         // Наприклад, перенаправлення на сторінку логіну
+//         return api(originalRequest);
+//       } catch (refreshError) {
+//         console.error("Token refresh failed:", refreshError);
+//         localStorage.removeItem("accessToken");
 //         window.location.href = "/signin";
-//         throw refreshError;
+//         return Promise.reject(refreshError);
 //       }
 //     }
-
-//     // Якщо це інша помилка, передаємо її далі
-//     return Promise.reject(error);
+//     return Promise.reject(error); // For all other errors, return the error as is.
 //   }
 // );
 
 export default axios;
+// export default api;

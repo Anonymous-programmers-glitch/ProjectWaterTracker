@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchWaterMonth } from "./operations.js";
+import { putHistory } from "./operations.js";
 
 function handlePending(state) {
   state.isLoading = true;
@@ -11,22 +11,25 @@ function handleRejected(state, action) {
 }
 
 const slice = createSlice({
-  name: "month",
+  name: "history",
   initialState: {
-    items: [],
+    items: {
+      date: "",
+      dailyNorma: "",
+    },
     isLoading: false,
     error: null,
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchWaterMonth.pending, handlePending)
-      .addCase(fetchWaterMonth.fulfilled, (state, action) => {
+      .addCase(putHistory.pending, handlePending)
+      .addCase(putHistory.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.items = action.payload;
       })
-      .addCase(fetchWaterMonth.rejected, handleRejected);
+      .addCase(putHistory.rejected, handleRejected);
   },
 });
 export default slice.reducer;

@@ -1,15 +1,16 @@
 .homepage {
- width: 100%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  gap: 40px;
 }
 .background {
   position: absolute;
-  background-image: url("../../assets/homepage/backgroundmobilehome.svg");
+  /* background-image: url("../../assets/homepage/backgroundmobilehome.svg"); */
+  background-image: var(--backgroundmanemob2);
   background-repeat: no-repeat;
-background-size: cover;
+  background-size: cover;
 
   width: 100%;
   height: 100%;
@@ -17,8 +18,6 @@ background-size: cover;
   left: 0;
   z-index: -1;
 }
-
-
 
 .topcontent {
   display: flex;
@@ -30,14 +29,13 @@ background-size: cover;
   position: relative;
 }
 
-.btn{
+.btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   width: 100%;
 }
-
 .rangeblok {
   display: flex;
   flex-direction: column;
@@ -80,6 +78,7 @@ background-size: cover;
   font-size: 24px;
   text-align: center;
   padding-top: 100px;
+  color: var(--primery-color-black);
 }
 
 .month {
@@ -89,9 +88,16 @@ background-size: cover;
   width: 100%;
   margin-bottom: 16px;
 }
+.textaddbtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 16px;
+}
 @media screen and (min-width: 768px) {
   .background {
-    background-image: url("../../assets/homepage/backgroundtablethome.svg");
+    /* background-image: url("../../assets/homepage/backgroundtablethome.svg"); */
+    background-image: var(--backgroundmanetab2);
   }
 
   .rangeblok {
@@ -113,6 +119,9 @@ background-size: cover;
 }
 
 @media screen and (min-width: 1440px) {
+  .background {
+    background-image: var(--backgroundmanedesc2);
+  }
   .homepage {
     justify-content: space-between;
     align-items: center;

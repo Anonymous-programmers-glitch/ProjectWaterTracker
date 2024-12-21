@@ -1,0 +1,24 @@
+.datepicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+}
+
+.monthyear {
+  font-size: 16px;
+  color: var(--primery-color-blue);
+}
+
+.but {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--primery-color-blue);
+}
+
+but:focus {
+  outline: none;
+}

@@ -1,12 +1,14 @@
 /* Modal Styles */
 .modal {
   border-radius: 10px;
-  background: #fff;
+  background: var(--primery-color-white);
   padding: 24px 12px;
   min-width: 160px;
+  width: 280px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
 /* Modal Header */
@@ -16,197 +18,98 @@
   justify-content: center;
   margin-bottom: 16px;
   height: auto;
+  gap: 24px;
 }
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   width: 100%;
 }
 
 .modalHeader h2 {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
   font-size: 26px;
   line-height: 1.2;
-  color: #2f2f2f;
-  margin: 0;
-}
-
-.modalClose {
-  background-color: transparent;
-  padding: 4px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease-out;
-}
-
-.modalClose svg {
-  width: 24px;
-  height: 24px;
-  fill: var(--primery-color-white);
-  stroke: rgb(64, 123, 255);
-  border-radius: 50%;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  color: var(--primery-color-black);
 }
 
 .modalClose:hover svg {
   background-color: rgba(64, 123, 255, 0.2);
   transform: scale(1.3);
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 /* Form */
 .form {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
-
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-  color: rgb(47, 47, 47);
-  font-size: 18px;
+.text {
   font-weight: 500;
-  line-height: 1.1;
+  font-size: 18px;
+  line-height: 1.11;
+  color: var(--primery-color-black);
+  padding-bottom: 4px;
 }
-
 .formGroupWater {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
+  gap: 12px;
 }
 
 .formGroupTime {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
-  color: rgb(47, 47, 47);
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.1;
-}
-
-.formLabel {
-  font-size: 18px;
-  line-height: 1.11;
-  font-weight: 500;
-  color: rgb(47, 47, 47);
+  gap: 12px;
 }
 
 .label {
-  font-size: 16px;
-  line-height: 1.25;
-  color: rgb(47, 47, 47);
-  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  color: var(--primery-color-black);
+  max-width: 240px;
+  padding-bottom: 4px;
 }
 
 .labelWater {
-  color: rgb(47, 47, 47);
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.1;
-  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--primery-color-black);
 }
 
-/* Amount Buttons */
+.error {
+  color: var(--secondary-color-3);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 .amountButtons {
   display: flex;
   align-items: center;
-  gap: 16px;
-}
-
-.amountButtons button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 30px;
-  border: 1px solid rgb(64, 123, 255);
-  background-color: rgb(255, 255, 255);
-  color: rgb(64, 123, 255);
-  fill: rgb(64, 123, 255);
-  box-shadow: rgba(64, 123, 255, 0.2) 0px 2px 4px;
-}
-
-.amountButtons span {
-  font-size: 1.2rem;
+  gap: 7px;
+  flex-direction: row;
+  width: 100%;
 }
 
 .amountTotalWater {
-  font-size: 18px;
-  font-weight: 700;
   width: 92px;
   height: 36px;
   border-radius: 40px;
-  color: rgb(64, 123, 255);
-  background-color: rgb(215, 227, 255);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px;
-}
-
-/* Submit Button */
-button[type="submit"] {
-  align-self: center;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 30px;
-  width: 100%;
-  height: 44px;
-  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
-  background: #407bff;
+  padding: 6px 10px;
+  background: var(--secondary-color---5);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33;
   text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  color: var(--primery-color-blue);
 }
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+.field {
+  width: 100%;
 }
-
-button[type="submit"]:active {
-  background-color: #0047a3;
-}
-
-/* Custom Input Styles */
-.customField {
-  border: 1px solid #407bff;
-  border-radius: 6px;
-  padding: 12px 10px;
-  font-size: 16px;
-  color: #407bff;
-  outline: none;
-  transition: border-color 0.3s ease;
-  width: 100%; 
-}
-
-.customField:focus {
-  border-color: #0056b3;
-}
-
-.customField::placeholder {
-  color: #a3a3a3;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 125%;
-}
-
-.customField[type="time"] {
-  color: #407bff;
-}
-
-
 /* Form Footer */
 .formFooter {
   display: flex;
@@ -216,52 +119,41 @@ button[type="submit"]:active {
 }
 
 .totalWater {
-  font-family: "Roboto", sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 1.33;
   text-align: center;
-  color: #407bff;
-  display: inline-block;
-  align-items: center;
+  color: var(--primery-color-blue);
 }
 
 /* Edit Info Section */
 .editInfo {
   display: flex;
   align-items: center;
-  width: 254px;
+  width: 256px;
   height: 52px;
-  text-align: center;
+  justify-content: center;
   border-radius: 10px;
-  background-color: rgb(215, 227, 255);
+  background-color: var(--secondary-color-2);
   padding: 8px 24px;
   gap: 16px;
-  font-size: 16px;
-  font-weight: 400;
-  margin-bottom: 16px;
 }
 
 .editInfo strong {
-  color: #407bff;
+  color: var(--primery-color-blue);
   font-size: 18px;
+  line-height: 1.33;
   font-weight: 400;
 }
 
 .editInfo .time {
-  color: rgb(47, 47, 47);
-}
-
-.glassOfWater {
-  fill: #407bff;
-  width: 36px;
-  height: 36px;
+  font-size: 12px;
+  line-height: 2;
+  color: var(--primery-color-black);
 }
 
 .watericon {
-  fill: #407bff;
-  width: 36px;
-  height: 36px;
+  fill: var(--primery-color-blue);
 }
 
 /* Media Queries */
@@ -277,18 +169,14 @@ button[type="submit"]:active {
     align-items: center;
     gap: 24px;
   }
-
-  button[type="submit"] {
-    width: auto;
-    max-width: 160px;
-    padding: 12px 40px;
+  .label {
+    max-width: 350px;
   }
-
-  .customField {
-    border: 1px solid #d7e3ff;
-    border-radius: 6px;
-    width: 544px;
-    height: 44px;
+  .field {
+    width: 100%;
+  }
+  .editInfo {
+    width: 254px;
   }
 }
 
@@ -296,18 +184,5 @@ button[type="submit"]:active {
   .modal {
     width: 592px;
     padding: 32px 24px;
-  }
-
-  button[type="submit"] {
-    width: auto;
-    max-width: 200px;
-    padding: 14px 50px;
-  }
-
-  .customField {
-    border: 1px solid #d7e3ff;
-    border-radius: 6px;
-    width: 544px;
-    height: 44px;
   }
 }

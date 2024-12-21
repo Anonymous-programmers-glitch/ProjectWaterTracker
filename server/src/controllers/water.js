@@ -3,18 +3,6 @@ import * as waterServices from '../services/water.js';
 import { userNormaHistoryCollection } from '../db/models/userNormaHistory.js';
 import { UserCollection } from '../db/models/User.js';
 
-// export const getAllWaterController = async (req, res, next) => {
-//   const { _id: userId } = req.user;
-
-//   const waterRecords = await waterServices.getAllWater(userId);
-
-//   res.json({
-//     status: 200,
-//     message: 'Successfully found waterToday records',
-//     waterRecords,
-//   });
-// };
-
 export const getWaterByDateController = async (req, res, next) => {
   const { _id: userId } = req.user;
 
@@ -42,22 +30,28 @@ export const getWaterByDateController = async (req, res, next) => {
     userId,
   );
 
-  if (waterRecords.length === 0) {
+  if (!waterRecords.length) {
     throw createHttpError(404, 'No records found for this date');
   }
 
-  const totalDayWater = waterRecords.reduce(
+  const sortedRecords = waterRecords.sort(
+    (a, b) => new Date(a.date) - new Date(b.date),
+  );
+
+  const totalDayWater = sortedRecords.reduce(
     (acc, item) => acc + item.amount,
     0,
   );
 
   const percentage = Math.round((totalDayWater / currentDailyNorma) * 100);
+
   res.json({
     status: 200,
-    message: `Successfully found water records by this date ${date}`,
+    message: `Successfully found water records for date: ${date.toISOString()}`,
     data: {
-      waterRecords,
-      recordsCount: waterRecords.length,
+      waterRecords: sortedRecords,
+      currentDailyNorma,
+      recordsCount: sortedRecords.length,
       totalDayWater,
       percentage,
     },
@@ -110,7 +104,6 @@ export const deleteWaterController = async (req, res, next) => {
     return next(createHttpError(404, "Water record isn't foudn"));
   }
 
-  // res.status(204).send({ message: 'Water record is deleted successfully' });
   res.json({
     status: 200,
     message: 'Water record is deleted successfully',
