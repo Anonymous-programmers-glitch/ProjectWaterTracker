@@ -1,16 +1,16 @@
 .homepage {
- width: 100%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  gap: 40px;
 }
 .background {
   position: absolute;
   /* background-image: url("../../assets/homepage/backgroundmobilehome.svg"); */
   background-image: var(--backgroundmanemob2);
   background-repeat: no-repeat;
-background-size: cover;
+  background-size: cover;
 
   width: 100%;
   height: 100%;
@@ -29,7 +29,7 @@ background-size: cover;
   position: relative;
 }
 
-.btn{
+.btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,6 +78,7 @@ background-size: cover;
   font-size: 24px;
   text-align: center;
   padding-top: 100px;
+  color: var(--primery-color-black);
 }
 
 .month {
@@ -87,7 +88,7 @@ background-size: cover;
   width: 100%;
   margin-bottom: 16px;
 }
-.textaddbtn{
+.textaddbtn {
   display: block;
   width: 100%;
   text-align: left;
