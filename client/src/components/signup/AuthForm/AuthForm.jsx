@@ -9,7 +9,6 @@ import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
-//import { CheckEmail } from "../../signin/errorMsgFn.jsx";
 
 const initialValues = {
   email: "",
@@ -23,7 +22,11 @@ export default function SignUpForm() {
     password: Yup.string()
       .required("Please confirm your password")
       .min(8, "Should be 8 chars minimum.")
-      .max(64, "Should be 64 chars maximum."),
+      .max(64, "Should be 64 chars maximum.")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)."
+      ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -53,17 +56,17 @@ export default function SignUpForm() {
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeOutline size={size} />
+    <EyeSlashOutline size={size} />
   );
   const [inputType, setInputType] = useState("password");
 
   const togglePasswordVisibility = () => {
     if (inputType === "password") {
       setInputType("text");
-      setPasswordVisible(EyeSlashOutline);
+      setPasswordVisible(EyeOutline);
     } else {
       setInputType("password");
-      setPasswordVisible(EyeOutline);
+      setPasswordVisible(EyeSlashOutline);
     }
   };
 
