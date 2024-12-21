@@ -1,324 +1,142 @@
-    .modalContent{
-        border-radius: 10px;
-        padding: 32px 24px;
-        background: #fff;
-        position: absolute;
-        margin: 20px;
-        width: 592px;
-        height: 730px;
-        padding-top: 32px;
-        padding-left: 24px;
-        padding-right: 24px;
-        padding-bottom: 32px;
-        border-radius: 10px;
-        background-color: var(--primery-color-white);
-        color: var(--primery-color-black);
+.modalContent {
+  border-radius: 10px;
+  padding: 24px 12px;
+  background: var(--primery-color-white);
+  width: 280px;
+}
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  font-size: 26px;
+  line-height: 1.23077;
+  color: var(--primery-color-black);
+}
+.closeBtn:hover svg {
+  background-color: rgba(64, 123, 255, 0.2);
+  transform: scale(1.3);
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.topWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.for {
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--primery-color-black);
+}
 
-    }
-    
-    .inputs{
-        width: 544px;
-        height: 44px;
-    }
+.formula {
+  font-size: 18px;
+  line-height: 1.33;
+  color: var(--primery-color-blue);
+}
+.forWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.modalDescr {
+  border: 1px solid var(--secondary-color---5);
+  border-radius: 10px;
+  padding: 10px;
+  width: 256px;
+  color: #8f8f8f;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+}
+.modalDescr span {
+  color: var(--primery-color-blue);
+}
+.titleLabel {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  padding-bottom: 8px;
+  color: var(--primery-color-black);
+}
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.radioBtnWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.radio {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--primery-color-black);
+}
+.text1 {
+  width: 190px;
+}
+.field {
+  width: 100%;
+}
+.amountWraper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+.spanResult {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.33;
+  color: var(--primery-color-blue);
+}
+@media screen and (min-width: 768px) {
+  .modalContent {
+    width: 704px;
+    padding: 32px 24px;
+  }
+  .forWrapper {
+    flex-direction: row;
+    gap: 24px;
+  }
+  .modalDescr {
+    width: 656px;
+  }
+  .text1 {
+    width: 328px;
+  }
+  .btn {
+    display: flex;
+    justify-content: end;
+  }
+}
 
-
-    .text1{
-        font-size: 26px;
-    }
-    
-    .cover{
-        display:flex;
-        margin-top: 20px;
-    }
-    
-    .formula{
-        font-size: 18px;
-        color: var(--primery-color-blue);
-        padding-right: 10px;
-    }
-    
-    .for{
-        padding-right: 10px;
-    }
-    
-    .closeBtn{
-        color: var(--primery-color-blue);
-        position: absolute;
-        top: 30px;
-        right: 24px;
-    }
-    
-    .labelInput{
-        margin-top: 0px;
-    }
-
-    .labels{
-        padding-right: 20px;
-    }
-    
-    .span{
-        padding-left: 10px;
-    }
-    
-    .textRadioBtn{
-        margin-top: 20px;
-        margin-bottom: 20px;
-        font-size: 18px;
-        
-    }
-    
-    .textRadioBtn2{
-        margin-top: 10px;
-        font-weight: bolder;
-    }
-    
-    .modalDescr{
-        margin-top: 20px;
-        height: 65px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 10px;
-        font-size: 12px;
-        color: #8F8F8F;
-        border: 1px solid var(--secondary-color---5);
-        border-radius: 5px;
-    }
-    
-    .text{
-        font-size: 16px;
-        margin-top: 15px;
-    }
-    
-    .modalInputKg{
-        width: 544px;
-        height: 44px;
-        margin-top: 10px;
-        border: 1px solid #D7E3FF;
-        border-radius: 5px;
-        
-    }
-    .modalInputKg:focus{
-        border: 1px solid #407BFF;
-    }
-    .modalInput{
-        width: 544px;
-        height: 44px;
-        margin-top: 10px;
-        border: 1px solid #D7E3FF;
-        border-radius: 5px;
-        padding: 10px;
-        
-    }
-    .modalInput:focus{
-        border: 1px solid #407BFF;
-    }
-    
-    .spanResult{
-        color: var(--primery-color-blue);
-        font-size: 18px;
-    }
-
-
-    .btn{
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        padding: 30px 0px;
-     
-    }
-    .cssstyleBtn{
-        border: none;
-        border-radius: 10px;
-        height: 44px;
-        width: 160px;
-        box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
-        background: var(--primery-color-blue);
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 125%;
-        text-align: center;
-        color: var(--primery-color-white);
-        bottom: 20px;
-        left: 40px;
-       
-        padding: 10px 20px;
-        
-    }
-    .cssstyleBtn:hover {
-        box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
-      }
-      .cssstyleBtn:active {
-        box-shadow: none;
-      }
-    
-    
-    .error{
-        color: red;
-    }  
-    
-    
-    .modalInputError {
-        color: red;
-      }
-      
-      .error {
-        color: red;
-        font-size: 12px;
-        margin-bottom: -5px;
-      }
-      
-      .errorText {
-        color: red;
-        font-size: 12px;
-      }
-      @media screen and (max-width: 768px) {
-        .modalContent {
-        width: 704px;
-        height: 730px;
-        }
-        .modalInput {
-            width: 656px;
-            height: 44px;
-          
-        }
-        .modalDescr{
-            padding-top: 15px;
-        }
-      
-        
-    }
-    
-    @media screen and (max-width: 715px) {
-        .modalContent {
-        width: 450px;
-        height: 840px;
-        }
-        .cover{
-            display: block;
-            padding-top: 10px;
-        }
-        .formula{
-            padding-right: 0;
-        }
-        .modalInput {
-            width: 100%;
-            height: 44px;
-          
-        }
-        .modalDescr{
-            padding-top: 15px;
-        }
-        .modalDescr{
-            height: 100px;
-            padding-left: 5px;
-        }
-    }
-    @media screen and (max-width: 453px) {
-        .modalContent {
-        width: 350px;
-        height: 816px;
-        padding-left: 12px;
-        padding-right: 12px;
-        }
-        .cover{
-            display: block;
-            padding-top: 10px;
-        }
-        .formula{
-            padding-right: 0;
-            margin-top: 10px;
-        }
-        .modalInput {
-            width: 100%;
-            height: 44px;
-          
-        }
-        .modalDescr{
-            padding-top: 15px;
-        }
-        .modalDescr{
-            height: 100px;
-            padding-left: 5px;
-        }
-        .btn{
-            margin-left: -7px;
-        }
-        .cssstyleBtn{
-            width: 95%;
-        }
-    }
-    
-    @media screen and (max-width: 359px) {
-        .modalContent {
-        width: 300px;
-        height: 816px;
-        padding-left: 12px;
-        padding-right: 12px;
-        }
-        .cover{
-            display: block;
-            padding-top: 10px;
-        }
-        .formula{
-            padding-right: 0;
-            margin-top: 10px;
-        }
-        .modalInput {
-            width: 100%;
-            height: 44px;
-          
-        }
-        .modalDescr{
-            padding-top: 15px;
-        }
-        .modalDescr{
-            height: 100px;
-            padding-left: 5px;
-        }
-        .btn{
-            margin-left: -7px;
-        }
-        .cssstyleBtn{
-            width: 95%;
-        }
-    }
-
-    @media screen and (max-width: 320px) {
-        .modalContent {
-        width: 280px;
-        height: 706px;
-        padding-left: 12px;
-        overflow-y: auto;
-        max-height: 80vh;
-        }
-        .modalForm{
-            overflow-y: auto;
-        }
-        .cover{
-            display: block;
-            padding-top: 10px;
-        }
-        .formula{
-            padding-right: 0;
-        }
-        .modalInput {
-            width: 256px;
-            height: 44px;
-          
-        }
-        .modalDescr{
-            padding-top: 15px;
-        }
-        .modalDescr{
-            height: 100px;
-            padding-left: 5px;
-        }
-
-        .btn{
-            margin-left: -10px;
-        }
-        .cssstyleBtn{
-            width: 90%;
-        
-        }
-    }
+@media screen and (min-width: 1440px) {
+  .modalContent {
+    width: 592px;
+  }
+  .modalDescr {
+    width: 544px;
+  }
+}
