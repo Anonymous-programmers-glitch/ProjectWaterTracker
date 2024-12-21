@@ -6,12 +6,15 @@ import { condition } from "../conditions.js";
 export const putHistory = createAsyncThunk(
   "history/userNormaHistory",
   async (data, thunkAPI) => {
-    const {  date,
-      norma } = data;
+    const { date, dailyNorma } = data;
     try {
       const reduxState = thunkAPI.getState();
       setAuthHeader(reduxState.user.accessToken);
-      const { data } = await axios.put(`/`, { date, norma });
+      const { data } = await axios.put(`/userNormaHistory`, {
+        date,
+        dailyNorma,
+      });
+
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -19,5 +22,5 @@ export const putHistory = createAsyncThunk(
   },
   {
     condition: condition,
-  },
+  }
 );

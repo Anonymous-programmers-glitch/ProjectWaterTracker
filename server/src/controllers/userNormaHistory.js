@@ -8,9 +8,13 @@ export const userNormaHistoryController = async (req, res) => {
     upsert: true,
   });
   const status = result.isNew ? 201 : 200;
+
   res.status(status).json({
     status,
     message: "Successfully upserted user's history",
-    data: result.userHistory,
+    data: {
+      date: result.userHistory.date,
+      dailyNorma: result.userHistory.dailyNorma,
+    },
   });
 };

@@ -22,6 +22,10 @@
     {
       "name": "User",
       "description": "User operations."
+    },
+    {
+      "name": "Water",
+      "description": "Water operations."
     }
   ],
   "paths": {
@@ -909,6 +913,13 @@
                                 "type": "number",
                                 "description": "The amount of waterToday consumed (in milliliters).",
                                 "example": 300
+
+                              },
+                              "currentDailyNorm": {
+                                "type": "number",
+                                "description": "The current daily waterToday consumption norm for the user (in milliliters).",
+                                "example": 2000
+
                               }
                             }
                           }
@@ -1049,6 +1060,13 @@
                           "type": "number",
                           "description": "The amount of waterToday consumed (in milliliters).",
                           "example": 250
+
+                        },
+                        "currentDailyNorm": {
+                          "type": "number",
+                          "description": "The current daily waterToday consumption norm for the user (in milliliters).",
+                          "example": 2000
+
                         }
                       }
                     }
@@ -1170,6 +1188,13 @@
                           "type": "number",
                           "description": "The updated amount of waterToday consumed (in milliliters).",
                           "example": 300
+
+                        },
+                        "currentDailyNorm": {
+                          "type": "number",
+                          "description": "The current daily waterToday consumption norm for the user (in milliliters).",
+                          "example": 2000
+
                         }
                       }
                     }
@@ -1237,10 +1262,12 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully deleted the waterToday record."
+
                     },
                     "_id": {
                       "type": "string",
                       "example": "64f5b992c4b3f1567e63a179"
+
                     }
                   }
                 }
@@ -1330,7 +1357,7 @@
     "/userNormaHistory": {
       "put": {
         "tags": [
-          "User"
+          "Water"
         ],
         "summary": "Upsert user daily norm history",
         "description": "Insert or update the user's daily norm history for the current day. The date is automatically set to today's date.",

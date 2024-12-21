@@ -40,7 +40,7 @@
 }
 .pencilicon {
   padding: 5px;
-  stroke: var(--primery-color-blue);
+  stroke: var(--secondary-color-4);
 }
 
 .trashicon {

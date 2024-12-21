@@ -1,6 +1,7 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
+import * as Yup from "yup"; 
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectEditData,
@@ -11,7 +12,7 @@ import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import Button from "../ui/Button/Button.jsx";
 import MinusSmall from "../ui/icons/MinusSmall.jsx";
 import PlusSmall from "../ui/icons/PlusSmall.jsx";
-import XMarkOutline from '../ui/icons/XMarkOutline.jsx';
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
@@ -21,7 +22,7 @@ const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
-  const {amount,date, _id}=data
+  const { amount, date, _id } = data;
   const time = dayjs(date).format("HH:mm");
   const day = dayjs(date).format("YYYY-MM-DD");
 
@@ -29,12 +30,14 @@ const EditListModal = () => {
     dispatch(closeEditModal());
   }, [dispatch]);
 
-
   const handleSubmit = (values) => {
-     const data= {_id:_id,amount:values.amount,date:dayjs(`${day} ${values.time}`).toISOString()}
-    dispatch(editWaterToday(data))
+    const data = {
+      _id: _id,
+      amount: values.amount,
+      date: dayjs(`${day} ${values.time}`).toISOString(),
+    };
+    dispatch(editWaterToday(data));
     handelCloseModal();
- 
   };
 
   const handleKeyDown = useCallback(
@@ -55,6 +58,13 @@ const EditListModal = () => {
     };
   }, [isOpenModal, handleKeyDown]);
 
+  const validationSchema = Yup.object().shape({
+    amount: Yup.number()
+      .min(50, "Minimum water amount is 50 ml")
+      .max(5000, "Maximum water amount is 5000 ml")
+      .required("This field is required"),
+  });
+
   return (
     isOpenModal && (
       <ModalBackdrop
@@ -65,17 +75,15 @@ const EditListModal = () => {
         }}
       >
         <div className={css.modal}>
-          <div className={css.modalHeaderWrapper}>
-            <div className={css.modalHeader}>
-              <h2>Edit the entered amount of water</h2>
-              <button
-                className={css.modalClose}
-                onClick={handelCloseModal}
-                aria-label="Close"
-              >
-                <XMarkOutline className={css.modalCloseIcon} />
-              </button>
-            </div>
+          <div className={css.modalHeader}>
+            <h2>Edit the entered amount of water</h2>
+            <button
+              className={css.modalClose}
+              onClick={handelCloseModal}
+              aria-label="Close"
+            >
+              <XMarkOutline size={24} />
+            </button>
           </div>
 
           <div className={css.editInfo}>
@@ -92,49 +100,48 @@ const EditListModal = () => {
               time: time || "00:00",
             }}
             enableReinitialize
+            validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue }) => (
+            {({ values, setFieldValue, errors, touched }) => (
               <Form className={css.form}>
-                <div className={css.formGroup}>
-                  <p>Correct entered data:</p>
-                </div>
-
                 <div className={css.formGroupWater}>
-                  <label className={css.label}>Amount of water:</label>
+                  <p className={css.text}>Correct entered data:</p>
+                  <label className={css.labelWater}>Amount of water:</label>
                   <div className={css.amountButtons}>
                     <button
                       className={css.buttonWater}
                       type="button"
                       onClick={() =>
-                        setFieldValue(
-                          "amount",
-                          Math.max(0, values.amount - 50)
-                        )
+                        setFieldValue("amount", Math.max(0, values.amount - 50))
                       }
                     >
-                      <MinusSmall />
+                      <MinusSmall size={24} />
                     </button>
                     <span className={css.amountTotalWater}>
                       {values.amount} ml
                     </span>
                     <button
+                      className={css.buttonWater}
                       type="button"
                       onClick={() =>
                         setFieldValue("amount", values.amount + 50)
                       }
                     >
-                      <PlusSmall />
+                      <PlusSmall size={24} />
                     </button>
                   </div>
+                  {errors.amount && touched.amount && (
+                    <div className={css.error}>{errors.amount}</div>
+                  )}
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="time" className={css.label}>
+                  <label htmlFor="time" className={css.labelWater}>
                     Recording time:
                   </label>
                   <Inputs
-                    className={css.customField}
+                    className={css.field}
                     type="time"
                     name="time"
                     placeholder="HH:mm"
@@ -146,11 +153,11 @@ const EditListModal = () => {
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="amount" className={css.labelWater}>
+                  <label htmlFor="amount" className={css.label}>
                     Enter the value of the water used:
                   </label>
                   <Inputs
-                    className={css.customField}
+                    className={css.field}
                     type="number"
                     name="amount"
                     placeholder="Enter amount"
@@ -164,10 +171,10 @@ const EditListModal = () => {
                 </div>
 
                 <div className={css.formFooter}>
-                  <span className={css.totalWater}>
-                    {values.amount} ml
-                  </span>
-                  <Button type="submit">Save</Button>
+                  <span className={css.totalWater}>{values.amount} ml</span>
+                  <Button cssstyle="save" type="submit">
+                    Save
+                  </Button>
                 </div>
               </Form>
             )}
@@ -179,4 +186,3 @@ const EditListModal = () => {
 };
 
 export default EditListModal;
-
