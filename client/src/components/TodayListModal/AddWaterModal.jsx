@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
-import * as Yup from "yup"; // Import Yup for validation
+import toast, { Toaster } from "react-hot-toast";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddModal } from "../../redux/modalToggle/slice.js";
@@ -24,12 +24,25 @@ const AddWaterModal = () => {
 
   const [time, setTime] = useState(dayjs().format("HH:mm"));
 
-  const handleSubmit = (value) => {
-    const { manualAmount, manualTime } = value;
+  const handleSubmit = (values) => {
+    const { manualAmount, manualTime } = values;
     const dateNow = dayjs().format("YYYY-MM-DD");
     const date = dayjs(`${dateNow} ${manualTime}`).toISOString();
-    dispatch(addWaterToday({ amount: manualAmount, date: date }));
+    dispatch(addWaterToday({ amount: manualAmount, date }));
+    toast.success("Water record successfully added!");
     onClose();
+  };
+
+  const validateValues = (values) => {
+    const errors = {};
+    if (!values.manualAmount) {
+      errors.manualAmount = "This field is required";
+    } else if (values.manualAmount < 50) {
+      errors.manualAmount = "Minimum water amount is 50 ml";
+    } else if (values.manualAmount > 5000) {
+      errors.manualAmount = "Maximum water amount is 5000 ml";
+    }
+    return errors;
   };
 
   const handleKeyDown = useCallback(
@@ -38,7 +51,7 @@ const AddWaterModal = () => {
         onClose();
       }
     },
-    [onClose],
+    [onClose]
   );
 
   useEffect(() => {
@@ -49,14 +62,6 @@ const AddWaterModal = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, handleKeyDown]);
-
-  // Validation schema
-  const validationSchema = Yup.object().shape({
-    manualAmount: Yup.number()
-      .min(50, "Minimum water amount is 50 ml")
-      .max(5000, "Maximum water amount is 5000 ml")
-      .required("This field is required"),
-  });
 
   return (
     isOpen && (
@@ -86,11 +91,19 @@ const AddWaterModal = () => {
               manualAmount: 0,
               manualTime: time,
             }}
-            validationSchema={validationSchema}
-            enableReinitialize
-            onSubmit={handleSubmit}
+            validate={validateValues}
+            onSubmit={(values, { setSubmitting }) => {
+              const errors = validateValues(values);
+              if (Object.keys(errors).length > 0) {
+                // Виведення помилок у вигляді попапів
+                Object.values(errors).forEach((error) => toast.error(error));
+                setSubmitting(false);
+                return;
+              }
+              handleSubmit(values);
+            }}
           >
-            {({ values, setFieldValue, errors, touched }) => (
+            {({ values, setFieldValue }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
                   <p>Choose a value:</p>
@@ -105,7 +118,7 @@ const AddWaterModal = () => {
                       onClick={() =>
                         setFieldValue(
                           "manualAmount",
-                          Math.max(0, values.manualAmount - 50),
+                          Math.max(0, values.manualAmount - 50)
                         )
                       }
                     >
@@ -123,9 +136,6 @@ const AddWaterModal = () => {
                       <PlusSmall />
                     </button>
                   </div>
-                  {touched.manualAmount && errors.manualAmount && (
-                    <div className={css.error}>{errors.manualAmount}</div>
-                  )}
                 </div>
 
                 <div className={css.formGroupTime}>
@@ -161,7 +171,6 @@ const AddWaterModal = () => {
                       setFieldValue("manualAmount", value);
                     }}
                   />
-                  
                 </div>
 
                 <div className={css.formFooter}>
@@ -174,10 +183,10 @@ const AddWaterModal = () => {
             )}
           </Formik>
         </div>
+        <Toaster />
       </ModalBackdrop>
     )
   );
 };
 
 export default AddWaterModal;
-

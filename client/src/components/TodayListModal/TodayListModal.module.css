@@ -115,6 +115,10 @@
   margin-bottom: 12px;
 }
 
+.error {
+  color: var(--secondary-color-3);
+}
+
 /* Amount Buttons */
 .amountButtons {
   display: flex;

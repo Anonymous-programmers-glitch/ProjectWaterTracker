@@ -24,7 +24,9 @@
 
 .error {
   color: var(--secondary-color-3);
-  border: 1px solid var(--secondary-color-3);
+  /* border: 1px solid var(--secondary-color-3); */
+  font-size: 14px;
+
 }
 
 @media screen and (min-width: 768px) {
