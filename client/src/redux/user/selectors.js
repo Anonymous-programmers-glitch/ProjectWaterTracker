@@ -1,5 +1,5 @@
 export const selectUser = (state) => state.user.user;
-export const selectAvatarUrl = (state) => state.user.avatarUrl;
+export const selectAvatarUrl = (state) => state.user.user.avatarUrl;
 export const selectLoading = (state) => state.user.isLoading;
 export const selectError = (state) => state.user.error;
 export const selectIsLoggedIn = (state) => state.user.isLoggedIn;

@@ -138,6 +138,7 @@
   flex-direction: column;
   justify-content: end;
   gap: 12px;
+  padding-right: 152px;
 }
 
 .labelPassword {
@@ -160,6 +161,12 @@
   bottom: 32px;
 }
 
+.formik-error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: -5px;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     max-width: 704px;
@@ -171,13 +178,19 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 375px) {
   .container {
+    padding-left: 12px;
+    padding-right: 12px;
     max-width: 280px;
     max-height: 852px;
   }
   .btn {
     position: inherit;
     padding-top: 24px;
+  }
+
+  .passwordWrapper {
+    padding-right: 0px;
   }
 }
