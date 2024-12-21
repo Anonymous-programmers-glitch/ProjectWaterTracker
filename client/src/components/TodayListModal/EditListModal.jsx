@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import Button from "../ui/Button/Button.jsx";
 import MinusSmall from "../ui/icons/MinusSmall.jsx";
 import PlusSmall from "../ui/icons/PlusSmall.jsx";
-import XMarkOutline from '../ui/icons/XMarkOutline.jsx';
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
@@ -21,7 +21,7 @@ const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
-  const {amount,date, _id}=data
+  const { amount, date, _id } = data;
   const time = dayjs(date).format("HH:mm");
   const day = dayjs(date).format("YYYY-MM-DD");
 
@@ -29,12 +29,14 @@ const EditListModal = () => {
     dispatch(closeEditModal());
   }, [dispatch]);
 
-
   const handleSubmit = (values) => {
-     const data= {_id:_id,amount:values.amount,date:dayjs(`${day} ${values.time}`).toISOString()}
-    dispatch(editWaterToday(data))
+    const data = {
+      _id: _id,
+      amount: values.amount,
+      date: dayjs(`${day} ${values.time}`).toISOString(),
+    };
+    dispatch(editWaterToday(data));
     handelCloseModal();
- 
   };
 
   const handleKeyDown = useCallback(
@@ -73,7 +75,7 @@ const EditListModal = () => {
                 onClick={handelCloseModal}
                 aria-label="Close"
               >
-                <XMarkOutline className={css.modalCloseIcon} />
+                <XMarkOutline size={24} />
               </button>
             </div>
           </div>
@@ -107,10 +109,7 @@ const EditListModal = () => {
                       className={css.buttonWater}
                       type="button"
                       onClick={() =>
-                        setFieldValue(
-                          "amount",
-                          Math.max(0, values.amount - 50)
-                        )
+                        setFieldValue("amount", Math.max(0, values.amount - 50))
                       }
                     >
                       <MinusSmall />
@@ -164,9 +163,7 @@ const EditListModal = () => {
                 </div>
 
                 <div className={css.formFooter}>
-                  <span className={css.totalWater}>
-                    {values.amount} ml
-                  </span>
+                  <span className={css.totalWater}>{values.amount} ml</span>
                   <Button type="submit">Save</Button>
                 </div>
               </Form>
@@ -179,4 +176,3 @@ const EditListModal = () => {
 };
 
 export default EditListModal;
-
