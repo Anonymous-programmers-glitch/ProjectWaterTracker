@@ -111,16 +111,6 @@ export default function SignInForm() {
               />
             </div>
             <Button cssstyle="signin">Sign In</Button>
-            <Button
-              cssstyle="signin"
-              onClick={() => {
-                dispatch(
-                  requestResetToken({ email: "baracuda20162016@gmail.com" })
-                );
-              }}
-            >
-              RedetPassword
-            </Button>
             <NavLink to="/forgotpassword" className={css.link}>
               <p>Forgot password?</p>
             </NavLink>

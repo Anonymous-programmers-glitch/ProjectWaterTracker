@@ -18,10 +18,12 @@ const initialState = {
   isRefreshing: false,
   isLoading: false,
   error: null,
+  isEdit: false,
 };
 
 const handlePending = (state) => {
   state.isLoading = true;
+  state.isEdit = false;
   state.error = null;
 };
 
@@ -69,6 +71,7 @@ const slice = createSlice({
     builder.addCase(update.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
+      state.isEdit = true;
       state.user = {
         ...state.user,
         ...action.payload.user,
@@ -78,7 +81,7 @@ const slice = createSlice({
     builder
       .addCase(updateAvatar.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.avatarUrl = action.payload.avatarUrl;
+        state.user.avatarUrl = action.payload;
       })
 
       // builder
