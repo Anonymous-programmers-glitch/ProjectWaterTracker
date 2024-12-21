@@ -1,6 +1,6 @@
-import { Form, Formik, ErrorMessage, Field } from "formik";
+import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
 // import user from "../../testUser.json";
@@ -8,7 +8,7 @@ import Button from "../ui/Button/Button.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { useState, useEffect, useCallback } from "react";
-import { selectAvatarUrl, selectUser } from "../../redux/user/selectors.js";
+import { selectUser } from "../../redux/user/selectors.js";
 import { useSelector } from "react-redux";
 // import { updateUser } from "../../redux/settings/operations.js";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
@@ -175,15 +175,20 @@ export default function SettingModal() {
         await dispatch(update(otherPayload));
       }
 
-      dispatch(closeSettingModal());
+      // alert("Успішна операція!");
+      toast.success("Успішна операція!", {
+        autoClose: 3000,
+      });
 
-      alert("Успішна операція!");
-      // toast.success("Успішна операція!", {
-      //   autoClose: 3000,
-      // });
+      // dispatch(closeSettingModal());
+      setTimeout(() => {
+        dispatch(closeSettingModal());
+      }, 3000);
     } catch (error) {
-      alert("Щось пішло не так: " + error.message);
-      // toast.error("Щось пішло не так: " + error.message, { autoClose: 2000 });
+      // alert("Щось пішло не так: " + error.message);
+      toast.error("Щось пішло не так: " + error.message, { autoClose: 2000 });
+
+      console.error(error);
     }
 
     actions.resetForm();
@@ -328,17 +333,29 @@ export default function SettingModal() {
                   </div>
 
                   <div className={css.userInfo}>
-                    <label className={css.labelUserName}>
+                    <label className={css.labelUserName} htmlFor="name">
                       Name
-                      <Inputs type="text" name="name" placeholder="Name">
+                      <Inputs
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        id="name"
+                        className={css.nameAndEmailInput}
+                      >
                         {value.name}
                       </Inputs>
-                      <ErrorMessage name="name" component="span" />
+                      {/* <ErrorMessage name="name" component="span" /> */}
                     </label>
 
-                    <label className={css.labelUser}>
+                    <label className={css.labelUser} htmlFor="email">
                       Email
-                      <Inputs type="email" name="email" placeholder="Email">
+                      <Inputs
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        id="email"
+                        className={css.nameAndEmailInput}
+                      >
                         {value.email}
                       </Inputs>
                       {/* <ErrorMessage name="email" component="span" /> */}
@@ -347,14 +364,19 @@ export default function SettingModal() {
                 </div>
 
                 <div className={css.passwordWrapper}>
-                  <h3>Password</h3>
-                  <label className={css.labelPassword}>
+                  <h3 className={css.passwordTittle}>Password</h3>
+                  <label
+                    className={css.labelPassword}
+                    htmlFor="outdatedPassword"
+                  >
                     Outdated password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
                       // name="outdatedPassword"
                       name="outdatedPassword"
                       placeholder="Password"
+                      id="outdatedPassword"
+                      className={css.input}
                     />
                     {openPassword ? (
                       <div className={css.eyeIcon} onClick={handleOpenPassword}>
@@ -365,15 +387,17 @@ export default function SettingModal() {
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
-                    <ErrorMessage name="outdatedPassword" component="span" />
+                    {/* <ErrorMessage name="outdatedPassword" component="span" /> */}
                   </label>
 
-                  <label className={css.labelPassword}>
+                  <label className={css.labelPassword} htmlFor="newPassword">
                     New password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
                       name="newPassword"
                       placeholder="Password"
+                      id="newPassword"
+                      className={css.input}
                     />
                     {openPassword ? (
                       <div className={css.eyeIcon} onClick={handleOpenPassword}>
@@ -384,15 +408,20 @@ export default function SettingModal() {
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
-                    <ErrorMessage name="newPassword" component="span" />
+                    {/* <ErrorMessage name="newPassword" component="span" /> */}
                   </label>
 
-                  <label className={css.labelPassword}>
+                  <label
+                    className={css.labelPassword}
+                    htmlFor="repeatNewPassword"
+                  >
                     Repeat new password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
                       name="repeatNewPassword"
                       placeholder="Password"
+                      id="repeatNewPassword"
+                      className={css.input}
                     />
                     {openPassword ? (
                       <div className={css.eyeIcon} onClick={handleOpenPassword}>
@@ -403,7 +432,7 @@ export default function SettingModal() {
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
-                    <ErrorMessage name="repeatNewPassword" component="span" />
+                    {/* <ErrorMessage name="repeatNewPassword" component="span" /> */}
                   </label>
                 </div>
               </div>
@@ -413,12 +442,13 @@ export default function SettingModal() {
                   cssstyle={css.btn}
                   // onClick={handleSubmit}
                 >
-                  Submit
+                  Save
                 </Button>
               </div>
             </div>
           </Form>
         </Formik>
+        <Toaster />
       </div>
     </ModalBackdrop>
   );
