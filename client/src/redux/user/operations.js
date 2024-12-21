@@ -164,7 +164,7 @@ export const updateAvatar = createAsyncThunk(
 //   async (payload, thunkAPI) => {
 //     try {
 //       const response = await axios.post("/auth/reset-pwd", payload);
-//       return response.data.massage;
+//       return response.data.message;
 //     } catch (error) {
 //       return thunkAPI.rejectWithValue(error.message);
 //     }
