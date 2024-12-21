@@ -1,6 +1,7 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
+import * as Yup from "yup"; 
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectEditData,
@@ -11,7 +12,7 @@ import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import Button from "../ui/Button/Button.jsx";
 import MinusSmall from "../ui/icons/MinusSmall.jsx";
 import PlusSmall from "../ui/icons/PlusSmall.jsx";
-import XMarkOutline from '../ui/icons/XMarkOutline.jsx';
+import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
@@ -21,7 +22,7 @@ const EditListModal = () => {
   const dispatch = useDispatch();
   const isOpenModal = useSelector(selectEditModal);
   const data = useSelector(selectEditData);
-  const {amount,date, _id}=data
+  const { amount, date, _id } = data;
   const time = dayjs(date).format("HH:mm");
   const day = dayjs(date).format("YYYY-MM-DD");
 
@@ -29,12 +30,14 @@ const EditListModal = () => {
     dispatch(closeEditModal());
   }, [dispatch]);
 
-
   const handleSubmit = (values) => {
-     const data= {_id:_id,amount:values.amount,date:dayjs(`${day} ${values.time}`).toISOString()}
-    dispatch(editWaterToday(data))
+    const data = {
+      _id: _id,
+      amount: values.amount,
+      date: dayjs(`${day} ${values.time}`).toISOString(),
+    };
+    dispatch(editWaterToday(data));
     handelCloseModal();
- 
   };
 
   const handleKeyDown = useCallback(
@@ -54,6 +57,13 @@ const EditListModal = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpenModal, handleKeyDown]);
+
+  const validationSchema = Yup.object().shape({
+    amount: Yup.number()
+      .min(50, "Minimum water amount is 50 ml")
+      .max(5000, "Maximum water amount is 5000 ml")
+      .required("This field is required"),
+  });
 
   return (
     isOpenModal && (
@@ -92,9 +102,10 @@ const EditListModal = () => {
               time: time || "00:00",
             }}
             enableReinitialize
+            validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue }) => (
+            {({ values, setFieldValue, errors, touched }) => (
               <Form className={css.form}>
                 <div className={css.formGroup}>
                   <p>Correct entered data:</p>
@@ -127,6 +138,9 @@ const EditListModal = () => {
                       <PlusSmall />
                     </button>
                   </div>
+                  {errors.amount && touched.amount && (
+                    <div className={css.error}>{errors.amount}</div>
+                  )}
                 </div>
 
                 <div className={css.formGroupTime}>
@@ -179,4 +193,3 @@ const EditListModal = () => {
 };
 
 export default EditListModal;
-
