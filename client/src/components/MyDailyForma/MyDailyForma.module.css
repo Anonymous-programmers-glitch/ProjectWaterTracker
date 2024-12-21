@@ -140,3 +140,10 @@
     width: 544px;
   }
 }
+.error {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--secondary-color-3);
+  margin-top: 4px;
+}
