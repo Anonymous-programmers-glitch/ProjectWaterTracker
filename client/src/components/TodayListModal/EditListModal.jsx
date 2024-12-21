@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
+import * as Yup from "yup"; 
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectEditData,
@@ -57,6 +58,13 @@ const EditListModal = () => {
     };
   }, [isOpenModal, handleKeyDown]);
 
+  const validationSchema = Yup.object().shape({
+    amount: Yup.number()
+      .min(50, "Minimum water amount is 50 ml")
+      .max(5000, "Maximum water amount is 5000 ml")
+      .required("This field is required"),
+  });
+
   return (
     isOpenModal && (
       <ModalBackdrop
@@ -92,9 +100,10 @@ const EditListModal = () => {
               time: time || "00:00",
             }}
             enableReinitialize
+            validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, setFieldValue }) => (
+            {({ values, setFieldValue, errors, touched }) => (
               <Form className={css.form}>
                 <div className={css.formGroupWater}>
                   <p className={css.text}>Correct entered data:</p>
@@ -122,6 +131,9 @@ const EditListModal = () => {
                       <PlusSmall size={24} />
                     </button>
                   </div>
+                  {errors.amount && touched.amount && (
+                    <div className={css.error}>{errors.amount}</div>
+                  )}
                 </div>
 
                 <div className={css.formGroupTime}>

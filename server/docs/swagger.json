@@ -876,6 +876,7 @@
                       "type": "object",
                       "required": [
                         "waterRecords",
+                        "currentDailyNorma",
                         "recordsCount",
                         "totalDayWater",
                         "percentage"
@@ -889,8 +890,7 @@
                               "_id",
                               "userId",
                               "date",
-                              "amount",
-                              "currentDailyNorm"
+                              "amount"
                             ],
                             "properties": {
                               "_id": {
@@ -913,14 +913,21 @@
                                 "type": "number",
                                 "description": "The amount of waterToday consumed (in milliliters).",
                                 "example": 300
+
                               },
                               "currentDailyNorm": {
                                 "type": "number",
                                 "description": "The current daily waterToday consumption norm for the user (in milliliters).",
                                 "example": 2000
+
                               }
                             }
                           }
+                        },
+                        "currentDailyNorma": {
+                          "type": "integer",
+                          "description": "The user's daily water consumption goal (in milliliters).",
+                          "example": 2000
                         },
                         "recordsCount": {
                           "type": "integer",
@@ -1030,8 +1037,7 @@
                         "_id",
                         "userId",
                         "date",
-                        "amount",
-                        "currentDailyNorm"
+                        "amount"
                       ],
                       "properties": {
                         "_id": {
@@ -1054,11 +1060,13 @@
                           "type": "number",
                           "description": "The amount of waterToday consumed (in milliliters).",
                           "example": 250
+
                         },
                         "currentDailyNorm": {
                           "type": "number",
                           "description": "The current daily waterToday consumption norm for the user (in milliliters).",
                           "example": 2000
+
                         }
                       }
                     }
@@ -1157,8 +1165,7 @@
                         "_id",
                         "userId",
                         "date",
-                        "amount",
-                        "currentDailyNorm"
+                        "amount"
                       ],
                       "properties": {
                         "_id": {
@@ -1181,11 +1188,13 @@
                           "type": "number",
                           "description": "The updated amount of waterToday consumed (in milliliters).",
                           "example": 300
+
                         },
                         "currentDailyNorm": {
                           "type": "number",
                           "description": "The current daily waterToday consumption norm for the user (in milliliters).",
                           "example": 2000
+
                         }
                       }
                     }
@@ -1242,7 +1251,8 @@
                   "type": "object",
                   "required": [
                     "status",
-                    "message"
+                    "message",
+                    "_id"
                   ],
                   "properties": {
                     "status": {
@@ -1252,6 +1262,12 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully deleted the waterToday record."
+
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "64f5b992c4b3f1567e63a179"
+
                     }
                   }
                 }

@@ -23,6 +23,7 @@ responses:
           required:
             - status
             - message
+            - _id
           properties:
             status:
               type: integer
@@ -30,6 +31,9 @@ responses:
             message:
               type: string
               example: Successfully deleted the waterToday record.
+            _id:
+              type: string
+              example: '64f5b992c4b3f1567e63a179'
   '400':
     $ref: ../../../components/responses/400.yaml
   '401':
