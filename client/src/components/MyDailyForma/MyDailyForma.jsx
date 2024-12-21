@@ -10,6 +10,7 @@ import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { closeDailyNormaModal } from "../../redux/modalToggle/slice.js";
 import { update } from "../../redux/user/operations.js";
 import { putHistory } from "../../redux/updateHistori/operations.js";
+import Inputs from "../ui/Inputs/Inputs.jsx";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -37,14 +38,12 @@ const MyDailyNorma = () => {
     return (weight * weightFactor + hours * activityFactor).toFixed(2);
   };
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = (values, actions) => {
     try {
       const myDailyNorma = values.waterYouDrink * 1000;
       const currentDate = new Date().toISOString();
-      await dispatch(update({ dailyNorma: myDailyNorma }));
-      await dispatch(
-        putHistory({ date: currentDate, dailyNorma: myDailyNorma })
-      );
+      dispatch(update({ dailyNorma: myDailyNorma }));
+      dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
       toast.success("Your daily norma has been successfully updated!");
       actions.resetForm();
       handleCloseModal();
@@ -85,7 +84,7 @@ const MyDailyNorma = () => {
                     </div>
                     <div className={css.cover}>
                       <p className={css.for}>
-                        For girl:{" "}
+                        For woman:{" "}
                         <span className={css.formula}>
                           V=(M*0,03) + (T*0,4)
                         </span>{" "}
@@ -112,7 +111,7 @@ const MyDailyNorma = () => {
                         className={css.error}
                         name="option"
                       />
-                      <span className={css.span}>For girl</span>
+                      <span className={css.span}>For woman</span>
                     </label>
 
                     <label className={css.labels}>
@@ -126,40 +125,22 @@ const MyDailyNorma = () => {
                     </label>
 
                     <p className={css.text}>Your weight in kilograms:</p>
-                    <Field
-                      className={`${css.modalInput} ${
-                        errors.weightInKg ? css.modalInputError : ""
-                      }`}
+                    <Inputs
                       type="number"
+                      className={`${css.field} ${css.inputs}`}
                       name="weightInKg"
                       placeholder="0"
-                      min="0"
-                      max="200"
-                    />
-                    <ErrorMessage
-                      name="weightInKg"
-                      component="span"
-                      className={css.error}
                     />
 
                     <p className={css.text}>
                       The time of active participation in sports or other
                       activities with a high physical. load in hours:
                     </p>
-                    <Field
-                      className={`${css.modalInput} ${
-                        errors.loadInHours ? css.modalInputError : ""
-                      }`}
+                    <Inputs
                       type="number"
+                      className={`${css.field} ${css.inputs}`}
                       name="loadInHours"
                       placeholder="0"
-                      min="0"
-                      max="24"
-                    />
-                    <ErrorMessage
-                      name="loadInHours"
-                      component="span"
-                      className={css.error}
                     />
 
                     <p className={css.text}>
@@ -177,22 +158,13 @@ const MyDailyNorma = () => {
                       </span>
                     </p>
 
-                    <Field
-                      className={`${css.modalInput} ${
-                        errors.waterYouDrink ? css.modalInputError : ""
-                      }`}
+                    <Inputs
                       type="number"
+                      className={`${css.field} ${css.inputs}`}
                       name="waterYouDrink"
                       placeholder="0"
-                      min="0"
-                      max="5"
                     />
 
-                    <ErrorMessage
-                      name="waterYouDrink"
-                      component="span"
-                      className={css.error}
-                    />
                     <div className={css.btn}>
                       {/* <button
                         onClick={notify}
@@ -201,7 +173,7 @@ const MyDailyNorma = () => {
                       >
                         Save
                       </button> */}
-                      <Button cssstyle={css.cssstyleBtn}>Save</Button>
+                      <Button type="submit" cssstyle={css.cssstyleBtn}>Save</Button>
 
                       {/* <div className={css.cssstyle}>
                           <Button cssstyle={css.cssstyle} type="submit">Save</Button>

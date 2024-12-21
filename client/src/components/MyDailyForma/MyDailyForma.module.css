@@ -16,6 +16,12 @@
 
     }
     
+    .inputs{
+        width: 544px;
+        height: 44px;
+    }
+
+
     .text1{
         font-size: 26px;
     }
