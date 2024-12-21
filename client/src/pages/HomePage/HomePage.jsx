@@ -71,9 +71,9 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange percentage={percentage} />
-          <Button onClick={handleAdd}>
+          <Button onClick={handleAdd} cssstyle="addwater" >
             <div className={css.btn}>
-              <PlusCircleOutline />
+              <PlusCircleOutline/>
               <p>Add Water</p>
             </div>
           </Button>
@@ -91,7 +91,8 @@ function HomePage() {
         ) : (
           <h2 className={css.list}>No notes yet</h2>
         )}
-        <TextButton onClick={handleAdd}>Add water</TextButton>
+
+        <TextButton onClick={handleAdd} clas={css.textaddbtn}>+ Add water</TextButton>
         <div className={css.month}>
           <h2 className={css.titlemonth}>Month</h2>
           <DatePicker />

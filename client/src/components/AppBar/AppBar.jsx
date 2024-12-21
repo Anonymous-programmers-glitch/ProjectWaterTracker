@@ -5,12 +5,33 @@ import UserAuth from "../UserAuth/UserAuth";
 import css from "./AppBar.module.css";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/user/selectors.js";
+import React, { useState, useEffect } from "react";
 
 const AppBar = () => {
+
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+        window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+
+
   return (
-    <header className={css.header}>
+    <header className={`${css.header} ${scrolled ? css.scrolled : ''}`}>
       <div className={css.container}>
         <Logo />
         <ThemeSwitcher />

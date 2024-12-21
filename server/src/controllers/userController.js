@@ -43,6 +43,7 @@ export const updateUserController = async (req, res, next) => {
 };
 
 export const updateUserAvatarController = async (req, res, next) => {
+  const { _id } = req.user;
   const photo = req.file;
 
   if (!photo) {
@@ -50,8 +51,6 @@ export const updateUserAvatarController = async (req, res, next) => {
   }
 
   const avatarUrl = await saveFileToCloudinary(photo);
-
-  const { _id } = req.user;
 
   const updatedUser = await updateUserAvatarUrl({ _id, avatarUrl });
 
@@ -62,8 +61,6 @@ export const updateUserAvatarController = async (req, res, next) => {
   res.json({
     status: 200,
     message: 'Successfully updated user avatar',
-    data: {
-      avatarUrl: updatedUser.avatarUrl,
-    },
+    data: updatedUser.avatarUrl,
   });
 };
