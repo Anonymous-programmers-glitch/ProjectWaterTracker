@@ -1,6 +1,6 @@
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
 // import user from "../../testUser.json";
@@ -8,7 +8,7 @@ import Button from "../ui/Button/Button.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { useState, useEffect, useCallback } from "react";
-import { selectAvatarUrl, selectUser } from "../../redux/user/selectors.js";
+import { selectUser } from "../../redux/user/selectors.js";
 import { useSelector } from "react-redux";
 // import { updateUser } from "../../redux/settings/operations.js";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
@@ -177,13 +177,13 @@ export default function SettingModal() {
 
       dispatch(closeSettingModal());
 
-      alert("Успішна операція!");
-      // toast.success("Успішна операція!", {
-      //   autoClose: 3000,
-      // });
+      // alert("Успішна операція!");
+      toast.success("Успішна операція!", {
+        autoClose: 3000,
+      });
     } catch (error) {
-      alert("Щось пішло не так: " + error.message);
-      // toast.error("Щось пішло не так: " + error.message, { autoClose: 2000 });
+      // alert("Щось пішло не так: " + error.message);
+      toast.error("Щось пішло не так: " + error.message, { autoClose: 2000 });
     }
 
     actions.resetForm();
@@ -347,7 +347,7 @@ export default function SettingModal() {
                 </div>
 
                 <div className={css.passwordWrapper}>
-                  <h3>Password</h3>
+                  <h3 className={css.passwordTitle}>Password</h3>
                   <label className={css.labelPassword}>
                     Outdated password:
                     <Inputs
@@ -413,12 +413,13 @@ export default function SettingModal() {
                   cssstyle={css.btn}
                   // onClick={handleSubmit}
                 >
-                  Submit
+                  Save
                 </Button>
               </div>
             </div>
           </Form>
         </Formik>
+        <Toaster />
       </div>
     </ModalBackdrop>
   );
