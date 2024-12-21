@@ -573,7 +573,7 @@
         ],
         "summary": "Get current user",
         "description": "Retrieve the details of the currently authenticated user.",
-        "operationId": "currentUser",
+        "operationId": "getCurrentUser",
         "security": [
           {
             "bearerAuth": []
