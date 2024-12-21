@@ -3,11 +3,13 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    padding: 0 20px;
 }
 
 .monthyear {
     font-size: 18px;
-    color: blue;
+    color: var(--primery-color-blue);
+
 }
 
 .but {
@@ -15,6 +17,7 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
+    color: var(--primery-color-blue);
 }
 
 but:focus {
