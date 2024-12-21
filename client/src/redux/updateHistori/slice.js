@@ -13,11 +13,11 @@ function handleRejected(state, action) {
 const slice = createSlice({
   name: "history",
   initialState: {
-    items:{
-      date:"",
-      norma:""
+    items: {
+      date: "",
+      dailyNorma: "",
     },
-    loading: false,
+    isLoading: false,
     error: null,
   },
 
@@ -25,7 +25,7 @@ const slice = createSlice({
     builder
       .addCase(putHistory.pending, handlePending)
       .addCase(putHistory.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         state.items = action.payload;
       })
