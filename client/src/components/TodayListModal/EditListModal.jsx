@@ -162,7 +162,7 @@ const EditListModal = () => {
                     className={css.field}
                     type="number"
                     name="manualAmount"
-                    placeholder="Введите количество"
+                    placeholder="Enter amount"
                     step="50"
                     min="0"
                     value={values.manualAmount}
