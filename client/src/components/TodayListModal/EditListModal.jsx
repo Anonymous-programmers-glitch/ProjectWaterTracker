@@ -67,17 +67,15 @@ const EditListModal = () => {
         }}
       >
         <div className={css.modal}>
-          <div className={css.modalHeaderWrapper}>
-            <div className={css.modalHeader}>
-              <h2>Edit the entered amount of water</h2>
-              <button
-                className={css.modalClose}
-                onClick={handelCloseModal}
-                aria-label="Close"
-              >
-                <XMarkOutline size={24} />
-              </button>
-            </div>
+          <div className={css.modalHeader}>
+            <h2>Edit the entered amount of water</h2>
+            <button
+              className={css.modalClose}
+              onClick={handelCloseModal}
+              aria-label="Close"
+            >
+              <XMarkOutline size={24} />
+            </button>
           </div>
 
           <div className={css.editInfo}>
@@ -98,12 +96,9 @@ const EditListModal = () => {
           >
             {({ values, setFieldValue }) => (
               <Form className={css.form}>
-                <div className={css.formGroup}>
-                  <p>Correct entered data:</p>
-                </div>
-
                 <div className={css.formGroupWater}>
-                  <label className={css.label}>Amount of water:</label>
+                  <p className={css.text}>Correct entered data:</p>
+                  <label className={css.labelWater}>Amount of water:</label>
                   <div className={css.amountButtons}>
                     <button
                       className={css.buttonWater}
@@ -112,28 +107,29 @@ const EditListModal = () => {
                         setFieldValue("amount", Math.max(0, values.amount - 50))
                       }
                     >
-                      <MinusSmall />
+                      <MinusSmall size={24} />
                     </button>
                     <span className={css.amountTotalWater}>
                       {values.amount} ml
                     </span>
                     <button
+                      className={css.buttonWater}
                       type="button"
                       onClick={() =>
                         setFieldValue("amount", values.amount + 50)
                       }
                     >
-                      <PlusSmall />
+                      <PlusSmall size={24} />
                     </button>
                   </div>
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="time" className={css.label}>
+                  <label htmlFor="time" className={css.labelWater}>
                     Recording time:
                   </label>
                   <Inputs
-                    className={css.customField}
+                    className={css.field}
                     type="time"
                     name="time"
                     placeholder="HH:mm"
@@ -145,11 +141,11 @@ const EditListModal = () => {
                 </div>
 
                 <div className={css.formGroupTime}>
-                  <label htmlFor="amount" className={css.labelWater}>
+                  <label htmlFor="amount" className={css.label}>
                     Enter the value of the water used:
                   </label>
                   <Inputs
-                    className={css.customField}
+                    className={css.field}
                     type="number"
                     name="amount"
                     placeholder="Enter amount"
@@ -164,7 +160,9 @@ const EditListModal = () => {
 
                 <div className={css.formFooter}>
                   <span className={css.totalWater}>{values.amount} ml</span>
-                  <Button type="submit">Save</Button>
+                  <Button cssstyle="save" type="submit">
+                    Save
+                  </Button>
                 </div>
               </Form>
             )}
