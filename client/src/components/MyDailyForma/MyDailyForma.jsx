@@ -37,14 +37,12 @@ const MyDailyNorma = () => {
     return (weight * weightFactor + hours * activityFactor).toFixed(2);
   };
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = (values, actions) => {
     try {
       const myDailyNorma = values.waterYouDrink * 1000;
       const currentDate = new Date().toISOString();
-      await dispatch(update({ dailyNorma: myDailyNorma }));
-      await dispatch(
-        putHistory({ date: currentDate, dailyNorma: myDailyNorma })
-      );
+      dispatch(update({ dailyNorma: myDailyNorma }));
+      dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
       toast.success("Your daily norma has been successfully updated!");
       actions.resetForm();
       handleCloseModal();
