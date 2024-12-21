@@ -92,7 +92,7 @@ function HomePage() {
           <h2 className={css.list}>No notes yet</h2>
         )}
 
-        <TextButton onClick={handleAdd}>Add water</TextButton>
+        <TextButton onClick={handleAdd} clas={css.textaddbtn}>+ Add water</TextButton>
         <div className={css.month}>
           <h2 className={css.titlemonth}>Month</h2>
           <DatePicker />
