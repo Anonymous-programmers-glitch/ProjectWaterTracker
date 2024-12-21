@@ -11,8 +11,6 @@ tags:
     description: Auth operations.
   - name: User
     description: User operations.
-  - name: Water
-    description: Water operations.
 servers:
   - url: https://projectwatertrackerteam4.onrender.com
 paths:
