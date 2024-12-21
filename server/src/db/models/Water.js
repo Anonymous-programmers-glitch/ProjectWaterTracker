@@ -10,6 +10,8 @@ const waterSchema = new Schema(
     },
     amount: {
       type: Number,
+      min: 1,
+      max: 5000,
       required: true,
     },
     userId: {
