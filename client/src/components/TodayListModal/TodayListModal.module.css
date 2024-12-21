@@ -1,7 +1,7 @@
 /* Modal Styles */
 .modal {
   border-radius: 10px;
-  background: #fff;
+  background: var( --primery-color-white);
   padding: 24px 12px;
   min-width: 160px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
   font-weight: 500;
   font-size: 26px;
   line-height: 1.2;
-  color: #2f2f2f;
+  color: var(--primery-color-black);
   margin: 0;
 }
 
@@ -51,7 +51,7 @@
   width: 24px;
   height: 24px;
   fill: var(--primery-color-white);
-  stroke: rgb(64, 123, 255);
+  stroke: var( --primery-color-blue);
   border-radius: 50%;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -129,10 +129,10 @@
   width: 44px;
   height: 44px;
   border-radius: 30px;
-  border: 1px solid rgb(64, 123, 255);
-  background-color: rgb(255, 255, 255);
-  color: rgb(64, 123, 255);
-  fill: rgb(64, 123, 255);
+  border: 1px solid var( --primery-color-blue);
+  background-color: var(--primery-color-white);
+  color: var( --primery-color-blue);
+  fill: var( --primery-color-blue);
   box-shadow: rgba(64, 123, 255, 0.2) 0px 2px 4px;
 }
 
@@ -146,8 +146,8 @@
   width: 92px;
   height: 36px;
   border-radius: 40px;
-  color: rgb(64, 123, 255);
-  background-color: rgb(215, 227, 255);
+  color: var(--primery-color-blue);
+  background-color: var(--primery-color-white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,14 +157,14 @@
 /* Submit Button */
 button[type="submit"] {
   align-self: center;
-  color: white;
+  color: var(--primery-color-white);
   border: none;
   border-radius: 10px;
   padding: 10px 30px;
   width: 100%;
   height: 44px;
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
-  background: #407bff;
+  background: var(--primery-color-blue);
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
@@ -181,11 +181,11 @@ button[type="submit"]:active {
 
 /* Custom Input Styles */
 .customField {
-  border: 1px solid #407bff;
+  border: 1px solid var(--primery-color-blue);
   border-radius: 6px;
   padding: 12px 10px;
   font-size: 16px;
-  color: #407bff;
+  color: var(--primery-color-blue);
   outline: none;
   transition: border-color 0.3s ease;
   width: 100%; 
@@ -203,7 +203,7 @@ button[type="submit"]:active {
 }
 
 .customField[type="time"] {
-  color: #407bff;
+  color: var(--primery-color-blue);
 }
 
 
@@ -221,7 +221,7 @@ button[type="submit"]:active {
   font-size: 18px;
   line-height: 1.33;
   text-align: center;
-  color: #407bff;
+  color: var(--primery-color-blue);
   display: inline-block;
   align-items: center;
 }
@@ -243,7 +243,7 @@ button[type="submit"]:active {
 }
 
 .editInfo strong {
-  color: #407bff;
+  color: var(--primery-color-blue);
   font-size: 18px;
   font-weight: 400;
 }
@@ -253,13 +253,13 @@ button[type="submit"]:active {
 }
 
 .glassOfWater {
-  fill: #407bff;
+  fill: var(--primery-color-blue);
   width: 36px;
   height: 36px;
 }
 
 .watericon {
-  fill: #407bff;
+  fill: var(--primery-color-blue);
   width: 36px;
   height: 36px;
 }
@@ -285,7 +285,7 @@ button[type="submit"]:active {
   }
 
   .customField {
-    border: 1px solid #d7e3ff;
+    border: 1px solid var(--secondary-color---5);
     border-radius: 6px;
     width: 544px;
     height: 44px;

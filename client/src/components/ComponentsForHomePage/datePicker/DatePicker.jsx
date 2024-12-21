@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import dayjs from "dayjs";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeMonthSelector,
   nextMonth,
   prevMonth,
-} from "../../../redux/changeMonth/changeMonth.js";
+} from "../../../redux/changeMonth/changeMonthSlice.js";
 import css from "./datePicker.module.css";
 
 function DatePicker() {
   const month = useSelector(changeMonthSelector);
   const dispatch = useDispatch();
+  const currentMonth = dayjs(new Date().toISOString()).format("MM");
+  const isNextMonth = dayjs(new Date(month ).toISOString()).format("MM") === currentMonth ? false : true;
+
 
   const handlePrevMonth = () => {
     dispatch(prevMonth());
@@ -32,9 +36,9 @@ function DatePicker() {
         &lt;
       </button>
       <span className={css.monthyear}>{getMonthYear(month)}</span>
-      <button className={css.but} onClick={handleNextMonth}>
+      {isNextMonth && <button className={css.but} onClick={handleNextMonth}>
         &gt;
-      </button>
+      </button>}
     </div>
   );
 }

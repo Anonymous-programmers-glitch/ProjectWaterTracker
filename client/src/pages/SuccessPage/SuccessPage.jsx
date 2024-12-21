@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import css from "./SuccessPage.module.css";
 
 const SuccessPage = () => {
   const navigate = useNavigate();
@@ -13,9 +14,12 @@ const SuccessPage = () => {
   }, [navigate]);
 
   return (
-    <div className="success-page">
-      <h1>Verification successful!</h1>
-      <p>In a few seconds you will be redirected to the login page...</p>
+    <div className={css.container}>
+      <div className={css.background}></div>
+      <h1 className={css.title}>Verification successful!</h1>
+      <p className={css.text}>
+        In a few seconds you will be redirected to the login page...
+      </p>
     </div>
   );
 };

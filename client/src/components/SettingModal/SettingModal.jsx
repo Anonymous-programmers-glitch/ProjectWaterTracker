@@ -15,10 +15,9 @@ import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import EyeOutline from "../../components/ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
 import ArrowUpTrayOutline from "../ui/icons/ArrowUpTrayOutline.jsx";
-import { closeSettingModal } from "../../redux/modal/slice.js";
-import { selectSettingModal } from "../../redux/modal/selectors.js";
-import { update } from "../../redux/user/operations.js";
-import { updateUserPhoto } from "../../redux/settings/operations.js";
+import { closeSettingModal } from "../../redux/modalToggle/slice.js";
+import { selectSettingModal } from "../../redux/modalToggle/selectors.js";
+import { update, updateAvatar } from "../../redux/user/operations.js";
 // import isLoading from "../../redux/user/selectors.js";
 
 const FeedbackSchema = Yup.object().shape({
@@ -71,10 +70,6 @@ export default function SettingModal() {
   // const [preview, setPreview] = useState(user?.avatarUrl || null);
   //
   const value = useSelector(selectUser);
-  const avatar = useSelector(selectAvatarUrl);
-  console.log(value.avatarUrl);
-
-  console.log(avatar);
 
   const [openPassword, setOpenPassword] = useState(false);
   const isSettingsOpen = useSelector(selectSettingModal);
@@ -215,59 +210,23 @@ export default function SettingModal() {
 
   const handleButtonClick = () => {
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append("avatarUrl", selectedFile);
-      dispatch(updateUserPhoto(formData));
-      setSelectedFile(null);
+      try {
+        const formData = new FormData();
+        formData.append("avatarUrl", selectedFile);
+        dispatch(updateAvatar(formData));
+      } catch (error) {
+        console.error("Failed to upload avatar:", error);
+      } finally {
+        setSelectedFile(null);
+      }
     } else {
       document.getElementById("avatarInput").click();
     }
   };
-  //
 
   return (
     <ModalBackdrop onClick={() => dispatch(closeSettingModal())}>
       <div className={css.container} onClick={(e) => e.stopPropagation()}>
-        <h3 className={css.photoTitle}>Your photo</h3>
-        <div className={css.imgWrapper}>
-          {selectedFile || value.avatarUrl ? (
-            <img
-              src={
-                selectedFile
-                  ? URL.createObjectURL(selectedFile)
-                  : value.avatarUrl
-              }
-              alt="User photo"
-              className={css.photo}
-            />
-          ) : (
-            <div className={css.spanValue}>
-              {(value.name || value.email[0]).charAt(0).toUpperCase()}
-            </div>
-          )}
-
-          <button
-            type="button"
-            className={css.buttonUpload}
-            onClick={handleButtonClick}
-            // onClick={() => document.getElementById("avatarInput").click()}
-          >
-            {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
-            <div className={css.uploadSvg}>
-              <ArrowUpTrayOutline size="16" />
-            </div>
-            Upload a photo
-            <input
-              id="avatarInput"
-              type="file"
-              name="avatar"
-              //
-              onChange={handleFileChange}
-              //
-              className={css.uploadPhotoInput}
-            />
-          </button>
-        </div>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -286,6 +245,47 @@ export default function SettingModal() {
                 onClick={() => dispatch(closeSettingModal())}
               >
                 <MarkOutline />
+              </div>
+
+              <h3 className={css.photoTitle}>Your photo</h3>
+              <div className={css.imgWrapper}>
+                {selectedFile || value.avatarUrl ? (
+                  <img
+                    src={
+                      selectedFile
+                        ? URL.createObjectURL(selectedFile)
+                        : value.avatarUrl
+                    }
+                    alt="User photo"
+                    className={css.photo}
+                  />
+                ) : (
+                  <div className={css.spanValue}>
+                    {(value.name || value.email[0]).charAt(0).toUpperCase()}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  className={css.buttonUpload}
+                  onClick={handleButtonClick}
+                  // onClick={() => document.getElementById("avatarInput").click()}
+                >
+                  {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
+                  <div className={css.uploadSvg}>
+                    <ArrowUpTrayOutline size="16" />
+                  </div>
+                  Upload a photo
+                  <input
+                    id="avatarInput"
+                    type="file"
+                    name="avatar"
+                    //
+                    onChange={handleFileChange}
+                    //
+                    className={css.uploadPhotoInput}
+                  />
+                </button>
               </div>
 
               <div className={css.wrapperTwoBlocks}>

@@ -3,14 +3,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setAuthHeader } from "../../api/operationsAPI.js";
 import { condition } from "../conditions.js";
 
-export const fetchWaterMonth = createAsyncThunk(
-  "month/fetchAllWaterMonth",
-  async (date, thunkAPI) => {
-    const { month, year } = date;
+export const putHistory = createAsyncThunk(
+  "history/userNormaHistory",
+  async (data, thunkAPI) => {
+    const {  date,
+      norma } = data;
     try {
       const reduxState = thunkAPI.getState();
       setAuthHeader(reduxState.user.accessToken);
-      const { data } = await axios.get(`/water/${month}/${year}`);
+      const { data } = await axios.put(`/`, { date, norma });
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

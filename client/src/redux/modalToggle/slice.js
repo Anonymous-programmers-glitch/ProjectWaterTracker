@@ -9,6 +9,7 @@ const modalSlice = createSlice({
     isAddModalOpen: false,
     isEditModalOpen: false,
     isDailyNormaModalOpen: false,
+    isDeleteModalOpen: false,
     editModalData: {
       amount: "",
       date: "",
@@ -23,6 +24,7 @@ const modalSlice = createSlice({
       state.isAddModalOpen = false;
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
+      state.isDeleteModalOpen = false;
     },
     closeLogoModal: (state) => {
       state.isLogoModalOpen = false;
@@ -35,6 +37,7 @@ const modalSlice = createSlice({
       state.isAddModalOpen = false;
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
+      state.isDeleteModalOpen = false;
     },
     closeSettingModal: (state) => {
       state.isSettingModalOpen = false;
@@ -47,6 +50,7 @@ const modalSlice = createSlice({
       state.isAddModalOpen = false;
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
+      state.isDeleteModalOpen = false;
     },
     closeLogoutModal: (state) => {
       state.isLogoutModalOpen = false;
@@ -59,6 +63,7 @@ const modalSlice = createSlice({
       state.isAddModalOpen = true;
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
+      state.isDeleteModalOpen = false;
     },
 
     closeAddModal: (state) => {
@@ -72,6 +77,7 @@ const modalSlice = createSlice({
       state.isAddModalOpen = false;
       state.isEditModalOpen = true;
       state.isDailyNormaModalOpen = false;
+      state.isDeleteModalOpen = false;
       state.editModalData = actions.payload || {
         amount: "",
         date: "",
@@ -94,9 +100,29 @@ const modalSlice = createSlice({
       state.isAddModalOpen = false;
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = true;
+      state.isDeleteModalOpen = false;
     },
     closeDailyNormaModal: (state) => {
       state.isDailyNormaModalOpen = false;
+    },
+
+    openDeleteModal: (state,action) => {
+      state.isLogoModalOpen = false;
+      state.isSettingModalOpen = false;
+      state.isLogoutModalOpen = false;
+      state.isAddModalOpen = false;
+      state.isEditModalOpen = false;
+      state.isDailyNormaModalOpen =false;
+      state.isDeleteModalOpen = true;
+      state.deleteModalData = action.payload ||{
+        id:""
+      }
+
+    },
+    closeDeleteModal: (state) => {
+      state.isDeleteModalOpen = false;
+      state.deleteModalData ={id:""}
+
     },
   },
 });
@@ -114,6 +140,9 @@ export const {
   closeEditModal,
   openDailyNormaModal,
   closeDailyNormaModal,
+  openDeleteModal,
+  closeDeleteModal
+
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

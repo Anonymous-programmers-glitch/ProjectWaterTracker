@@ -1,22 +1,24 @@
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DatePicker from "../../components/HomePage/datePicker/DatePicker.jsx";
-import WaterListIItemToday from "../../components/HomePage/waterListItemToday/WaterListIItemToday.jsx";
-import Bottle from "../../components/HomePage/bottle.jsx";
-import MyDailyCard from "../../components/HomePage/myDayliCard/MyDayliCard.jsx";
-import WaterListIItemMonth from "../../components/HomePage/waterListItemMonth/WaterListIItemMonth.jsx";
-import WaterListMonth from "../../components/HomePage/waterListMonth/WaterListMonth.jsx";
-import WaterListToday from "../../components/HomePage/waterListToday/WaterListToday.jsx";
-import WaterRange from "../../components/HomePage/waterRange/WaterRange.jsx";
+import DatePicker from "../../components/ComponentsForHomePage/datePicker/DatePicker.jsx";
+import WaterListIItemToday from "../../components/ComponentsForHomePage/waterListItemToday/WaterListIItemToday.jsx";
+import Bottle from "../../components/ComponentsForHomePage/bottle.jsx";
+import MyDailyCard from "../../components/ComponentsForHomePage/myDayliCard/MyDayliCard.jsx";
+import WaterListIItemMonth from "../../components/ComponentsForHomePage/waterListItemMonth/WaterListIItemMonth.jsx";
+import WaterListMonth from "../../components/ComponentsForHomePage/waterListMonth/WaterListMonth.jsx";
+import WaterListToday from "../../components/ComponentsForHomePage/waterListToday/WaterListToday.jsx";
+import WaterRange from "../../components/ComponentsForHomePage/waterRange/WaterRange.jsx";
+import DeleteWaterModal from '../../components/DeleteWaterModal/DeleteWaterModal.jsx';
 import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
 import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
-import { changeMonthSelector } from "../../redux/changeMonth/changeMonth.js";
-import { openAddModal } from "../../redux/modal/slice.js";
+import { changeMonthSelector } from "../../redux/changeMonth/changeMonthSlice.js";
+import { openAddModal } from "../../redux/modalToggle/slice.js";
+import { selectEditUser } from '../../redux/user/selectors.js';
 import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
 import { getIsWaterMonth } from "../../redux/waterMonth/selectors.js";
 import { fetchWaterToday } from "../../redux/waterToday/operations.js";
@@ -39,10 +41,11 @@ function HomePage() {
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
   const dataMonth = useSelector(getIsWaterMonth);
+  const userEdit=useSelector(selectEditUser)
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
-  }, [dispatch, waterRecords.length,isEdit]);
+  }, [dispatch, waterRecords.length,isEdit,userEdit]);
 
   useEffect(() => {
     const date = {
@@ -50,7 +53,7 @@ function HomePage() {
       year: dayjs(monthState).format("YYYY"),
     };
     dispatch(fetchWaterMonth(date));
-  }, [dispatch, monthState, waterRecords.length]);
+  }, [dispatch, monthState, waterRecords.length,isEdit,userEdit]);
 
   function handleAdd() {
     dispatch(openAddModal());
@@ -68,9 +71,9 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange percentage={percentage} />
-          <Button onClick={handleAdd}>
+          <Button onClick={handleAdd} cssstyle="addwater" >
             <div className={css.btn}>
-              <PlusCircleOutline />
+              <PlusCircleOutline/>
               <p>Add Water</p>
             </div>
           </Button>
@@ -88,7 +91,8 @@ function HomePage() {
         ) : (
           <h2 className={css.list}>No notes yet</h2>
         )}
-        <TextButton onClick={handleAdd}>Add water</TextButton>
+
+        <TextButton onClick={handleAdd} clas={css.textaddbtn}>+ Add water</TextButton>
         <div className={css.month}>
           <h2 className={css.titlemonth}>Month</h2>
           <DatePicker />
@@ -102,6 +106,7 @@ function HomePage() {
       <AddWaterModal />
       <TodayListModal />
       <MyDailyNorma />
+      <DeleteWaterModal/>
     </section>
   );
 }

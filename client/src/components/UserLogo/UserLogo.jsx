@@ -5,13 +5,13 @@ import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
 import UserLogoModal from "../UserLogoModal/UserLogoModal";
 import SettingModal from "../SettingModal/SettingModal";
 import UserLogoutModal from "../UserLogoutModal/UserLogoutModal";
-import { closeLogoModal, openLogoModal } from "../../redux/modal/slice";
+import { closeLogoModal, openLogoModal } from "../../redux/modalToggle/slice";
 import { selectUser } from "../../redux/user/selectors";
 import {
   selectLogoModal,
   selectLogoutModal,
   selectSettingModal,
-} from "../../redux/modal/selectors";
+} from "../../redux/modalToggle/selectors";
 
 import css from "./UserLogo.module.css";
 
@@ -21,6 +21,21 @@ const UserLogo = () => {
   const isLogoModalOpen = useSelector(selectLogoModal);
   const isSettingModalOpen = useSelector(selectSettingModal);
   const isLogoutModalOpen = useSelector(selectLogoutModal);
+  const user = useSelector(selectUser);
+  if (!user) return null;
+
+  const userName = user.name ?? user.email;
+
+  const avatarContent = user.avatarUrl ? (
+    <img
+      src={user.avatarUrl}
+      alt="User avatar"
+      className={css.userLogoBtnAvatar}
+    />
+  ) : (
+    <span>{(user.name || user.email[0]).charAt(0).toUpperCase()}</span>
+  );
+
   const toggleModal = () => {
     if (isLogoModalOpen) {
       dispatch(closeLogoModal());
@@ -28,21 +43,6 @@ const UserLogo = () => {
       dispatch(openLogoModal());
     }
   };
-
-  const user = useSelector(selectUser);
-  if (!user) return null;
-
-  const userName = user.name ?? user.email;
-
-  const avatarContent = user.avatar ? (
-    <img
-      src={user.avatar}
-      alt="User Avatar"
-      className={css.userLogoBtnAvatar}
-    />
-  ) : (
-    <span>{(user.name || user.email[0]).charAt(0).toUpperCase()}</span>
-  );
 
   return (
     <>

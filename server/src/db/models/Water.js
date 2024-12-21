@@ -12,10 +12,6 @@ const waterSchema = new Schema(
       type: Number,
       required: true,
     },
-    currentDailyNorma: {
-      type: Number,
-      default: 2000,
-    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'user',
@@ -33,6 +29,6 @@ waterSchema.post('findOneAndUpdate', handleSaveError);
 
 export const sortByList = ['date'];
 
-const WaterCollection = model('water', waterSchema);
+const WaterCollection = model('waterToday', waterSchema);
 
 export default WaterCollection;

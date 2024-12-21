@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectEditData,
   selectEditModal,
-} from "../../redux/modal/selectors.js";
-import { closeEditModal } from "../../redux/modal/slice.js";
+} from "../../redux/modalToggle/selectors.js";
+import { closeEditModal } from "../../redux/modalToggle/slice.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import Button from "../ui/Button/Button.jsx";
 import MinusSmall from "../ui/icons/MinusSmall.jsx";
