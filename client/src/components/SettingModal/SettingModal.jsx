@@ -436,15 +436,16 @@ export default function SettingModal() {
                   </label>
                 </div>
               </div>
-              <div>
-                <Button
-                  type="submit"
-                  className={css.btn}
-                  // onClick={handleSubmit}
-                >
-                  Save
-                </Button>
-              </div>
+              {/* <div className={css.btn}> */}
+              <Button
+                type="submit"
+                cssstyle={css.btn}
+                className={css.btn}
+                // onClick={handleSubmit}
+              >
+                Save
+              </Button>
+              {/* </div> */}
             </div>
           </Form>
         </Formik>

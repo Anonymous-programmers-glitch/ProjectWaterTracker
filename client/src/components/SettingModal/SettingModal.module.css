@@ -189,7 +189,7 @@
   text-align: center;
   color: var(--primery-color-white);
   transition: box-shadow 0.3s ease;
-  width: 165px;
+  width: 160px;
 }
 
 .btn:hover {
@@ -228,8 +228,8 @@
   }
   .btn {
     position: inherit;
-    padding-top: 24px;
-    max-width: 256px;
+    width: 256px;
+    margin-top: 24px;
   }
 
   .passwordWrapper {
