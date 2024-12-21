@@ -14,7 +14,7 @@ const slice = createSlice({
   name: "month",
   initialState: {
     items: [],
-    loading: false,
+    isLoading: false,
     error: null,
   },
 
@@ -22,7 +22,7 @@ const slice = createSlice({
     builder
       .addCase(fetchWaterMonth.pending, handlePending)
       .addCase(fetchWaterMonth.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         state.items = action.payload;
       })

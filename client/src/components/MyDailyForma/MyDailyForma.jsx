@@ -9,6 +9,7 @@ import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { closeDailyNormaModal } from "../../redux/modalToggle/slice.js";
 import { update } from "../../redux/user/operations.js";
+import { putHistory } from "../../redux/updateHistori/operations.js";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -39,8 +40,11 @@ const MyDailyNorma = () => {
   const handleSubmit = async (values, actions) => {
     try {
       const myDailyNorma = values.waterYouDrink * 1000;
-
+      const currentDate = new Date().toISOString();
       await dispatch(update({ dailyNorma: myDailyNorma }));
+      await dispatch(
+        putHistory({ date: currentDate, dailyNorma: myDailyNorma })
+      );
       toast.success("Your daily norma has been successfully updated!");
       actions.resetForm();
       handleCloseModal();
