@@ -71,9 +71,9 @@ function HomePage() {
         </div>
         <div className={css.rangeblok}>
           <WaterRange percentage={percentage} />
-          <Button onClick={handleAdd}>
+          <Button onClick={handleAdd} cssstyle="addwater" >
             <div className={css.btn}>
-              <PlusCircleOutline />
+              <PlusCircleOutline/>
               <p>Add Water</p>
             </div>
           </Button>
