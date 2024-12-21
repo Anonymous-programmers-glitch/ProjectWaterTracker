@@ -12,8 +12,8 @@ const userSchema = new Schema(
     dailyNorma: {
       type: Number,
       required: false,
-      min: 50,
-      max: 5000,
+      min: 1,
+      max: 15000,
       default: 2000,
     },
     avatarUrl: { type: String, required: false, default: '' },
