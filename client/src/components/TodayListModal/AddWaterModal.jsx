@@ -104,6 +104,7 @@ const AddWaterModal = () => {
                           Math.max(0, values.manualAmount - 50)
                         )
                       }
+                      disabled={values.manualAmount <= 0}
                     >
                       <MinusSmall size={24} />
                     </button>
@@ -111,11 +112,15 @@ const AddWaterModal = () => {
                       {values.manualAmount} ml
                     </span>
                     <button
-                      type="button"
                       className={css.buttonWater}
+                      type="button"
                       onClick={() =>
-                        setFieldValue("manualAmount", values.manualAmount + 50)
+                        setFieldValue(
+                          "manualAmount",
+                          Math.min(5000, values.manualAmount + 50)
+                        )
                       }
+                      disabled={values.manualAmount >= 5000}
                     >
                       <PlusSmall size={24} />
                     </button>
@@ -156,7 +161,6 @@ const AddWaterModal = () => {
                     step="50"
                     min="0"
                     value={values.manualAmount}
-                    
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
                       setFieldValue("manualAmount", value);
