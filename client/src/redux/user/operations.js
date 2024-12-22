@@ -7,15 +7,30 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  *
  * After successful registration, you will need to go through verification. An email with a link has been sent to the email address you provided during registration.
  */
+
 export const signup = createAsyncThunk(
   "user/signup",
+
   async (credentials, thunkAPI) => {
     try {
-      const { user } = (await axios.post("/auth/register", credentials)).data;
+      const response = (await axios.post("/auth/register", credentials)).data;
+      //const { user} = (await axios.post("/auth/register", credentials)).data;
       // const { user } = (await $api.post("/auth/register", credentials)).data;
-      return user;
+      //return user;
+
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.log(
+        "error.response.data.status :>> ",
+        error.response.data.status
+      );
+      console.log(
+        "error.response.data.message :>> ",
+        error.response.data.message
+      );
+      //return thunkAPI.rejectWithValue(error.message);
+      //return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -35,7 +50,7 @@ export const login = createAsyncThunk(
       setAuthHeader(response.data.accessToken);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );

@@ -30,6 +30,8 @@ const handlePending = (state) => {
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload ?? "Unknown error";
+  state.responseStatus = action.payload.status;
+  state.responseMessage = action.payload.message;
 };
 
 const slice = createSlice({
@@ -40,6 +42,7 @@ const slice = createSlice({
     builder.addCase(signup.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
+      state.error = null;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
@@ -47,6 +50,7 @@ const slice = createSlice({
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
       state.isLoggedIn = true;
+      state.error = null;
     });
 
     builder.addCase(logout.fulfilled, () => {
@@ -74,8 +78,10 @@ const slice = createSlice({
       state.isEdit = true;
       state.user = {
         ...state.user,
-        ...action.payload.user,
+        ...action.payload.data.user,
       };
+      state.responseStatus = action.payload.status;
+      state.responseMessage = action.payload.message;
     });
 
     builder

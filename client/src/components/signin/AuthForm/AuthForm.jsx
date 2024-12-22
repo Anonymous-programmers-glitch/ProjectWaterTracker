@@ -3,11 +3,13 @@ import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../../redux/user/operations.js";
+//import { selectError } from "../../../redux/user/selectors.js";
 import * as Yup from "yup";
 import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
+import toast from "react-hot-toast";
 
 const initialValues = {
   email: "",
@@ -30,11 +32,7 @@ export default function SignInForm() {
     password: Yup.string()
       .required()
       .min(8, "Should be 8 chars minimum.")
-      .max(64, "Should be 64 chars maximum.")
-      .matches(
-        /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-        "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)."
-      ),
+      .max(64, "Should be 64 chars maximum."),
   });
   const dispatch = useDispatch();
 
@@ -43,9 +41,31 @@ export default function SignInForm() {
   const signinId = useId();
   const passwordId = useId();
 
-  const handleSubmit = (values, actions) => {
-    dispatch(login(values));
-    actions.resetForm();
+  const handleSubmit = async (values, actions) => {
+    const { email, password } = values;
+    const result = await dispatch(login({ email, password }));
+
+    console.log(result.payload.status);
+    console.log(result.payload.data.message);
+
+    const message = result.payload.data.message;
+
+    if (result.error) {
+      switch (result.payload.status) {
+        case 400:
+          toast.error(message);
+          break;
+        case 401:
+          toast.error(message);
+          break;
+        default:
+          toast.error(message);
+          break;
+      }
+    } else {
+      toast.success("Successfully login a user!");
+      actions.resetForm();
+    }
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
@@ -113,7 +133,9 @@ export default function SignInForm() {
                 className={css.error}
               />
             </div>
-            <Button cssstyle="signin">Sign In</Button>
+            <Button type="submit" cssstyle="signin">
+              Sign In
+            </Button>
             <NavLink to="/forgotpassword" className={css.link}>
               <p>Forgot password?</p>
             </NavLink>
