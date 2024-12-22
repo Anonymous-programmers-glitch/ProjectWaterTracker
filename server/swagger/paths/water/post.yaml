@@ -23,7 +23,7 @@ requestBody:
           amount:
             description: The amount of waterToday consumed (in milliliters).
             type: number
-            minimum: 50
+            minimum: 1
             maximum: 5000
             example: 250
 responses:
