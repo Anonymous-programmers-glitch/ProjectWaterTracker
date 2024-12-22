@@ -82,10 +82,40 @@
   flex-direction: row;
   gap: 24px;
 }
+.hiddenRadio {
+  display: none;
+}
+.customRadio {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--primery-color-blue);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+.hiddenRadio:checked + .customRadio {
+  background-color: var(--primery-color-white);
+}
+.hiddenRadio:checked + .customRadio::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: var(--primery-color-blue);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
 .radio {
   display: flex;
   flex-direction: row;
   gap: 8px;
+  align-items: center;
+}
+.span {
+  color: var(--primery-color-black);
 }
 .text {
   font-weight: 400;
@@ -98,6 +128,10 @@
 }
 .field {
   width: 100%;
+}
+
+.field::placeholder {
+  color: var(--primery-color-blue);
 }
 .amountWraper {
   display: flex;
