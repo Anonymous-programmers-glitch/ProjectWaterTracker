@@ -12,6 +12,8 @@ properties:
   dailyNorma:
     type: integer
     description: The user's daily norm value.
+    minimum: 1
+    maximum: 15000
     default: 2000
     example: 2000
 required:

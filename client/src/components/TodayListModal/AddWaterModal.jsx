@@ -18,7 +18,6 @@ const validationSchema = Yup.object({
   manualAmount: Yup.number()
     .min(50, "Minimum amount is 50 ml")
     .max(5000, "Maximum amount is 5000 ml")
-    .integer("Amount must be an integer")
     .required("Amount of water is required")
     .typeError("Please enter a valid number"),
 });
@@ -135,7 +134,6 @@ const AddWaterModal = () => {
                     type="time"
                     name="manualTime"
                     placeholder="HH:mm"
-                    step="300"
                     value={values.manualTime}
                     onChange={(e) => {
                       setFieldValue("manualTime", e.target.value);
@@ -154,7 +152,6 @@ const AddWaterModal = () => {
                     name="manualAmount"
                     placeholder="Enter amount"
                     step="50"
-                    min="0"
                     value={values.manualAmount}
                     
                     onChange={(e) => {

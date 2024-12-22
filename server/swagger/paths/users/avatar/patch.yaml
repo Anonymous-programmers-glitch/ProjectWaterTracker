@@ -1,5 +1,5 @@
 tags:
-  - User
+  - Users
 summary: Update user avatar
 description: Update the avatar of the currently authenticated user. Requires the user to upload an image file.
 operationId: updateUserAvatar
@@ -39,6 +39,8 @@ responses:
                   example: 'https://res.cloudinary.com/demo/image/upload/v1616161616/sample.jpg'
   '400':
     $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'
   '500':
