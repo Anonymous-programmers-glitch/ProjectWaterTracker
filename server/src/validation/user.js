@@ -38,9 +38,9 @@ export const userInfoUpdatedSchema = Joi.object({
     'any.only':
       'Gender must be one of the following values: male, female, other.',
   }),
-  dailyNorma: Joi.number().min(50).max(5000).default(2000).messages({
+  dailyNorma: Joi.number().min(1).max(15000).default(2000).messages({
     'number.base': 'Daily norm must be a number.',
-    'number.min': 'Daily norm must be at least 50.',
-    'number.max': 'Daily norm must be at most 5000.',
+    'number.min': 'Daily norm must be at least 1.',
+    'number.max': 'Daily norm must be at most 15000.',
   }),
 });
