@@ -10,8 +10,13 @@ export const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
 
+export default axios;
+
+// import axios from "axios";
+
 // const api = axios.create({
 //   baseURL: "http://localhost:3000",
+//   withCredentials: true,
 // });
 
 // export const setAuthHeader = (token) => {
@@ -19,8 +24,14 @@ export const clearAuthHeader = () => {
 // };
 
 // export const clearAuthHeader = () => {
-//   api.defaults.headers.common.Authorization = "";
+//   // api.defaults.headers.common.Authorization = "";
+//   delete api.defaults.headers.common.Authorization;
 // };
+
+// const token = localStorage.getItem("accessToken");
+// if (token) {
+//   setAuthHeader(token);
+// }
 
 // api.interceptors.response.use(
 //   (response) => response,
@@ -29,7 +40,11 @@ export const clearAuthHeader = () => {
 //     if (error.response.status === 401 && !originalRequest._retry) {
 //       originalRequest._retry = true;
 //       try {
-//         const response = await axios.post("/auth/refresh");
+//         const response = await axios.post(
+//           "/auth/refresh",
+//           {},
+//           { withCredentials: true }
+//         );
 //         const { accessToken } = response.data;
 //         setAuthHeader(accessToken);
 //         localStorage.setItem("accessToken", accessToken);
@@ -46,5 +61,4 @@ export const clearAuthHeader = () => {
 //   }
 // );
 
-export default axios;
 // export default api;

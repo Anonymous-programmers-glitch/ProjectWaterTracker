@@ -2,6 +2,7 @@ import axios, { setAuthHeader, clearAuthHeader } from "../../api/operationsAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /*
+ * User registration.
  * POST @ /auth/register
  * body: { email, password }
  *
@@ -12,7 +13,6 @@ export const signup = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { user } = (await axios.post("/auth/register", credentials)).data;
-      // const { user } = (await $api.post("/auth/register", credentials)).data;
       return user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -21,17 +21,17 @@ export const signup = createAsyncThunk(
 );
 
 /*
+ * User login.
  * POST @ /auth/login
  * body: { email, password }
  *
- * After successful login, add the access token to the HTTP header
+ * After a successful login, the access token is added to the HTTP header for subsequent requests.
  */
 export const login = createAsyncThunk(
   "user/login",
   async (credentials, thunkAPI) => {
     try {
       const response = (await axios.post("/auth/login", credentials)).data;
-      // const response = (await $api.post("/auth/login", credentials)).data;
       setAuthHeader(response.data.accessToken);
       return response.data;
     } catch (error) {
@@ -41,15 +41,15 @@ export const login = createAsyncThunk(
 );
 
 /*
- * POST @ /auth/logout
- * headers: Authorization: Bearer token
+ * User logout.
+ * Route: POST @ /auth/logout
+ * Headers: Authorization: Bearer token
  *
- *  After successful logout, remove the access token from the HTTP header
+ * After a successful logout, the access token is removed from the HTTP header.
  */
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
     await axios.post("/auth/logout");
-    // await $api.post("/auth/logout");
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -57,10 +57,12 @@ export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
 });
 
 /*
- * GET @ /users/current
- * headers: Authorization: Bearer token
+ * Refresh user data by verifying the current access token.
+ * Route: GET @ /users/current
+ * Headers: Authorization: Bearer token
+ *
+ * Sends a request to the server to fetch the current user's data.
  */
-
 export const refresh = createAsyncThunk(
   "user/refresh",
   async (_, thunkAPI) => {
@@ -87,16 +89,17 @@ export const refresh = createAsyncThunk(
 );
 
 /*
- * PATCH @ /users
- * headers: Authorization: Bearer token
+ * Update user profile.
+ * Route: PATCH @ /users
+ * Headers: Authorization: Bearer token
+ *
+ * Allows updating user information such as name or other profile details.
  */
-
 export const update = createAsyncThunk(
   "user/update",
   async (data, thunkAPI) => {
     try {
       const response = (await axios.patch(`/users`, data)).data;
-      // const response = (await $api.patch(`/users`, data)).data;
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -105,8 +108,12 @@ export const update = createAsyncThunk(
 );
 
 /*
- * PATCH @ /users/avatar
- * headers: Authorization: Bearer token
+ * Update user's avatar.
+ * Route: PATCH @ /users/avatar
+ * Headers: Authorization: Bearer token
+ * Request body: multipart/form-data
+ *
+ * Allows updating the user's avatar by uploading a new image file.
  */
 export const updateAvatar = createAsyncThunk(
   "user/updateAvatar",
@@ -128,22 +135,22 @@ export const updateAvatar = createAsyncThunk(
 //  * GET @ /auth/refresh
 //  * headers: Authorization: Bearer token
 //  */
-// // export const refreshToken = createAsyncThunk(
-// //   "user/refreshToken",
-// //   async (_, thunkAPI) => {
-// //     try {
-// //       const response = (
-// //         await axios.post("/auth/refresh", null, { withCredentials: true })
-// //       ).data;
-// //       console.log("response :>> ", response);
-// //       // console.log("response.data.accessToken :>> ", response.data.accessToken);
-// //       setAuthHeader(response.data.accessToken);
-// //       return response;
-// //     } catch (error) {
-// //       return thunkAPI.rejectWithValue(error.message);
-// //     }
-// //   }
-// // );
+// export const refreshToken = createAsyncThunk(
+//   "user/refreshToken",
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = (
+//         await axios.post("/auth/refresh", null, { withCredentials: true })
+//       ).data;
+//       console.log("response :>> ", response);
+//       // console.log("response.data.accessToken :>> ", response.data.accessToken);
+//       setAuthHeader(response.data.accessToken);
+//       return response;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // // Операція запиту на скидання паролю
 // export const requestResetToken = createAsyncThunk(
