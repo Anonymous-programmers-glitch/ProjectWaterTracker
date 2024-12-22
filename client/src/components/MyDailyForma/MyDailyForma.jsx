@@ -111,22 +111,34 @@ const MyDailyNorma = () => {
 
                       <div className={css.radioBtnWrapper}>
                         <label className={css.radio}>
-                          <Field type="radio" name="option" value="female" />
+                          <Field
+                            type="radio"
+                            name="option"
+                            value="female"
+                            className={css.hiddenRadio}
+                          />
                           <ErrorMessage
                             component="span"
                             className={css.error}
                             name="option"
                           />
+                          <span className={css.customRadio}></span>
                           <span className={css.span}>For woman</span>
                         </label>
 
                         <label className={css.radio}>
-                          <Field type="radio" name="option" value="male" />
+                          <Field
+                            type="radio"
+                            name="option"
+                            value="male"
+                            className={css.hiddenRadio}
+                          />
                           <ErrorMessage
                             name="option"
                             component="span"
                             // className={css.error}
                           />
+                          <span className={css.customRadio}></span>
                           <span className={css.span}>For man</span>
                         </label>
                       </div>
