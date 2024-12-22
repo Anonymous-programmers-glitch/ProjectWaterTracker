@@ -237,40 +237,6 @@
                         "accessToken": {
                           "type": "string",
                           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                        },
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "example": "675d7c92d8489ab3f0b3b7ed"
-                            },
-                            "name": {
-                              "type": "string",
-                              "example": "John Doe"
-                            },
-                            "email": {
-                              "type": "string",
-                              "example": "user@example.com"
-                            },
-                            "gender": {
-                              "type": "string",
-                              "enum": [
-                                "female",
-                                "male"
-                              ],
-                              "default": "female",
-                              "example": "female"
-                            },
-                            "dailyNorma": {
-                              "type": "number",
-                              "example": 2000
-                            },
-                            "avatarUrl": {
-                              "type": "string",
-                              "example": "http://example.com/avatar.jpg"
-                            }
-                          }
                         }
                       }
                     }
@@ -569,7 +535,7 @@
     "/users/current": {
       "get": {
         "tags": [
-          "User"
+          "Users"
         ],
         "summary": "Get current user",
         "description": "Retrieve the details of the currently authenticated user.",
@@ -657,7 +623,7 @@
     "/users": {
       "patch": {
         "tags": [
-          "User"
+          "Users"
         ],
         "summary": "Update user information",
         "description": "Allows updating fields such as name, email, password, gender, daily norm, and avatar.",
@@ -701,8 +667,8 @@
                   },
                   "dailyNorma": {
                     "type": "integer",
-                    "minimum": 50,
-                    "maximum": 5000,
+                    "minimum": 1,
+                    "maximum": 15000,
                     "default": 2000,
                     "example": 2000
                   },
@@ -744,6 +710,9 @@
           "400": {
             "$ref": "#/components/responses/400"
           },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
           "404": {
             "$ref": "#/components/responses/404"
           },
@@ -756,7 +725,7 @@
     "/users/avatar": {
       "patch": {
         "tags": [
-          "User"
+          "Users"
         ],
         "summary": "Update user avatar",
         "description": "Update the avatar of the currently authenticated user. Requires the user to upload an image file.",
@@ -816,6 +785,9 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -913,13 +885,6 @@
                                 "type": "number",
                                 "description": "The amount of waterToday consumed (in milliliters).",
                                 "example": 300
-
-                              },
-                              "currentDailyNorm": {
-                                "type": "number",
-                                "description": "The current daily waterToday consumption norm for the user (in milliliters).",
-                                "example": 2000
-
                               }
                             }
                           }
@@ -1060,13 +1025,6 @@
                           "type": "number",
                           "description": "The amount of waterToday consumed (in milliliters).",
                           "example": 250
-
-                        },
-                        "currentDailyNorm": {
-                          "type": "number",
-                          "description": "The current daily waterToday consumption norm for the user (in milliliters).",
-                          "example": 2000
-
                         }
                       }
                     }
@@ -1188,13 +1146,6 @@
                           "type": "number",
                           "description": "The updated amount of waterToday consumed (in milliliters).",
                           "example": 300
-
-                        },
-                        "currentDailyNorm": {
-                          "type": "number",
-                          "description": "The current daily waterToday consumption norm for the user (in milliliters).",
-                          "example": 2000
-
                         }
                       }
                     }
@@ -1262,12 +1213,10 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully deleted the waterToday record."
-
                     },
                     "_id": {
                       "type": "string",
                       "example": "64f5b992c4b3f1567e63a179"
-
                     }
                   }
                 }
@@ -1396,17 +1345,15 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "userId": {
-                          "type": "string",
-                          "example": "1234567890abcdef12345678"
-                        },
                         "date": {
                           "type": "string",
                           "format": "date",
-                          "example": "2024-12-19"
+                          "description": "The date of the norma history entry.",
+                          "example": "2024-12-22"
                         },
                         "dailyNorma": {
-                          "type": "integer",
+                          "type": "number",
+                          "description": "The daily norma value.",
                           "example": 2000
                         }
                       }
@@ -1529,8 +1476,8 @@
             "description": "User's daily norm value",
             "type": "number",
             "default": 2000,
-            "minimum": 50,
-            "maximum": 5000,
+            "minimum": 1,
+            "maximum": 15000,
             "example": 2000
           },
           "avatarUrl": {

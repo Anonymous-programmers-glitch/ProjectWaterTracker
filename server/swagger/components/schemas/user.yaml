@@ -41,8 +41,8 @@ properties:
     description: "User's daily norm value"
     type: number
     default: 2000
-    minimum: 50
-    maximum: 5000
+    minimum: 1
+    maximum: 15000
     example: 2000
   avatarUrl:
     description: "URL of the user's avatar image"
