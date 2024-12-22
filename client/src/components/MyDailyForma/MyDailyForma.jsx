@@ -77,12 +77,14 @@ const MyDailyNorma = () => {
             >
               {({ values, errors }) => (
                 <Form className={css.modalForm}>
-                  <h2 className={css.text1}>My daily norma</h2>
-                  <div className={css.coverToBtn}>
+                  <div className={css.top}>
+                    <h2 className={css.title}>My daily norma</h2>
                     <div className={css.closeBtn} onClick={handleCloseModal}>
                       <MarkOutline />
                     </div>
-                    <div className={css.cover}>
+                  </div>
+                  <div className={css.topWrapper}>
+                    <div className={css.forWrapper}>
                       <p className={css.for}>
                         For woman:{" "}
                         <span className={css.formula}>
@@ -97,57 +99,64 @@ const MyDailyNorma = () => {
                       </p>
                     </div>
                     <p className={css.modalDescr}>
-                      * V is the volume of the water norm in liters per day, M
-                      is your body weight, T is the time of active sports, or
-                      another type of activity commensurate in terms of loads
-                      (in the absence of these, you must set 0)
+                      <span>*</span> V is the volume of the water norm in liters
+                      per day, M is your body weight, T is the time of active
+                      sports, or another type of activity commensurate in terms
+                      of loads (in the absence of these, you must set 0)
                     </p>
-                    <p className={css.textRadioBtn}>Calculate your rate:</p>
+                  </div>
+                  <div className={css.wrapper}>
+                    <div className={css.inputWrapper}>
+                      <p className={css.titleLabel}>Calculate your rate:</p>
 
-                    <label className={css.labels}>
-                      <Field type="radio" name="option" value="female" />
-                      <ErrorMessage
-                        component="span"
-                        className={css.error}
-                        name="option"
+                      <div className={css.radioBtnWrapper}>
+                        <label className={css.radio}>
+                          <Field type="radio" name="option" value="female" />
+                          <ErrorMessage
+                            component="span"
+                            className={css.error}
+                            name="option"
+                          />
+                          <span className={css.span}>For woman</span>
+                        </label>
+
+                        <label className={css.radio}>
+                          <Field type="radio" name="option" value="male" />
+                          <ErrorMessage
+                            name="option"
+                            component="span"
+                            className={css.error}
+                          />
+                          <span className={css.span}>For man</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className={css.inputWrapper}>
+                      <p className={css.text}>Your weight in kilograms:</p>
+                      <Inputs
+                        type="number"
+                        className={css.field}
+                        name="weightInKg"
+                        placeholder="0"
                       />
-                      <span className={css.span}>For woman</span>
-                    </label>
-
-                    <label className={css.labels}>
-                      <Field type="radio" name="option" value="male" />
-                      <ErrorMessage
-                        name="option"
-                        component="span"
-                        className={css.error}
+                    </div>
+                    <div className={css.inputWrapper}>
+                      <p className={css.text}>
+                        The time of active participation in sports or other
+                        activities with a high physical. load in hours:
+                      </p>
+                      <Inputs
+                        type="number"
+                        className={css.field}
+                        name="loadInHours"
+                        placeholder="0"
                       />
-                      <span className={css.span}>For man</span>
-                    </label>
+                    </div>
 
-                    <p className={css.text}>Your weight in kilograms:</p>
-                    <Inputs
-                      type="number"
-                      className={`${css.field} ${css.inputs}`}
-                      name="weightInKg"
-                      placeholder="0"
-                    />
-
-                    <p className={css.text}>
-                      The time of active participation in sports or other
-                      activities with a high physical. load in hours:
-                    </p>
-                    <Inputs
-                      type="number"
-                      className={`${css.field} ${css.inputs}`}
-                      name="loadInHours"
-                      placeholder="0"
-                    />
-
-                    <p className={css.text}>
-                      The required amount of water in liters per day:
-                    </p>
-                    <p className={css.textRadioBtn2}>
-                      Write down how much water you will drink:{" "}
+                    <div className={css.amountWraper}>
+                      <p className={`${css.text} ${css.text1}`}>
+                        The required amount of water in liters per day:
+                      </p>
                       <span className={css.spanResult}>
                         {calculateWaterNorm(
                           parseFloat(values.weightInKg || 0),
@@ -156,29 +165,24 @@ const MyDailyNorma = () => {
                         )}{" "}
                         L
                       </span>
+                    </div>
+                  </div>
+                  <div className={css.inputWrapper}>
+                    <p className={css.titleLabel}>
+                      Write down how much water you will drink:{" "}
                     </p>
 
                     <Inputs
                       type="number"
-                      className={`${css.field} ${css.inputs}`}
+                      className={css.field}
                       name="waterYouDrink"
                       placeholder="0"
                     />
-
-                    <div className={css.btn}>
-                      {/* <button
-                        onClick={notify}
-                        className={css.cssstyleBtn}
-                        type="submit"
-                      >
-                        Save
-                      </button> */}
-                      <Button type="submit" cssstyle={css.cssstyleBtn}>Save</Button>
-
-                      {/* <div className={css.cssstyle}>
-                          <Button cssstyle={css.cssstyle} type="submit">Save</Button>
-                      </div> */}
-                    </div>
+                  </div>
+                  <div className={css.btn}>
+                    <Button type="submit" cssstyle="save">
+                      Save
+                    </Button>
                   </div>
                 </Form>
               )}

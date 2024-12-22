@@ -1,8 +1,8 @@
 .container {
   border-radius: 10px;
   padding: 32px 24px;
-  max-width: 1008px;
-  max-height: 592px;
+  width: 1008px;
+  height: 592px;
   background: var(--primery-color-white);
   position: relative;
 }
@@ -15,6 +15,7 @@
 
 .mainTitle {
   padding-bottom: 24px;
+  color: var(--primery-color-black);
 }
 
 .wrapperToBtn {
@@ -30,6 +31,7 @@
 
 .photoTitle {
   padding-bottom: 8px;
+  color: var(--primery-color-black);
 }
 
 .imgWrapper {
@@ -55,7 +57,7 @@
 .buttonUpload {
   display: flex;
   gap: 8px;
-  color: #407bff;
+  color: var(--primery-color-blue);
   position: relative;
 }
 
@@ -106,6 +108,7 @@
 
 .genderTitle {
   padding-bottom: 12px;
+  color: var(--primery-color-black);
 }
 
 .genderOptions {
@@ -116,6 +119,7 @@
 
 .genderInput {
   margin-left: 8px;
+  color: var(--primery-color-black);
 }
 
 .labelUserName {
@@ -123,12 +127,22 @@
   gap: 8px;
   flex-direction: column;
   margin-bottom: 24px;
+  color: var(--primery-color-black);
 }
 
 .labelUser {
   display: flex;
   gap: 8px;
   flex-direction: column;
+  color: var(--primery-color-black);
+}
+
+.nameAndEmailInput {
+  width: 100%;
+}
+
+.passwordTittle {
+  color: var(--primery-color-black);
 }
 
 .passwordWrapper {
@@ -138,6 +152,11 @@
   flex-direction: column;
   justify-content: end;
   gap: 12px;
+  padding-right: 152px;
+}
+
+.passwordTitle {
+  color: var(--primery-color-black);
 }
 
 .labelPassword {
@@ -145,6 +164,7 @@
   flex-direction: column;
   gap: 8px;
   position: relative;
+  color: var(--primery-color-black);
 }
 
 .eyeIcon {
@@ -158,12 +178,40 @@
   position: absolute;
   right: 24px;
   bottom: 32px;
+  border: none;
+  border-radius: 10px;
+  height: 36px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: var(--primery-color-blue);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: var(--primery-color-white);
+  transition: box-shadow 0.3s ease;
+  width: 160px;
 }
 
+.btn:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.btn:active {
+  box-shadow: none;
+}
+
+.formik-error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: -5px;
+}
+
+.input {
+  width: 100%;
+}
 @media screen and (max-width: 768px) {
   .container {
-    max-width: 704px;
-    max-height: 860px;
+    width: 704px;
+    height: 860px;
   }
 
   .wrapperTwoBlocks {
@@ -171,13 +219,20 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 376px) {
   .container {
+    padding-left: 12px;
+    padding-right: 12px;
     max-width: 280px;
     max-height: 852px;
   }
   .btn {
     position: inherit;
-    padding-top: 24px;
+    width: 256px;
+    margin-top: 24px;
+  }
+
+  .passwordWrapper {
+    padding-right: 0px;
   }
 }

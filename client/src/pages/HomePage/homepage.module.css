@@ -6,8 +6,7 @@
   gap: 40px;
 }
 .background {
-  position: absolute;
-  /* background-image: url("../../assets/homepage/backgroundmobilehome.svg"); */
+  position: fixed;
   background-image: var(--backgroundmanemob2);
   background-repeat: no-repeat;
   background-size: cover;
