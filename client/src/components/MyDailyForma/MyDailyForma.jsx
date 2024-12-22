@@ -39,6 +39,10 @@ const MyDailyNorma = () => {
   };
 
   const handleSubmit = (values, actions) => {
+    if (values.weightInKg > 200 || values.loadInHours > 24 || values.waterYouDrink > 5) {
+      toast.error("Weight cannot exceed 200 kg!");
+      
+    }
     try {
       const myDailyNorma = values.waterYouDrink * 1000;
       const currentDate = new Date().toISOString();
@@ -59,148 +63,150 @@ const MyDailyNorma = () => {
   // const notify = () => toast("Personal data updated");
   return (
     isOpen && (
-      <>
-        <ModalBackdrop onClick={handleCloseModal}>
-          <div
-            className={css.modalContent}
-            onClick={(e) => e.stopPropagation()}
+    <>
+      <ModalBackdrop onClick={handleCloseModal}>
+        <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
+          <Formik
+            initialValues={{
+              weightInKg: "",
+              loadInHours: "",
+              waterYouDrink: "",
+              option: "female",
+            }}
+            validationSchema={DailySchema}
+            onSubmit={handleSubmit}
           >
-            <Formik
-              initialValues={{
-                weightInKg: "",
-                loadInHours: "",
-                waterYouDrink: "",
-                option: "female",
-              }}
-              validationSchema={DailySchema}
-              onSubmit={handleSubmit}
-            >
-              {({ values, errors }) => (
-                <Form className={css.modalForm}>
-                  <div className={css.top}>
-                    <h2 className={css.title}>My daily norma</h2>
-                    <div className={css.closeBtn} onClick={handleCloseModal}>
-                      <MarkOutline />
-                    </div>
+            {({ values, errors }) => (
+              <Form className={css.modalForm}>
+                <div className={css.top}>
+                  <h2 className={css.title}>My daily norma</h2>
+                  <div className={css.closeBtn} onClick={handleCloseModal}>
+                    <MarkOutline />
                   </div>
-                  <div className={css.topWrapper}>
-                    <div className={css.forWrapper}>
-                      <p className={css.for}>
-                        For woman:{" "}
-                        <span className={css.formula}>
-                          V=(M*0,03) + (T*0,4)
-                        </span>{" "}
-                      </p>
-                      <p className={css.for}>
-                        For man:{" "}
-                        <span className={css.formula}>
-                          V=(M*0,04) + (T*0,6)
-                        </span>
-                      </p>
-                    </div>
-                    <p className={css.modalDescr}>
-                      <span>*</span> V is the volume of the water norm in liters
-                      per day, M is your body weight, T is the time of active
-                      sports, or another type of activity commensurate in terms
-                      of loads (in the absence of these, you must set 0)
+                </div>
+                <div className={css.topWrapper}>
+                  <div className={css.forWrapper}>
+                    <p className={css.for}>
+                      For woman:{" "}
+                      <span className={css.formula}>V=(M*0,03) + (T*0,4)</span>{" "}
+                    </p>
+                    <p className={css.for}>
+                      For man:{" "}
+                      <span className={css.formula}>V=(M*0,04) + (T*0,6)</span>
                     </p>
                   </div>
-                  <div className={css.wrapper}>
-                    <div className={css.inputWrapper}>
-                      <p className={css.titleLabel}>Calculate your rate:</p>
+                  <p className={css.modalDescr}>
+                    <span>*</span> V is the volume of the water norm in liters
+                    per day, M is your body weight, T is the time of active
+                    sports, or another type of activity commensurate in terms of
+                    loads (in the absence of these, you must set 0)
+                  </p>
+                </div>
+                <div className={css.wrapper}>
+                  <div className={css.inputWrapper}>
+                    <p className={css.titleLabel}>Calculate your rate:</p>
 
-                      <div className={css.radioBtnWrapper}>
-                        <label className={css.radio}>
-                          <Field type="radio" name="option" value="female" />
-                          <ErrorMessage
-                            component="span"
-                            className={css.error}
-                            name="option"
-                          />
-                          <span className={css.span}>For woman</span>
-                        </label>
+                    <div className={css.radioBtnWrapper}>
+                      <label className={css.radio}>
+                        <Field type="radio" name="option" value="female" />
+                        <ErrorMessage
+                          component="span"
+                          className={css.error}
+                          name="option"
+                        />
+                        <span className={css.span}>For woman</span>
+                      </label>
 
-                        <label className={css.radio}>
-                          <Field type="radio" name="option" value="male" />
-                          <ErrorMessage
-                            name="option"
-                            component="span"
-                            className={css.error}
-                          />
-                          <span className={css.span}>For man</span>
-                        </label>
-                      </div>
-                    </div>
-                    <div className={css.inputWrapper}>
-                      <p className={css.text}>Your weight in kilograms:</p>
-                      <Inputs
-                        type="number"
-                        className={css.field}
-                        name="weightInKg"
-                        placeholder="0"
-                      />
-                    </div>
-                    <div className={css.inputWrapper}>
-                      <p className={css.text}>
-                        The time of active participation in sports or other
-                        activities with a high physical. load in hours:
-                      </p>
-                      <Inputs
-                        type="number"
-                        className={css.field}
-                        name="loadInHours"
-                        placeholder="0"
-                      />
-                    </div>
-
-                    <div className={css.amountWraper}>
-                      <p className={`${css.text} ${css.text1}`}>
-                        The required amount of water in liters per day:
-                      </p>
-                      <span className={css.spanResult}>
-                        {calculateWaterNorm(
-                          parseFloat(values.weightInKg || 0),
-                          parseFloat(values.loadInHours || 0),
-                          values.option === "female"
-                        )}{" "}
-                        L
-                      </span>
+                      <label className={css.radio}>
+                        <Field type="radio" name="option" value="male" />
+                        <ErrorMessage
+                          name="option"
+                          component="span"
+                          className={css.error}
+                        />
+                        <span className={css.span}>For man</span>
+                      </label>
                     </div>
                   </div>
                   <div className={css.inputWrapper}>
-                    <p className={css.titleLabel}>
-                      Write down how much water you will drink:{" "}
-                    </p>
-
+                    <p className={css.text}>Your weight in kilograms:</p>
                     <Inputs
                       type="number"
                       className={css.field}
-                      name="waterYouDrink"
+                      name="weightInKg"
                       placeholder="0"
                     />
                   </div>
-                  <div className={css.btn}>
-                    <Button type="submit" cssstyle="save">
-                      Save
-                    </Button>
+                  <div className={css.inputWrapper}>
+                    <p className={css.text}>
+                      The time of active participation in sports or other
+                      activities with a high physical. load in hours:
+                    </p>
+                    <Inputs
+                      type="number"
+                      className={css.field}
+                      name="loadInHours"
+                      placeholder="0"
+                    />
                   </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </ModalBackdrop>
-        <Toaster
-        // position="top-right"
-        // reverseOrder={false}
-        // toastOptions={{
-        //   style: {
-        //     background: "#333",
-        //     color: "#fff",
-        //     zIndex: 999,
-        //   },
-        // }}
-        />
-      </>
+
+                  <div className={css.amountWraper}>
+                    <p className={`${css.text} ${css.text1}`}>
+                      The required amount of water in liters per day:
+                    </p>
+                    <span className={css.spanResult}>
+                      {calculateWaterNorm(
+                        parseFloat(values.weightInKg || 0),
+                        parseFloat(values.loadInHours || 0),
+                        values.option === "female"
+                      )}{" "}
+                      L
+                    </span>
+                  </div>
+                </div>
+                <div className={css.inputWrapper}>
+                  <p className={css.titleLabel}>
+                    Write down how much water you will drink:{" "}
+                  </p>
+
+                  <Inputs
+                    type="number"
+                    className={css.field}
+                    name="waterYouDrink"
+                    placeholder="0"
+                  />
+                </div>
+                <div className={css.btn}>
+                  <Button
+                    type="submit"
+                    cssstyle="save"
+                    disabled={
+                      !values.weightInKg ||
+                      !values.loadInHours ||
+                      !values.waterYouDrink ||
+                      !values.option
+                    }
+                  >
+                    Save
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </ModalBackdrop>
+      <Toaster
+      // position="top-right"
+      // reverseOrder={false}
+      // toastOptions={{
+      //   style: {
+      //     background: "#333",
+      //     color: "#fff",
+      //     zIndex: 999,
+      //   },
+      // }}
+      />
+    </>
     )
   );
 };
