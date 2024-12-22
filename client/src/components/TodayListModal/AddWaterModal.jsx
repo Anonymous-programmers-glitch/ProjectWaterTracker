@@ -153,6 +153,7 @@ const AddWaterModal = () => {
                     placeholder="Enter amount"
                     step="50"
                     value={values.manualAmount}
+                    
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
                       setFieldValue("manualAmount", value);

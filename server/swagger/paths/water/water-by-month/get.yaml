@@ -24,11 +24,30 @@ parameters:
       example: 2024
 responses:
   '200':
-    description: Successfully retrieved waterToday consumption data for the month.
+    description: Successfully retrieved water consumption data for the month.
     content:
       application/json:
         schema:
-          $ref: ../../../components/schemas/water.yaml
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                example: '2024-12-01'
+              dailyNorma:
+                type: string
+                example: '2000'
+              percentageConsumed:
+                type: string
+                example: '75'
+              entries:
+                type: integer
+                example: 3
+              consumedWaterByDay:
+                type: string
+                example: '1500'
   '400':
     $ref: ../../../components/responses/400.yaml
   '401':
