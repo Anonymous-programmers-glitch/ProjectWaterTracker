@@ -59,7 +59,7 @@ const EditListModal = () => {
   }, [isOpenModal, handleKeyDown]);
 
   const validationSchema = Yup.object({
-    manualAmount: Yup.number()
+    amount: Yup.number()
       .min(50, "Minimum amount is 50 ml")
       .max(5000, "Maximum amount is 5000 ml")
       .integer("Amount must be an integer")
@@ -161,26 +161,14 @@ const EditListModal = () => {
                   <Inputs
                     className={css.field}
                     type="number"
-                    name="manualAmount"
+                    name="amount"
                     placeholder="Enter amount"
                     step="50"
                     min="0"
-                    value={values.manualAmount}
+                    value={values.amount}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/[^0-9]/g, ""); // Убираем всё, кроме цифр
-                      if (value.length <= 4) {
-                        // Ограничиваем длину значения 4 цифрами
-                        setFieldValue(
-                          "manualAmount",
-                          Math.max(0, Number(value))
-                        ); // Убираем отрицательные значения
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      // Блокируем ввод '-', '+', и букв 'e' или 'E'
-                      if (["e", "E", "+", "-"].includes(e.key)) {
-                        e.preventDefault();
-                      }
+                      const value = Math.max(0, Number(e.target.value));
+                      setFieldValue("manualAmount", value);
                     }}
                   />
                 </div>

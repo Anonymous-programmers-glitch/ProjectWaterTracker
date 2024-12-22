@@ -156,21 +156,10 @@ const AddWaterModal = () => {
                     step="50"
                     min="0"
                     value={values.manualAmount}
+                    
                     onChange={(e) => {
-                      const value = e.target.value.replace(/[^0-9]/g, ""); // Убираем всё, кроме цифр
-                      if (value.length <= 4) {
-                        // Ограничиваем длину значения 4 цифрами
-                        setFieldValue(
-                          "manualAmount",
-                          Math.max(0, Number(value))
-                        ); // Убираем отрицательные значения
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      // Блокируем ввод '-', '+', и букв 'e' или 'E'
-                      if (["e", "E", "+", "-"].includes(e.key)) {
-                        e.preventDefault();
-                      }
+                      const value = Math.max(0, Number(e.target.value));
+                      setFieldValue("manualAmount", value);
                     }}
                   />
                 </div>
