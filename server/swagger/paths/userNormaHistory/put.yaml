@@ -53,9 +53,6 @@ responses:
             data:
               type: object
               properties:
-                userId:
-                  type: string
-                  example: '1234567890abcdef12345678'
                 date:
                   type: string
                   format: date
