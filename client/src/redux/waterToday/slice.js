@@ -16,6 +16,7 @@ function handlePending(state) {
 function handleRejected(state, action) {
   state.isLoading = false;
   state.error = action.payload;
+  console.log(action.payload);
 }
 
 const slice = createSlice({

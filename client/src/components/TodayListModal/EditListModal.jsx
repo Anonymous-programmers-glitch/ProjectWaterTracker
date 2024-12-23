@@ -58,11 +58,14 @@ const EditListModal = () => {
     };
   }, [isOpenModal, handleKeyDown]);
 
-  const validationSchema = Yup.object().shape({
+
+  const validationSchema = Yup.object({
     amount: Yup.number()
-      .min(50, "Minimum water amount is 50 ml")
-      .max(5000, "Maximum water amount is 5000 ml")
-      .required("This field is required"),
+      .min(50, "Minimum amount is 50 ml")
+      .max(15000, "Maximum amount is 15000 ml")
+      .integer("Amount must be an integer")
+      .required("Amount of water is required")
+      .typeError("Please enter a valid number"),
   });
 
   return (
@@ -162,10 +165,13 @@ const EditListModal = () => {
                     name="amount"
                     placeholder="Enter amount"
                     step="50"
+
+                    min="0"
                     value={values.amount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
-                      setFieldValue("amount", value);
+                      setFieldValue("manualAmount", value);
+
                     }}
                   />
                 </div>
