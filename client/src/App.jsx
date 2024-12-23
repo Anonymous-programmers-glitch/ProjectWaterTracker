@@ -1,5 +1,5 @@
 import "./App.css";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
 import SuspenseFallback from "./components/SuspenseFallback/SuspenseFallback.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage.jsx";
@@ -20,8 +20,6 @@ const Layout = lazy(() => import("./components/Layout/Layout.jsx"));
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-
-  const [modalActive, setModalActive] = useState(true);
 
   useEffect(() => {
     dispatch(refresh());
