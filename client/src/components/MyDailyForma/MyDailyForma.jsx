@@ -145,6 +145,9 @@ const MyDailyNorma = () => {
                         className={css.field}
                         name="weightInKg"
                         placeholder="0"
+                        min="0"
+                        max="200"
+                        step="1"
                       />
                     </div>
                     <div className={css.inputWrapper}>
@@ -157,7 +160,11 @@ const MyDailyNorma = () => {
                         className={css.field}
                         name="loadInHours"
                         placeholder="0"
+                        min="0"
+                        max="24"
+                        step="1"
                       />
+                      {/* < className={css.field} type="number" name="loadInHours" placeholder="0"/> */}
                     </div>
 
                     <div className={css.amountWraper}>
@@ -184,6 +191,9 @@ const MyDailyNorma = () => {
                       className={css.field}
                       name="waterYouDrink"
                       placeholder="0"
+                      min="0"
+                      max="5"
+                      step="0.1"
                     />
                   </div>
                   <div className={css.btn}>
