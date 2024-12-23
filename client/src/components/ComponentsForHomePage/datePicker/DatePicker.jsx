@@ -6,6 +6,7 @@ import {
   nextMonth,
   prevMonth,
 } from "../../../redux/changeMonth/changeMonthSlice.js";
+import TextButton from '../../ui/TextButton/TextButton.jsx';
 import css from "./datePicker.module.css";
 
 function DatePicker() {
@@ -32,13 +33,13 @@ function DatePicker() {
 
   return (
     <div className={css.datepicker}>
-      <button className={css.but} onClick={handlePrevMonth}>
+      <TextButton clas={css.but} onClick={handlePrevMonth}>
         &lt;
-      </button>
+      </TextButton>
       <span className={css.monthyear}>{getMonthYear(month)}</span>
-      {isNextMonth && <button className={css.but} onClick={handleNextMonth}>
+      {isNextMonth && <TextButton clas={css.but} onClick={handleNextMonth}>
         &gt;
-      </button>}
+      </TextButton>}
     </div>
   );
 }
