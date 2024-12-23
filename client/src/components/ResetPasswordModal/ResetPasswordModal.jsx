@@ -93,12 +93,9 @@ const ResetPasswordModal = () => {
                 type="email"
                 name="email"
                 placeholder="your_email@mail.com"
-                className={css.field}
               />
               <div className={css.modalButtons}>
-                <Button type="submit" cssstyle={css.btnCancel}>
-                  Send
-                </Button>
+              <Button cssstyle="save">Send</Button>
               </div>
             </Form>
           )}
