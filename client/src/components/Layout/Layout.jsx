@@ -1,17 +1,15 @@
-import { Outlet } from "react-router";
+import { Outlet } from "react-router"; 
 import AppBar from "../AppBar/AppBar";
-import { Footer } from "../Footer/Footer.jsx";
 import css from "./Layout.module.css";
 
 const Layout = () => {
   return (
-    <div className={css.Layout}>
+    <>
       <AppBar />
-      <main className={css.Content}>
+      <main className={css.container}>
         <Outlet />
       </main>
-      <Footer />
-    </div>
+    </>
   );
 };
 
