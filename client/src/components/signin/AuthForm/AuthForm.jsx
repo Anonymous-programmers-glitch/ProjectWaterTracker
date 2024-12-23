@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import css from "./AuthForm.module.css";
 //import Input from "../../ui/Inputs/Inputs.jsx";
 import Button from "../../ui/Button/Button.jsx";
+import TextButton from "../../ui/TextButton/TextButton.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import { openResetPasswordModal } from "../../../redux/modalToggle/slice.js";
@@ -115,20 +116,22 @@ export default function SignInForm() {
                   className={css.error}
                 />
               </div>
+              
               <Button cssstyle="signin">Sign In</Button>
               {/* <NavLink to="/forgotpassword" className={css.link}>
                 <p>Forgot password?</p>
               </NavLink> */}
+              <TextButton onClick={() => dispatch(openResetPasswordModal())}>
+        Forgot your password?
+      </TextButton>
               <NavLink to="/signup" className={css.link}>
                 <p>Sign up</p>
-              </NavLink>
+              </NavLink>  
             </Form>
           );
         }}
       </Formik>
-      <Button cssstyle="psw" onClick={() => dispatch(openResetPasswordModal())}>
-        Forgot your password?
-      </Button>
+      
       {isResetPasswordModalOpen && <ResetPasswordModal />}
     </>
   );
