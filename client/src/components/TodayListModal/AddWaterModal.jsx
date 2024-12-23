@@ -77,9 +77,8 @@ const AddWaterModal = () => {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
 
-      {isError && <Toaster position="top-center" reverseOrder={false} />}
-      {isError  || <Toaster position="top-center" reverseOrder={false} />}
       {isOpen && (
         <ModalBackdrop
           onClick={(e) => {
@@ -100,49 +99,51 @@ const AddWaterModal = () => {
               </button>
             </div>
 
-            <Formik
-              initialValues={{
-                manualAmount: 0,
-                manualTime: time,
-              }}
-              enableReinitialize
-              onSubmit={handleSubmit}
-              validationSchema={validationSchema}
-            >
-              {({ values, setFieldValue, errors, touched }) => (
-                <Form className={css.form}>
-                  <div className={css.formGroupWater}>
-                    <p className={css.text}>Choose a value:</p>
-                    <label className={css.labelWater}>Amount of water:</label>
-                    <div className={css.amountButtons}>
-                      <button
-                        className={css.buttonWater}
-                        type="button"
-                        onClick={() =>
-                          setFieldValue(
-                            "manualAmount",
-                            Math.max(0, values.manualAmount - 50),
-                          )
-                        }
-                      >
-                        <MinusSmall size={24} />
-                      </button>
-                      <span className={css.amountTotalWater}>
-                        {values.manualAmount} ml
-                      </span>
-                      <button
-                        type="button"
-                        className={css.buttonWater}
-                        onClick={() =>
-                          setFieldValue(
-                            "manualAmount",
-                            values.manualAmount + 50,
-                          )
-                        }
-                      >
-                        <PlusSmall size={24} />
-                      </button>
-                    </div>
+          <Formik
+            initialValues={{
+              manualAmount: 0,
+              manualTime: time,
+            }}
+            enableReinitialize
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            {({ values, setFieldValue, errors, touched }) => (
+              <Form className={css.form}>
+                <div className={css.formGroupWater}>
+                  <p className={css.text}>Choose a value:</p>
+                  <label className={css.labelWater}>Amount of water:</label>
+                  <div className={css.amountButtons}>
+                    <button
+                      className={css.buttonWater}
+                      type="button"
+                      onClick={() =>
+                        setFieldValue(
+                          "manualAmount",
+                          Math.max(0, values.manualAmount - 50)
+                        )
+                      }
+                      disabled={values.manualAmount <= 0}
+                    >
+                      <MinusSmall size={24} />
+                    </button>
+                    <span className={css.amountTotalWater}>
+                      {values.manualAmount} ml
+                    </span>
+                    <button
+                      className={css.buttonWater}
+                      type="button"
+                      onClick={() =>
+                        setFieldValue(
+                          "manualAmount",
+                          Math.min(5000, values.manualAmount + 50)
+                        )
+                      }
+                      disabled={values.manualAmount >= 5000}
+                    >
+                      <PlusSmall size={24} />
+                    </button>
+                  </div>
 
                     {errors.manualAmount && touched.manualAmount && (
                       <div className={css.error}>{errors.manualAmount}</div>
@@ -166,23 +167,24 @@ const AddWaterModal = () => {
                     />
                   </div>
 
-                  <div className={css.formGroupTime}>
-                    <label htmlFor="manualAmount" className={css.label}>
-                      Enter the value of the water used:
-                    </label>
-                    <Inputs
-                      className={css.field}
-                      type="number"
-                      name="manualAmount"
-                      placeholder="Enter amount"
-                      step="50"
-                      value={values.manualAmount}
-                      onChange={(e) => {
-                        const value = Math.max(0, Number(e.target.value));
-                        setFieldValue("manualAmount", value);
-                      }}
-                    />
-                  </div>
+                <div className={css.formGroupTime}>
+                  <label htmlFor="manualAmount" className={css.label}>
+                    Enter the value of the water used:
+                  </label>
+                  <Inputs
+                    className={css.field}
+                    type="number"
+                    name="manualAmount"
+                    placeholder="Enter amount"
+                    step="50"
+                    min="0"
+                    value={values.manualAmount}
+                    onChange={(e) => {
+                      const value = Math.max(0, Number(e.target.value));
+                      setFieldValue("manualAmount", value);
+                    }}
+                  />
+                </div>
 
                   <div className={css.formFooter}>
                     <span className={css.totalWater}>

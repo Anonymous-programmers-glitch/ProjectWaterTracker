@@ -87,6 +87,15 @@
   margin-top: 5px;
 }
 
+.buttonWater {
+  border: 1px solid #9ebbff;
+  border-radius: 30px;
+  padding: 10px;
+  width: 44px;
+  height: 44px;
+  box-shadow: 0 2px 4px 0 rgba(64, 123, 255, 0.2);
+}
+
 .amountButtons {
   display: flex;
   align-items: center;
