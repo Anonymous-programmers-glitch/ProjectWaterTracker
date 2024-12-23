@@ -54,12 +54,25 @@
   stroke: var(--primery-color-blue);
 }
 
+/* .uploadSvg:hover {
+  stroke: var(--secondary-color-5);
+  fill: var(--secondary-color-5);
+} */
+
 .buttonUpload {
   display: flex;
   gap: 8px;
   color: var(--primery-color-blue);
   position: relative;
 }
+.buttonUpload:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+
+/* .ArrowOutline:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+  fill: var--secondary-color-5();
+} */
 
 .userLogoBtnAvatarWrapper {
   display: flex;
@@ -199,6 +212,13 @@
   box-shadow: none;
 }
 
+.btn:disabled {
+  background-color: #d3d3d3;
+  color: #a1a1a1;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
+
 .formik-error {
   color: red;
   font-size: 12px;
@@ -217,6 +237,21 @@
   .wrapperTwoBlocks {
     flex-direction: column;
   }
+
+  .labelUserName {
+    padding-right: 152px;
+  }
+
+  .labelUser {
+    padding-right: 152px;
+  }
+  /* .nameAndEmailInput {
+    width: 392px;
+  }
+
+  .input {
+    width: 392px;
+  } */
 }
 
 @media screen and (max-width: 376px) {
