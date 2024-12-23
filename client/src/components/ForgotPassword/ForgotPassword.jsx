@@ -1,11 +1,10 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useId, useState } from "react";
 import { useDispatch } from "react-redux";
-//import { signup } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
-import Input from "../ui/Inputs/Inputs.jsx";
 import Button from "../ui/Button/Button.jsx";
+import Inputs from '../ui/Inputs/Inputs.jsx';
 import css from "./ForgotPassword.module.css";
 import EyeOutline from "../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
@@ -85,7 +84,7 @@ export default function ForgotPassword() {
             <label className={css.label} htmlFor={passwordId}>
               Enter a new password
               <div className={css.psw}>
-                <Input
+                <Inputs
                   type={inputType}
                   name="password"
                   placeholder="Password"
@@ -99,7 +98,7 @@ export default function ForgotPassword() {
             <label className={css.label} htmlFor={repeatPasswordId}>
               Repeat new password
               <div className={css.psw}>
-                <Input
+                <Inputs
                   type={inputType}
                   name="repeatPassword"
                   placeholder="Repeat password"
