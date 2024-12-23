@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { openDailyNormaModal } from "../../../redux/modalToggle/slice.js";
 import { selectUser } from "../../../redux/user/selectors";
+import TextButton from '../../ui/TextButton/TextButton.jsx';
 import css from "./mydailycard.module.css";
 
 function MyDailyCard() {
@@ -15,9 +16,9 @@ function MyDailyCard() {
       <p className={css.title}>My daily norma</p>
       <div className={css.cardfooter}>
         <p className={css.text}>{dailyNorma / 1000} L</p>
-        <button className={css.button} onClick={handleClick}>
+        <TextButton clas={css.button} onClick={handleClick}>
           Edit
-        </button>
+        </TextButton>
       </div>
     </div>
   );
