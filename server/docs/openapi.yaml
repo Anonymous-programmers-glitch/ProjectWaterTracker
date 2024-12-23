@@ -9,7 +9,7 @@ info:
 tags:
   - name: Auth
     description: Auth operations.
-  - name: User
+  - name: Users
     description: User operations.
   - name: Water
     description: Water operations.
