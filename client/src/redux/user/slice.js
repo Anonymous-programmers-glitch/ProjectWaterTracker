@@ -29,7 +29,7 @@ const handlePending = (state) => {
 
 const handleRejected = (state, action) => {
   state.isLoading = false;
-  state.error = action.payload ?? "Unknown error";
+  state.error = action.payload.response ?? "Unknown error";
 };
 
 const slice = createSlice({

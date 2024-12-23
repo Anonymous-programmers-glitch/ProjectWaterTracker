@@ -11,6 +11,7 @@ import { closeDailyNormaModal } from "../../redux/modalToggle/slice.js";
 import { update } from "../../redux/user/operations.js";
 import { putHistory } from "../../redux/updateHistori/operations.js";
 import Inputs from "../ui/Inputs/Inputs.jsx";
+import dayjs from "dayjs";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -39,24 +40,18 @@ const MyDailyNorma = () => {
   };
 
   const handleSubmit = (values, actions) => {
-    try {
-      const myDailyNorma = values.waterYouDrink * 1000;
-      const currentDate = new Date().toISOString();
-      dispatch(update({ dailyNorma: myDailyNorma }));
-      dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
-      toast.success("Your daily norma has been successfully updated!");
-      actions.resetForm();
-      handleCloseModal();
-    } catch (error) {
-      toast.error("Something wrong! Please try again.");
-    }
+    const myDailyNorma = values.waterYouDrink * 1000;
+    const currentDate = dayjs().format("YYYY-MM-DD");
+    dispatch(update({ dailyNorma: myDailyNorma }));
+    dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
+    actions.resetForm();
+    handleCloseModal();
   };
 
   const handleCloseModal = () => {
     dispatch(closeDailyNormaModal());
   };
 
-  // const notify = () => toast("Personal data updated");
   return (
     isOpen && (
       <>
