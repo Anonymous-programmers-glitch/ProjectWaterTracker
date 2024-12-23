@@ -176,8 +176,9 @@ const AddWaterModal = () => {
                     type="number"
                     name="manualAmount"
                     placeholder="Enter amount"
-                    step="50"
                     min="0"
+                    max="5000"
+                    step="50"
                     value={values.manualAmount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));

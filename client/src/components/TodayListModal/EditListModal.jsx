@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, Fragment } from 'react';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -166,14 +166,17 @@ const EditListModal = () => {
                     type="number"
                     name="amount"
                     placeholder="Enter amount"
-                    step="50"
                     min="0"
+                    max="5000"
+                    step="50"
                     value={values.amount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
                       setFieldValue("manualAmount", value);
                     }}
                   />
+                  <Fragment></Fragment>
+
                 </div>
 
                 <div className={css.formFooter}>
