@@ -152,31 +152,31 @@ export const updateAvatar = createAsyncThunk(
 //   }
 // );
 
-// // Операція запиту на скидання паролю
-// export const requestResetToken = createAsyncThunk(
-//   "user/requestResetToken",
-//   async (email, thunkAPI) => {
-//     try {
-//       const response = await axios.post("/auth/send-reset-email", { email });
-//       return response.data.message;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+// Операція запиту на скидання паролю
+export const requestResetToken = createAsyncThunk(
+  "user/requestResetToken",
+  async (email, thunkAPI) => {
+    try {
+      const response = await axios.post("/auth/send-reset-email", { email });
+      return response.data.message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-// // Операція скидання паролю
-// export const resetPassword = createAsyncThunk(
-//   "user/resetPassword",
-//   async (payload, thunkAPI) => {
-//     try {
-//       const response = await axios.post("/auth/reset-pwd", payload);
-//       return response.data.message;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+// Операція скидання паролю
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.post("/auth/reset-pwd", payload);
+      return response.data.message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 // // Операція отримання URL для OAuth авторизації через Google
 // export const getGoogleOAuthUrl = createAsyncThunk(

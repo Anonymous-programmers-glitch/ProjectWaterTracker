@@ -77,8 +77,8 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route path="/success" element={<SuccessPage />} />
-      <Route path="*" element={<NotFoundPage />} />
       <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

@@ -3,8 +3,8 @@ import {
   login,
   logout,
   refresh,
-  // requestResetToken,
-  // resetPassword,
+  requestResetToken,
+  resetPassword,
   signup,
   update,
   updateAvatar,
@@ -79,54 +79,53 @@ const slice = createSlice({
       };
     });
 
+    builder.addCase(updateAvatar.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user.avatarUrl = action.payload;
+    });
+
+    // builder
+    //   .addCase(refreshToken.pending, (state) => {
+    //     state.isRefreshing = true;
+    //     state.error = null;
+    //   })
+    //   .addCase(refreshToken.fulfilled, (state, action) => {
+    //     state.isRefreshing = false;
+    //     state.isLoggedIn = true;
+    //     state.accessToken = action.payload;
+    //   })
+    //   .addCase(refreshToken.rejected, (state, action) => {
+    //     state.isRefreshing = false;
+    //     state.error = action.payload;
+    //   });
+
     builder
-      .addCase(updateAvatar.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user.avatarUrl = action.payload;
+      .addCase(requestResetToken.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
       })
+      .addCase(requestResetToken.fulfilled, (state) => {
+        state.isLoading = false;
+        // state.accessToken = action.payload;
+      })
+      .addCase(requestResetToken.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload;
+      });
 
-      // builder
-      //   .addCase(refreshToken.pending, (state) => {
-      //     state.isRefreshing = true;
-      //     state.error = null;
-      //   })
-      //   .addCase(refreshToken.fulfilled, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.isLoggedIn = true;
-      //     state.accessToken = action.payload;
-      //   })
-      //   .addCase(refreshToken.rejected, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.error = action.payload;
-      //   });
-
-      // builder
-      //   .addCase(requestResetToken.pending, (state) => {
-      //     state.isLoading = true;
-      //     state.error = null;
-      //   })
-      //   .addCase(requestResetToken.fulfilled, (state) => {
-      //     state.isLoading = false;
-      //     // state.accessToken = action.payload;
-      //   })
-      //   .addCase(requestResetToken.rejected, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.error = action.payload;
-      //   });
-
-      // builder
-      //   .addCase(resetPassword.pending, (state) => {
-      //     state.isLoading = true;
-      //     state.error = null;
-      //   })
-      //   .addCase(resetPassword.fulfilled, (state) => {
-      //     state.isLoading = false;
-      //     // state.accessToken = action.payload;
-      //   })
-      //   .addCase(resetPassword.rejected, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.error = action.payload;
-      //   })
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+        // state.accessToken = action.payload;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload;
+      })
 
       .addMatcher(
         isAnyOf(

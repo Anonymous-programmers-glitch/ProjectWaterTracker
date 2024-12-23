@@ -8,3 +8,5 @@ export const selectDailyNormaModal = (state) =>
   state.modal.isDailyNormaModalOpen;
 export const selectDeleteModal = (state) => state.modal.isDeleteModalOpen;
 export const selectDeleteData = (state) => state.modal.deleteModalData;
+export const selectResetPasswordModal = (state) =>
+  state.modal.isResetPasswordModalOpen;

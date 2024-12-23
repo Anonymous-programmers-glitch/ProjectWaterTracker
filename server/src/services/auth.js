@@ -176,8 +176,7 @@ export const requestResetToken = async (email) => {
 
   const html = template({
     name: user.name ?? 'Guest',
-    // link: `${appDomain}/auth/reset-pwd?token=${resetToken}`,
-    link: `http://localhost:5173/forgotpassword?token=${resetToken}`,
+    link: `https://project-water-tracker.vercel.app/forgotpassword?token=${resetToken}`,
     currentYear: new Date().getFullYear(),
   });
 

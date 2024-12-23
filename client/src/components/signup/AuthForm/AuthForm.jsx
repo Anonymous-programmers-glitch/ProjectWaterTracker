@@ -9,7 +9,6 @@ import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
-//import { CheckEmail } from "../../signin/errorMsgFn.jsx";
 
 const initialValues = {
   email: "",
@@ -23,7 +22,16 @@ export default function SignUpForm() {
     password: Yup.string()
       .required("Please confirm your password")
       .min(8, "Should be 8 chars minimum.")
-      .max(64, "Should be 64 chars maximum."),
+      .max(64, "Should be 64 chars maximum.")
+      .matches(/(?=.*[0-9])/, "Password must contain a number.")
+      .matches(
+        /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+        "Password must contain a special character."
+      )
+      .matches(
+        /^(?=.*[A-Z])/,
+        "Password must contain at least one uppercase letter."
+      ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
