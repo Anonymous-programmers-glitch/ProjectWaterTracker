@@ -87,12 +87,14 @@
   width: 100%;
   margin-bottom: 16px;
 }
+
 .textaddbtn {
   display: block;
   width: 100%;
   text-align: left;
   margin-bottom: 16px;
 }
+
 @media screen and (min-width: 768px) {
   .background {
     /* background-image: url("../../assets/homepage/backgroundtablethome.svg"); */

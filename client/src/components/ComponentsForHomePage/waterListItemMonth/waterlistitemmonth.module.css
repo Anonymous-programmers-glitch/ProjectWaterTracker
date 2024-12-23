@@ -13,7 +13,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: var(--primery-color-white) ;
+  background: var(--primery-color-white);
   border-radius: 32px;
   font-weight: 400;
   font-size: 14px;
@@ -31,5 +31,10 @@
   font-size: 10px;
   line-height: 160%;
   color: var(--secondary-color-4);
+}
 
+@media screen and (min-width: 1440px) {
+  .item {
+    position: relative;
+  }
 }

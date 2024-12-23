@@ -26,3 +26,10 @@
   line-height: 1.25;
   color: var(--primery-color-black);
 }
+
+@media screen and (min-width: 1440px) {
+  .popUp  {
+    top: -188px;
+    left: -270px;
+  }
+}
