@@ -158,9 +158,9 @@ export const requestResetToken = createAsyncThunk(
   async (email, thunkAPI) => {
     try {
       const response = await axios.post("/auth/send-reset-email", { email });
-      return response.data.message;
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.status);
     }
   }
 );
