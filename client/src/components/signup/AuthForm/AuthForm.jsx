@@ -9,7 +9,6 @@ import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
-//import { CheckEmail } from "../../signin/errorMsgFn.jsx";
 
 const initialValues = {
   email: "",
