@@ -3,8 +3,8 @@ import {
   login,
   logout,
   refresh,
-  // requestResetToken,
-  // resetPassword,
+  requestResetToken,
+  resetPassword,
   signup,
   update,
   updateAvatar,
@@ -29,7 +29,7 @@ const handlePending = (state) => {
 
 const handleRejected = (state, action) => {
   state.isLoading = false;
-  state.error = action.payload ?? "Unknown error";
+  state.error = action.payload.response ?? "Unknown error";
 };
 
 const slice = createSlice({
@@ -69,64 +69,69 @@ const slice = createSlice({
         state.error = action.payload;
       });
 
-    builder.addCase(update.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.error = null;
-      state.isEdit = true;
-      state.user = {
-        ...state.user,
-        ...action.payload.user,
-      };
-    });
-
     builder
-      .addCase(updateAvatar.fulfilled, (state, action) => {
+      .addCase(update.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user.avatarUrl = action.payload;
+        state.error = null;
+        state.isEdit = true;
+        state.user = {
+          ...state.user,
+          ...action.payload.user,
+        };
       })
 
-      // builder
-      //   .addCase(refreshToken.pending, (state) => {
-      //     state.isRefreshing = true;
-      //     state.error = null;
-      //   })
-      //   .addCase(refreshToken.fulfilled, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.isLoggedIn = true;
-      //     state.accessToken = action.payload;
-      //   })
-      //   .addCase(refreshToken.rejected, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.error = action.payload;
-      //   });
+      //додав свій кейс з реджектід для нотіфікашок
+      .addCase(update.rejected, (state, action) => {
+        state.error = action.payload.message;
+      });
 
-      // builder
-      //   .addCase(requestResetToken.pending, (state) => {
-      //     state.isLoading = true;
-      //     state.error = null;
-      //   })
-      //   .addCase(requestResetToken.fulfilled, (state) => {
-      //     state.isLoading = false;
-      //     // state.accessToken = action.payload;
-      //   })
-      //   .addCase(requestResetToken.rejected, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.error = action.payload;
-      //   });
+    builder.addCase(updateAvatar.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user.avatarUrl = action.payload;
+    });
 
-      // builder
-      //   .addCase(resetPassword.pending, (state) => {
-      //     state.isLoading = true;
-      //     state.error = null;
-      //   })
-      //   .addCase(resetPassword.fulfilled, (state) => {
-      //     state.isLoading = false;
-      //     // state.accessToken = action.payload;
-      //   })
-      //   .addCase(resetPassword.rejected, (state, action) => {
-      //     state.isRefreshing = false;
-      //     state.error = action.payload;
-      //   })
+    // builder
+    //   .addCase(refreshToken.pending, (state) => {
+    //     state.isRefreshing = true;
+    //     state.error = null;
+    //   })
+    //   .addCase(refreshToken.fulfilled, (state, action) => {
+    //     state.isRefreshing = false;
+    //     state.isLoggedIn = true;
+    //     state.accessToken = action.payload;
+    //   })
+    //   .addCase(refreshToken.rejected, (state, action) => {
+    //     state.isRefreshing = false;
+    //     state.error = action.payload;
+    //   });
+
+    builder
+      .addCase(requestResetToken.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(requestResetToken.fulfilled, (state) => {
+        state.isLoading = false;
+        // state.accessToken = action.payload;
+      })
+      .addCase(requestResetToken.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload;
+      });
+
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+        // state.accessToken = action.payload;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload;
+      })
 
       .addMatcher(
         isAnyOf(
