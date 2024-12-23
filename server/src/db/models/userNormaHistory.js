@@ -14,6 +14,8 @@ const userNormaHistorySchema = new Schema(
     },
     dailyNorma: {
       type: Number,
+      min: 1,
+      max: 15000,
       default: 2000,
     },
   },

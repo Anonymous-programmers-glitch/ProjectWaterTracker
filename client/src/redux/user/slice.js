@@ -48,6 +48,7 @@ const slice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload.user;
+      state.avatarUrl = action.payload.user.avatarUrl;
       state.accessToken = action.payload.accessToken;
       state.isLoggedIn = true;
       state.error = null;

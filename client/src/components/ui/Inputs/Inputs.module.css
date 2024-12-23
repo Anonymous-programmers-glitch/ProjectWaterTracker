@@ -27,6 +27,12 @@
   border: 1px solid var(--secondary-color-3);
 }
 
+.errormes{font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: #f16161;
+margin-top: 4px;}
+
 @media screen and (min-width: 768px) {
   .field {
     width: 336px;

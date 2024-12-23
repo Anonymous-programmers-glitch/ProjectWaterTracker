@@ -23,7 +23,7 @@ requestBody:
           amount:
             description: The amount of waterToday consumed (in milliliters).
             type: number
-            minimum: 50
+            minimum: 1
             maximum: 5000
             example: 250
 responses:
@@ -52,7 +52,6 @@ responses:
                 - userId
                 - date
                 - amount
-                - currentDailyNorm
               properties:
                 _id:
                   type: string
@@ -71,10 +70,7 @@ responses:
                   type: number
                   description: The amount of waterToday consumed (in milliliters).
                   example: 250
-                currentDailyNorm:
-                  type: number
-                  description: The current daily waterToday consumption norm for the user (in milliliters).
-                  example: 2000
+
   '400':
     $ref: ../../components/responses/400.yaml
   '401':
