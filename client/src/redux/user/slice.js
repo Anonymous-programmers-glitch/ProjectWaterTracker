@@ -112,7 +112,7 @@ const slice = createSlice({
       })
       .addCase(requestResetToken.fulfilled, (state) => {
         state.isLoading = false;
-        // state.accessToken = action.payload;
+        state.error = null;
       })
       .addCase(requestResetToken.rejected, (state, action) => {
         state.isRefreshing = false;
@@ -126,7 +126,6 @@ const slice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state) => {
         state.isLoading = false;
-        // state.accessToken = action.payload;
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isRefreshing = false;
