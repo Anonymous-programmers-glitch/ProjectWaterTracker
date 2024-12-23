@@ -40,6 +40,7 @@ const slice = createSlice({
     builder.addCase(signup.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
+      state.error = null;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
@@ -48,6 +49,7 @@ const slice = createSlice({
       state.avatarUrl = action.payload.user.avatarUrl;
       state.accessToken = action.payload.accessToken;
       state.isLoggedIn = true;
+      state.error = null;
     });
 
     builder.addCase(logout.fulfilled, () => {
