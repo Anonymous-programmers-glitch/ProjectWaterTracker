@@ -15,7 +15,17 @@ export const signup = createAsyncThunk(
       const { user } = (await axios.post("/auth/register", credentials)).data;
       return user;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.log(
+        "error.response.data.status :>> ",
+        error.response.data.status
+      );
+      console.log(
+        "error.response.data.message :>> ",
+        error.response.data.message
+      );
+      //return thunkAPI.rejectWithValue(error.message);
+      //return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -35,7 +45,7 @@ export const login = createAsyncThunk(
       setAuthHeader(response.data.accessToken);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
