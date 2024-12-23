@@ -18,5 +18,5 @@ export const fetchWaterMonth = createAsyncThunk(
   },
   {
     condition: condition,
-  },
+  }
 );

@@ -77,9 +77,8 @@ const AddWaterModal = () => {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
 
-      {isError && <Toaster position="top-center" reverseOrder={false} />}
-      {isError  || <Toaster position="top-center" reverseOrder={false} />}
       {isOpen && (
         <ModalBackdrop
           onClick={(e) => {

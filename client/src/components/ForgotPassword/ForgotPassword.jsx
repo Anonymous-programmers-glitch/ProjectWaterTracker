@@ -1,29 +1,40 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
+import { useNavigate } from "react-router-dom";
 import { useId, useState } from "react";
 import { useDispatch } from "react-redux";
-//import { signup } from "../../../redux/auth/operations.js";
 import * as Yup from "yup";
-import Input from "../ui/Inputs/Inputs.jsx";
 import Button from "../ui/Button/Button.jsx";
-import css from "./AuthForm.module.css";
+import Inputs from '../ui/Inputs/Inputs.jsx';
+import css from "./ForgotPassword.module.css";
 import EyeOutline from "../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
-// import { resetPassword } from "../../redux/user/operations.js";
-// import { useSearchParams } from "react-router";
+import { resetPassword } from "../../redux/user/operations.js";
+import { useSearchParams } from "react-router";
 
 const initialValues = {
   password: "",
   repeatPassword: "",
 };
 
-export default function AuthForm() {
-  // const [searchParams] = useSearchParams();
-  // const dispatch = useDispatch();
+export default function ForgotPassword() {
+  const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const ForgotSchema = Yup.object().shape({
     password: Yup.string()
       .required("Please confirm your password")
       .min(8, "Password is too short - should be 8 chars minimum.")
-      .max(64, "Password is too long - should be 64 chars maximum."),
+      .max(64, "Password is too long - should be 64 chars maximum.")
+      .matches(/(?=.*[0-9])/, "Password must contain a number.")
+      .matches(
+        /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+        "Password must contain a special character."
+      )
+      .matches(
+        /^(?=.*[A-Z])/,
+        "Password must contain at least one uppercase letter."
+      ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
       .oneOf([Yup.ref("password")], "Password must match"),
@@ -34,13 +45,13 @@ export default function AuthForm() {
   const passwordId = useId();
   const repeatPasswordId = useId();
 
-  // const handleSubmit = (values, actions) => {
-  //   const token = searchParams.get("token");
-  //   const { password } = values;
+  const handleSubmit = (values, actions) => {
+    const token = searchParams.get("token");
+    const { password } = values;
 
-  //   dispatch(resetPassword({ password, token }));
-  //   actions.resetForm();
-  // };
+    dispatch(resetPassword({ password, token }));
+    actions.resetForm();
+  };
 
   const [passwordVisible, setPasswordVisible] = useState(
     <EyeOutline size={size} />
@@ -57,10 +68,14 @@ export default function AuthForm() {
     }
   };
 
+  const handleSignInClick = () => {
+    navigate("/signin");
+  };
+
   return (
     <Formik
       initialValues={initialValues}
-      // onSubmit={handleSubmit}
+      onSubmit={handleSubmit}
       validationSchema={ForgotSchema}
     >
       {() => {
@@ -69,7 +84,7 @@ export default function AuthForm() {
             <label className={css.label} htmlFor={passwordId}>
               Enter a new password
               <div className={css.psw}>
-                <Input
+                <Inputs
                   type={inputType}
                   name="password"
                   placeholder="Password"
@@ -83,7 +98,7 @@ export default function AuthForm() {
             <label className={css.label} htmlFor={repeatPasswordId}>
               Repeat new password
               <div className={css.psw}>
-                <Input
+                <Inputs
                   type={inputType}
                   name="repeatPassword"
                   placeholder="Repeat password"
@@ -94,7 +109,9 @@ export default function AuthForm() {
                 </span>
               </div>
             </label>
-            <Button cssstyle="signup">Create new password</Button>
+            <Button cssstyle="signup" onClick={handleSignInClick}>
+              Create new password
+            </Button>
           </Form>
         );
       }}

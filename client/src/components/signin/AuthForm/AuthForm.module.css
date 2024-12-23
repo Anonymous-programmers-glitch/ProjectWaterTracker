@@ -80,8 +80,11 @@
 }*/
 
 .link {
-  height: 20px;
+  font-size: 16px;
+  line-height: 125%;
   color: var(--primery-color-blue);
+  transition: box-shadow 0.3s ease;
+  padding-left: 6px;
 }
 
 .link:hover {
@@ -130,5 +133,9 @@
   .btn {
     width: 384px;
     height: 44px;
+  }
+  .link {
+    font-size: 18px;
+    line-height: 133%;
   }
 }

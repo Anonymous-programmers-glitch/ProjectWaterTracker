@@ -10,6 +10,8 @@ const modalSlice = createSlice({
     isEditModalOpen: false,
     isDailyNormaModalOpen: false,
     isDeleteModalOpen: false,
+    isResetPasswordModalOpen: false,
+    deleteModalData: { id: "" },
     editModalData: {
       amount: "",
       date: "",
@@ -25,6 +27,7 @@ const modalSlice = createSlice({
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
       state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = false;
     },
     closeLogoModal: (state) => {
       state.isLogoModalOpen = false;
@@ -38,6 +41,7 @@ const modalSlice = createSlice({
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
       state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = false;
     },
     closeSettingModal: (state) => {
       state.isSettingModalOpen = false;
@@ -51,6 +55,7 @@ const modalSlice = createSlice({
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
       state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = false;
     },
     closeLogoutModal: (state) => {
       state.isLogoutModalOpen = false;
@@ -64,6 +69,7 @@ const modalSlice = createSlice({
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = false;
       state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = false;
     },
 
     closeAddModal: (state) => {
@@ -78,6 +84,7 @@ const modalSlice = createSlice({
       state.isEditModalOpen = true;
       state.isDailyNormaModalOpen = false;
       state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = false;
       state.editModalData = actions.payload || {
         amount: "",
         date: "",
@@ -101,28 +108,42 @@ const modalSlice = createSlice({
       state.isEditModalOpen = false;
       state.isDailyNormaModalOpen = true;
       state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = false;
     },
     closeDailyNormaModal: (state) => {
       state.isDailyNormaModalOpen = false;
     },
 
-    openDeleteModal: (state,action) => {
+    openDeleteModal: (state, action) => {
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
       state.isAddModalOpen = false;
       state.isEditModalOpen = false;
-      state.isDailyNormaModalOpen =false;
+      state.isDailyNormaModalOpen = false;
       state.isDeleteModalOpen = true;
-      state.deleteModalData = action.payload ||{
-        id:""
-      }
-
+      state.isResetPasswordModalOpen = false;
+      state.deleteModalData = action.payload || {
+        id: "",
+      };
     },
     closeDeleteModal: (state) => {
       state.isDeleteModalOpen = false;
-      state.deleteModalData ={id:""}
+      state.deleteModalData = { id: "" };
+    },
 
+    openResetPasswordModal: (state) => {
+      state.isLogoModalOpen = false;
+      state.isSettingModalOpen = false;
+      state.isLogoutModalOpen = false;
+      state.isAddModalOpen = false;
+      state.isEditModalOpen = false;
+      state.isDailyNormaModalOpen = false;
+      state.isDeleteModalOpen = false;
+      state.isResetPasswordModalOpen = true;
+    },
+    closeResetPasswordModal: (state) => {
+      state.isResetPasswordModalOpen = false;
     },
   },
 });
@@ -141,8 +162,9 @@ export const {
   openDailyNormaModal,
   closeDailyNormaModal,
   openDeleteModal,
-  closeDeleteModal
-
+  closeDeleteModal,
+  openResetPasswordModal,
+  closeResetPasswordModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
