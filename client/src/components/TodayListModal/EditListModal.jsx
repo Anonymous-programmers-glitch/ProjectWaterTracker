@@ -117,6 +117,7 @@ const EditListModal = () => {
                       onClick={() =>
                         setFieldValue("amount", Math.max(0, values.amount - 50))
                       }
+                      disabled={values.manualAmount <= 0}
                     >
                       <MinusSmall size={24} />
                     </button>
@@ -127,8 +128,10 @@ const EditListModal = () => {
                       className={css.buttonWater}
                       type="button"
                       onClick={() =>
-                        setFieldValue("amount", values.amount + 50)
+                        setFieldValue("amount", Math.min(5000, values.amount + 50)
+                      )
                       }
+                      disabled={values.manualAmount >= 5000}
                     >
                       <PlusSmall size={24} />
                     </button>
