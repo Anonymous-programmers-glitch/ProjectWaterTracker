@@ -98,49 +98,26 @@ export default function SettingModal() {
     setOpenPassword((prev) => !prev);
   };
 
-  // const handleSubmit = (values, actions) => {
-  //   const updatedValues = {};
-
-  //   Object.keys(values).forEach((key) => {
-  //     if (values[key] !== initialValues[key]) {
-  //       updatedValues[key] = values[key];
-  //     }
-  //   });
-
-  //   if (updatedValues.outdatedPassword && updatedValues.newPassword) {
-  //     const passwordPayload = {
-  //       outdatedPassword: updatedValues.outdatedPassword,
-  //       newPassword: updatedValues.newPassword,
-  //     };
-
-  //     dispatch(update(passwordPayload));
-  //     console.log("Пароль оновлено:", passwordPayload);
-  //     delete updatedValues.outdatedPassword;
-  //     delete updatedValues.newPassword;
-  //   }
-
-  //   // Обработка данных , кроме паролей
-  //   const otherFields = Object.keys(updatedValues).filter(
-  //     (key) => key !== "outdatedPassword" && key !== "newPassword"
-  //   );
-
-  //   if (otherFields.length > 0) {
-  //     const otherPayload = otherFields.reduce((acc, key) => {
-  //       acc[key] = updatedValues[key];
-  //       return acc;
-  //     }, {});
-
-  //     dispatch(update(otherPayload));
-  //   }
-
-  //   //
-  //   dispatch(closeSettingModal());
-
-  //   actions.resetForm();
-  // };
-
   const handleSubmit = async (values, actions) => {
     const updatedValues = {};
+
+    if (values.newPassword !== values.repeatNewPassword) {
+      toast.error("New passwords don't match.", {
+        autoClose: 2000,
+      });
+      return;
+    }
+
+    if (
+      values.outdatedPassword &&
+      (values.outdatedPassword === values.newPassword ||
+        values.outdatedPassword === values.repeatNewPassword)
+    ) {
+      toast.error("Old password cannot be the same as new passwords.", {
+        autoClose: 2000,
+      });
+      return;
+    }
 
     Object.keys(values).forEach((key) => {
       if (values[key] !== initialValues[key]) {
@@ -175,18 +152,17 @@ export default function SettingModal() {
         await dispatch(update(otherPayload));
       }
 
-      // alert("Успішна операція!");
-      toast.success("Успішна операція!", {
+      toast.success("Successfully updated!", {
         autoClose: 3000,
       });
 
-      // dispatch(closeSettingModal());
       setTimeout(() => {
         dispatch(closeSettingModal());
-      }, 3000);
+      }, 1000);
     } catch (error) {
-      // alert("Щось пішло не так: " + error.message);
-      toast.error("Щось пішло не так: " + error.message, { autoClose: 2000 });
+      toast.error("Something went wrong: ", {
+        autoClose: 2000,
+      });
 
       console.error(error);
     }
@@ -205,7 +181,6 @@ export default function SettingModal() {
 
   if (!isSettingsOpen) return null;
 
-  // додавання фото
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -237,217 +212,238 @@ export default function SettingModal() {
           onSubmit={handleSubmit}
           validationSchema={FeedbackSchema}
         >
-          <Form className={css.formWrapper}>
-            <h2 className={css.mainTitle}>Settings</h2>
-            <div className={css.wrapperToBtn}>
-              {/* <HiXMark
+          {({ dirty, isValid }) => (
+            <Form className={css.formWrapper}>
+              <h2 className={css.mainTitle}>Settings</h2>
+              <div className={css.wrapperToBtn}>
+                {/* <HiXMark
                   className={css.closeBtn}
                   size={24}
                   onClick={handleCloseModal}
                 /> */}
-              <div
-                className={css.closeBtn}
-                onClick={() => dispatch(closeSettingModal())}
-              >
-                <MarkOutline />
-              </div>
-
-              <h3 className={css.photoTitle}>Your photo</h3>
-              <div className={css.imgWrapper}>
-                {selectedFile || value.avatarUrl ? (
-                  <img
-                    src={
-                      selectedFile
-                        ? URL.createObjectURL(selectedFile)
-                        : value.avatarUrl
-                    }
-                    alt="User photo"
-                    className={css.photo}
-                  />
-                ) : (
-                  <div className={css.spanValue}>
-                    {(value.name || value.email[0]).charAt(0).toUpperCase()}
-                  </div>
-                )}
-
-                <button
-                  type="button"
-                  className={css.buttonUpload}
-                  onClick={handleButtonClick}
-                  // onClick={() => document.getElementById("avatarInput").click()}
+                <div
+                  className={css.closeBtn}
+                  onClick={() => dispatch(closeSettingModal())}
                 >
-                  {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
-                  <div className={css.uploadSvg}>
-                    <ArrowUpTrayOutline size="16" />
-                  </div>
-                  Upload a photo
-                  <input
-                    id="avatarInput"
-                    type="file"
-                    name="avatar"
-                    //
-                    onChange={handleFileChange}
-                    //
-                    className={css.uploadPhotoInput}
-                  />
-                </button>
-              </div>
+                  <MarkOutline />
+                </div>
 
-              <div className={css.wrapperTwoBlocks}>
-                <div className={css.firstWrapper}>
-                  <h3 className={css.genderTitle}>Your gender identity</h3>
+                <h3 className={css.photoTitle}>Your photo</h3>
+                <div className={css.imgWrapper}>
+                  {selectedFile || value.avatarUrl ? (
+                    <img
+                      src={
+                        selectedFile
+                          ? URL.createObjectURL(selectedFile)
+                          : value.avatarUrl
+                      }
+                      alt="User photo"
+                      className={css.photo}
+                    />
+                  ) : (
+                    <div className={css.spanValue}>
+                      {(value.name || value.email[0]).charAt(0).toUpperCase()}
+                    </div>
+                  )}
 
-                  <div className={css.genderOptions}>
-                    <div className={css.genderWrapper}>
-                      <Field
-                        type="radio"
-                        name="gender"
-                        id="woman"
-                        value="female"
-                      />
-                      <label
-                        htmlFor="woman"
-                        name="gender"
-                        className={css.genderInput}
-                        // value="woman"
-                      >
-                        Woman
+                  <button
+                    type="button"
+                    className={css.buttonUpload}
+                    onClick={handleButtonClick}
+                    // onClick={() => document.getElementById("avatarInput").click()}
+                  >
+                    {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
+                    <div className={css.uploadSvg}>
+                      <ArrowUpTrayOutline size="16" />
+                    </div>
+                    Upload a photo
+                    <input
+                      id="avatarInput"
+                      type="file"
+                      name="avatar"
+                      //
+                      onChange={handleFileChange}
+                      //
+                      className={css.uploadPhotoInput}
+                    />
+                  </button>
+                </div>
+
+                <div className={css.wrapperTwoBlocks}>
+                  <div className={css.firstWrapper}>
+                    <h3 className={css.genderTitle}>Your gender identity</h3>
+
+                    <div className={css.genderOptions}>
+                      <div className={css.genderWrapper}>
+                        <Field
+                          type="radio"
+                          name="gender"
+                          id="woman"
+                          value="female"
+                        />
+                        <label
+                          htmlFor="woman"
+                          name="gender"
+                          className={css.genderInput}
+                          // value="woman"
+                        >
+                          Woman
+                        </label>
+                      </div>
+                      <div className={css.genderWrapper}>
+                        <Field
+                          type="radio"
+                          name="gender"
+                          id="man"
+                          // value="man"
+                          value="male"
+                        />
+                        <label
+                          htmlFor="man"
+                          name="gender"
+                          className={css.genderInput}
+                        >
+                          Man
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className={css.userInfo}>
+                      <label className={css.labelUserName} htmlFor="name">
+                        Name
+                        <Inputs
+                          type="text"
+                          name="name"
+                          placeholder="Name"
+                          id="name"
+                          className={css.nameAndEmailInput}
+                        >
+                          {value.name}
+                        </Inputs>
+                        {/* <ErrorMessage name="name" component="span" /> */}
+                      </label>
+
+                      <label className={css.labelUser} htmlFor="email">
+                        Email
+                        <Inputs
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          id="email"
+                          className={css.nameAndEmailInput}
+                        >
+                          {value.email}
+                        </Inputs>
+                        {/* <ErrorMessage name="email" component="span" /> */}
                       </label>
                     </div>
-                    <div className={css.genderWrapper}>
-                      <Field
-                        type="radio"
-                        name="gender"
-                        id="man"
-                        // value="man"
-                        value="male"
-                      />
-                      <label
-                        htmlFor="man"
-                        name="gender"
-                        className={css.genderInput}
-                      >
-                        Man
-                      </label>
-                    </div>
                   </div>
 
-                  <div className={css.userInfo}>
-                    <label className={css.labelUserName} htmlFor="name">
-                      Name
+                  <div className={css.passwordWrapper}>
+                    <h3 className={css.passwordTittle}>Password</h3>
+                    <label
+                      className={css.labelPassword}
+                      htmlFor="outdatedPassword"
+                    >
+                      Outdated password:
                       <Inputs
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        id="name"
-                        className={css.nameAndEmailInput}
-                      >
-                        {value.name}
-                      </Inputs>
-                      {/* <ErrorMessage name="name" component="span" /> */}
+                        type={openPassword ? "text" : "password"}
+                        // name="outdatedPassword"
+                        name="outdatedPassword"
+                        placeholder="Password"
+                        id="outdatedPassword"
+                        className={css.input}
+                      />
+                      {openPassword ? (
+                        <div
+                          className={css.eyeIcon}
+                          onClick={handleOpenPassword}
+                        >
+                          <EyeOutline size="16" />
+                        </div>
+                      ) : (
+                        <div
+                          className={css.eyeIcon}
+                          onClick={handleOpenPassword}
+                        >
+                          <EyeSlashOutline size="16" />
+                        </div>
+                      )}
+                      {/* <ErrorMessage name="outdatedPassword" component="span" /> */}
                     </label>
 
-                    <label className={css.labelUser} htmlFor="email">
-                      Email
+                    <label className={css.labelPassword} htmlFor="newPassword">
+                      New password:
                       <Inputs
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        id="email"
-                        className={css.nameAndEmailInput}
-                      >
-                        {value.email}
-                      </Inputs>
-                      {/* <ErrorMessage name="email" component="span" /> */}
+                        type={openPassword ? "text" : "password"}
+                        name="newPassword"
+                        placeholder="Password"
+                        id="newPassword"
+                        className={css.input}
+                      />
+                      {openPassword ? (
+                        <div
+                          className={css.eyeIcon}
+                          onClick={handleOpenPassword}
+                        >
+                          <EyeOutline size="16" />
+                        </div>
+                      ) : (
+                        <div
+                          className={css.eyeIcon}
+                          onClick={handleOpenPassword}
+                        >
+                          <EyeSlashOutline size="16" />
+                        </div>
+                      )}
+                      {/* <ErrorMessage name="newPassword" component="span" /> */}
+                    </label>
+
+                    <label
+                      className={css.labelPassword}
+                      htmlFor="repeatNewPassword"
+                    >
+                      Repeat new password:
+                      <Inputs
+                        type={openPassword ? "text" : "password"}
+                        name="repeatNewPassword"
+                        placeholder="Password"
+                        id="repeatNewPassword"
+                        className={css.input}
+                      />
+                      {openPassword ? (
+                        <div
+                          className={css.eyeIcon}
+                          onClick={handleOpenPassword}
+                        >
+                          <EyeOutline size="16" />
+                        </div>
+                      ) : (
+                        <div
+                          className={css.eyeIcon}
+                          onClick={handleOpenPassword}
+                        >
+                          <EyeSlashOutline size="16" />
+                        </div>
+                      )}
+                      {/* <ErrorMessage name="repeatNewPassword" component="span" /> */}
                     </label>
                   </div>
                 </div>
-
-                <div className={css.passwordWrapper}>
-                  <h3 className={css.passwordTittle}>Password</h3>
-                  <label
-                    className={css.labelPassword}
-                    htmlFor="outdatedPassword"
-                  >
-                    Outdated password:
-                    <Inputs
-                      type={openPassword ? "text" : "password"}
-                      // name="outdatedPassword"
-                      name="outdatedPassword"
-                      placeholder="Password"
-                      id="outdatedPassword"
-                      className={css.input}
-                    />
-                    {openPassword ? (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
-                        <EyeOutline size="16" />
-                      </div>
-                    ) : (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
-                        <EyeSlashOutline size="16" />
-                      </div>
-                    )}
-                    {/* <ErrorMessage name="outdatedPassword" component="span" /> */}
-                  </label>
-
-                  <label className={css.labelPassword} htmlFor="newPassword">
-                    New password:
-                    <Inputs
-                      type={openPassword ? "text" : "password"}
-                      name="newPassword"
-                      placeholder="Password"
-                      id="newPassword"
-                      className={css.input}
-                    />
-                    {openPassword ? (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
-                        <EyeOutline size="16" />
-                      </div>
-                    ) : (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
-                        <EyeSlashOutline size="16" />
-                      </div>
-                    )}
-                    {/* <ErrorMessage name="newPassword" component="span" /> */}
-                  </label>
-
-                  <label
-                    className={css.labelPassword}
-                    htmlFor="repeatNewPassword"
-                  >
-                    Repeat new password:
-                    <Inputs
-                      type={openPassword ? "text" : "password"}
-                      name="repeatNewPassword"
-                      placeholder="Password"
-                      id="repeatNewPassword"
-                      className={css.input}
-                    />
-                    {openPassword ? (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
-                        <EyeOutline size="16" />
-                      </div>
-                    ) : (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
-                        <EyeSlashOutline size="16" />
-                      </div>
-                    )}
-                    {/* <ErrorMessage name="repeatNewPassword" component="span" /> */}
-                  </label>
-                </div>
+                {/* <div className={css.btn}> */}
+                <Button
+                  type="submit"
+                  cssstyle={css.btn}
+                  className={css.btn}
+                  disabled={!dirty || !isValid}
+                  // onClick={handleSubmit}
+                >
+                  Save
+                </Button>
+                {/* </div> */}
               </div>
-              {/* <div className={css.btn}> */}
-              <Button
-                type="submit"
-                cssstyle={css.btn}
-                className={css.btn}
-                // onClick={handleSubmit}
-              >
-                Save
-              </Button>
-              {/* </div> */}
-            </div>
-          </Form>
+            </Form>
+          )}
         </Formik>
         <Toaster />
       </div>

@@ -69,15 +69,21 @@ const slice = createSlice({
         state.error = action.payload;
       });
 
-    builder.addCase(update.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.error = null;
-      state.isEdit = true;
-      state.user = {
-        ...state.user,
-        ...action.payload.user,
-      };
-    });
+    builder
+      .addCase(update.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.isEdit = true;
+        state.user = {
+          ...state.user,
+          ...action.payload.user,
+        };
+      })
+
+      //додав свій кейс з реджектід для нотіфікашок
+      .addCase(update.rejected, (state, action) => {
+        state.error = action.payload.message;
+      });
 
     builder.addCase(updateAvatar.fulfilled, (state, action) => {
       state.isLoading = false;
