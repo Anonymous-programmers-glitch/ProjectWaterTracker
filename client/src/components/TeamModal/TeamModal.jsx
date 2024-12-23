@@ -5,48 +5,46 @@ import sprite from "../ui/image/sprite/sprite.svg";
 import styles from "./TeamModal.module.css";
 import XMarkOutline from "../ui/icons/xMarkOutline";
 
-import more from "../ui/image/team/more.webp";
+
+import lyubarsky from "../ui/image/team/lyubarsky.webp";
 import babenko from "../ui/image/team/babenko.webp";
+import bartytskyi from "../ui/image/team/bartytskyi.webp"
 import bova from "../ui/image/team/bova.webp";
 import beda from "../ui/image/team/beda.webp";
+import horokhovatska from "../ui/image/team/horokhovatska.webp";
+import cherviakov from "../ui/image/team/cherviakov.webp"
+import bystryi from "../ui/image/team/bystryi.webp";
+import sidorchuk from "../ui/image/team/sidorchuk.jpg";
 import more3 from "../ui/image/team/more3.webp";
-import more4 from "../ui/image/team/more4.webp";
 
 const frontTeam = [
   {
     name: `Konstantin Lyubarsky`,
-    photo: more,
+    photo: lyubarsky,
     role: `Team Lead`,
     social: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/",
+      linkedin: "https://www.linkedin.com/in/konstantin-lubarskiy/",
+      github: "https://github.com/Lubarskiyk",
     },
   },
+      
+  
   {
-    name: `Irina Babenko`,
-    photo: babenko,
-    role: `Scrum Master`,
-    social: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/Irina-Babenko",
-    },
-  },
-  {
-    name: `Sergii Bartytskyi`,
-    photo: more3,
+    name: `Nataliia Horokhovatska`,
+    photo: horokhovatska,
     role: `Developer`,
     social: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/SergiiBartytskyi",
+      linkedin: "https://www.linkedin.com/in/nataliia-horokhovatska/",
+      github: "https://github.com/NataliHor",
     },
   },
   {
-    name: `Serhii Bova`,
-    photo: bova,
+    name: `Ihor Cherviakov`,
+    photo: cherviakov,
     role: `Developer`,
     social: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/GOIT-Serhii",
+      linkedin: "https://www.linkedin.com/in/ihor-cherviakov-818805274/",
+      github: "https://github.com/cherviakow",
     },
   },
   {
@@ -59,14 +57,33 @@ const frontTeam = [
     },
   },
   {
-    name: `Serhii Bova`,
+    name: `Yevsovych Kateryna`,
     photo: more3,
     role: `Developer`,
     social: {
       linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/GOIT-Serhii",
+      github: "https://github.com/evsovichka",
     },
   },
+  {
+    name: `Denys Bystryi`,
+    photo: bystryi,
+    role: `Developer`,
+    social: {
+      linkedin: "https://www.linkedin.com/in/denys-bystryi-609184249/",
+      github: "https://github.com/Bystryi21",
+    },
+},
+
+{
+    name: `Ihor`,
+    photo: sidorchuk,
+    role: `Developer`,
+    social: {
+      linkedin: "https://www.linkedin.com/",
+      github: "https://github.com/StIgorek",
+    },
+},
 ];
 
 const backTeam = [
@@ -75,26 +92,35 @@ const backTeam = [
     photo: babenko,
     role: `Scrum Master`,
     social: {
-      linkedin: "https://www.linkedin.com/",
+      linkedin: "https://www.linkedin.com/in/irina-babenko-383718175/",
       github: "https://github.com/Irina-Babenko",
     },
   },
   {
-    name: `More4`,
-    photo: more4,
-    role: `Team Lead`,
+    name: `Sergii Bartytskyi`,
+    photo: bartytskyi,
+    role: `Developer`,
     social: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/",
+      linkedin: "https://www.linkedin.com/in/sergiibartytskyi/",
+      github: "https://github.com/SergiiBartytskyi",
     },
   },
   {
-    name: `More4`,
-    photo: more4,
-    role: `Team Lead`,
+    name: `Mykola Sidorchuk`,
+    photo: sidorchuk,
+    role: `Developer`,
     social: {
-      linkedin: "https://www.linkedin.com/",
-      github: "https://github.com/",
+      linkedin: "https://www.linkedin.com/in/mykola-sidorchuk-v/",
+      github: "https://github.com/Mikosid",
+    },
+},
+{
+    name: `Serhii Bova`,
+    photo: bova,
+    role: `Developer`,
+    social: {
+      linkedin: "https://www.linkedin.com/in/serhii-bova/",
+      github: "https://github.com/GOIT-Serhii",
     },
   },
 ];
