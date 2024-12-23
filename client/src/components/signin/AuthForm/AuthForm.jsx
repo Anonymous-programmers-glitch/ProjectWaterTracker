@@ -3,7 +3,6 @@ import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../../redux/user/operations.js";
-//import { selectError } from "../../../redux/user/selectors.js";
 import * as Yup from "yup";
 import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
