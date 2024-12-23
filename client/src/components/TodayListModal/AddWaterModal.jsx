@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { Formik, Form } from "formik";
 import dayjs from "dayjs";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAddModal } from "../../redux/modalToggle/slice.js";
 import { selectAddModal } from "../../redux/modalToggle/selectors.js";
 import { addWaterToday } from "../../redux/waterToday/operations.js";
+import { getError } from "../../redux/waterToday/selectors.js";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop";
 import Button from "../../components/ui/Button/Button.jsx";
 import XMarkOutline from "../ui/icons/XMarkOutline.jsx";
@@ -25,6 +27,8 @@ const validationSchema = Yup.object({
 const AddWaterModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAddModal);
+  const isError = useSelector(getError);
+
 
   const onClose = useCallback(() => {
     dispatch(closeAddModal());
@@ -36,8 +40,21 @@ const AddWaterModal = () => {
     const { manualAmount, manualTime } = value;
     const dateNow = dayjs().format("YYYY-MM-DD");
     const date = dayjs(`${dateNow} ${manualTime}`).toISOString();
+
     dispatch(addWaterToday({ amount: manualAmount, date: date }));
-    onClose();
+
+    if (isError) {
+      switch (isError) {
+        case 404:toast.error(`404`); break;
+        case 409:toast.error(`409`); break;
+        default: toast.error(`ХЗ`); break;
+      }
+
+    } else {
+      toast.success('Water is Add');
+    }
+
+ onClose();
   };
 
   const handleKeyDown = useCallback(
@@ -46,7 +63,7 @@ const AddWaterModal = () => {
         onClose();
       }
     },
-    [onClose]
+    [onClose],
   );
 
   useEffect(() => {
@@ -59,122 +76,129 @@ const AddWaterModal = () => {
   }, [isOpen, handleKeyDown]);
 
   return (
-    isOpen && (
-      <ModalBackdrop
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            onClose();
-          }
-        }}
-      >
-        <div className={css.modal}>
-          <div className={css.modalHeader}>
-            <h2>Add water</h2>
-            <button
-              className={css.modalClose}
-              onClick={onClose}
-              aria-label="Close"
-            >
-              <XMarkOutline size={24} />
-            </button>
-          </div>
+    <>
 
-          <Formik
-            initialValues={{
-              manualAmount: 0,
-              manualTime: time,
-            }}
-            enableReinitialize
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-          >
-            {({ values, setFieldValue, errors, touched }) => (
-              <Form className={css.form}>
-                <div className={css.formGroupWater}>
-                  <p className={css.text}>Choose a value:</p>
-                  <label className={css.labelWater}>Amount of water:</label>
-                  <div className={css.amountButtons}>
-                    <button
-                      className={css.buttonWater}
-                      type="button"
-                      onClick={() =>
-                        setFieldValue(
-                          "manualAmount",
-                          Math.max(0, values.manualAmount - 50)
-                        )
-                      }
-                    >
-                      <MinusSmall size={24} />
-                    </button>
-                    <span className={css.amountTotalWater}>
-                      {values.manualAmount} ml
-                    </span>
-                    <button
-                      type="button"
-                      className={css.buttonWater}
-                      onClick={() =>
-                        setFieldValue("manualAmount", values.manualAmount + 50)
-                      }
-                    >
-                      <PlusSmall size={24} />
-                    </button>
+      {isError && <Toaster position="top-center" reverseOrder={false} />}
+      {isError  || <Toaster position="top-center" reverseOrder={false} />}
+      {isOpen && (
+        <ModalBackdrop
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              onClose();
+            }
+          }}
+        >
+          <div className={css.modal}>
+            <div className={css.modalHeader}>
+              <h2>Add water</h2>
+              <button
+                className={css.modalClose}
+                onClick={onClose}
+                aria-label="Close"
+              >
+                <XMarkOutline size={24} />
+              </button>
+            </div>
+
+            <Formik
+              initialValues={{
+                manualAmount: 0,
+                manualTime: time,
+              }}
+              enableReinitialize
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              {({ values, setFieldValue, errors, touched }) => (
+                <Form className={css.form}>
+                  <div className={css.formGroupWater}>
+                    <p className={css.text}>Choose a value:</p>
+                    <label className={css.labelWater}>Amount of water:</label>
+                    <div className={css.amountButtons}>
+                      <button
+                        className={css.buttonWater}
+                        type="button"
+                        onClick={() =>
+                          setFieldValue(
+                            "manualAmount",
+                            Math.max(0, values.manualAmount - 50),
+                          )
+                        }
+                      >
+                        <MinusSmall size={24} />
+                      </button>
+                      <span className={css.amountTotalWater}>
+                        {values.manualAmount} ml
+                      </span>
+                      <button
+                        type="button"
+                        className={css.buttonWater}
+                        onClick={() =>
+                          setFieldValue(
+                            "manualAmount",
+                            values.manualAmount + 50,
+                          )
+                        }
+                      >
+                        <PlusSmall size={24} />
+                      </button>
+                    </div>
+
+                    {errors.manualAmount && touched.manualAmount && (
+                      <div className={css.error}>{errors.manualAmount}</div>
+                    )}
                   </div>
 
-                  {errors.manualAmount && touched.manualAmount && (
-                    <div className={css.error}>{errors.manualAmount}</div>
-                  )}
-                </div>
+                  <div className={css.formGroupTime}>
+                    <label htmlFor="manualTime" className={css.labelWater}>
+                      Recording time:
+                    </label>
+                    <Inputs
+                      className={css.field}
+                      type="time"
+                      name="manualTime"
+                      placeholder="HH:mm"
+                      value={values.manualTime}
+                      onChange={(e) => {
+                        setFieldValue("manualTime", e.target.value);
+                        setTime(e.target.value);
+                      }}
+                    />
+                  </div>
 
-                <div className={css.formGroupTime}>
-                  <label htmlFor="manualTime" className={css.labelWater}>
-                    Recording time:
-                  </label>
-                  <Inputs
-                    className={css.field}
-                    type="time"
-                    name="manualTime"
-                    placeholder="HH:mm"
-                    value={values.manualTime}
-                    onChange={(e) => {
-                      setFieldValue("manualTime", e.target.value);
-                      setTime(e.target.value);
-                    }}
-                  />
-                </div>
+                  <div className={css.formGroupTime}>
+                    <label htmlFor="manualAmount" className={css.label}>
+                      Enter the value of the water used:
+                    </label>
+                    <Inputs
+                      className={css.field}
+                      type="number"
+                      name="manualAmount"
+                      placeholder="Enter amount"
+                      step="50"
+                      value={values.manualAmount}
+                      onChange={(e) => {
+                        const value = Math.max(0, Number(e.target.value));
+                        setFieldValue("manualAmount", value);
+                      }}
+                    />
+                  </div>
 
-                <div className={css.formGroupTime}>
-                  <label htmlFor="manualAmount" className={css.label}>
-                    Enter the value of the water used:
-                  </label>
-                  <Inputs
-                    className={css.field}
-                    type="number"
-                    name="manualAmount"
-                    placeholder="Enter amount"
-                    step="50"
-                    value={values.manualAmount}
-                    
-                    onChange={(e) => {
-                      const value = Math.max(0, Number(e.target.value));
-                      setFieldValue("manualAmount", value);
-                    }}
-                  />
-                </div>
-
-                <div className={css.formFooter}>
-                  <span className={css.totalWater}>
-                    {values.manualAmount} ml
-                  </span>
-                  <Button cssstyle="save" type="submit">
-                    Save
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </ModalBackdrop>
-    )
+                  <div className={css.formFooter}>
+                    <span className={css.totalWater}>
+                      {values.manualAmount} ml
+                    </span>
+                    <Button cssstyle="save" type="submit">
+                      Save
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </ModalBackdrop>
+      )}
+    </>
   );
 };
 
