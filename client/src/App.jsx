@@ -73,11 +73,10 @@ function App() {
             />
           }
         />
+        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
-      <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
       <Route path="/success" element={<SuccessPage />} />
-
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
