@@ -68,7 +68,7 @@ export const addWaterToday = createAsyncThunk(
       const { data } = await axios.post("/water/", { date, amount });
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.status);
     }
   },
   {
