@@ -11,6 +11,7 @@ import { closeDailyNormaModal } from "../../redux/modalToggle/slice.js";
 import { update } from "../../redux/user/operations.js";
 import { putHistory } from "../../redux/updateHistori/operations.js";
 import Inputs from "../ui/Inputs/Inputs.jsx";
+import dayjs from "dayjs";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -43,17 +44,12 @@ const MyDailyNorma = () => {
       toast.error("Weight cannot exceed 200 kg!");
       
     }
-    try {
-      const myDailyNorma = values.waterYouDrink * 1000;
-      const currentDate = new Date().toISOString();
-      dispatch(update({ dailyNorma: myDailyNorma }));
-      dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
-      toast.success("Your daily norma has been successfully updated!");
-      actions.resetForm();
-      handleCloseModal();
-    } catch (error) {
-      toast.error("Something wrong! Please try again.");
-    }
+    const myDailyNorma = values.waterYouDrink * 1000;
+    const currentDate = dayjs().format("YYYY-MM-DD");
+    dispatch(update({ dailyNorma: myDailyNorma }));
+    dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
+    actions.resetForm();
+    handleCloseModal();
   };
 
   const handleCloseModal = () => {
@@ -62,7 +58,7 @@ const MyDailyNorma = () => {
 
   // const notify = () => toast("Personal data updated");
   return (
-    isOpen && (
+    // isOpen && (
     <>
       <ModalBackdrop onClick={handleCloseModal}>
         <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -95,67 +91,27 @@ const MyDailyNorma = () => {
                       <span className={css.formula}>V=(M*0,04) + (T*0,6)</span>
                     </p>
                   </div>
+                  <p className={css.modalDescr}>
+                    <span>*</span> V is the volume of the water norm in liters
+                    per day, M is your body weight, T is the time of active
+                    sports, or another type of activity commensurate in terms of
+                    loads (in the absence of these, you must set 0)
+                  </p>
+                </div>
+                <div className={css.wrapper}>
+                  <div className={css.inputWrapper}>
+                    <p className={css.titleLabel}>Calculate your rate:</p>
 
-
-                  <div className={css.wrapper}>
-                    <div className={css.inputWrapper}>
-                      <p className={css.titleLabel}>Calculate your rate:</p>
-
-                      <div className={css.radioBtnWrapper}>
-                        <label className={css.radio}>
-                          <Field
-                            type="radio"
-                            name="option"
-                            value="female"
-                            className={css.hiddenRadio}
-                          />
-                          <ErrorMessage
-                            component="span"
-                            className={css.error}
-                            name="option"
-                          />
-                          <span className={css.customRadio}></span>
-                          <span className={css.span}>For woman</span>
-                        </label>
-
-                        <label className={css.radio}>
-                          <Field
-                            type="radio"
-                            name="option"
-                            value="male"
-                            className={css.hiddenRadio}
-                          />
-                          <ErrorMessage
-                            name="option"
-                            component="span"
-                            className={css.error}
-                          />
-                          <span className={css.customRadio}></span>
-                          <span className={css.span}>For man</span>
-                        </label>
-                      </div>
-                    </div>
-                    <div className={css.inputWrapper}>
-                      <p className={css.text}>Your weight in kilograms:</p>
-                      <Inputs
-                        type="number"
-                        className={css.field}
-                        name="weightInKg"
-                        placeholder="0"
-                      />
-                    </div>
-                    <div className={css.inputWrapper}>
-                      <p className={css.text}>
-                        The time of active participation in sports or other
-                        activities with a high physical. load in hours:
-                      </p>
-                      <Inputs
-                        type="number"
-                        className={css.field}
-                        name="loadInHours"
-                        placeholder="0"
-                      />
-                    </div>
+                    <div className={css.radioBtnWrapper}>
+                      <label className={css.radio}>
+                        <Field type="radio" name="option" value="female" />
+                        <ErrorMessage
+                          component="span"
+                          className={css.error}
+                          name="option"
+                        />
+                        <span className={css.span}>For woman</span>
+                      </label>
 
                       <label className={css.radio}>
                         <Field type="radio" name="option" value="male" />
@@ -247,7 +203,7 @@ const MyDailyNorma = () => {
       // }}
       />
     </>
-    )
+    // )
   );
 };
 

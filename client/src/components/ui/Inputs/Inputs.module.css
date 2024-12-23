@@ -1,4 +1,6 @@
 .field {
+  display: flex;
+  margin-bottom: 5px;
   border-radius: 6px;
   padding: 12px 10px;
   border: 1px solid var(--secondary-color---5);
