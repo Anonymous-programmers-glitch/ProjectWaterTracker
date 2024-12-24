@@ -17,8 +17,9 @@ import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
+import UserLogoutModal from '../../components/UserLogoutModal/UserLogoutModal.jsx';
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonthSlice.js";
-import { selectBodyBlock, selectSettingModal } from '../../redux/modalToggle/selectors.js';
+import { selectBodyBlock, selectLogoutModal, selectSettingModal } from '../../redux/modalToggle/selectors.js';
 import { openAddModal } from "../../redux/modalToggle/slice.js";
 import { selectEditUser } from "../../redux/user/selectors.js";
 import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
@@ -38,7 +39,6 @@ function HomePage() {
   const dateNow = dayjs().format("YYYY-MM-DD");
   const { waterRecords } = useSelector(getIsWaterToday);
   const { percentage } = useSelector(getIsWaterToday);
-  const IsLoading = useSelector(getIsLoading);
   const isEdit = useSelector(getEdit);
   const isError = useSelector(getError);
   const monthState = useSelector(changeMonthSelector);
@@ -46,6 +46,7 @@ function HomePage() {
   const userEdit = useSelector(selectEditUser);
   const isSettingModalOpen = useSelector(selectSettingModal);
   const bodyBlock = useSelector(selectBodyBlock);
+  const isLogoutModalOpen = useSelector(selectLogoutModal);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
@@ -120,6 +121,7 @@ function HomePage() {
         </WaterListMonth>
       </div>
       {isSettingModalOpen && <SettingModal />}
+      {isLogoutModalOpen && <UserLogoutModal />}
       <AddWaterModal />
       <TodayListModal />
       <MyDailyNorma />
