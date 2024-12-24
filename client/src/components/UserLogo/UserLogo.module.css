@@ -21,7 +21,7 @@
 }
 
 .userLogoBtnText {
-  min-width: 66px;
+  width: 66px;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.25;
@@ -30,6 +30,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding: 4px 0;
 }
 
 .userLogoBtnWrapper {
@@ -62,12 +63,11 @@
   object-fit: cover;
 }
 
-
-
 @media screen and (min-width: 768px) {
   .userLogoBtnText {
-    min-width: 54px;
+    width: 100%;
     font-size: 18px;
     line-height: 1.33;
+    padding: 2px 0;
   }
 }

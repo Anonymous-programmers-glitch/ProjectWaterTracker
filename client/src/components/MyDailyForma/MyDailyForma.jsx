@@ -85,15 +85,11 @@ const MyDailyNorma = () => {
                     <div className={css.forWrapper}>
                       <p className={css.for}>
                         For woman:{" "}
-                        <span className={css.formula}>
-                          V=(M*0,03) + (T*0,4)
-                        </span>{" "}
+                        <span className={css.formula}>V=(M*0,03)+(T*0,4)</span>{" "}
                       </p>
                       <p className={css.for}>
                         For man:{" "}
-                        <span className={css.formula}>
-                          V=(M*0,04) + (T*0,6)
-                        </span>
+                        <span className={css.formula}>V=(M*0,04)+(T*0,6)</span>
                       </p>
                     </div>
                     <p className={css.modalDescr}>
