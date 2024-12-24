@@ -1,4 +1,4 @@
-import { useRef } from "react";
+// import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChevronDoubleUp from "../ui/icons/ChevronDoubleUp";
@@ -16,7 +16,7 @@ import {
 import css from "./UserLogo.module.css";
 
 const UserLogo = () => {
-  const buttonRef = useRef(null);
+  // const buttonRef = useRef(null);
   const dispatch = useDispatch();
   const isLogoModalOpen = useSelector(selectLogoModal);
   const isSettingModalOpen = useSelector(selectSettingModal);
@@ -45,8 +45,9 @@ const UserLogo = () => {
   };
 
   return (
-    <>
-      <button className={css.userLogoBtn} onClick={toggleModal} ref={buttonRef}>
+    <div className={css.container}>
+      <button className={css.userLogoBtn} onClick={toggleModal}>
+        {/* <button className={css.userLogoBtn} onClick={toggleModal} ref={buttonRef}> */}
         <p className={css.userLogoBtnText}>{userName}</p>
 
         <div className={css.userLogoBtnWrapper}>
@@ -56,11 +57,12 @@ const UserLogo = () => {
         </div>
       </button>
 
-      {isLogoModalOpen && <UserLogoModal targetRef={buttonRef} />}
+      {isLogoModalOpen && <UserLogoModal />}
+      {/* {isLogoModalOpen && <UserLogoModal targetRef={buttonRef} />} */}
 
       {isSettingModalOpen && <SettingModal />}
       {isLogoutModalOpen && <UserLogoutModal />}
-    </>
+    </div>
   );
 };
 

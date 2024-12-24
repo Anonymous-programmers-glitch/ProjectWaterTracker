@@ -6,6 +6,7 @@ import css from "./UserLogoutModal.module.css";
 import { closeLogoutModal } from "../../redux/modalToggle/slice";
 import { selectLogoutModal } from "../../redux/modalToggle/selectors";
 import { logout } from "../../redux/user/operations";
+import Button from ".././ui/Button/Button.jsx";
 
 const UserLogoutModal = () => {
   const dispatch = useDispatch();
@@ -55,15 +56,8 @@ const UserLogoutModal = () => {
         </div>
         <p className={css.modalText}>Do you really want to leave?</p>
         <div className={css.modalButtons}>
-          <button
-            onClick={() => dispatch(closeLogoutModal())}
-            className={css.btnCancel}
-          >
-            Cancel
-          </button>
-          <button onClick={handleLogout} className={css.btnLogout}>
-            Log out
-          </button>
+          <Button onClick={() => dispatch(closeLogoutModal())} cssstyle="cancel">Cancel</Button>
+          <Button onClick={handleLogout} cssstyle="logout">Log out</Button>
         </div>
       </div>
     </ModalBackdrop>
