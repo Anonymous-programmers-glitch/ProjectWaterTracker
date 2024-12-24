@@ -1,13 +1,13 @@
 .modalContent {
   border-radius: 10px;
-  padding: 24px 12px;
+  padding: 10px 12px;
   background: var(--primery-color-white);
   width: 280px;
 }
 .modalForm {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
 }
 .top {
   display: flex;
@@ -16,8 +16,8 @@
   align-items: center;
 }
 .title {
-  font-size: 26px;
-  line-height: 1.23077;
+  font-size: 21px;
+  line-height: 1.23;
   color: var(--primery-color-black);
 }
 .closeBtn:hover svg {
@@ -29,37 +29,37 @@
 .topWrapper {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 .for {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.25;
   color: var(--primery-color-black);
 }
 
 .formula {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.33;
   color: var(--primery-color-blue);
 }
 .forWrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 6px;
 }
 .modalDescr {
   border: 1px solid var(--secondary-color---5);
   border-radius: 10px;
-  padding: 10px;
+  padding: 4px;
   width: 256px;
   color: #8f8f8f;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1.33;
 }
 .modalDescr span {
@@ -67,9 +67,8 @@
 }
 .titleLabel {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.11;
-  padding-bottom: 8px;
   color: var(--primery-color-black);
 }
 .inputWrapper {
@@ -116,10 +115,11 @@
 }
 .span {
   color: var(--primery-color-black);
+  font-size: 14px;
 }
 .text {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.25;
   color: var(--primery-color-black);
 }
@@ -128,6 +128,9 @@
 }
 .field {
   width: 100%;
+  height: 36px;
+  font-size: 14px;
+  margin: 0;
 }
 
 .field::placeholder {
@@ -141,7 +144,7 @@
 }
 .spanResult {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.33;
   color: var(--primery-color-blue);
 }
@@ -150,15 +153,53 @@
     width: 704px;
     padding: 32px 24px;
   }
+  .modalForm {
+    gap: 24px;
+  }
+  .topWrapper {
+    gap: 12px;
+  }
+  .wrapper {
+    gap: 16px;
+  }
   .forWrapper {
     flex-direction: row;
     gap: 24px;
   }
+  .for {
+    font-size: 16px;
+  }
   .modalDescr {
     width: 656px;
+    padding: 9px;
+    font-size: 12px;
+  }
+  .formula {
+    font-size: 18px;
+  }
+  .title {
+    font-size: 26px;
+  }
+  .text {
+    font-size: 16px;
   }
   .text1 {
     width: 328px;
+  }
+  .titleLabel {
+    font-size: 18px;
+    padding-bottom: 8px;
+  }
+  .span {
+    font-size: 16px;
+  }
+
+  .field {
+    height: 44px;
+    font-size: 16px;
+  }
+  .spanResult {
+    font-size: 18px;
   }
   .btn {
     display: flex;
