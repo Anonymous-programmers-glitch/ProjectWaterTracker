@@ -18,7 +18,7 @@ import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonthSlice.js";
-import { selectSettingModal } from '../../redux/modalToggle/selectors.js';
+import { selectBodyBlock, selectSettingModal } from '../../redux/modalToggle/selectors.js';
 import { openAddModal } from "../../redux/modalToggle/slice.js";
 import { selectEditUser } from "../../redux/user/selectors.js";
 import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
@@ -45,6 +45,7 @@ function HomePage() {
   const dataMonth = useSelector(getIsWaterMonth);
   const userEdit = useSelector(selectEditUser);
   const isSettingModalOpen = useSelector(selectSettingModal);
+  const bodyBlock = useSelector(selectBodyBlock);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
@@ -61,6 +62,16 @@ function HomePage() {
   function handleAdd() {
     dispatch(openAddModal());
   }
+
+  if (bodyBlock) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
+
+
+
 
   return (
     <section className={css.homepage}>

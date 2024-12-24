@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const modalSlice = createSlice({
   name: "modal",
   initialState: {
+    isBodyBlock:false,
     isLogoModalOpen: false,
     isSettingModalOpen: false,
     isLogoutModalOpen: false,
@@ -20,6 +21,7 @@ const modalSlice = createSlice({
   },
   reducers: {
     openLogoModal: (state) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = true;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
@@ -30,10 +32,12 @@ const modalSlice = createSlice({
       state.isResetPasswordModalOpen = false;
     },
     closeLogoModal: (state) => {
+      state.isBodyBlock = false;
       state.isLogoModalOpen = false;
     },
 
     openSettingModal: (state) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = true;
       state.isLogoutModalOpen = false;
@@ -44,10 +48,12 @@ const modalSlice = createSlice({
       state.isResetPasswordModalOpen = false;
     },
     closeSettingModal: (state) => {
+      state.isBodyBlock = false;
       state.isSettingModalOpen = false;
     },
 
     openLogoutModal: (state) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = true;
@@ -58,10 +64,12 @@ const modalSlice = createSlice({
       state.isResetPasswordModalOpen = false;
     },
     closeLogoutModal: (state) => {
+      state.isBodyBlock = false;
       state.isLogoutModalOpen = false;
     },
 
     openAddModal: (state) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
@@ -73,10 +81,12 @@ const modalSlice = createSlice({
     },
 
     closeAddModal: (state) => {
+      state.isBodyBlock = false;
       state.isAddModalOpen = false;
     },
 
     openEditModal: (state, actions) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
@@ -92,6 +102,7 @@ const modalSlice = createSlice({
       };
     },
     closeEditModal: (state) => {
+      state.isBodyBlock = false;
       state.isEditModalOpen = false;
       state.editModalData = {
         amount: "",
@@ -101,6 +112,7 @@ const modalSlice = createSlice({
     },
 
     openDailyNormaModal: (state) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
@@ -111,10 +123,12 @@ const modalSlice = createSlice({
       state.isResetPasswordModalOpen = false;
     },
     closeDailyNormaModal: (state) => {
+      state.isBodyBlock = false;
       state.isDailyNormaModalOpen = false;
     },
 
     openDeleteModal: (state, action) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
@@ -128,11 +142,13 @@ const modalSlice = createSlice({
       };
     },
     closeDeleteModal: (state) => {
+      state.isBodyBlock = false;
       state.isDeleteModalOpen = false;
       state.deleteModalData = { id: "" };
     },
 
     openResetPasswordModal: (state) => {
+      state.isBodyBlock = true;
       state.isLogoModalOpen = false;
       state.isSettingModalOpen = false;
       state.isLogoutModalOpen = false;
@@ -143,6 +159,7 @@ const modalSlice = createSlice({
       state.isResetPasswordModalOpen = true;
     },
     closeResetPasswordModal: (state) => {
+      state.isBodyBlock = false;
       state.isResetPasswordModalOpen = false;
     },
   },
