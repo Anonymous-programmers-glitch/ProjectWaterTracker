@@ -3,6 +3,7 @@ import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signup } from "../../../redux/user/operations.js";
+//import { selectError } from "../../../redux/user/selectors.js";
 import * as Yup from "yup";
 import Button from "../../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
@@ -16,6 +17,16 @@ const initialValues = {
   repeatPassword: "",
 };
 
+function validateEmail(value) {
+  let error;
+  if (!value) {
+    error = "Required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    error = "Invalid email address";
+  }
+  return error;
+}
+
 export default function SignUpForm() {
   const SignUpSchema = Yup.object().shape({
     email: Yup.string().email().required(),
@@ -23,14 +34,9 @@ export default function SignUpForm() {
       .required("Please confirm your password")
       .min(8, "Should be 8 chars minimum.")
       .max(64, "Should be 64 chars maximum.")
-      .matches(/(?=.*[0-9])/, "Password must contain a number.")
       .matches(
-        /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-        "Password must contain a special character."
-      )
-      .matches(
-        /^(?=.*[A-Z])/,
-        "Password must contain at least one uppercase letter."
+        /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)."
       ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
@@ -45,33 +51,56 @@ export default function SignUpForm() {
   const passwordId = useId();
   const repeatPasswordId = useId();
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const { email, password } = values;
 
-    dispatch(signup({ email, password }));
-    toast((t) => (
-      <span>
-        Check your email to confirm it!
-        <button onClick={() => toast.dismiss(t.id)}>
-          <b>OK</b>
-        </button>
-      </span>
-    ));
-    actions.resetForm();
+    const result = await dispatch(signup({ email, password }));
+
+    console.log(result.payload.status);
+    console.log(result.payload.data.message);
+
+    const message = result.payload.data.message;
+
+    if (result.error) {
+      switch (result.payload.status) {
+        case 409:
+          //toast.error("Email in use!");
+          toast.error(message);
+          break;
+        case 400:
+          toast.error(message);
+          break;
+        default:
+          toast.error(message);
+          break;
+      }
+    } else {
+      toast.success("Successfully registered a user!");
+
+      toast((t) => (
+        <span>
+          Check your email to confirm it!
+          <button type="button" onClick={() => toast.dismiss(t.id)}>
+            <b>OK</b>
+          </button>
+        </span>
+      ));
+      actions.resetForm();
+    }
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeOutline size={size} />
+    <EyeSlashOutline size={size} />
   );
   const [inputType, setInputType] = useState("password");
 
   const togglePasswordVisibility = () => {
     if (inputType === "password") {
       setInputType("text");
-      setPasswordVisible(EyeSlashOutline);
+      setPasswordVisible(EyeOutline);
     } else {
       setInputType("password");
-      setPasswordVisible(EyeOutline);
+      setPasswordVisible(EyeSlashOutline);
     }
   };
 
@@ -95,6 +124,7 @@ export default function SignUpForm() {
                 className={css.input}
                 placeholder="E-mail"
                 id={signupId}
+                validate={validateEmail}
               />
               <ErrorMessage
                 name="email"
@@ -146,7 +176,9 @@ export default function SignUpForm() {
                 className={css.errorRepeatPswrd}
               />
             </div>
-            <Button cssstyle="signup">Sign Up</Button>
+            <Button type="submit" cssstyle="signup">
+              Sign Up
+            </Button>
             <NavLink to="/signin" className={css.link}>
               <p>Sign in</p>
             </NavLink>
