@@ -11,12 +11,14 @@ import WaterListToday from "../../components/ComponentsForHomePage/waterListToda
 import WaterRange from "../../components/ComponentsForHomePage/waterRange/WaterRange.jsx";
 import DeleteWaterModal from "../../components/DeleteWaterModal/DeleteWaterModal.jsx";
 import MyDailyNorma from "../../components/MyDailyForma/MyDailyForma.jsx";
+import SettingModal from '../../components/SettingModal/SettingModal.jsx';
 import AddWaterModal from "../../components/TodayListModal/AddWaterModal.jsx";
 import TodayListModal from "../../components/TodayListModal/EditListModal.jsx";
 import Button from "../../components/ui/Button/Button.jsx";
 import PlusCircleOutline from "../../components/ui/icons/PlusCircleOutline.jsx";
 import TextButton from "../../components/ui/TextButton/TextButton.jsx";
 import { changeMonthSelector } from "../../redux/changeMonth/changeMonthSlice.js";
+import { selectSettingModal } from '../../redux/modalToggle/selectors.js';
 import { openAddModal } from "../../redux/modalToggle/slice.js";
 import { selectEditUser } from "../../redux/user/selectors.js";
 import { fetchWaterMonth } from "../../redux/waterMonth/operations.js";
@@ -42,6 +44,7 @@ function HomePage() {
   const monthState = useSelector(changeMonthSelector);
   const dataMonth = useSelector(getIsWaterMonth);
   const userEdit = useSelector(selectEditUser);
+  const isSettingModalOpen = useSelector(selectSettingModal);
 
   useEffect(() => {
     dispatch(fetchWaterToday(dateNow));
@@ -105,6 +108,7 @@ function HomePage() {
           ))}
         </WaterListMonth>
       </div>
+      {isSettingModalOpen && <SettingModal />}
       <AddWaterModal />
       <TodayListModal />
       <MyDailyNorma />
