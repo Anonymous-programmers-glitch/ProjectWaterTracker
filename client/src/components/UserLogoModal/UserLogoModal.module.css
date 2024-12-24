@@ -1,7 +1,23 @@
-.modal {
+/* .modal {
   position: absolute;
   top: 0;
   right: 20px;
+  width: 118px;
+  height: 88px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.2);
+  background: var(--primery-color-white);
+} */
+
+
+.modal {
+  position: absolute;
+  top: 34px;
+  right: 0;
   width: 118px;
   height: 88px;
   padding: 16px;
