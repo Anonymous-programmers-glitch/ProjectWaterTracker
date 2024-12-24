@@ -12,6 +12,7 @@ import { update } from "../../redux/user/operations.js";
 import { putHistory } from "../../redux/updateHistori/operations.js";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import dayjs from "dayjs";
+import { selectUser } from "../../redux/user/selectors.js";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -32,6 +33,8 @@ const DailySchema = Yup.object().shape({
 const MyDailyNorma = () => {
   const isOpen = useSelector(selectDailyNormaModal);
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const dailyNorma = user.dailyNorma / 1000 || 0;
 
   const calculateWaterNorm = (weight, hours, isWoman) => {
     const weightFactor = isWoman ? 0.03 : 0.04;
@@ -64,7 +67,7 @@ const MyDailyNorma = () => {
               initialValues={{
                 weightInKg: "",
                 loadInHours: "",
-                waterYouDrink: "",
+                waterYouDrink: dailyNorma,
                 option: "female",
               }}
               validationSchema={DailySchema}
@@ -145,6 +148,9 @@ const MyDailyNorma = () => {
                         className={css.field}
                         name="weightInKg"
                         placeholder="0"
+                        min="0"
+                        max="200"
+                        step="1"
                       />
                     </div>
                     <div className={css.inputWrapper}>
@@ -157,7 +163,11 @@ const MyDailyNorma = () => {
                         className={css.field}
                         name="loadInHours"
                         placeholder="0"
+                        min="0"
+                        max="24"
+                        step="1"
                       />
+                      {/* < className={css.field} type="number" name="loadInHours" placeholder="0"/> */}
                     </div>
 
                     <div className={css.amountWraper}>
@@ -183,7 +193,9 @@ const MyDailyNorma = () => {
                       type="number"
                       className={css.field}
                       name="waterYouDrink"
-                      placeholder="0"
+                      min="0"
+                      max="5"
+                      step="0.1"
                     />
                   </div>
                   <div className={css.btn}>
@@ -196,17 +208,7 @@ const MyDailyNorma = () => {
             </Formik>
           </div>
         </ModalBackdrop>
-        <Toaster
-        // position="top-right"
-        // reverseOrder={false}
-        // toastOptions={{
-        //   style: {
-        //     background: "#333",
-        //     color: "#fff",
-        //     zIndex: 999,
-        //   },
-        // }}
-        />
+        <Toaster />
       </>
     )
   );

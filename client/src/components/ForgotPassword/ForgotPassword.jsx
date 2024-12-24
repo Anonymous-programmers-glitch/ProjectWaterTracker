@@ -53,19 +53,17 @@ export default function ForgotPassword() {
     actions.resetForm();
   };
 
-  const [passwordVisible, setPasswordVisible] = useState(
-    <EyeOutline size={size} />
-  );
+  const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
+
   const [inputType, setInputType] = useState("password");
 
   const togglePasswordVisibility = () => {
-    if (inputType === "password") {
-      setInputType("text");
-      setPasswordVisible(EyeSlashOutline);
-    } else {
-      setInputType("password");
-      setPasswordVisible(EyeOutline);
-    }
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const toggleRepeatPasswordVisibility = () => {
+    setRepeatPasswordVisible(!repeatPasswordVisible);
   };
 
   const handleSignInClick = () => {
@@ -83,33 +81,57 @@ export default function ForgotPassword() {
           <Form autoComplete="off" className={css.wrapper}>
             <label className={css.label} htmlFor={passwordId}>
               Enter a new password
-              <div className={css.psw}>
-                <Inputs
-                  type={inputType}
-                  name="password"
-                  placeholder="Password"
-                  id={passwordId}
-                />
-                <span className={css.icon} onClick={togglePasswordVisibility}>
-                  {passwordVisible}
-                </span>
-              </div>
+              
+              <Inputs
+                        type={passwordVisible ? "text" : "password"}
+                        name="password"
+                        placeholder="Password"
+                        id={passwordId}
+                        className={css.input}
+                      />
+                      {passwordVisible ? (
+                        <div
+                          className={css.icon}
+                          onClick={togglePasswordVisibility}
+                        >
+                          <EyeOutline size={size} />
+                        </div>
+                      ) : (
+                        <div
+                          className={css.icon}
+                          onClick={togglePasswordVisibility}
+                        >
+                          <EyeSlashOutline size={size} />
+                        </div>
+                      )}
             </label>
             <label className={css.label} htmlFor={repeatPasswordId}>
               Repeat new password
-              <div className={css.psw}>
-                <Inputs
-                  type={inputType}
-                  name="repeatPassword"
-                  placeholder="Repeat password"
-                  id={repeatPasswordId}
-                />
-                <span className={css.icon} onClick={togglePasswordVisibility}>
-                  {passwordVisible}
-                </span>
-              </div>
+                  <Inputs
+                        type={repeatPasswordVisible ? "text" : "password"}
+                        name="repeatPassword"
+                        placeholder="Repeat password"
+                        id={repeatPasswordId}
+                        className={css.input}
+                      />
+                      {repeatPasswordVisible ? (
+                        <div
+                          className={css.icon}
+                          onClick={toggleRepeatPasswordVisibility}
+                        >
+                          <EyeOutline size={size} />
+                        </div>
+                      ) : (
+                        <div
+                          className={css.icon}
+                          onClick={toggleRepeatPasswordVisibility}
+                        >
+                          <EyeSlashOutline size={size} />
+                        </div>
+                      )}
+
             </label>
-            <Button cssstyle="signup" onClick={handleSignInClick}>
+            <Button cssstyle="signup" type="submit">
               Create new password
             </Button>
           </Form>
@@ -118,3 +140,5 @@ export default function ForgotPassword() {
     </Formik>
   );
 }
+
+
