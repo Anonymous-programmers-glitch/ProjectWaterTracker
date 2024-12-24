@@ -25,7 +25,7 @@ const FeedbackSchema = Yup.object().shape({
     ["female", "male"],
     "Please select a valid gender."
   ),
-  name: Yup.string().max(12, "Name is Too Long."),
+  name: Yup.string().max(32, "Name is Too Long."),
   email: Yup.string().email().required("Email is Required."),
   outdatedPassword: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
@@ -69,7 +69,6 @@ export default function SettingModal() {
   const [selectedFile, setSelectedFile] = useState(null);
   const value = useSelector(selectUser);
   const avatar = useSelector(selectAvatarUrl);
-  console.log(avatar);
 
   const [openPassword, setOpenPassword] = useState(false);
   const isSettingsOpen = useSelector(selectSettingModal);
@@ -134,7 +133,7 @@ export default function SettingModal() {
         };
 
         await dispatch(update(passwordPayload));
-        console.log("Пароль оновлено:", passwordPayload);
+
         delete updatedValues.outdatedPassword;
         delete updatedValues.newPassword;
         delete updatedValues.repeatNewPassword;
@@ -164,8 +163,6 @@ export default function SettingModal() {
       toast.error("Something went wrong: ", {
         autoClose: 2000,
       });
-
-      console.error(error);
     }
 
     actions.resetForm();
@@ -192,7 +189,6 @@ export default function SettingModal() {
         await dispatch(updateAvatar(formData));
         toast.success("Avatar updated successfully!");
       } catch (error) {
-        console.error("Failed to upload avatar:", error);
         toast.error("Failed to update avatar.");
       }
     }
@@ -420,20 +416,20 @@ export default function SettingModal() {
                 </div>
               </div>
               {/* <div className={css.btn}> */}
-
-              <Button
-                type="submit"
-                cssstyle={css.btn}
-                className={css.btn}
-                // disabled={!dirty || !isValid}
-                //для фото сейв
-                // disabled={!(dirty || isPhotoDirty || selectedFile) || !isValid}
-                //
-                // onClick={handleSubmit}
-              >
-                Save
-              </Button>
-
+              <div className={css.saveBtnWrapper}>
+                <Button
+                  type="submit"
+                  cssstyle={css.btn}
+                  className={css.btn}
+                  // disabled={!dirty || !isValid}
+                  //для фото сейв
+                  // disabled={!(dirty || isPhotoDirty || selectedFile) || !isValid}
+                  //
+                  // onClick={handleSubmit}
+                >
+                  Save
+                </Button>
+              </div>
               {/* </div> */}
             </div>
           </Form>
