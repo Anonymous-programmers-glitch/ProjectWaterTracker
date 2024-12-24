@@ -2,7 +2,7 @@ import css from "./Inputs.module.css";
 import { Field, ErrorMessage } from "formik";
 
 const Inputs = (props) => {
- const { type, name, placeholder, className, min, max, step } = props;
+  const { type, name, placeholder, className, min, max, step } = props;
 
   return (
     <div>
