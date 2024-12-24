@@ -1,3 +1,10 @@
+/* Основной контейнер, который занимает всю высоту */
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Убедитесь, что контейнер занимает всю высоту экрана */
+}
+
 .container {
   width: 100%;
   padding-right: 20px;
@@ -5,12 +12,11 @@
   max-width: 320px;
   margin: 0 auto;
   padding-top: 80px;
-  height: 100vh;
+  flex-grow: 1; /* Основной контент занимает всё доступное пространство */
 }
 
-
 @media screen and (min-width: 768px) {
-  .container{
+  .container {
     max-width: 768px;
     padding-right: 32px;
     padding-left: 32px;
@@ -19,11 +25,15 @@
 }
 
 @media screen and (min-width: 1440px) {
-
   .container {
     max-width: 1440px;
     padding-right: 112px;
     padding-left: 112px;
     padding-top: 80px;
   }
+}
+
+/* Футер будет оставаться внизу */
+footer {
+  margin-top: auto; /* Это заставит футер двигаться вниз */
 }
