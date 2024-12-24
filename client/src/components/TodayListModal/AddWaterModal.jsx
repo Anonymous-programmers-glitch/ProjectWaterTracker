@@ -101,7 +101,7 @@ const AddWaterModal = () => {
 
           <Formik
             initialValues={{
-              manualAmount: 0,
+              manualAmount: 50,
               manualTime: time,
             }}
             enableReinitialize
@@ -176,9 +176,9 @@ const AddWaterModal = () => {
                     type="number"
                     name="manualAmount"
                     placeholder="Enter amount"
-                    min="0"
+                    min="50"
                     max="5000"
-                    step="50"
+                    step="1"
                     value={values.manualAmount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));

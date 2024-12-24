@@ -9,9 +9,13 @@ function WaterRange({ percentage }) {
           type="range"
           min="0"
           max="100"
+          id="slider"
           value={percentage}
           onChange={() => {}}
           className={css.slider}
+          style={{
+            background: `linear-gradient(to right,  var(--secondary-color-4) ${percentage}%, var(--secondary-color---5) ${percentage}%)`,
+          }}
         />
         <ul className={css.sliderlabels}>
           <li className={css.sliderlabelleft}>
