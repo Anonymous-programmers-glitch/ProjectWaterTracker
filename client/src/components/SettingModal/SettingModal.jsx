@@ -67,11 +67,6 @@ const FeedbackSchema = Yup.object().shape({
 
 export default function SettingModal() {
   const [selectedFile, setSelectedFile] = useState(null);
-  //для фото сейв
-  // const [isPhotoDirty, setIsPhotoDirty] = useState(false);
-  //
-  // const [preview, setPreview] = useState(user?.avatarUrl || null);
-  //
   const value = useSelector(selectUser);
   const avatar = useSelector(selectAvatarUrl);
   console.log(avatar);
@@ -105,20 +100,6 @@ export default function SettingModal() {
   };
 
   const handleSubmit = async (values, actions) => {
-    //тост без змін
-    // if (!dirty && !isPhotoDirty && !selectedFile) {
-    //   toast.info("No changes were made.", { autoClose: 2000 });
-    //   dispatch(closeSettingModal());
-    // }
-    //
-
-    // const { dirty, isValid } = actions; //
-
-    // if (!dirty || !isValid) {
-    //   toast.info("No changes were made.", { autoClose: 2000 });
-    //   return;
-    // }
-
     const updatedValues = {};
 
     if (values.newPassword !== values.repeatNewPassword) {
@@ -201,30 +182,24 @@ export default function SettingModal() {
 
   if (!isSettingsOpen) return null;
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedFile(file);
-      //для фото сейв
-      // setIsPhotoDirty(true);
-      //
+      const formData = new FormData();
+      formData.append("avatarUrl", file);
+
+      try {
+        await dispatch(updateAvatar(formData));
+        toast.success("Avatar updated successfully!");
+      } catch (error) {
+        console.error("Failed to upload avatar:", error);
+        toast.error("Failed to update avatar.");
+      }
     }
   };
 
   const handleButtonClick = () => {
-    if (selectedFile) {
-      try {
-        const formData = new FormData();
-        formData.append("avatarUrl", selectedFile);
-        dispatch(updateAvatar(formData));
-      } catch (error) {
-        console.error("Failed to upload avatar:", error);
-      } finally {
-        setSelectedFile(null);
-      }
-    } else {
-      document.getElementById("avatarInput").click();
-    }
+    document.getElementById("avatarInput").click();
   };
 
   return (
@@ -253,7 +228,7 @@ export default function SettingModal() {
 
               <h3 className={css.photoTitle}>Your photo</h3>
               <div className={css.imgWrapper}>
-                {selectedFile || value.avatarUrl ? (
+                {/* {selectedFile || value.avatarUrl ? (
                   <img
                     src={
                       selectedFile
@@ -262,13 +237,18 @@ export default function SettingModal() {
                     }
                     alt="User photo"
                     className={css.photo}
+                  /> */}
+                {selectedFile || value.avatarUrl ? (
+                  <img
+                    src={value.avatarUrl}
+                    alt="User photo"
+                    className={css.photo}
                   />
                 ) : (
                   <div className={css.spanValue}>
                     {(value.name || value.email[0]).charAt(0).toUpperCase()}
                   </div>
                 )}
-
                 <button
                   type="button"
                   className={css.buttonUpload}
@@ -459,7 +439,7 @@ export default function SettingModal() {
           </Form>
           {/* )} */}
         </Formik>
-        <Toaster />
+        {/* <Toaster /> */}
       </div>
     </ModalBackdrop>
   );
