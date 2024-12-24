@@ -19,7 +19,6 @@ const UserLogo = () => {
   // const buttonRef = useRef(null);
   const dispatch = useDispatch();
   const isLogoModalOpen = useSelector(selectLogoModal);
-  const isSettingModalOpen = useSelector(selectSettingModal);
   const isLogoutModalOpen = useSelector(selectLogoutModal);
   const user = useSelector(selectUser);
   if (!user) return null;
@@ -60,7 +59,7 @@ const UserLogo = () => {
       {isLogoModalOpen && <UserLogoModal />}
       {/* {isLogoModalOpen && <UserLogoModal targetRef={buttonRef} />} */}
 
-      {isSettingModalOpen && <SettingModal />}
+
       {isLogoutModalOpen && <UserLogoutModal />}
     </div>
   );
