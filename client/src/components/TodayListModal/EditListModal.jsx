@@ -168,7 +168,7 @@ const EditListModal = () => {
                     placeholder="Enter amount"
                     min="50"
                     max="5000"
-            
+
                     value={values.amount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
