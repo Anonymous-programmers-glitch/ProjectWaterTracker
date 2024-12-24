@@ -112,7 +112,8 @@ export const update = createAsyncThunk(
       const response = (await axios.patch(`/users`, data)).data;
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.massage);
+
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
