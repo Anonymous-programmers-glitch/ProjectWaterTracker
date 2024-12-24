@@ -1,3 +1,8 @@
+.container {
+  position: relative;
+  display: inline-block;
+}
+
 .userLogoBtn {
   width: auto;
   height: 28px;
@@ -22,6 +27,9 @@
   line-height: 1.25;
   text-align: right;
   flex-shrink: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .userLogoBtnWrapper {

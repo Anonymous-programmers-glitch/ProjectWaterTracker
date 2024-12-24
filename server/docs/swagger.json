@@ -20,7 +20,7 @@
       "description": "Auth operations."
     },
     {
-      "name": "User",
+      "name": "Users",
       "description": "User operations."
     },
     {
@@ -965,7 +965,7 @@
                   "amount": {
                     "description": "The amount of waterToday consumed (in milliliters).",
                     "type": "number",
-                    "minimum": 50,
+                    "minimum": 1,
                     "maximum": 5000,
                     "example": 250
                   }
@@ -1278,11 +1278,37 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved waterToday consumption data for the month.",
+            "description": "Successfully retrieved water consumption data for the month.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/water"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-12-01"
+                      },
+                      "dailyNorma": {
+                        "type": "string",
+                        "example": "2000"
+                      },
+                      "percentageConsumed": {
+                        "type": "string",
+                        "example": "75"
+                      },
+                      "entries": {
+                        "type": "integer",
+                        "example": 3
+                      },
+                      "consumedWaterByDay": {
+                        "type": "string",
+                        "example": "1500"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -1381,10 +1407,6 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "userId": {
-                          "type": "string",
-                          "example": "1234567890abcdef12345678"
-                        },
                         "date": {
                           "type": "string",
                           "format": "date",
@@ -1500,58 +1522,6 @@
           }
         }
       },
-      "water": {
-        "type": "object",
-        "required": [
-          "date",
-          "amount",
-          "userId"
-        ],
-        "properties": {
-          "_id": {
-            "description": "Water record's unique identifier",
-            "type": "string",
-            "example": "64f5b992c4b3f1567e63a179"
-          },
-          "userId": {
-            "description": "ID of the user associated with the waterToday record",
-            "type": "string",
-            "example": "64f5b992c4b3f1567e63a178"
-          },
-          "date": {
-            "description": "The date and time of the waterToday consumption record",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-16T08:30:00Z"
-          },
-          "amount": {
-            "description": "The amount of waterToday consumed (in milliliters)",
-            "type": "number",
-            "minimum": 50,
-            "maximum": 5000,
-            "example": 250
-          },
-          "currentDailyNorm": {
-            "description": "User's daily waterToday consumption norm (in milliliters)",
-            "type": "number",
-            "default": 2000,
-            "minimum": 500,
-            "example": 2000
-          },
-          "createdAt": {
-            "description": "Timestamp when the waterToday record was created",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-16T08:31:00Z"
-          },
-          "updatedAt": {
-            "description": "Timestamp when the waterToday record was last updated",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-16T10:15:00Z"
-          }
-        }
-      },
       "UserNormaHistory": {
         "type": "object",
         "properties": {
@@ -1561,21 +1531,17 @@
             "description": "The date of the user's daily norm entry.",
             "example": "2024-12-19"
           },
-          "userId": {
-            "type": "string",
-            "description": "The unique identifier of the user.",
-            "example": "1234567890abcdef12345678"
-          },
           "dailyNorma": {
             "type": "integer",
             "description": "The user's daily norm value.",
+            "minimum": 1,
+            "maximum": 15000,
             "default": 2000,
             "example": 2000
           }
         },
         "required": [
-          "date",
-          "userId"
+          "date"
         ]
       }
     },
