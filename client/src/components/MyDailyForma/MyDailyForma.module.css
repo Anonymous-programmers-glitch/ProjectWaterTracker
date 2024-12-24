@@ -43,7 +43,7 @@
 }
 
 .formula {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.33;
   color: var(--primery-color-blue);
 }
@@ -135,6 +135,7 @@
 
 .field::placeholder {
   color: var(--primery-color-blue);
+  font-size: 14px;
 }
 .amountWraper {
   display: flex;
@@ -144,10 +145,18 @@
 }
 .spanResult {
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.33;
   color: var(--primery-color-blue);
 }
+.error {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 125%;
+  color: var(--secondary-color-3);
+  margin-top: 2px;
+}
+
 @media screen and (min-width: 768px) {
   .modalContent {
     width: 704px;
@@ -198,6 +207,9 @@
     height: 44px;
     font-size: 16px;
   }
+  .field::placeholder {
+    font-size: 16px;
+  }
   .spanResult {
     font-size: 18px;
   }
@@ -216,9 +228,6 @@
   }
 }
 .error {
-  font-weight: 400;
   font-size: 16px;
-  line-height: 125%;
-  color: var(--secondary-color-3);
   margin-top: 4px;
 }
