@@ -1,10 +1,13 @@
 .container {
   border-radius: 10px;
   padding: 32px 24px;
+
   width: 1008px;
-  height: 592px;
+  /* height: 592px; */
   background: var(--primery-color-white);
   position: relative;
+  margin-right: 32px;
+  margin-left: 32px;
 }
 
 /* .formWrapper {
@@ -18,9 +21,9 @@
   color: var(--primery-color-black);
 }
 
-.wrapperToBtn {
+/* .wrapperToBtn {
   padding-bottom: 100px;
-}
+} */
 
 .closeBtn {
   color: var(--primery-color-blue);
@@ -178,6 +181,7 @@
   gap: 8px;
   position: relative;
   color: var(--primery-color-black);
+  white-space: nowrap;
 }
 
 .eyeIcon {
@@ -188,9 +192,9 @@
 }
 
 .btn {
-  position: absolute;
+  /* position: absolute;
   right: 24px;
-  bottom: 32px;
+  bottom: 32px; */
   border: none;
   border-radius: 10px;
   height: 36px;
@@ -228,10 +232,19 @@
 .input {
   width: 100%;
 }
+
+.saveBtnWrapper {
+  display: flex;
+  justify-content: end;
+  padding-top: 24px;
+}
 @media screen and (max-width: 768px) {
   .container {
     width: 704px;
-    height: 860px;
+    /* height: 860px; */
+    margin-right: 32px;
+    margin-left: 32px;
+    margin-top: 15px;
   }
 
   .wrapperTwoBlocks {
@@ -254,20 +267,74 @@
   } */
 }
 
+/* @media screen and (min-width: 377px) {
+  .eyeIcon {
+    top: 35px;
+    right: 16px;
+  }
+}
+
+@media screen and (max-width: 422px) {
+  .eyeIcon {
+    top: 45px;
+    right: 16px;
+  }
+} */
+
 @media screen and (max-width: 376px) {
   .container {
+    padding-top: 15px;
     padding-left: 12px;
     padding-right: 12px;
     max-width: 280px;
-    max-height: 852px;
+    /* max-height: 852px;
+    margin-top: 40px;
+    margin-right: 20px;
+    margin-left: 20px; */
   }
+
+  /* .mainTitle {
+    padding-bottom: 10px;
+  }
+
+  .imgWrapper {
+    padding-bottom: 10px;
+  }
+
+  .labelUserName {
+    margin-bottom: 10px;
+  } */
+
+  /* .wrapperTwoBlocks {
+    padding-bottom: 10px;
+  } */
+
   .btn {
     position: inherit;
     width: 256px;
-    margin-top: 24px;
+    margin-top: 10px;
+  }
+
+  .genderOptions {
+    padding-bottom: 10px;
   }
 
   .passwordWrapper {
     padding-right: 0px;
+  }
+
+  .nameAndEmailInput {
+    width: 256px;
+  }
+  /* 
+  .wrapperTwoBlocks {
+    padding-bottom: 10px;
+  } */
+
+  /* .wrapperToBtn {
+    padding-bottom: 0px;
+  } */
+  .saveBtnWrapper {
+    padding-top: 15px;
   }
 }
