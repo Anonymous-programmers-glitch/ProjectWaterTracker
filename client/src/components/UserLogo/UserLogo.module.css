@@ -65,7 +65,6 @@
 
 @media screen and (min-width: 768px) {
   .userLogoBtnText {
-    width: 100%;
     font-size: 18px;
     line-height: 1.33;
     padding: 2px 0;

@@ -1,6 +1,5 @@
-import axios from "axios";
+import axios, { setAuthHeader } from "../../api/operationsAPI.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setAuthHeader } from "../../api/operationsAPI.js";
 import { condition } from "../conditions.js";
 
 export const putHistory = createAsyncThunk(
