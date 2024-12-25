@@ -160,10 +160,10 @@
 @media screen and (min-width: 768px) {
   .modalContent {
     width: 704px;
-    padding: 32px 24px;
+    padding: 16px 24px;
   }
   .modalForm {
-    gap: 24px;
+    gap: 14px;
   }
   .topWrapper {
     gap: 12px;
@@ -203,13 +203,6 @@
     font-size: 16px;
   }
 
-  .field {
-    height: 44px;
-    font-size: 16px;
-  }
-  .field::placeholder {
-    font-size: 16px;
-  }
   .spanResult {
     font-size: 18px;
   }
@@ -226,8 +219,19 @@
   .modalDescr {
     width: 544px;
   }
-}
-.error {
-  font-size: 16px;
-  margin-top: 4px;
+  .modalForm {
+    gap: 24px;
+  }
+
+  .field {
+    height: 44px;
+    font-size: 16px;
+  }
+  .field::placeholder {
+    font-size: 16px;
+  }
+  .error {
+    font-size: 16px;
+    margin-top: 4px;
+  }
 }
