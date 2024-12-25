@@ -10,6 +10,7 @@ import { refresh } from "./redux/user/operations.js";
 import PrivateRoute from "./PrivateRoute.jsx";
 import RestrictedRoute from "./RestrictedRoute.jsx";
 import { selectIsRefreshing } from "./redux/user/selectors.js";
+import { Toaster } from "react-hot-toast";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage/welcomePage.jsx"));
@@ -30,55 +31,58 @@ function App() {
   return isRefreshing ? (
     <b>Please wait, updating user info...</b>
   ) : (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Suspense fallback={<SuspenseFallback />}>
-            <Layout />
-          </Suspense>
-        }
-      >
+    <>
+      <Toaster position="top-center" />
+      <Routes>
         <Route
-          index
+          path="/"
           element={
             <Suspense fallback={<SuspenseFallback />}>
+              <Layout />
+            </Suspense>
+          }
+        >
+          <Route
+            index
+            element={
+              <Suspense fallback={<SuspenseFallback />}>
+                <RestrictedRoute
+                  redirectTo="/homepage"
+                  component={<WelcomePage />}
+                />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/welcome"
+            element={
+              <Suspense fallback={<>Load</>}>
+                <WelcomePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/homepage"
+            element={
+              <PrivateRoute redirectTo="/signin" component={<HomePage />} />
+            }
+          />
+          <Route
+            path="/signin"
+            element={
               <RestrictedRoute
                 redirectTo="/homepage"
-                component={<WelcomePage />}
+                component={<SigninPage />}
               />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/welcome"
-          element={
-            <Suspense fallback={<>Load</>}>
-              <WelcomePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/homepage"
-          element={
-            <PrivateRoute redirectTo="/signin" component={<HomePage />} />
-          }
-        />
-        <Route
-          path="/signin"
-          element={
-            <RestrictedRoute
-              redirectTo="/homepage"
-              component={<SigninPage />}
-            />
-          }
-        />
-        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-      </Route>
-      <Route path="/success" element={<SuccessPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+            }
+          />
+          <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 }
 

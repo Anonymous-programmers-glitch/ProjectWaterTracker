@@ -6,3 +6,5 @@ export const selectIsLoggedIn = (state) => state.user.isLoggedIn;
 export const selectIsRefreshing = (state) => state.user.isRefreshing;
 export const selectAccessToken = (state) => state.user.accessToken;
 export const selectEditUser = (state) => state.user.isEdit;
+export const selectResponseStatus = (state) => state.user.status;
+export const selectResponseMessage = (state) => state.user.message;

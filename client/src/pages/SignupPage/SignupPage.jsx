@@ -7,7 +7,7 @@ export default function SignupPage() {
   return (
     <section className={css.main}>
       <div className={css.background}></div>
-      <Toaster position="top-center" />
+      {/* <Toaster position="top-center" /> */}
       <div className={css.wrapper}>
         <div className={css.form}>
           <AuthForm />

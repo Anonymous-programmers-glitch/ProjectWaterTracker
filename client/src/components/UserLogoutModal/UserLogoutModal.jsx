@@ -7,18 +7,34 @@ import { closeLogoutModal } from "../../redux/modalToggle/slice";
 import { selectLogoutModal } from "../../redux/modalToggle/selectors";
 import { logout } from "../../redux/user/operations";
 import Button from ".././ui/Button/Button.jsx";
+import toast from "react-hot-toast";
 
 const UserLogoutModal = () => {
   const dispatch = useDispatch();
   const isLogoutModalOpen = useSelector(selectLogoutModal);
 
-  const handleLogout = () => {
-    dispatch(logout())
-      .unwrap()
-      .then(() => dispatch(closeLogoutModal()))
-      .catch((error) => {
-        console.error("Error exiting:", error);
-      });
+  const handleLogout = async () => {
+    // dispatch(logout());
+    // .unwrap()
+    // .then(() => dispatch(closeLogoutModal()))
+    // .catch((error) => {
+    //   console.error("Error exiting:", error);
+    // });
+    const response = await dispatch(logout());
+    const updateStatus = response.payload;
+    const updateMessage =
+      response.payload?.data?.message ||
+      response.payload?.message ||
+      "User successfully logged out, session cleared!";
+
+    if (updateStatus === 204) {
+      toast.success(updateMessage);
+      dispatch(closeLogoutModal());
+    } else {
+      toast.error(`${updateMessage}`);
+    }
+    // dispatch(closeLogoutModal());
+    // toast.success("User successfully logged out, session cleared!");
   };
 
   const handleKeyDown = useCallback(
@@ -27,7 +43,7 @@ const UserLogoutModal = () => {
         dispatch(closeLogoutModal());
       }
     },
-    [dispatch],
+    [dispatch]
   );
 
   useEffect(() => {
@@ -56,8 +72,15 @@ const UserLogoutModal = () => {
         </div>
         <p className={css.modalText}>Do you really want to leave?</p>
         <div className={css.modalButtons}>
-          <Button onClick={() => dispatch(closeLogoutModal())} cssstyle="cancel">Cancel</Button>
-          <Button onClick={handleLogout} cssstyle="logout">Log out</Button>
+          <Button
+            onClick={() => dispatch(closeLogoutModal())}
+            cssstyle="cancel"
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleLogout} cssstyle="logout">
+            Log out
+          </Button>
         </div>
       </div>
     </ModalBackdrop>
