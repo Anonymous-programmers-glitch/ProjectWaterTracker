@@ -50,19 +50,12 @@ const FeedbackSchema = Yup.object().shape({
     .matches(
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter."
-    ),
-  repeatNewPassword: Yup.string()
-    .min(8, "Password is too short - should be 8 chars minimum.")
-    .max(64, "Password must be at most 64 characters long.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
-    .matches(
-      /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-      "Password must contain a special character."
     )
-    .matches(
-      /^(?=.*[A-Z])/,
-      "Password must contain at least one uppercase letter."
-    ),
+    .notOneOf([Yup.ref("outdatedPassword")]),
+  repeatNewPassword: Yup.string().oneOf(
+    [Yup.ref("newPassword")],
+    "Password must match"
+  ),
 });
 
 export default function SettingModal() {
@@ -101,24 +94,6 @@ export default function SettingModal() {
   const handleSubmit = async (values, actions) => {
     const updatedValues = {};
 
-    if (values.newPassword !== values.repeatNewPassword) {
-      toast.error("New passwords don't match.", {
-        autoClose: 2000,
-      });
-      return;
-    }
-
-    if (
-      values.outdatedPassword &&
-      (values.outdatedPassword === values.newPassword ||
-        values.outdatedPassword === values.repeatNewPassword)
-    ) {
-      toast.error("Old password cannot be the same as new passwords.", {
-        autoClose: 2000,
-      });
-      return;
-    }
-
     Object.keys(values).forEach((key) => {
       if (values[key] !== initialValues[key]) {
         updatedValues[key] = values[key];
@@ -155,10 +130,10 @@ export default function SettingModal() {
       toast.success("Successfully updated!", {
         autoClose: 3000,
       });
-
-      setTimeout(() => {
-        dispatch(closeSettingModal());
-      }, 1000);
+      dispatch(closeSettingModal());
+      // setTimeout(() => {
+      //   dispatch(closeSettingModal());
+      // }, 1000);
     } catch (error) {
       toast.error("Something went wrong: ", {
         autoClose: 2000,

@@ -37,7 +37,9 @@ const UserLogo = () => {
   return (
     <div className={css.container}>
       <button className={css.userLogoBtn} onClick={toggleModal}>
-        <p className={css.userLogoBtnText}>{userName}</p>
+        <p className={css.userLogoBtnText}>
+          {userName ? user.name : user.email}
+        </p>
         <div className={css.userLogoBtnWrapper}>
           <div className={css.userLogoBtnAvatarWrapper}>{avatarContent}</div>
           <ChevronDoubleUp size="16" />
