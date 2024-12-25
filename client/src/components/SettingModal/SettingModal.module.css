@@ -251,12 +251,24 @@
     flex-direction: column;
   }
 
-  .labelUserName {
+  /* .labelUserName {
     padding-right: 152px;
+  } */
+
+  /* .labelUser {
+    padding-right: 152px;
+  } */
+
+  .genderOptions {
+    padding-bottom: 26px;
   }
 
-  .labelUser {
-    padding-right: 152px;
+  .saveBtnWrapper {
+    padding-top: 12px;
+  }
+
+  .passwordWrapper {
+    padding-right: 0;
   }
   /* .nameAndEmailInput {
     width: 392px;
@@ -287,36 +299,86 @@
     padding-left: 12px;
     padding-right: 12px;
     max-width: 280px;
+    margin-top: 5px;
+    padding-bottom: 15px;
     /* max-height: 852px;
     margin-top: 40px;
     margin-right: 20px;
     margin-left: 20px; */
   }
 
-  /* .mainTitle {
+  /*  */
+  .mainTitle {
     padding-bottom: 10px;
+    font-size: 14px;
   }
 
   .imgWrapper {
     padding-bottom: 10px;
   }
 
+  .photo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .buttonUpload {
+    font-size: 14px;
+  }
+
   .labelUserName {
     margin-bottom: 10px;
-  } */
+  }
 
-  /* .wrapperTwoBlocks {
-    padding-bottom: 10px;
-  } */
+  .wrapperTwoBlocks {
+    /* padding-bottom: 10px; */
+    gap: 0;
+  }
+
+  .photoTitle {
+    font-size: 14px;
+  }
+  /*  */
 
   .btn {
     position: inherit;
     width: 256px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+  }
+
+  .closeBtn {
+    top: 15px;
+    right: 10px;
   }
 
   .genderOptions {
     padding-bottom: 10px;
+  }
+
+  .genderTitle {
+    font-size: 14px;
+  }
+
+  .genderInput {
+    font-size: 14px;
+  }
+
+  .labelUserName {
+    font-size: 14px;
+  }
+
+  .nameAndEmailInput {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  .labelUser {
+    font-size: 14px;
+  }
+
+  .passwordTittle {
+    font-size: 14px;
+    padding-top: 5px;
   }
 
   .passwordWrapper {
@@ -325,16 +387,35 @@
 
   .nameAndEmailInput {
     width: 256px;
+    height: 36px;
   }
-  /* 
+  /*  */
   .wrapperTwoBlocks {
-    padding-bottom: 10px;
-  } */
+    padding-bottom: 6px;
+  }
+
+  .passwordTitle {
+    font-size: 14px;
+  }
+
+  .labelPassword {
+    font-size: 14px;
+  }
 
   /* .wrapperToBtn {
     padding-bottom: 0px;
-  } */
+  } 
+   /*  */
   .saveBtnWrapper {
-    padding-top: 15px;
+    padding-top: 5px;
+  }
+
+  .input {
+    margin-bottom: 0;
+    height: 36px;
+  }
+
+  .eyeIcon {
+    top: 34px;
   }
 }
