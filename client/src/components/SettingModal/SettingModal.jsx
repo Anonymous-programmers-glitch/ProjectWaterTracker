@@ -25,7 +25,7 @@ const FeedbackSchema = Yup.object().shape({
     ["female", "male"],
     "Please select a valid gender."
   ),
-  name: Yup.string().max(12, "Name is Too Long."),
+  name: Yup.string().max(32, "Name is Too Long."),
   email: Yup.string().email().required("Email is Required."),
   outdatedPassword: Yup.string()
     .min(8, "Password is too short - should be 8 chars minimum.")
