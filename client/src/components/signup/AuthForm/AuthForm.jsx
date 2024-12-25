@@ -48,35 +48,50 @@ export default function SignUpForm() {
   const handleSubmit = async (values, actions) => {
     const { email, password } = values;
 
-    const result = await dispatch(signup({ email, password }));
+    const response = await dispatch(signup({ email, password }));
 
-    const message = result.payload.data.message;
+    const updateStatus = response.payload?.status;
+    const updateMessage =
+      response.payload?.data?.message || response.payload?.message;
 
-    if (result.error) {
-      switch (result.payload.status) {
-        case 409:
-          toast.error(message);
-          break;
-        case 400:
-          toast.error(message);
-          break;
-        default:
-          toast.error(message);
-          break;
-      }
-    } else {
-      toast.success("Successfully registered a user!");
-
-      toast((t) => (
-        <span>
-          Check your email to confirm it!
-          <button type="button" onClick={() => toast.dismiss(t.id)}>
-            <b>OK</b>
-          </button>
-        </span>
-      ));
+    if (updateStatus === 201) {
+      toast.success(`${updateMessage}`);
       actions.resetForm();
+    } else {
+      toast.error(`${updateMessage}`);
     }
+
+    // dispatch(signup({ email, password }));
+
+    // const result = await dispatch(signup({ email, password }));
+    // const message = result.payload.data.message;
+
+    // if (result.error) {
+    //   switch (result.payload.status) {
+    //     case 409:
+    //       toast.error(message);
+    //       break;
+    //     case 400:
+    //       toast.error(message);
+    //       break;
+    //     default:
+    //       toast.error(message);
+    //       break;
+    //   }
+    // } else {
+    //   toast.success("Successfully registered a user!");
+
+    //   toast((t) => (
+    //     <span>
+    //       Check your email to confirm it!
+    //       <button type="button" onClick={() => toast.dismiss(t.id)}>
+    //         <b>OK</b>
+    //       </button>
+    //     </span>
+    //   ));
+    //   actions.resetForm();
+    // }
+    actions.resetForm();
   };
 
   const [passwordVisible, setPasswordVisible] = useState(

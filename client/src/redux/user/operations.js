@@ -1,6 +1,6 @@
 import axios, { setAuthHeader, clearAuthHeader } from "../../api/operationsAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import toast from "react-hot-toast";
 /*
  * User registration.
  * POST @ /auth/register
@@ -12,20 +12,13 @@ export const signup = createAsyncThunk(
   "user/signup",
   async (credentials, thunkAPI) => {
     try {
-      const { user } = (await axios.post("/auth/register", credentials)).data;
-      return user;
+      const response = (await axios.post("/auth/register", credentials)).data;
+      return response;
     } catch (error) {
-      console.log(
-        "error.response.data.status :>> ",
-        error.response.data.status
-      );
-      console.log(
-        "error.response.data.message :>> ",
-        error.response.data.message
-      );
-      //return thunkAPI.rejectWithValue(error.message);
-      //return thunkAPI.rejectWithValue(error.response);
-      return thunkAPI.rejectWithValue(error.response.data);
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -43,9 +36,13 @@ export const login = createAsyncThunk(
     try {
       const response = (await axios.post("/auth/login", credentials)).data;
       setAuthHeader(response.data.accessToken);
-      return response.data;
+      console.log("response :>> ", response);
+      return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -59,11 +56,16 @@ export const login = createAsyncThunk(
  */
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
-    await axios.post("/auth/logout");
+    const response = await axios.post("/auth/logout");
     clearAuthHeader();
+    return response.status;
   } catch (error) {
+    if (error.response?.data) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
     return thunkAPI.rejectWithValue(error.message);
   }
+  // }
 });
 
 /*
@@ -85,8 +87,12 @@ export const refresh = createAsyncThunk(
 
       const response = (await axios.get("/users/current")).data;
       setAuthHeader(response.data.accessToken);
-      return response.data;
+      console.log("response :>> ", response);
+      return response;
     } catch (error) {
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   },
@@ -110,9 +116,9 @@ export const update = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = (await axios.patch(`/users`, data)).data;
-      return response.data;
+      console.log("response update :>> ", response);
+      return response;
     } catch (error) {
-
       return thunkAPI.rejectWithValue(error.message);
     }
   }

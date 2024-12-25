@@ -45,7 +45,7 @@ export const signup = async (payload) => {
   const { email, password } = payload;
 
   const user = await findUser({ email });
-  if (user) throw createHttpError(409, 'Email in use!');
+  if (user) throw createHttpError(409, 'Email is already in use!');
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
