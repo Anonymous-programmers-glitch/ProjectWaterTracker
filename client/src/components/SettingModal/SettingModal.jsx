@@ -71,6 +71,7 @@ export default function SettingModal() {
   const avatar = useSelector(selectAvatarUrl);
 
   const [openPassword, setOpenPassword] = useState(false);
+
   const isSettingsOpen = useSelector(selectSettingModal);
   const dispatch = useDispatch();
 
@@ -351,7 +352,6 @@ export default function SettingModal() {
                     Outdated password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      // name="outdatedPassword"
                       name="outdatedPassword"
                       placeholder="Password"
                       id="outdatedPassword"
