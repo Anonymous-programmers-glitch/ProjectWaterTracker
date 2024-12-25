@@ -44,8 +44,6 @@ export default function SignInForm() {
     const { email, password } = values;
     const result = await dispatch(login({ email, password }));
 
-    console.log(result.payload.status);
-    console.log(result.payload.data.message);
 
     const message = result.payload.data.message;
 
