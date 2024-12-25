@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import Button from "../ui/Button/Button.jsx";
-import Inputs from '../ui/Inputs/Inputs.jsx';
+import Inputs from "../ui/Inputs/Inputs.jsx";
 import css from "./ForgotPassword.module.css";
 import EyeOutline from "../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
@@ -29,11 +29,11 @@ export default function ForgotPassword() {
       .matches(/(?=.*[0-9])/, "Password must contain a number.")
       .matches(
         /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-        "Password must contain a special character."
+        "Password must contain a special character.",
       )
       .matches(
         /^(?=.*[A-Z])/,
-        "Password must contain at least one uppercase letter."
+        "Password must contain at least one uppercase letter.",
       ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
@@ -53,7 +53,7 @@ export default function ForgotPassword() {
     actions.resetForm();
   };
 
-  const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
 
   const [inputType, setInputType] = useState("password");
@@ -81,64 +81,52 @@ export default function ForgotPassword() {
           <Form autoComplete="off" className={css.wrapper}>
             <label className={css.label} htmlFor={passwordId}>
               Enter a new password
-              
               <Inputs
-                        type={passwordVisible ? "text" : "password"}
-                        name="password"
-                        placeholder="Password"
-                        id={passwordId}
-                        className={css.input}
-                      />
-                      {passwordVisible ? (
-                        <div
-                          className={css.icon}
-                          onClick={togglePasswordVisibility}
-                        >
-                          <EyeOutline size={size} />
-                        </div>
-                      ) : (
-                        <div
-                          className={css.icon}
-                          onClick={togglePasswordVisibility}
-                        >
-                          <EyeSlashOutline size={size} />
-                        </div>
-                      )}
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                id={passwordId}
+                className={css.input}
+              />
+              {passwordVisible ? (
+                <div className={css.icon} onClick={togglePasswordVisibility}>
+                  <EyeOutline size={size} />
+                </div>
+              ) : (
+                <div className={css.icon} onClick={togglePasswordVisibility}>
+                  <EyeSlashOutline size={size} />
+                </div>
+              )}
             </label>
             <label className={css.label} htmlFor={repeatPasswordId}>
               Repeat new password
-                  <Inputs
-                        type={repeatPasswordVisible ? "text" : "password"}
-                        name="repeatPassword"
-                        placeholder="Repeat password"
-                        id={repeatPasswordId}
-                        className={css.input}
-                      />
-                      {repeatPasswordVisible ? (
-                        <div
-                          className={css.icon}
-                          onClick={toggleRepeatPasswordVisibility}
-                        >
-                          <EyeOutline size={size} />
-                        </div>
-                      ) : (
-                        <div
-                          className={css.icon}
-                          onClick={toggleRepeatPasswordVisibility}
-                        >
-                          <EyeSlashOutline size={size} />
-                        </div>
-                      )}
-
+              <Inputs
+                type={repeatPasswordVisible ? "text" : "password"}
+                name="repeatPassword"
+                placeholder="Repeat password"
+                id={repeatPasswordId}
+                className={css.input}
+              />
+              {repeatPasswordVisible ? (
+                <div
+                  className={css.icon}
+                  onClick={toggleRepeatPasswordVisibility}
+                >
+                  <EyeOutline size={size} />
+                </div>
+              ) : (
+                <div
+                  className={css.icon}
+                  onClick={toggleRepeatPasswordVisibility}
+                >
+                  <EyeSlashOutline size={size} />
+                </div>
+              )}
             </label>
-            <Button cssstyle="signup" type="submit">
-              Create new password
-            </Button>
+            <Button cssstyle="signup" onClick={handleSignInClick}>Create new password</Button>
           </Form>
         );
       }}
     </Formik>
   );
 }
-
-

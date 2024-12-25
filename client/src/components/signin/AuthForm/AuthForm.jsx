@@ -1,9 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectResetPasswordModal } from '../../../redux/modalToggle/selectors.js';
+import { openResetPasswordModal } from "../../../redux/modalToggle/slice.js";
 import { login } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
+import ResetPasswordModal from '../../ResetPasswordModal/ResetPasswordModal.jsx';
+import TextButton from "../../ui/TextButton/TextButton.jsx";
 import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
@@ -34,6 +38,7 @@ export default function SignInForm() {
       .max(64, "Should be 64 chars maximum."),
   });
   const dispatch = useDispatch();
+  const isResetPasswordModalOpen = useSelector(selectResetPasswordModal);
 
   const size = "24";
 
@@ -44,8 +49,8 @@ export default function SignInForm() {
     const { email, password } = values;
     const result = await dispatch(login({ email, password }));
 
-
     const message = result.payload.data.message;
+
 
     if (result.error) {
       switch (result.payload.status) {
@@ -66,7 +71,7 @@ export default function SignInForm() {
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeSlashOutline size={size} />
+    <EyeSlashOutline size={size} />,
   );
   const [inputType, setInputType] = useState("password");
 
@@ -81,67 +86,70 @@ export default function SignInForm() {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={SignInSchema}
-    >
-      {() => {
-        return (
-          <Form autoComplete="off" className={css.wrapper}>
-            <h3 className={css.h3}>Sign In</h3>
-            <div>
-              <label className={css.label} htmlFor={signinId}>
-                Enter your email{" "}
-              </label>
-              <Field
-                type="email"
-                name="email"
-                className={css.input}
-                placeholder="E-mail"
-                id={signinId}
-                validate={validateEmail}
-              />
-              <ErrorMessage
-                name="email"
-                component="span"
-                className={css.error}
-              />
-            </div>
-            <div>
-              <label className={css.label} htmlFor={passwordId}>
-                Enter your password{" "}
-              </label>
-              <div className={css.psw}>
+    <>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={SignInSchema}
+      >
+        {() => {
+          return (
+            <Form autoComplete="off" className={css.wrapper}>
+              <h3 className={css.h3}>Sign In</h3>
+              <div>
+                <label className={css.label} htmlFor={signinId}>
+                  Enter your email{" "}
+                </label>
                 <Field
-                  type={inputType}
-                  name="password"
-                  placeholder="Password"
-                  id={passwordId}
-                  className={css.field}
+                  type="email"
+                  name="email"
+                  className={css.input}
+                  placeholder="E-mail"
+                  id={signinId}
+                  validate={validateEmail}
                 />
-                <span className={css.icon} onClick={togglePasswordVisibility}>
-                  {passwordVisible}
-                </span>
+                <ErrorMessage
+                  name="email"
+                  component="span"
+                  className={css.error}
+                />
               </div>
-              <ErrorMessage
-                name="password"
-                component="span"
-                className={css.error}
-              />
-            </div>
-            <Button type="submit" cssstyle="signin">
-              Sign In
-            </Button>
-            <NavLink to="/forgotpassword" className={css.link}>
-              <p>Forgot password?</p>
-            </NavLink>
-            <NavLink to="/signup" className={css.link}>
-              <p>Sign up</p>
-            </NavLink>
-          </Form>
-        );
-      }}
-    </Formik>
+              <div>
+                <label className={css.label} htmlFor={passwordId}>
+                  Enter your password{" "}
+                </label>
+                <div className={css.psw}>
+                  <Field
+                    type={inputType}
+                    name="password"
+                    placeholder="Password"
+                    id={passwordId}
+                    className={css.field}
+                  />
+                  <span className={css.icon} onClick={togglePasswordVisibility}>
+                    {passwordVisible}
+                  </span>
+                </div>
+                <ErrorMessage
+                  name="password"
+                  component="span"
+                  className={css.error}
+                />
+              </div>
+              <Button type="submit" cssstyle="signin">
+                Sign In
+              </Button>
+              <TextButton onClick={() => dispatch(openResetPasswordModal())}>
+                Forgot your password?
+              </TextButton>
+              <NavLink to="/signup" className={css.link}>
+                <p>Sign up</p>
+              </NavLink>
+            </Form>
+          );
+        }}
+      </Formik>
+      {isResetPasswordModalOpen && <ResetPasswordModal />}
+    </>
   );
 }

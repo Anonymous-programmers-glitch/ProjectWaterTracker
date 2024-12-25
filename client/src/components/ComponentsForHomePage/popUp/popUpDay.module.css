@@ -1,9 +1,9 @@
 .popUp {
   position: absolute;
   top: -188px;
-  left: 0;
+  left: -5px;
   background: var(--primery-color-white);
-  width: 280px;
+  width: 275px;
   min-height: 188px;
   padding: 24px 12px;
   border-radius: 10px;
