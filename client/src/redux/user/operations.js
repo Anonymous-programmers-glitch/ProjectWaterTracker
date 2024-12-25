@@ -119,6 +119,9 @@ export const update = createAsyncThunk(
       console.log("response update :>> ", response);
       return response;
     } catch (error) {
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
