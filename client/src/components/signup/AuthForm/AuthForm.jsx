@@ -3,7 +3,6 @@ import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signup } from "../../../redux/user/operations.js";
-//import { selectError } from "../../../redux/user/selectors.js";
 import * as Yup from "yup";
 import Button from "../../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
@@ -36,7 +35,7 @@ export default function SignUpForm() {
       .max(64, "Should be 64 chars maximum.")
       .matches(
         /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-        "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)."
+        "Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*).",
       ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
@@ -56,15 +55,11 @@ export default function SignUpForm() {
 
     const result = await dispatch(signup({ email, password }));
 
-    console.log(result.payload.status);
-    console.log(result.payload.data.message);
-
     const message = result.payload.data.message;
 
     if (result.error) {
       switch (result.payload.status) {
         case 409:
-          //toast.error("Email in use!");
           toast.error(message);
           break;
         case 400:
@@ -90,7 +85,7 @@ export default function SignUpForm() {
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeSlashOutline size={size} />
+    <EyeSlashOutline size={size} />,
   );
   const [inputType, setInputType] = useState("password");
 
