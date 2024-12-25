@@ -27,7 +27,7 @@ requestBody:
             example: StrongP@ssw0rd
 responses:
   '200':
-    description: Successfully logged in an user.
+    description: User successfully logged in!
     content:
       application/json:
         schema:
@@ -38,7 +38,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully logged in an user!
+              example: User successfully logged in!
             data:
               type: object
               properties:
