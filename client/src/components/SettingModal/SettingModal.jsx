@@ -28,6 +28,7 @@ const FeedbackSchema = Yup.object().shape({
   name: Yup.string().max(32, "Name is Too Long."),
   email: Yup.string().email().required("Email is Required."),
   outdatedPassword: Yup.string()
+    .nullable()
     .min(8, "Password is too short - should be 8 chars minimum.")
     .max(64, "Password must be at most 64 characters long.")
     .matches(/(?=.*[0-9])/, "Password must contain a number.")
@@ -40,6 +41,7 @@ const FeedbackSchema = Yup.object().shape({
       "Password must contain at least one uppercase letter."
     ),
   newPassword: Yup.string()
+    .nullable()
     .min(8, "Password is too short - should be 8 chars minimum.")
     .max(64, "Password must be at most 64 characters long.")
     .matches(/(?=.*[0-9])/, "Password must contain a number.")
@@ -51,11 +53,26 @@ const FeedbackSchema = Yup.object().shape({
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter."
     )
+    //
+    // repeatNewPassword: Yup.string()
+    //   .min(8, "Password is too short - should be 8 chars minimum.")
+    //   .max(64, "Password must be at most 64 characters long.")
+    //   .matches(/(?=.*[0-9])/, "Password must contain a number.")
+    //   .matches(
+    //     /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+    //     "Password must contain a special character."
+    //   )
+    //   .matches(
+    //     /^(?=.*[A-Z])/,
+    //     "Password must contain at least one uppercase letter."
+    //   ),
+    //
+
+    //
     .notOneOf([Yup.ref("outdatedPassword")]),
-  repeatNewPassword: Yup.string().oneOf(
-    [Yup.ref("newPassword")],
-    "Password must match"
-  ),
+  repeatNewPassword: Yup.string()
+    .nullable() // Дозволяє порожнє значення
+    .oneOf([Yup.ref("newPassword")], "Password must match"),
 });
 
 export default function SettingModal() {
@@ -64,6 +81,7 @@ export default function SettingModal() {
   const avatar = useSelector(selectAvatarUrl);
 
   const [openPassword, setOpenPassword] = useState(false);
+
   const isSettingsOpen = useSelector(selectSettingModal);
   const dispatch = useDispatch();
 
@@ -94,53 +112,105 @@ export default function SettingModal() {
   const handleSubmit = async (values, actions) => {
     const updatedValues = {};
 
+    // if (values.newPassword !== values.repeatNewPassword) {
+    //   toast.error("New passwords don't match.", {
+    //     autoClose: 2000,
+    //   });
+    //   return;
+    // }
+
+    // if (
+    //   values.outdatedPassword &&
+    //   (values.outdatedPassword === values.newPassword ||
+    //     values.outdatedPassword === values.repeatNewPassword)
+    // ) {
+    //   toast.error("Old password cannot be the same as new passwords.", {
+    //     autoClose: 2000,
+    //   });
+    //   return;
+    // }
+
     Object.keys(values).forEach((key) => {
       if (values[key] !== initialValues[key]) {
         updatedValues[key] = values[key];
       }
     });
 
-    try {
-      if (updatedValues.outdatedPassword && updatedValues.newPassword) {
-        const passwordPayload = {
-          outdatedPassword: updatedValues.outdatedPassword,
-          newPassword: updatedValues.newPassword,
-        };
+    // try {
+    if (updatedValues.outdatedPassword && updatedValues.newPassword) {
+      const passwordPayload = {
+        outdatedPassword: updatedValues.outdatedPassword,
+        newPassword: updatedValues.newPassword,
+      };
 
-        await dispatch(update(passwordPayload));
+      // await dispatch(update(passwordPayload));
 
-        delete updatedValues.outdatedPassword;
-        delete updatedValues.newPassword;
-        delete updatedValues.repeatNewPassword;
+      const passwordResponse = await dispatch(update(passwordPayload));
+      const passwordUpdateStatus = passwordResponse.payload?.status;
+      const passwordUpdateMessage =
+        passwordResponse.payload?.data?.message ||
+        passwordResponse.payload?.message ||
+        passwordResponse.payload ||
+        passwordResponse.error.message;
+
+      console.log(passwordResponse);
+
+      if (passwordUpdateStatus === 200) {
+        toast.success(`${passwordUpdateMessage}`);
+        dispatch(closeSettingModal());
+      } else {
+        toast.error(`${passwordUpdateMessage}`);
       }
 
-      const otherFields = Object.keys(updatedValues).filter(
-        (key) => key !== "outdatedPassword" && key !== "newPassword"
-      );
-
-      if (otherFields.length > 0) {
-        const otherPayload = otherFields.reduce((acc, key) => {
-          acc[key] = updatedValues[key];
-          return acc;
-        }, {});
-
-        await dispatch(update(otherPayload));
-      }
-
-      toast.success("Successfully updated!", {
-        autoClose: 3000,
-      });
-      dispatch(closeSettingModal());
-      // setTimeout(() => {
-      //   dispatch(closeSettingModal());
-      // }, 1000);
-    } catch (error) {
-      toast.error("Something went wrong: ", {
-        autoClose: 2000,
-      });
+      delete updatedValues.outdatedPassword;
+      delete updatedValues.newPassword;
+      delete updatedValues.repeatNewPassword;
     }
 
-    actions.resetForm();
+    const otherFields = Object.keys(updatedValues).filter(
+      (key) => key !== "outdatedPassword" && key !== "newPassword"
+    );
+
+    if (otherFields.length > 0) {
+      const otherPayload = otherFields.reduce((acc, key) => {
+        acc[key] = updatedValues[key];
+        return acc;
+      }, {});
+
+      // const { email, password } = values;
+      // const response = await dispatch(login({ email, password }));
+      const response = await dispatch(update(otherPayload));
+
+      const updateStatus = response.payload?.status;
+      const updateMessage =
+        response.payload?.data?.message ||
+        response.payload?.message ||
+        response.error.message;
+      console.log(response);
+
+      if (updateStatus === 200) {
+        toast.success(`${updateMessage}`);
+        dispatch(closeSettingModal());
+        actions.resetForm();
+      } else {
+        toast.error(`${updateMessage}`);
+      }
+    }
+
+    //   toast.success("Successfully updated!", {
+    //     autoClose: 3000,
+    //   });
+    //   dispatch(closeSettingModal());
+    //   // setTimeout(() => {
+    //   //   dispatch(closeSettingModal());
+    //   // }, 1000);
+    // } catch (error) {
+    //   toast.error("Something went wrong: ", {
+    //     autoClose: 2000,
+    //   });
+    // }
+
+    // actions.resetForm();
   };
 
   useEffect(() => {
@@ -326,7 +396,6 @@ export default function SettingModal() {
                     Outdated password:
                     <Inputs
                       type={openPassword ? "text" : "password"}
-                      // name="outdatedPassword"
                       name="outdatedPassword"
                       placeholder="Password"
                       id="outdatedPassword"

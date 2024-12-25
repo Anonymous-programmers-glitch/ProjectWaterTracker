@@ -143,6 +143,7 @@
   gap: 8px;
   flex-direction: column;
   margin-bottom: 24px;
+  /* padding-bottom: 24px; */
   color: var(--primery-color-black);
 }
 
@@ -238,6 +239,19 @@
   justify-content: end;
   padding-top: 24px;
 }
+
+.uploadSvg {
+  stroke: var(--primery-color-blue);
+}
+
+.buttonUpload:hover .uploadSvg {
+  stroke: var(--secondary-color-5);
+}
+
+.buttonUpload:hover {
+  color: var(--secondary-color-5);
+}
+
 @media screen and (max-width: 768px) {
   .container {
     width: 704px;
@@ -247,8 +261,16 @@
     margin-top: 15px;
   }
 
+  .mainTitle {
+    font-size: 26px;
+  }
+
   .wrapperTwoBlocks {
     flex-direction: column;
+  }
+
+  .buttonUpload {
+    font-size: 14px;
   }
 
   /* .labelUserName {
@@ -259,8 +281,16 @@
     padding-right: 152px;
   } */
 
+  .genderTitle {
+    font-size: 18px;
+  }
+
   .genderOptions {
-    padding-bottom: 26px;
+    padding-bottom: 24px;
+  }
+
+  .genderInput {
+    font-size: 16px;
   }
 
   .saveBtnWrapper {
