@@ -8,7 +8,7 @@ const SuccessPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/signin");
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [navigate]);

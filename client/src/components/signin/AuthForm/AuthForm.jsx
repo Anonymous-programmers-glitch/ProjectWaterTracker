@@ -1,18 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { selectResetPasswordModal } from '../../../redux/modalToggle/selectors.js';
+import { useDispatch, useSelector } from "react-redux";
+import { selectResetPasswordModal } from "../../../redux/modalToggle/selectors.js";
 import { openResetPasswordModal } from "../../../redux/modalToggle/slice.js";
 import { login } from "../../../redux/user/operations.js";
 import * as Yup from "yup";
-import ResetPasswordModal from '../../ResetPasswordModal/ResetPasswordModal.jsx';
+import ResetPasswordModal from "../../ResetPasswordModal/ResetPasswordModal.jsx";
 import TextButton from "../../ui/TextButton/TextButton.jsx";
 import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
+import {} from "../../../redux/user/selectors.js";
 
 const initialValues = {
   email: "",
@@ -47,31 +48,43 @@ export default function SignInForm() {
 
   const handleSubmit = async (values, actions) => {
     const { email, password } = values;
-    const result = await dispatch(login({ email, password }));
+    const response = await dispatch(login({ email, password }));
 
-    const message = result.payload.data.message;
+    const updateStatus = response.payload?.status;
+    const updateMessage =
+      response.payload?.data?.message || response.payload?.message;
 
-
-    if (result.error) {
-      switch (result.payload.status) {
-        case 400:
-          toast.error(message);
-          break;
-        case 401:
-          toast.error(message);
-          break;
-        default:
-          toast.error(message);
-          break;
-      }
-    } else {
-      toast.success("Successfully login a user!");
+    if (updateStatus === 200) {
+      toast.success(`${updateMessage}`);
       actions.resetForm();
+    } else {
+      toast.error(`${updateMessage}`);
     }
+    // dispatch(login({ email, password }));
+    // toast.success("User successfully logged in!");
+    // const message = result.payload.data.message;
+
+    // if (result.error) {
+    //   switch (result.payload.status) {
+    //     case 400:
+    //       toast.error(message);
+    //       break;
+    //     case 401:
+    //       toast.error(message);
+    //       break;
+    //     default:
+    //       toast.error(message);
+    //       break;
+    //   }
+    // } else {
+    //   toast.success("Successfully login a user!");
+    //   actions.resetForm();
+    // }
+    // actions.resetForm();
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
-    <EyeSlashOutline size={size} />,
+    <EyeSlashOutline size={size} />
   );
   const [inputType, setInputType] = useState("password");
 
@@ -139,7 +152,9 @@ export default function SignInForm() {
               <Button type="submit" cssstyle="signin">
                 Sign In
               </Button>
-              <TextButton onClick={() => dispatch(openResetPasswordModal())}>
+              <TextButton
+                onClick={async () => await dispatch(openResetPasswordModal())}
+              >
                 Forgot your password?
               </TextButton>
               <NavLink to="/signup" className={css.link}>

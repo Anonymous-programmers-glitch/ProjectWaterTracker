@@ -49,7 +49,7 @@ export const loginUserController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Successfully logged in an user!',
+    message: 'User successfully logged in!',
     data: {
       user: {
         id: user._id,
