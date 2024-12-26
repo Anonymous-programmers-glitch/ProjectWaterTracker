@@ -1,4 +1,3 @@
-import React from "react";
 import css from "./waterlisttoday.module.css";
 
 function WaterListToday({ children }) {

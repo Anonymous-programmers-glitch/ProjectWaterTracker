@@ -1,11 +1,12 @@
 import Point from "../../ui/icons/Point.jsx";
 import css from "./WhyDrinkWaterList.module.css";
-export default function WhyDrinkWaterList({ data }) {
+export default function WhyDrinkWaterList(data) {
+  const { data: payload } = data;
   return (
     <div className={css.listWrapper}>
       <h3 className={css.titleList}>Why drink water</h3>
       <ul className={css.list}>
-        {data.map((item) => {
+        {payload.map((item) => {
           return (
             <li className={css.item} key={item.id}>
               <Point size={8} />

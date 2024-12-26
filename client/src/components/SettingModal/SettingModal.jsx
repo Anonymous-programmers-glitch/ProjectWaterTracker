@@ -1,6 +1,5 @@
 import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
-import { toast } from "react-hot-toast";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
 import Button from "../ui/Button/Button.jsx";

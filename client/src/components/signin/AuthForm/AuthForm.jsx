@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +12,8 @@ import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
-import toast from "react-hot-toast";
-
 import Inputs from "../../ui/Inputs/Inputs.jsx";
-
-
 import { updateNotifier } from "../../../utils/updateNotifier.js";
-
 
 const initialValues = {
   email: "",
@@ -54,7 +49,6 @@ export default function SignInForm() {
       resetForm: actions?.resetForm,
       status: 200,
     });
-
   };
 
   const [passwordVisible, setPasswordVisible] = useState(

@@ -22,6 +22,11 @@
   color: var(--primery-color-black);
 }
 
+.dayToday {
+  background-color: var(--secondary-color-5);
+  transform: scale(1.1);
+}
+
 .border {
   border: 1px solid var(--secondary-color-5);
 }

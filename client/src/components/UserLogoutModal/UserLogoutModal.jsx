@@ -7,7 +7,6 @@ import { closeLogoutModal } from "../../redux/modalToggle/slice";
 import { selectLogoutModal } from "../../redux/modalToggle/selectors";
 import { logout } from "../../redux/user/operations";
 import Button from ".././ui/Button/Button.jsx";
-import toast from "react-hot-toast";
 import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const UserLogoutModal = () => {
@@ -15,26 +14,6 @@ const UserLogoutModal = () => {
   const isLogoutModalOpen = useSelector(selectLogoutModal);
 
   const handleLogout = async () => {
-    // dispatch(logout());
-    // .unwrap()
-    // .then(() => dispatch(closeLogoutModal()))
-    // .catch((error) => {
-    //   console.error("Error exiting:", error);
-    // });
-    // const response = await dispatch(logout());
-    // const updateStatus =
-    // ;
-    // const updateMessage =
-    //   response.payload?.data?.message ||
-    //   response.payload?.message ||
-    //   "User successfully logged out, session cleared!";
-
-    // if (updateStatus === 204) {
-    //   toast.success(updateMessage);
-    //   dispatch(closeLogoutModal());
-    // } else {
-    //   toast.error(`${updateMessage}`);
-    // }
     const logoutMessage = "User successfully logged out, session cleared!";
     await updateNotifier({
       dispatchAction: () => dispatch(logout()),
@@ -42,8 +21,6 @@ const UserLogoutModal = () => {
       status: 204,
       message: logoutMessage,
     });
-    // dispatch(closeLogoutModal());
-    // toast.success("User successfully logged out, session cleared!");
   };
 
   const handleKeyDown = useCallback(
@@ -73,7 +50,7 @@ const UserLogoutModal = () => {
           <h2 className={css.modalHeader}>Log out</h2>
           <button
             className={css.modalClose}
-            onClick={() => dispatch(closeLogoutModal())} // Исправлено здесь
+            onClick={() => dispatch(closeLogoutModal())}
             aria-label="Close"
           >
             <XMarkOutline className={css.modalCloseIcon} />

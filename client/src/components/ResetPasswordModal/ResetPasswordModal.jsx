@@ -9,9 +9,8 @@ import { closeResetPasswordModal } from "../../redux/modalToggle/slice.js";
 import { selectResetPasswordModal } from "../../redux/modalToggle/selectors.js";
 import { requestResetToken } from "../../redux/user/operations.js";
 import Button from "../ui/Button/Button.jsx";
-import Input from "../ui/Inputs/Inputs.jsx";
-import toast, { Toaster } from "react-hot-toast";
 import Inputs from "../ui/Inputs/Inputs.jsx";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const ResetPasswordSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,23 +23,13 @@ const ResetPasswordModal = () => {
   const isResetPasswordModalOpen = useSelector(selectResetPasswordModal);
 
   const handleSubmit = async (values, actions) => {
-    const { payload } = await dispatch(requestResetToken(values.email));
-    const newError = payload.status === 200 ? payload.status : payload;
-    if (newError) {
-      switch (newError) {
-        case 200:
-          toast.success("Reset password email has been successfully sent!");
-          actions.resetForm();
-          dispatch(closeResetPasswordModal());
-          break;
-        case 404:
-          toast.error(`User not found!`);
-          break;
-        default:
-          toast.error(`Somethings wrong!`);
-          break;
-      }
-    }
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(requestResetToken(vals)),
+      values: values.email,
+      closeModal: () => dispatch(closeResetPasswordModal()),
+      resetForm: actions?.resetForm,
+      status: 200,
+    });
   };
 
   const handleKeyDown = useCallback(
@@ -65,7 +54,6 @@ const ResetPasswordModal = () => {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
       <ModalBackdrop onClick={() => dispatch(closeResetPasswordModal())}>
         <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
           <div className={css.modalHeaderContainer}>

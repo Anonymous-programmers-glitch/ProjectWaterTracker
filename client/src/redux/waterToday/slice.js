@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
 
 import {
   addWaterToday,
@@ -27,7 +25,7 @@ const slice = createSlice({
       totalDayWater: 0,
       waterRecords: [],
     },
-    loading: false,
+    isLoading: false,
     error: null,
     edit: false,
   },
@@ -36,10 +34,10 @@ const slice = createSlice({
     builder
       .addCase(fetchWaterToday.pending, handlePending)
       .addCase(fetchWaterToday.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.edit = false;
         state.error = null;
-        state.items = action.payload;
+        state.items = action.payload.data;
       })
       .addCase(fetchWaterToday.rejected, handleRejected);
     builder
@@ -57,7 +55,7 @@ const slice = createSlice({
         state.error = null;
 
         const index = state.items.waterRecords.findIndex(
-          (water) => water._id === action.payload,
+          (water) => water._id === action.payload._id
         );
 
         state.items.waterRecords.splice(index, 1);
@@ -69,12 +67,11 @@ const slice = createSlice({
         state.isLoading = false;
         state.error = null;
         const index = state.items.waterRecords.findIndex(
-          (waterId) => waterId.id === action.payload._id,
+          (waterId) => waterId.id === action.payload._id
         );
 
         state.items.waterRecords.splice(index, 1, action.payload.data);
         state.edit = true;
-
       })
       .addCase(editWaterToday.rejected, handleRejected);
   },

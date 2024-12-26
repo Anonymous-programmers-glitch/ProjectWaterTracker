@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { selectDailyNormaModal } from "../../redux/modalToggle/selectors.js";
 import css from "./MyDailyForma.module.css";
 import Button from "../ui/Button/Button.jsx";
-import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
@@ -13,6 +12,7 @@ import { putHistory } from "../../redux/updateHistori/operations.js";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import dayjs from "dayjs";
 import { selectUser } from "../../redux/user/selectors.js";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const DailySchema = Yup.object().shape({
   weightInKg: Yup.number()
@@ -42,13 +42,17 @@ const MyDailyNorma = () => {
     return (weight * weightFactor + hours * activityFactor).toFixed(2);
   };
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const myDailyNorma = values.waterYouDrink * 1000;
     const currentDate = dayjs().format("YYYY-MM-DD");
-    dispatch(update({ dailyNorma: myDailyNorma }));
-    dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
-    actions.resetForm();
-    handleCloseModal();
+    await dispatch(putHistory({ date: currentDate, dailyNorma: myDailyNorma }));
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(update(vals)),
+      values: { dailyNorma: myDailyNorma },
+      closeModal: () => dispatch(closeDailyNormaModal()),
+      resetForm: actions?.resetForm,
+      status: 200,
+    });
   };
 
   const handleCloseModal = () => {
@@ -163,7 +167,6 @@ const MyDailyNorma = () => {
                         max="24"
                         step="1"
                       />
-                      {/* < className={css.field} type="number" name="loadInHours" placeholder="0"/> */}
                     </div>
 
                     <div className={css.amountWraper}>
@@ -204,7 +207,6 @@ const MyDailyNorma = () => {
             </Formik>
           </div>
         </ModalBackdrop>
-        <Toaster />
       </>
     )
   );

@@ -1,15 +1,16 @@
 import { resizeWindow } from "../../../utils/resizeWindow";
 import css from "./TrackerBenefitsList.module.css";
 import React from "react";
-export default function TrackerBenefitsList({ data }) {
+export default function TrackerBenefitsList(data) {
   const sizeWindow = resizeWindow();
   const isMobile = sizeWindow < 768;
   const size = isMobile ? "32" : "40";
+  const { data: payload } = data;
   return (
     <>
       <h3 className={css.titleList}>Tracker Benefits</h3>
       <ul className={css.list}>
-        {data.map((item) => {
+        {payload.map((item) => {
           return (
             <li key={item.id}>
               <div className={css.item}>
