@@ -9,6 +9,7 @@ import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
+import { updateNotifier } from "../../../utils/updateNotifier.js";
 
 const initialValues = {
   email: "",
@@ -53,19 +54,12 @@ export default function SignUpForm() {
   const handleSubmit = async (values, actions) => {
     const { email, password } = values;
 
-    const response = await dispatch(signup({ email, password }));
-
-    const updateStatus = response.payload?.status;
-    const updateMessage =
-      response.payload?.data?.message || response.payload?.message;
-
-    if (updateStatus === 201) {
-      toast.success(`${updateMessage}`);
-      actions.resetForm();
-    } else {
-      toast.error(`${updateMessage}`);
-    }
-
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(signup(vals)),
+      values: { email, password },
+      resetForm: actions?.resetForm,
+      status: 201,
+    });
     // dispatch(signup({ email, password }));
 
     // const result = await dispatch(signup({ email, password }));
@@ -96,7 +90,7 @@ export default function SignUpForm() {
     //   ));
     //   actions.resetForm();
     // }
-    actions.resetForm();
+    // actions.resetForm();
   };
 
   const [passwordVisible, setPasswordVisible] = useState(

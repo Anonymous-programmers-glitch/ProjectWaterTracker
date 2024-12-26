@@ -87,7 +87,6 @@ export const refresh = createAsyncThunk(
 
       const response = (await axios.get("/users/current")).data;
       setAuthHeader(response.data.accessToken);
-      console.log("response :>> ", response);
       return response;
     } catch (error) {
       if (error.response?.data) {
@@ -116,7 +115,6 @@ export const update = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = (await axios.patch(`/users`, data)).data;
-      console.log("response update :>> ", response);
       return response;
     } catch (error) {
       if (error.response?.data) {
@@ -144,9 +142,12 @@ export const updateAvatar = createAsyncThunk(
           headers: { "Content-Type": "multipart/form-data" },
         })
       ).data;
-      return response.data;
+      return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.massage);
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -180,7 +181,10 @@ export const requestResetToken = createAsyncThunk(
       const response = await axios.post("/auth/send-reset-email", { email });
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.status);
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -193,6 +197,9 @@ export const resetPassword = createAsyncThunk(
       const response = await axios.post("/auth/reset-pwd", payload);
       return response.data.message;
     } catch (error) {
+      if (error.response?.data) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }

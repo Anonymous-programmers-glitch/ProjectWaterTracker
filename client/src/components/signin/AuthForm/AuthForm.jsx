@@ -14,6 +14,7 @@ import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
 import {} from "../../../redux/user/selectors.js";
+import { updateNotifier } from "../../../utils/updateNotifier.js";
 
 const initialValues = {
   email: "",
@@ -48,18 +49,12 @@ export default function SignInForm() {
 
   const handleSubmit = async (values, actions) => {
     const { email, password } = values;
-    const response = await dispatch(login({ email, password }));
-
-    const updateStatus = response.payload?.status;
-    const updateMessage =
-      response.payload?.data?.message || response.payload?.message;
-
-    if (updateStatus === 200) {
-      toast.success(`${updateMessage}`);
-      actions.resetForm();
-    } else {
-      toast.error(`${updateMessage}`);
-    }
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(login(vals)),
+      values: { email, password },
+      resetForm: actions?.resetForm,
+      status: 200,
+    });
     // dispatch(login({ email, password }));
     // toast.success("User successfully logged in!");
     // const message = result.payload.data.message;

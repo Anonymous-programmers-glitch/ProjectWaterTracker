@@ -10,6 +10,7 @@ export const userInfoUpdatedSchema = Joi.object({
     'string.pattern.base': "Email must be in the format 'example@example.com'.",
   }),
   outdatedPassword: Joi.string()
+    .allow('')
     .min(8)
     .max(64)
     .pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)
@@ -22,6 +23,7 @@ export const userInfoUpdatedSchema = Joi.object({
         'Password must contain at least one uppercase letter, one number, and one special character (!@#$%^&*).',
     }),
   newPassword: Joi.string()
+    .allow('')
     .min(8)
     .max(64)
     .pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/)

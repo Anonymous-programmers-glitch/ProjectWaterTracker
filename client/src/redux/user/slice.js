@@ -74,7 +74,6 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(refresh.fulfilled, (state, action) => {
-        console.log("action.payload :>> ", action.payload);
         state.isRefreshing = false;
         state.isLoggedIn = true;
         state.user = action.payload.data.user;
@@ -86,25 +85,24 @@ const slice = createSlice({
         state.error = action.payload;
       });
 
-    builder
-      .addCase(update.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.isEdit = true;
-        state.user = {
-          ...state.user,
-          ...action.payload.data.user,
-        };
-      })
+    builder.addCase(update.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.isEdit = true;
+      state.user = {
+        ...state.user,
+        ...action.payload.data.user,
+      };
+    });
 
-      //додав свій кейс з реджектід для нотіфікашок
-      .addCase(update.rejected, (state, action) => {
-        state.error = action.payload.message;
-      });
+    // //додав свій кейс з реджектід для нотіфікашок
+    // .addCase(update.rejected, (state, action) => {
+    //   state.error = action.payload.message;
+    // });
 
     builder.addCase(updateAvatar.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.user.avatarUrl = action.payload;
+      state.user.avatarUrl = action.payload.data;
     });
 
     // builder
