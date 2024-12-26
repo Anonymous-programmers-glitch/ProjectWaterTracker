@@ -18,7 +18,7 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully logged in an user!'
+              example: 'User successfully refreshed!'
             data:
               type: object
               properties:

@@ -13,7 +13,12 @@ import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
 import toast from "react-hot-toast";
+
 import Inputs from "../../ui/Inputs/Inputs.jsx";
+
+
+import { updateNotifier } from "../../../utils/updateNotifier.js";
+
 
 const initialValues = {
   email: "",
@@ -42,26 +47,14 @@ export default function SignInForm() {
 
   const handleSubmit = async (values, actions) => {
     const { email, password } = values;
-    const result = await dispatch(login({ email, password }));
 
-    const message = result.payload.data.message;
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(login(vals)),
+      values: { email, password },
+      resetForm: actions?.resetForm,
+      status: 200,
+    });
 
-    if (result.error) {
-      switch (result.payload.status) {
-        case 400:
-          toast.error(message);
-          break;
-        case 401:
-          toast.error(message);
-          break;
-        default:
-          toast.error(message);
-          break;
-      }
-    } else {
-      toast.success("Successfully login a user!");
-      actions.resetForm();
-    }
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
