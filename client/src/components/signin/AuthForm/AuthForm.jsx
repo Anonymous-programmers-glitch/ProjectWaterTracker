@@ -12,6 +12,10 @@ import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
+import toast from "react-hot-toast";
+
+import Inputs from "../../ui/Inputs/Inputs.jsx";
+
 import { updateNotifier } from "../../../utils/updateNotifier.js";
 
 const initialValues = {
@@ -19,34 +23,29 @@ const initialValues = {
   password: "",
 };
 
-function validateEmail(value) {
-  let error;
-  if (!value) {
-    error = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address";
-  }
-  return error;
-}
-
 export default function SignInForm() {
   const SignInSchema = Yup.object().shape({
-    email: Yup.string().email().required(),
+    email: Yup.string()
+      .required("Required")
+      .test("is-valid-email", "Invalid email address", (value) => {
+        return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
+      }),
     password: Yup.string()
-      .required()
+      .required("Required")
       .min(8, "Should be 8 chars minimum.")
       .max(64, "Should be 64 chars maximum."),
   });
   const dispatch = useDispatch();
   const isResetPasswordModalOpen = useSelector(selectResetPasswordModal);
 
-  const size = "24";
+  const size = "16";
 
   const signinId = useId();
   const passwordId = useId();
 
   const handleSubmit = async (values, actions) => {
     const { email, password } = values;
+
     await updateNotifier({
       dispatchAction: (vals) => dispatch(login(vals)),
       values: { email, password },
@@ -63,10 +62,10 @@ export default function SignInForm() {
   const togglePasswordVisibility = () => {
     if (inputType === "password") {
       setInputType("text");
-      setPasswordVisible(EyeOutline);
+      setPasswordVisible(<EyeOutline size={size} />);
     } else {
       setInputType("password");
-      setPasswordVisible(EyeSlashOutline);
+      setPasswordVisible(<EyeSlashOutline size={size} />);
     }
   };
 
@@ -85,26 +84,20 @@ export default function SignInForm() {
                 <label className={css.label} htmlFor={signinId}>
                   Enter your email{" "}
                 </label>
-                <Field
+                <Inputs
                   type="email"
                   name="email"
-                  className={css.input}
+                  className={css.field}
                   placeholder="E-mail"
                   id={signinId}
-                  validate={validateEmail}
-                />
-                <ErrorMessage
-                  name="email"
-                  component="span"
-                  className={css.error}
                 />
               </div>
-              <div>
+              <div className={css.passwordWrapper}>
                 <label className={css.label} htmlFor={passwordId}>
                   Enter your password{" "}
                 </label>
                 <div className={css.psw}>
-                  <Field
+                  <Inputs
                     type={inputType}
                     name="password"
                     placeholder="Password"
@@ -115,17 +108,13 @@ export default function SignInForm() {
                     {passwordVisible}
                   </span>
                 </div>
-                <ErrorMessage
-                  name="password"
-                  component="span"
-                  className={css.error}
-                />
               </div>
               <Button type="submit" cssstyle="signin">
                 Sign In
               </Button>
               <TextButton
-                onClick={async () => await dispatch(openResetPasswordModal())}
+                clas={css.link}
+                onClick={() => dispatch(openResetPasswordModal())}
               >
                 Forgot your password?
               </TextButton>

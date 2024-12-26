@@ -8,8 +8,11 @@ import Button from "../../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
-import toast from "react-hot-toast";
+
+import Inputs from "../../ui/Inputs/Inputs.jsx";
+
 import { updateNotifier } from "../../../utils/updateNotifier.js";
+
 
 const initialValues = {
   email: "",
@@ -17,19 +20,13 @@ const initialValues = {
   repeatPassword: "",
 };
 
-function validateEmail(value) {
-  let error;
-  if (!value) {
-    error = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address";
-  }
-  return error;
-}
-
 export default function SignUpForm() {
   const SignUpSchema = Yup.object().shape({
-    email: Yup.string().email().required(),
+    email: Yup.string()
+      .required("Required")
+      .test("is-valid-email", "Invalid email address", (value) => {
+        return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
+      }),
     password: Yup.string()
       .required("Please confirm your password")
       .min(8, "Should be 8 chars minimum.")
@@ -45,7 +42,7 @@ export default function SignUpForm() {
 
   const dispatch = useDispatch();
 
-  const size = "24";
+  const size = "16";
 
   const signupId = useId();
   const passwordId = useId();
@@ -60,37 +57,7 @@ export default function SignUpForm() {
       resetForm: actions?.resetForm,
       status: 201,
     });
-    // dispatch(signup({ email, password }));
 
-    // const result = await dispatch(signup({ email, password }));
-    // const message = result.payload.data.message;
-
-    // if (result.error) {
-    //   switch (result.payload.status) {
-    //     case 409:
-    //       toast.error(message);
-    //       break;
-    //     case 400:
-    //       toast.error(message);
-    //       break;
-    //     default:
-    //       toast.error(message);
-    //       break;
-    //   }
-    // } else {
-    //   toast.success("Successfully registered a user!");
-
-    //   toast((t) => (
-    //     <span>
-    //       Check your email to confirm it!
-    //       <button type="button" onClick={() => toast.dismiss(t.id)}>
-    //         <b>OK</b>
-    //       </button>
-    //     </span>
-    //   ));
-    //   actions.resetForm();
-    // }
-    // actions.resetForm();
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
@@ -101,10 +68,10 @@ export default function SignUpForm() {
   const togglePasswordVisibility = () => {
     if (inputType === "password") {
       setInputType("text");
-      setPasswordVisible(EyeOutline);
+      setPasswordVisible(<EyeOutline size={size} />);
     } else {
       setInputType("password");
-      setPasswordVisible(EyeSlashOutline);
+      setPasswordVisible(<EyeSlashOutline size={size} />);
     }
   };
 
@@ -122,26 +89,20 @@ export default function SignUpForm() {
               <label className={css.label} htmlFor={signupId}>
                 Enter your email{" "}
               </label>
-              <Field
+              <Inputs
                 type="email"
                 name="email"
-                className={css.input}
+                className={css.field}
                 placeholder="E-mail"
                 id={signupId}
-                validate={validateEmail}
-              />
-              <ErrorMessage
-                name="email"
-                component="span"
-                className={css.errorEmail}
               />
             </div>
-            <div>
+            <div className={css.passwordWrapper}>
               <label className={css.label} htmlFor={passwordId}>
                 Enter your password{" "}
               </label>
               <div className={css.psw}>
-                <Field
+                <Inputs
                   type={inputType}
                   name="password"
                   placeholder="Password"
@@ -152,18 +113,13 @@ export default function SignUpForm() {
                   {passwordVisible}
                 </span>
               </div>
-              <ErrorMessage
-                name="password"
-                component="span"
-                className={css.errorPswrd}
-              />
             </div>
-            <div>
+            <div className={css.passwordWrapper}>
               <label className={css.label} htmlFor={repeatPasswordId}>
                 Repeat password{" "}
               </label>
               <div className={css.psw}>
-                <Field
+                <Inputs
                   type={inputType}
                   name="repeatPassword"
                   placeholder="Repeat password"
@@ -174,11 +130,6 @@ export default function SignUpForm() {
                   {passwordVisible}
                 </span>
               </div>
-              <ErrorMessage
-                name="repeatPassword"
-                component="span"
-                className={css.errorRepeatPswrd}
-              />
             </div>
             <Button type="submit" cssstyle="signup">
               Sign Up
