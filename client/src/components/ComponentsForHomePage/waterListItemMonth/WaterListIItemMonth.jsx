@@ -10,7 +10,6 @@ function WaterListIItemMonth(item) {
   const { id, date, percentageConsumed } = item.item;
   const day = date.split("-")[2];
   const currentDay = dayjs().format("D");
-  console.log("currentDay :>> ", currentDay);
   return (
     <li key={id} className={css.item}>
       <p
