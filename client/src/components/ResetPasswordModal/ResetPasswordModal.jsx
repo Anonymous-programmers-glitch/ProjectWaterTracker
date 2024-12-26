@@ -11,6 +11,7 @@ import { requestResetToken } from "../../redux/user/operations.js";
 import Button from "../ui/Button/Button.jsx";
 import Input from "../ui/Inputs/Inputs.jsx";
 import toast, { Toaster } from "react-hot-toast";
+import Inputs from "../ui/Inputs/Inputs.jsx";
 
 const ResetPasswordSchema = Yup.object().shape({
   email: Yup.string()
@@ -84,14 +85,14 @@ const ResetPasswordModal = () => {
           >
             {() => (
               <Form>
-                <Input
+                <Inputs
                   type="email"
                   name="email"
                   placeholder="your_email@mail.com"
                   className={css.field}
                 />
                 <div className={css.modalButtons}>
-                  <Button type="submit" cssstyle={css.btnCancel}>
+                  <Button type="submit" cssstyle="save">
                     Send
                   </Button>
                 </div>
