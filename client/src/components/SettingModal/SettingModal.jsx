@@ -70,8 +70,6 @@ export default function SettingModal() {
   const value = useSelector(selectUser);
   const avatar = useSelector(selectAvatarUrl);
 
-  const [openPassword, setOpenPassword] = useState(false);
-
   const isSettingsOpen = useSelector(selectSettingModal);
   const dispatch = useDispatch();
 
@@ -94,8 +92,20 @@ export default function SettingModal() {
     [dispatch]
   );
 
-  const handleOpenPassword = () => {
-    setOpenPassword((prev) => !prev);
+  const [isOutdatedPasswordVisible, setIsOutdatedPasswordVisible] =
+    useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+  const [isRepeatNewPasswordVisible, setIsRepeatNewPasswordVisible] =
+    useState(false);
+
+  const togglePasswordVisibility = (field) => {
+    if (field === "outdatedPassword") {
+      setIsOutdatedPasswordVisible((prev) => !prev);
+    } else if (field === "newPassword") {
+      setIsNewPasswordVisible((prev) => !prev);
+    } else if (field === "repeatNewPassword") {
+      setIsRepeatNewPasswordVisible((prev) => !prev);
+    }
   };
 
   const handleSubmit = async (values, actions) => {
@@ -263,18 +273,28 @@ export default function SettingModal() {
                   >
                     Outdated password:
                     <Inputs
-                      type={openPassword ? "text" : "password"}
+                      type={isOutdatedPasswordVisible ? "text" : "password"}
                       name="outdatedPassword"
                       placeholder="Password"
                       id="outdatedPassword"
                       className={css.input}
                     />
-                    {openPassword ? (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
+                    {isOutdatedPasswordVisible ? (
+                      <div
+                        className={css.eyeIcon}
+                        onClick={() =>
+                          togglePasswordVisibility("outdatedPassword")
+                        }
+                      >
                         <EyeOutline size="16" />
                       </div>
                     ) : (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
+                      <div
+                        className={css.eyeIcon}
+                        onClick={() =>
+                          togglePasswordVisibility("outdatedPassword")
+                        }
+                      >
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
@@ -283,18 +303,24 @@ export default function SettingModal() {
                   <label className={css.labelPassword} htmlFor="newPassword">
                     New password:
                     <Inputs
-                      type={openPassword ? "text" : "password"}
+                      type={isNewPasswordVisible ? "text" : "password"}
                       name="newPassword"
                       placeholder="Password"
                       id="newPassword"
                       className={css.input}
                     />
-                    {openPassword ? (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
+                    {isNewPasswordVisible ? (
+                      <div
+                        className={css.eyeIcon}
+                        onClick={() => togglePasswordVisibility("newPassword")}
+                      >
                         <EyeOutline size="16" />
                       </div>
                     ) : (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
+                      <div
+                        className={css.eyeIcon}
+                        onClick={() => togglePasswordVisibility("newPassword")}
+                      >
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
@@ -306,18 +332,28 @@ export default function SettingModal() {
                   >
                     Repeat new password:
                     <Inputs
-                      type={openPassword ? "text" : "password"}
+                      type={isRepeatNewPasswordVisible ? "text" : "password"}
                       name="repeatNewPassword"
                       placeholder="Password"
                       id="repeatNewPassword"
                       className={css.input}
                     />
-                    {openPassword ? (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
+                    {isRepeatNewPasswordVisible ? (
+                      <div
+                        className={css.eyeIcon}
+                        onClick={() =>
+                          togglePasswordVisibility("repeatNewPassword")
+                        }
+                      >
                         <EyeOutline size="16" />
                       </div>
                     ) : (
-                      <div className={css.eyeIcon} onClick={handleOpenPassword}>
+                      <div
+                        className={css.eyeIcon}
+                        onClick={() =>
+                          togglePasswordVisibility("repeatNewPassword")
+                        }
+                      >
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
