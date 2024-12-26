@@ -217,7 +217,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully logged in an user.",
+            "description": "User successfully logged in!",
             "content": {
               "application/json": {
                 "schema": {
@@ -229,7 +229,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully logged in an user!"
+                      "example": "User successfully logged in!"
                     },
                     "data": {
                       "type": "object",
@@ -272,7 +272,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Successfully logged out, session cleared"
+            "description": "User successfully logged out, session cleared!"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -559,7 +559,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully logged in an user!"
+                      "example": "User successfully refreshed!"
                     },
                     "data": {
                       "type": "object",
