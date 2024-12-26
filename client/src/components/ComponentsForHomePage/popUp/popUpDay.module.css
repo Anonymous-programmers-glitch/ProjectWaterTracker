@@ -1,6 +1,6 @@
 .popUp {
   position: absolute;
-  top: -188px;
+  top: -200px;
   left: -5px;
   background: var(--primery-color-white);
   width: 275px;
@@ -27,8 +27,14 @@
   color: var(--primery-color-black);
 }
 
+@media screen and (min-width: 768px) {
+  .popUp {
+    left: 20px;
+  }
+}
+
 @media screen and (min-width: 1440px) {
-  .popUp  {
+  .popUp {
     top: -188px;
     left: -270px;
   }
