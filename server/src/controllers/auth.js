@@ -93,7 +93,6 @@ export const refreshUserSessionController = async (req, res) => {
 };
 
 export const requestResetEmailController = async (req, res) => {
-  console.log('req.body.email :>> ', req.body.email);
   await requestResetToken(req.body.email);
 
   res.json({
