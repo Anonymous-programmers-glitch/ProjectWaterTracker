@@ -1,5 +1,3 @@
-import React from "react";
-
 function Bottle() {
   return (
     <svg viewBox="0 0 280 208" fill="none" xmlns="http://www.w3.org/2000/svg">

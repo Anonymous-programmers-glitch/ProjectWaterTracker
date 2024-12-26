@@ -1,14 +1,6 @@
-import React from "react";
-
 export default function BottleContainer() {
   return (
-    <svg
-      //width="280"
-      //height="210"
-      viewBox="0 0 280 210"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 280 210" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M140 210C199.966 210 248.578 207.144 248.578 203.62C248.578 200.097 199.966 197.24 140 197.24C80.0338 197.24 31.4216 200.097 31.4216 203.62C31.4216 207.144 80.0338 210 140 210Z"
         fill="#F5F5F5"

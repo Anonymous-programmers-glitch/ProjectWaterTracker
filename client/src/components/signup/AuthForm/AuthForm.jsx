@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { useId, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,11 +8,8 @@ import Button from "../../ui/Button/Button.jsx";
 import css from "./AuthForm.module.css";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
-
 import Inputs from "../../ui/Inputs/Inputs.jsx";
-
 import { updateNotifier } from "../../../utils/updateNotifier.js";
-
 
 const initialValues = {
   email: "",
@@ -57,7 +54,6 @@ export default function SignUpForm() {
       resetForm: actions?.resetForm,
       status: 201,
     });
-
   };
 
   const [passwordVisible, setPasswordVisible] = useState(

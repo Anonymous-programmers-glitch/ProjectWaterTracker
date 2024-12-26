@@ -13,8 +13,6 @@ import {
 const initialState = {
   user: null,
   avatarUrl: null,
-  status: null,
-  message: null,
   accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -27,14 +25,10 @@ const handlePending = (state) => {
   state.isLoading = true;
   state.isEdit = false;
   state.error = null;
-  state.status = null;
-  state.message = null;
 };
 
 const handleRejected = (state, action) => {
   state.isLoading = false;
-  state.status = action.payload.status;
-  state.message = action.payload.data?.message || action.payload.error;
   state.error = action.payload.message ?? "Unknown error";
 };
 
@@ -46,8 +40,6 @@ const slice = createSlice({
     builder.addCase(signup.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload.data.user;
-      state.status = action.payload.status;
-      state.message = action.payload.message;
       state.error = null;
     });
 
@@ -56,8 +48,6 @@ const slice = createSlice({
       state.user = action.payload.data.user;
       state.avatarUrl = action.payload.data.user.avatarUrl;
       state.accessToken = action.payload.data.accessToken;
-      state.status = action.payload.status;
-      state.message = action.payload.message;
       state.isLoggedIn = true;
       state.error = null;
     });
@@ -69,16 +59,12 @@ const slice = createSlice({
     builder
       .addCase(refresh.pending, (state) => {
         state.isRefreshing = true;
-        state.status = null;
-        state.message = null;
         state.error = null;
       })
       .addCase(refresh.fulfilled, (state, action) => {
         state.isRefreshing = false;
         state.isLoggedIn = true;
         state.user = action.payload.data.user;
-        state.status = null;
-        state.message = null;
       })
       .addCase(refresh.rejected, (state, action) => {
         state.isRefreshing = false;

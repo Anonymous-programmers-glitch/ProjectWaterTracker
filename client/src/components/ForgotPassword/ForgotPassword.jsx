@@ -10,6 +10,7 @@ import EyeOutline from "../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
 import { resetPassword } from "../../redux/user/operations.js";
 import { useSearchParams } from "react-router";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const initialValues = {
   password: "",
@@ -29,11 +30,11 @@ export default function ForgotPassword() {
       .matches(/(?=.*[0-9])/, "Password must contain a number.")
       .matches(
         /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-        "Password must contain a special character.",
+        "Password must contain a special character."
       )
       .matches(
         /^(?=.*[A-Z])/,
-        "Password must contain at least one uppercase letter.",
+        "Password must contain at least one uppercase letter."
       ),
     repeatPassword: Yup.string()
       .required("Please confirm your password")
@@ -45,18 +46,19 @@ export default function ForgotPassword() {
   const passwordId = useId();
   const repeatPasswordId = useId();
 
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const token = searchParams.get("token");
     const { password } = values;
-
-    dispatch(resetPassword({ password, token }));
-    actions.resetForm();
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(resetPassword(vals)),
+      values: { password, token },
+      resetForm: actions?.resetForm,
+      status: 200,
+    });
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
-
-  const [inputType, setInputType] = useState("password");
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -123,7 +125,9 @@ export default function ForgotPassword() {
                 </div>
               )}
             </label>
-            <Button cssstyle="signup" onClick={handleSignInClick}>Create new password</Button>
+            <Button cssstyle="signup" onClick={handleSignInClick}>
+              Create new password
+            </Button>
           </Form>
         );
       }}

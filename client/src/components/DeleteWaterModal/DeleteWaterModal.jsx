@@ -11,15 +11,20 @@ import Button from "../ui/Button/Button.jsx";
 import css from "./DeleteWaterModal.module.css";
 
 import { deleteWaterToday } from "../../redux/waterToday/operations";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const DeleteWaterModal = () => {
   const dispatch = useDispatch();
   const isDeleteModalOpen = useSelector(selectDeleteModal);
   const data = useSelector(selectDeleteData);
 
-  const handleDelete = () => {
-    dispatch(deleteWaterToday(data));
-    dispatch(closeDeleteModal());
+  const handleDelete = async () => {
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(deleteWaterToday(vals)),
+      values: data,
+      closeModal: () => dispatch(closeDeleteModal()),
+      status: 200,
+    });
   };
 
   const handleKeyDown = useCallback(

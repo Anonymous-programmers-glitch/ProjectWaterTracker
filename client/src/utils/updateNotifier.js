@@ -9,7 +9,6 @@ export const updateNotifier = async ({
   message,
 }) => {
   const response = await dispatchAction(values);
-
   const updateStatus =
     response.payload?.status ||
     response.payload?.data?.status ||

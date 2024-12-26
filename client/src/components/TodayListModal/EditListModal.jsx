@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useEffect, useCallback, Fragment } from 'react';
+import { useEffect, useCallback, Fragment } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import Inputs from "../ui/Inputs/Inputs.jsx";
 import GlassOfWater from "../ui/icons/GlassOfWater.jsx";
 import css from "./TodayListModal.module.css";
 import { editWaterToday } from "../../redux/waterToday/operations.js";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const EditListModal = () => {
   const dispatch = useDispatch();
@@ -30,14 +31,19 @@ const EditListModal = () => {
     dispatch(closeEditModal());
   }, [dispatch]);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const data = {
       _id: _id,
       amount: values.amount,
       date: dayjs(`${day} ${values.time}`).toISOString(),
     };
-    dispatch(editWaterToday(data));
-    handelCloseModal();
+
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(editWaterToday(vals)),
+      values: data,
+      closeModal: () => dispatch(closeEditModal()),
+      status: 200,
+    });
   };
 
   const handleKeyDown = useCallback(
@@ -128,8 +134,10 @@ const EditListModal = () => {
                       className={css.buttonWater}
                       type="button"
                       onClick={() =>
-                        setFieldValue("amount", Math.min(5000, values.amount + 50)
-                      )
+                        setFieldValue(
+                          "amount",
+                          Math.min(5000, values.amount + 50)
+                        )
                       }
                       disabled={values.manualAmount >= 5000}
                     >
@@ -168,7 +176,6 @@ const EditListModal = () => {
                     placeholder="Enter amount"
                     min="50"
                     max="5000"
-
                     value={values.amount}
                     onChange={(e) => {
                       const value = Math.max(0, Number(e.target.value));
@@ -176,7 +183,6 @@ const EditListModal = () => {
                     }}
                   />
                   <Fragment></Fragment>
-
                 </div>
 
                 <div className={css.formFooter}>
