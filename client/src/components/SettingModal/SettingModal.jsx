@@ -1,16 +1,14 @@
 import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import css from "./SettingModal.module.css";
 import { useDispatch } from "react-redux";
-// import user from "../../testUser.json";
 import Button from "../ui/Button/Button.jsx";
 import Inputs from "../ui/Inputs/Inputs.jsx";
 import ModalBackdrop from "../ModalBackdrop/ModalBackdrop.jsx";
 import { useState, useEffect, useCallback } from "react";
 import { selectAvatarUrl, selectUser } from "../../redux/user/selectors.js";
 import { useSelector } from "react-redux";
-// import { updateUser } from "../../redux/settings/operations.js";
 import MarkOutline from "../ui/icons/XMarkOutline.jsx";
 import EyeOutline from "../../components/ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../ui/icons/EyeSlashOutline.jsx";
@@ -18,65 +16,58 @@ import ArrowUpTrayOutline from "../ui/icons/ArrowUpTrayOutline.jsx";
 import { closeSettingModal } from "../../redux/modalToggle/slice.js";
 import { selectSettingModal } from "../../redux/modalToggle/selectors.js";
 import { update, updateAvatar } from "../../redux/user/operations.js";
-// import isLoading from "../../redux/user/selectors.js";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const FeedbackSchema = Yup.object().shape({
   gender: Yup.string().oneOf(
     ["female", "male"],
     "Please select a valid gender."
   ),
-  name: Yup.string().max(32, "Name is Too Long."),
-  email: Yup.string().email().required("Email is Required."),
+  name: Yup.string().max(32, "Name is too long!"),
+  email: Yup.string().email().required("Email is required!"),
   outdatedPassword: Yup.string()
-    .nullable()
-    .min(8, "Password is too short - should be 8 chars minimum.")
-    .max(64, "Password must be at most 64 characters long.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
+    .min(8, "Password is too short - should be 8 chars minimum!")
+    .max(64, "Password must be at most 64 characters long!")
+    .matches(/(?=.*[0-9])/, "Password must contain a number!")
     .matches(
       /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-      "Password must contain a special character."
+      "Password must contain a special character!"
     )
     .matches(
       /^(?=.*[A-Z])/,
-      "Password must contain at least one uppercase letter."
+      "Password must contain at least one uppercase letter!"
     ),
   newPassword: Yup.string()
     .nullable()
-    .min(8, "Password is too short - should be 8 chars minimum.")
-    .max(64, "Password must be at most 64 characters long.")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
-    .matches(
-      /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-      "Password must contain a special character."
-    )
-    .matches(
-      /^(?=.*[A-Z])/,
-      "Password must contain at least one uppercase letter."
-    )
-    //
-    // repeatNewPassword: Yup.string()
-    //   .min(8, "Password is too short - should be 8 chars minimum.")
-    //   .max(64, "Password must be at most 64 characters long.")
-    //   .matches(/(?=.*[0-9])/, "Password must contain a number.")
-    //   .matches(
-    //     /(?=.*[!@#$%^&*(),.?":{}|<>])/,
-    //     "Password must contain a special character."
-    //   )
-    //   .matches(
-    //     /^(?=.*[A-Z])/,
-    //     "Password must contain at least one uppercase letter."
-    //   ),
-    //
-
-    //
-    .notOneOf([Yup.ref("outdatedPassword")]),
-  repeatNewPassword: Yup.string()
-    .nullable() // Дозволяє порожнє значення
-    .oneOf([Yup.ref("newPassword")], "Password must match"),
+    .when("outdatedPassword", {
+      is: (outdatedPassword) => !!outdatedPassword,
+      then: (schema) =>
+        schema
+          .min(8, "Password is too short - should be 8 chars minimum!")
+          .max(64, "Password must be at most 64 characters long!")
+          .matches(/(?=.*[0-9])/, "Password must contain a number!")
+          .matches(
+            /(?=.*[!@#$%^&*(),.?":{}|<>])/,
+            "Password must contain a special character!"
+          )
+          .matches(
+            /^(?=.*[A-Z])/,
+            "Password must contain at least one uppercase letter!"
+          )
+          .notOneOf(
+            [Yup.ref("outdatedPassword")],
+            "New password must not match the outdated password!"
+          ),
+      otherwise: (schema) => schema.nullable(),
+    }),
+  repeatNewPassword: Yup.string().oneOf(
+    [Yup.ref("newPassword")],
+    "New passwords must match!"
+  ),
 });
 
 export default function SettingModal() {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile] = useState(null);
   const value = useSelector(selectUser);
   const avatar = useSelector(selectAvatarUrl);
 
@@ -93,7 +84,6 @@ export default function SettingModal() {
     newPassword: "",
     repeatNewPassword: "",
     avatarUrl: avatar || null,
-    // password: "",
   };
 
   const handleKeyDown = useCallback(
@@ -110,107 +100,15 @@ export default function SettingModal() {
   };
 
   const handleSubmit = async (values, actions) => {
-    const updatedValues = {};
+    const { repeatNewPassword, avatarUrl, ...filteredValues } = values;
 
-    // if (values.newPassword !== values.repeatNewPassword) {
-    //   toast.error("New passwords don't match.", {
-    //     autoClose: 2000,
-    //   });
-    //   return;
-    // }
-
-    // if (
-    //   values.outdatedPassword &&
-    //   (values.outdatedPassword === values.newPassword ||
-    //     values.outdatedPassword === values.repeatNewPassword)
-    // ) {
-    //   toast.error("Old password cannot be the same as new passwords.", {
-    //     autoClose: 2000,
-    //   });
-    //   return;
-    // }
-
-    Object.keys(values).forEach((key) => {
-      if (values[key] !== initialValues[key]) {
-        updatedValues[key] = values[key];
-      }
+    await updateNotifier({
+      dispatchAction: (vals) => dispatch(update(vals)),
+      values: filteredValues,
+      closeModal: () => dispatch(closeSettingModal()),
+      resetForm: actions?.resetForm,
+      status: 200,
     });
-
-    // try {
-    if (updatedValues.outdatedPassword && updatedValues.newPassword) {
-      const passwordPayload = {
-        outdatedPassword: updatedValues.outdatedPassword,
-        newPassword: updatedValues.newPassword,
-      };
-
-      // await dispatch(update(passwordPayload));
-
-      const passwordResponse = await dispatch(update(passwordPayload));
-      const passwordUpdateStatus = passwordResponse.payload?.status;
-      const passwordUpdateMessage =
-        passwordResponse.payload?.data?.message ||
-        passwordResponse.payload?.message ||
-        passwordResponse.payload ||
-        passwordResponse.error.message;
-
-      console.log(passwordResponse);
-
-      if (passwordUpdateStatus === 200) {
-        toast.success(`${passwordUpdateMessage}`);
-        dispatch(closeSettingModal());
-      } else {
-        toast.error(`${passwordUpdateMessage}`);
-      }
-
-      delete updatedValues.outdatedPassword;
-      delete updatedValues.newPassword;
-      delete updatedValues.repeatNewPassword;
-    }
-
-    const otherFields = Object.keys(updatedValues).filter(
-      (key) => key !== "outdatedPassword" && key !== "newPassword"
-    );
-
-    if (otherFields.length > 0) {
-      const otherPayload = otherFields.reduce((acc, key) => {
-        acc[key] = updatedValues[key];
-        return acc;
-      }, {});
-
-      // const { email, password } = values;
-      // const response = await dispatch(login({ email, password }));
-      const response = await dispatch(update(otherPayload));
-
-      const updateStatus = response.payload?.status;
-      const updateMessage =
-        response.payload?.data?.message ||
-        response.payload?.message ||
-        response.error.message;
-      console.log(response);
-
-      if (updateStatus === 200) {
-        toast.success(`${updateMessage}`);
-        dispatch(closeSettingModal());
-        actions.resetForm();
-      } else {
-        toast.error(`${updateMessage}`);
-      }
-    }
-
-    //   toast.success("Successfully updated!", {
-    //     autoClose: 3000,
-    //   });
-    //   dispatch(closeSettingModal());
-    //   // setTimeout(() => {
-    //   //   dispatch(closeSettingModal());
-    //   // }, 1000);
-    // } catch (error) {
-    //   toast.error("Something went wrong: ", {
-    //     autoClose: 2000,
-    //   });
-    // }
-
-    // actions.resetForm();
   };
 
   useEffect(() => {
@@ -230,12 +128,11 @@ export default function SettingModal() {
       const formData = new FormData();
       formData.append("avatarUrl", file);
 
-      try {
-        await dispatch(updateAvatar(formData));
-        toast.success("Avatar updated successfully!");
-      } catch (error) {
-        toast.error("Failed to update avatar.");
-      }
+      await updateNotifier({
+        dispatchAction: (vals) => dispatch(updateAvatar(vals)),
+        values: formData,
+        status: 200,
+      });
     }
   };
 
@@ -251,15 +148,9 @@ export default function SettingModal() {
           onSubmit={handleSubmit}
           validationSchema={FeedbackSchema}
         >
-          {/* {({ dirty, isValid }) => ( */}
           <Form className={css.formWrapper}>
             <h2 className={css.mainTitle}>Settings</h2>
             <div className={css.wrapperToBtn}>
-              {/* <HiXMark
-                  className={css.closeBtn}
-                  size={24}
-                  onClick={handleCloseModal}
-                /> */}
               <div
                 className={css.closeBtn}
                 onClick={() => dispatch(closeSettingModal())}
@@ -269,16 +160,6 @@ export default function SettingModal() {
 
               <h3 className={css.photoTitle}>Your photo</h3>
               <div className={css.imgWrapper}>
-                {/* {selectedFile || value.avatarUrl ? (
-                  <img
-                    src={
-                      selectedFile
-                        ? URL.createObjectURL(selectedFile)
-                        : value.avatarUrl
-                    }
-                    alt="User photo"
-                    className={css.photo}
-                  /> */}
                 {selectedFile || value.avatarUrl ? (
                   <img
                     src={value.avatarUrl}
@@ -294,9 +175,7 @@ export default function SettingModal() {
                   type="button"
                   className={css.buttonUpload}
                   onClick={handleButtonClick}
-                  // onClick={() => document.getElementById("avatarInput").click()}
                 >
-                  {/* <HiArrowDownTray style={{ color: "407BFF" }} /> */}
                   <div className={css.uploadSvg}>
                     <ArrowUpTrayOutline
                       size="16"
@@ -304,7 +183,6 @@ export default function SettingModal() {
                     />
                   </div>
                   {selectedFile ? "Click to upload" : "Upload a photo"}
-                  {/* Upload a photo */}
                   <input
                     id="avatarInput"
                     type="file"
@@ -333,19 +211,12 @@ export default function SettingModal() {
                         htmlFor="woman"
                         name="gender"
                         className={css.genderInput}
-                        // value="woman"
                       >
                         Woman
                       </label>
                     </div>
                     <div className={css.genderWrapper}>
-                      <Field
-                        type="radio"
-                        name="gender"
-                        id="man"
-                        // value="man"
-                        value="male"
-                      />
+                      <Field type="radio" name="gender" id="man" value="male" />
                       <label
                         htmlFor="man"
                         name="gender"
@@ -368,7 +239,6 @@ export default function SettingModal() {
                       >
                         {value.name}
                       </Inputs>
-                      {/* <ErrorMessage name="name" component="span" /> */}
                     </label>
 
                     <label className={css.labelUser} htmlFor="email">
@@ -382,7 +252,6 @@ export default function SettingModal() {
                       >
                         {value.email}
                       </Inputs>
-                      {/* <ErrorMessage name="email" component="span" /> */}
                     </label>
                   </div>
                 </div>
@@ -410,7 +279,6 @@ export default function SettingModal() {
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
-                    {/* <ErrorMessage name="outdatedPassword" component="span" /> */}
                   </label>
 
                   <label className={css.labelPassword} htmlFor="newPassword">
@@ -431,7 +299,6 @@ export default function SettingModal() {
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
-                    {/* <ErrorMessage name="newPassword" component="span" /> */}
                   </label>
 
                   <label
@@ -455,31 +322,17 @@ export default function SettingModal() {
                         <EyeSlashOutline size="16" />
                       </div>
                     )}
-                    {/* <ErrorMessage name="repeatNewPassword" component="span" /> */}
                   </label>
                 </div>
               </div>
-              {/* <div className={css.btn}> */}
               <div className={css.saveBtnWrapper}>
-                <Button
-                  type="submit"
-                  cssstyle={css.btn}
-                  className={css.btn}
-                  // disabled={!dirty || !isValid}
-                  //для фото сейв
-                  // disabled={!(dirty || isPhotoDirty || selectedFile) || !isValid}
-                  //
-                  // onClick={handleSubmit}
-                >
+                <Button type="submit" cssstyle={css.btn} className={css.btn}>
                   Save
                 </Button>
               </div>
-              {/* </div> */}
             </div>
           </Form>
-          {/* )} */}
         </Formik>
-        {/* <Toaster /> */}
       </div>
     </ModalBackdrop>
   );

@@ -8,6 +8,7 @@ import { selectLogoutModal } from "../../redux/modalToggle/selectors";
 import { logout } from "../../redux/user/operations";
 import Button from ".././ui/Button/Button.jsx";
 import toast from "react-hot-toast";
+import { updateNotifier } from "../../utils/updateNotifier.js";
 
 const UserLogoutModal = () => {
   const dispatch = useDispatch();
@@ -20,19 +21,27 @@ const UserLogoutModal = () => {
     // .catch((error) => {
     //   console.error("Error exiting:", error);
     // });
-    const response = await dispatch(logout());
-    const updateStatus = response.payload;
-    const updateMessage =
-      response.payload?.data?.message ||
-      response.payload?.message ||
-      "User successfully logged out, session cleared!";
+    // const response = await dispatch(logout());
+    // const updateStatus =
+    // ;
+    // const updateMessage =
+    //   response.payload?.data?.message ||
+    //   response.payload?.message ||
+    //   "User successfully logged out, session cleared!";
 
-    if (updateStatus === 204) {
-      toast.success(updateMessage);
-      dispatch(closeLogoutModal());
-    } else {
-      toast.error(`${updateMessage}`);
-    }
+    // if (updateStatus === 204) {
+    //   toast.success(updateMessage);
+    //   dispatch(closeLogoutModal());
+    // } else {
+    //   toast.error(`${updateMessage}`);
+    // }
+    const logoutMessage = "User successfully logged out, session cleared!";
+    await updateNotifier({
+      dispatchAction: () => dispatch(logout()),
+      closeModal: () => dispatch(closeLogoutModal()),
+      status: 204,
+      message: logoutMessage,
+    });
     // dispatch(closeLogoutModal());
     // toast.success("User successfully logged out, session cleared!");
   };
