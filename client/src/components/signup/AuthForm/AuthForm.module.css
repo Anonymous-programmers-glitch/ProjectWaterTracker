@@ -29,6 +29,7 @@
 .psw {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .field {
@@ -44,6 +45,7 @@
   stroke: var(--primery-color-blue);
   position: absolute;
   right: 10px;
+  top:15px;
   cursor: pointer;
 }
 /* .field:invalid icon {

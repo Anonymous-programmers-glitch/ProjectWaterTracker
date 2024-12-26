@@ -29,6 +29,7 @@
 .psw {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .field {
@@ -45,6 +46,7 @@
   position: absolute;
   right: 10px;
   cursor: pointer;
+  top: 15px;
 }
 /* .field:invalid icon {
   top: 50%;
@@ -79,6 +81,7 @@
 
   .psw {
     width: 336px;
+    position: relative;
   }
 
   .input {
