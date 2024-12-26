@@ -12,8 +12,6 @@ import css from "./AuthForm.module.css";
 import Button from "../../ui/Button/Button.jsx";
 import EyeOutline from "../../ui/icons/EyeOutline.jsx";
 import EyeSlashOutline from "../../ui/icons/EyeSlashOutline.jsx";
-import toast from "react-hot-toast";
-import {} from "../../../redux/user/selectors.js";
 import { updateNotifier } from "../../../utils/updateNotifier.js";
 
 const initialValues = {
@@ -55,27 +53,6 @@ export default function SignInForm() {
       resetForm: actions?.resetForm,
       status: 200,
     });
-    // dispatch(login({ email, password }));
-    // toast.success("User successfully logged in!");
-    // const message = result.payload.data.message;
-
-    // if (result.error) {
-    //   switch (result.payload.status) {
-    //     case 400:
-    //       toast.error(message);
-    //       break;
-    //     case 401:
-    //       toast.error(message);
-    //       break;
-    //     default:
-    //       toast.error(message);
-    //       break;
-    //   }
-    // } else {
-    //   toast.success("Successfully login a user!");
-    //   actions.resetForm();
-    // }
-    // actions.resetForm();
   };
 
   const [passwordVisible, setPasswordVisible] = useState(
