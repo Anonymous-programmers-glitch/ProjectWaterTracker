@@ -9,7 +9,13 @@ function WaterListIItemMonth(item) {
   const refDay = useRef(null);
   const { id, date, percentageConsumed } = item.item;
   const day = date.split("-")[2];
-  const currentDay = dayjs().format("D");
+  // const currentDay = dayjs().format("D");
+  // const currentMonth = dayjs().format("MM");
+  // const itemMonth = dayjs(date).format("MM");
+  // const day = dayjs(date).date();
+  const currentDate = dayjs().startOf("day");
+  const itemDate = dayjs(date).startOf("day");
+
   return (
     <li key={id} className={css.item}>
       <p
@@ -19,7 +25,8 @@ function WaterListIItemMonth(item) {
         className={clsx(
           css.day,
           Number(percentageConsumed) < 100 && css.border,
-          currentDay === day && css.dayToday
+          // currentDay === day && css.dayToday
+          currentDate.isSame(itemDate) && css.dayToday
         )}
       >
         {day}

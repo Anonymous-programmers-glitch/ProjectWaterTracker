@@ -1,6 +1,5 @@
 import axios, { setAuthHeader, clearAuthHeader } from "../../api/operationsAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
 /*
  * User registration.
  * POST @ /auth/register

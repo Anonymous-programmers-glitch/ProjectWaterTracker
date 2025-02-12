@@ -6,16 +6,24 @@ import {
   nextMonth,
   prevMonth,
 } from "../../../redux/changeMonth/changeMonthSlice.js";
-import TextButton from '../../ui/TextButton/TextButton.jsx';
+import TextButton from "../../ui/TextButton/TextButton.jsx";
 import css from "./datePicker.module.css";
 
 function DatePicker() {
   const month = useSelector(changeMonthSelector);
   const dispatch = useDispatch();
-  const currentMonth = dayjs(new Date().toISOString()).format("MM");
-  const isNextMonth = dayjs(new Date(month ).toISOString()).format("MM") === currentMonth ? false : true;
+  // const currentMonth = dayjs(new Date().toISOString()).format("MM");
+  // const isNextMonth = dayjs(new Date(month ).toISOString()).format("MM") === currentMonth ? false : true;
+  // ----
+  const currentMonth = dayjs().format("MM");
+  const currentYear = dayjs().format("YYYY");
+  const selectedMonth = dayjs(month).format("MM");
+  const selectedYear = dayjs(month).format("YYYY");
 
-
+  const isNextMonth = !(
+    currentMonth === selectedMonth && currentYear === selectedYear
+  );
+  // ---
   const handlePrevMonth = () => {
     dispatch(prevMonth());
   };
@@ -37,9 +45,11 @@ function DatePicker() {
         &lt;
       </TextButton>
       <span className={css.monthyear}>{getMonthYear(month)}</span>
-      {isNextMonth && <TextButton clas={css.but} onClick={handleNextMonth}>
-        &gt;
-      </TextButton>}
+      {isNextMonth && (
+        <TextButton clas={css.but} onClick={handleNextMonth}>
+          &gt;
+        </TextButton>
+      )}
     </div>
   );
 }
