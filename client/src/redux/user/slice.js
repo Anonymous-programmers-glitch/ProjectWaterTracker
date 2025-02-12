@@ -81,30 +81,10 @@ const slice = createSlice({
       };
     });
 
-    // //додав свій кейс з реджектід для нотіфікашок
-    // .addCase(update.rejected, (state, action) => {
-    //   state.error = action.payload.message;
-    // });
-
     builder.addCase(updateAvatar.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user.avatarUrl = action.payload.data;
     });
-
-    // builder
-    //   .addCase(refreshToken.pending, (state) => {
-    //     state.isRefreshing = true;
-    //     state.error = null;
-    //   })
-    //   .addCase(refreshToken.fulfilled, (state, action) => {
-    //     state.isRefreshing = false;
-    //     state.isLoggedIn = true;
-    //     state.accessToken = action.payload;
-    //   })
-    //   .addCase(refreshToken.rejected, (state, action) => {
-    //     state.isRefreshing = false;
-    //     state.error = action.payload;
-    //   });
 
     builder
       .addCase(requestResetToken.pending, (state) => {

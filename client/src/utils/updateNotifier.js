@@ -16,10 +16,10 @@ export const updateNotifier = async ({
     response.error?.status;
 
   const updateMessage =
+    message ||
     response.payload?.error ||
     response.payload?.data?.message ||
-    response.payload?.message ||
-    message;
+    response.payload?.message;
 
   if (updateStatus === status) {
     toast.success(updateMessage);

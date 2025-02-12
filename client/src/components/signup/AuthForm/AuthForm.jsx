@@ -53,6 +53,8 @@ export default function SignUpForm() {
       values: { email, password },
       resetForm: actions?.resetForm,
       status: 201,
+      message:
+        "Registration successful. A verification email has been sent to your email!",
     });
   };
 

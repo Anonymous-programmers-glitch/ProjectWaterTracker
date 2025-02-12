@@ -30,7 +30,12 @@ function App() {
     <b>Please wait, updating user info...</b>
   ) : (
     <>
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 5000,
+        }}
+      />
       <Routes>
         <Route
           path="/"
